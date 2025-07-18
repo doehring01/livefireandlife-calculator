@@ -1,27 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>FI Take-Home Pay Calculator (MVP)</title>
-  
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FI Take-Home Pay Calculator</title>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<h2>FI Take-Home Pay Calculator (MVP)</h2>
+  <header>
+    <nav class="navbar">
+      <a href="/">Home</a>
+      <a href="/calculators/take-home.html" class="active">Calculators</a>
+      <a href="/blog/">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+  </header>
 
-<label>Gross Income ($): <input id="income" type="number" /></label><br/>
-<label>401(k) Contribution ($): <input id="k401" type="number" /></label><br/>
-<label>IRA Contribution ($): <input id="ira" type="number" /></label><br/>
-<label>HSA Contribution ($): <input id="hsa" type="number" /></label><br/>
-<label>Health Insurance Premiums ($/year): <input id="health" type="number" /></label><br/>
+  <main class="container">
+    <h1 class="page-title">FI Take-Home Pay Calculator</h1>
 
-<button onclick="calculate()">Calculate</button>
+    <form id="calculator-form" class="calculator-form">
+      <!-- Example inputs -->
+      <label for="income">Annual Income:</label>
+      <input type="number" id="income" name="income" required />
 
-<h3>Results:</h3>
-<div id="results"></div>
-<!-- partial -->
-  <script  src="./script.js"></script>
+      <label for="state">State:</label>
+      <select id="state" name="state">
+        <option value="CO">Colorado</option>
+        <option value="CA">California</option>
+        <!-- Add more states -->
+      </select>
 
+      <!-- Add more inputs here -->
+
+      <button type="submit">Calculate</button>
+    </form>
+
+    <section id="results" class="results-section">
+      <!-- Results will populate here -->
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
+  </footer>
+
+  <script src="/script.js"></script>
 </body>
 </html>
