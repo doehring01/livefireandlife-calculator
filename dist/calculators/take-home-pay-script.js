@@ -1,3 +1,5 @@
+console.log("🚀 Script loaded!");
+
 function calculate() {
   const income = parseFloat(document.getElementById('income').value || 0);
   const k401 = parseFloat(document.getElementById('k401').value || 0);
