@@ -34,3 +34,8 @@ function calculate() {
 
   document.getElementById('results').innerHTML = results;
 }
+
+document.getElementById("calculator-form").addEventListener("submit", function (e) {
+  e.preventDefault(); // stop form from refreshing the page
+  calculate(); // run your function
+});
