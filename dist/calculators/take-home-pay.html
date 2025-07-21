@@ -23,13 +23,20 @@
   <main class="container">
     <h1 class="page-title">FI Take-Home Pay Calculator</h1>
 
-   <form id="calculator-form">
+<form id="calculator-form">
   <input type="number" id="income" placeholder="Enter your income" required />
+
+  <input type="number" id="k401" placeholder="401(k) contributions" />
+  <input type="number" id="ira" placeholder="IRA contributions" />
+  <input type="number" id="hsa" placeholder="HSA contributions" />
+  <input type="number" id="health" placeholder="Annual health premiums" />
+
   <select id="state">
     <option value="CO">Colorado</option>
     <option value="CA">California</option>
     <!-- more states -->
   </select>
+
   <button type="submit">Calculate</button>
 </form>
 
