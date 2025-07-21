@@ -23,32 +23,24 @@
   <main class="container">
     <h1 class="page-title">FI Take-Home Pay Calculator</h1>
 
-    <form id="calculator-form" class="calculator-form">
-      <!-- Example inputs -->
-      <label for="income">Annual Income:</label>
-      <input type="number" id="income" name="income" required />
+   <form id="calculator-form">
+  <input type="number" id="income" placeholder="Enter your income" required />
+  <select id="state">
+    <option value="CO">Colorado</option>
+    <option value="CA">California</option>
+    <!-- more states -->
+  </select>
+  <button type="submit">Calculate</button>
+</form>
 
-      <label for="state">State:</label>
-      <select id="state" name="state">
-        <option value="CO">Colorado</option>
-        <option value="CA">California</option>
-        <!-- Add more states -->
-      </select>
+<div id="results"></div>
 
-      <!-- Add more inputs here -->
-
-      <button type="submit">Calculate</button>
-    </form>
-
-    <section id="results" class="results-section">
-      <!-- Results will populate here -->
-    </section>
   </main>
 
   <footer>
     <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
   </footer>
  
-  <script src="./script.js"></script>
+  <script src="./take-home-pay-script.js"></script>
 </body>
 </html>
