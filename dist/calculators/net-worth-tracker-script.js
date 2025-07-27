@@ -1,5 +1,8 @@
+console.log("✅ Net Worth Tracker Script Loaded");
+
 document.getElementById("netWorthForm").addEventListener("submit", function (e) {
   e.preventDefault();
+  console.log("✅ Form submitted");
 
   const getValue = (id) => parseFloat(document.getElementById(id).value) || 0;
   const isChecked = (id) => document.getElementById(id).checked;
@@ -39,13 +42,25 @@ document.getElementById("netWorthForm").addEventListener("submit", function (e) 
 
   const fiNetWorth = fiAssets - totalLiabilities;
 
-  // Update results
+  console.log("Calculated:", { netWorth, fiNetWorth });
+
   document.getElementById("netWorthResult").textContent = netWorth.toLocaleString();
   document.getElementById("fiNetWorthResult").textContent = fiNetWorth.toLocaleString();
 
-  const ctx = document.getElementById("netWorthChart").getContext("2d");
+  const ctx = document.getElementById("netWorthChart");
+  if (!ctx) {
+    console.error("❌ Canvas element not found!");
+    return;
+  }
+
   if (window.netWorthChart) {
     window.netWorthChart.destroy();
+  }
+
+  // Ensure Chart.js is loaded
+  if (typeof Chart === "undefined") {
+    console.error("❌ Chart.js not loaded");
+    return;
   }
 
   window.netWorthChart = new Chart(ctx, {
@@ -69,5 +84,7 @@ document.getElementById("netWorthForm").addEventListener("submit", function (e) 
       }
     }
   });
+
+  console.log("✅ Chart rendered successfully");
 });
 
