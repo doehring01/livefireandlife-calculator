@@ -1,74 +1,66 @@
-document.getElementById('net-worth-form').addEventListener('submit', function (e) {
+document.getElementById("netWorthForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
+  const getValue = (id) => parseFloat(document.getElementById(id).value) || 0;
+  const isChecked = (id) => document.getElementById(id).checked;
+
   const assets = {
-    checking: parseFloat(document.getElementById('checking').value) || 0,
-    savings: parseFloat(document.getElementById('savings').value) || 0,
-    brokerage: parseFloat(document.getElementById('brokerage').value) || 0,
-    retirement: parseFloat(document.getElementById('retirement').value) || 0,
-    realEstate: parseFloat(document.getElementById('realEstate').value) || 0,
-    otherAssets: parseFloat(document.getElementById('otherAssets').value) || 0,
+    cash: getValue("cash"),
+    savings: getValue("savings"),
+    brokerage: getValue("brokerage"),
+    retirement: getValue("retirement"),
+    hsa: getValue("hsa"),
+    home: getValue("home"),
+    otherAssets: getValue("otherAssets"),
   };
 
   const liabilities = {
-    mortgage: parseFloat(document.getElementById('mortgage').value) || 0,
-    studentLoans: parseFloat(document.getElementById('studentLoans').value) || 0,
-    carLoans: parseFloat(document.getElementById('carLoans').value) || 0,
-    creditCards: parseFloat(document.getElementById('creditCards').value) || 0,
-    otherDebts: parseFloat(document.getElementById('otherDebts').value) || 0,
+    mortgage: getValue("mortgage"),
+    carLoans: getValue("carLoans"),
+    studentLoans: getValue("studentLoans"),
+    creditCards: getValue("creditCards"),
+    otherLiabilities: getValue("otherLiabilities"),
   };
 
-  const includeRealEstate = document.getElementById('realEstateFI').checked;
-  const includeOtherAssets = document.getElementById('otherAssetsFI').checked;
-
-  const totalAssets = Object.values(assets).reduce((a, b) => a + b, 0);
-  const totalLiabilities = Object.values(liabilities).reduce((a, b) => a + b, 0);
+  const totalAssets = Object.values(assets).reduce((acc, val) => acc + val, 0);
+  const totalLiabilities = Object.values(liabilities).reduce((acc, val) => acc + val, 0);
   const netWorth = totalAssets - totalLiabilities;
 
-  const fiAssets = 
-    assets.checking +
-    assets.savings +
-    assets.brokerage +
-    assets.retirement +
-    (includeRealEstate ? assets.realEstate : 0) +
-    (includeOtherAssets ? assets.otherAssets : 0);
-
+  let fiAssets = assets.cash + assets.savings + assets.brokerage;
+  if (isChecked("includeRetirement")) fiAssets += assets.retirement;
+  if (isChecked("includeHSA")) fiAssets += assets.hsa;
+  if (isChecked("includeHome")) fiAssets += assets.home;
+  if (isChecked("includeOtherAssets")) fiAssets += assets.otherAssets;
   const fiNetWorth = fiAssets - totalLiabilities;
 
-  // Update results
-  document.getElementById('results').innerHTML = `
-    <h2>Results</h2>
-    <p><strong>Total Net Worth:</strong> $${netWorth.toLocaleString()}</p>
-    <p><strong>FI Net Worth:</strong> $${fiNetWorth.toLocaleString()}</p>
-  `;
+  document.getElementById("netWorthResult").innerText = netWorth.toLocaleString();
+  document.getElementById("fiNetWorthResult").innerText = fiNetWorth.toLocaleString();
 
-  // Chart
-  const ctx = document.getElementById('netWorthChart').getContext('2d');
-  if (window.netWorthChart) {
-    window.netWorthChart.destroy();
-  }
-
+  // Chart.js Pie Chart
+  const ctx = document.getElementById("netWorthChart").getContext("2d");
+  if (window.netWorthChart) window.netWorthChart.destroy(); // prevent duplicates
   window.netWorthChart = new Chart(ctx, {
-    type: 'bar',
+    type: "pie",
     data: {
-      labels: ['Total Net Worth', 'FI Net Worth'],
+      labels: ["Net Worth", "FI Net Worth"],
       datasets: [{
-        label: 'Value in USD',
+        label: "Comparison",
         data: [netWorth, fiNetWorth],
-        backgroundColor: ['#6ac259', '#3478f6']
+        backgroundColor: ["#0077b6", "#90e0ef"],
+        borderColor: "#ffffff",
+        borderWidth: 2
       }]
     },
     options: {
       responsive: true,
       plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            callback: function(value) {
-              return '$' + value.toLocaleString();
+        legend: {
+          position: 'bottom'
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return `$${context.parsed.toLocaleString()}`;
             }
           }
         }
