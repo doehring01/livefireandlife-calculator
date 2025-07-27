@@ -1,11 +1,10 @@
 document.getElementById("netWorthForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  // Helper functions
   const getValue = (id) => parseFloat(document.getElementById(id).value) || 0;
   const isChecked = (id) => document.getElementById(id).checked;
 
-  // Get assets
+  // Assets
   const assets = {
     cash: getValue("cash"),
     savings: getValue("savings"),
@@ -16,7 +15,7 @@ document.getElementById("netWorthForm").addEventListener("submit", function (e) 
     otherAssets: getValue("otherAssets"),
   };
 
-  // Get liabilities
+  // Liabilities
   const liabilities = {
     mortgage: getValue("mortgage"),
     carLoans: getValue("carLoans"),
@@ -25,12 +24,10 @@ document.getElementById("netWorthForm").addEventListener("submit", function (e) 
     otherDebts: getValue("otherDebts"),
   };
 
-  // Calculate totals
-  const totalAssets = Object.values(assets).reduce((sum, val) => sum + val, 0);
-  const totalLiabilities = Object.values(liabilities).reduce((sum, val) => sum + val, 0);
+  const totalAssets = Object.values(assets).reduce((a, b) => a + b, 0);
+  const totalLiabilities = Object.values(liabilities).reduce((a, b) => a + b, 0);
   const netWorth = totalAssets - totalLiabilities;
 
-  // Calculate FI Net Worth (only include selected assets)
   let fiAssets = 0;
   if (isChecked("cashFI")) fiAssets += assets.cash;
   if (isChecked("savingsFI")) fiAssets += assets.savings;
@@ -42,14 +39,13 @@ document.getElementById("netWorthForm").addEventListener("submit", function (e) 
 
   const fiNetWorth = fiAssets - totalLiabilities;
 
-  // Update result text
+  // Update results
   document.getElementById("netWorthResult").textContent = netWorth.toLocaleString();
   document.getElementById("fiNetWorthResult").textContent = fiNetWorth.toLocaleString();
 
-  // Render Pie Chart
   const ctx = document.getElementById("netWorthChart").getContext("2d");
   if (window.netWorthChart) {
-    window.netWorthChart.destroy(); // Avoid duplicate charts
+    window.netWorthChart.destroy();
   }
 
   window.netWorthChart = new Chart(ctx, {
@@ -74,3 +70,4 @@ document.getElementById("netWorthForm").addEventListener("submit", function (e) 
     }
   });
 });
+
