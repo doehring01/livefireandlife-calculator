@@ -3,169 +3,92 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Net Worth & FI Tracker</title>
-  <link rel="stylesheet" href="../style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Net Worth & FI Net Worth Tracker</title>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <div class="calculator-container">
-    <h2 class="calculator-title">Net Worth & FI Tracker</h2>
+  <header>
+    <nav>
+      <div class="logo">FIRE and Life</div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/calculators/our-financial-calculators.html" class="active">Calculators</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <p class="calculator-description">
-      <strong>Net Worth</strong> includes everything you own minus everything you owe. 
-      <strong>FI Net Worth</strong> excludes your primary residence, car, or other non-income-generating assets 
-      — focusing only on assets that can fund your future.
+  <main class="container">
+    <h1 class="page-title">Net Worth & FI Net Worth Tracker</h1>
+
+    <p>
+      <strong>Net Worth</strong> is the total of everything you own minus what you owe. 
+      <strong>FI Net Worth</strong> (Financial Independence Net Worth) excludes non-liquid assets you do not plan to sell 
+      (e.g., primary home, vehicles). Use this to track your progress toward financial independence.
     </p>
 
-    <!-- ASSETS -->
-    <h3 class="section-title">Assets</h3>
-    <div class="input-group">
-      <label class="input-label" for="cash">Cash</label>
-      <input class="input-field" type="number" id="cash" placeholder="e.g. 10000" />
-      <label><input type="checkbox" class="fi-include" data-id="cash" checked> Include in FI Net Worth</label>
-    </div>
+    <form id="net-worth-form">
+      <fieldset>
+        <legend><strong>Assets</strong></legend>
 
-    <div class="input-group">
-      <label class="input-label" for="investments">Investments</label>
-      <input class="input-field" type="number" id="investments" placeholder="e.g. 50000" />
-      <label><input type="checkbox" class="fi-include" data-id="investments" checked> Include in FI Net Worth</label>
-    </div>
+        <label for="checking">Checking Accounts</label>
+        <input type="number" id="checking" placeholder="e.g. 5000" />
 
-    <div class="input-group">
-      <label class="input-label" for="retirement">Retirement Accounts</label>
-      <input class="input-field" type="number" id="retirement" placeholder="e.g. 75000" />
-      <label><input type="checkbox" class="fi-include" data-id="retirement" checked> Include in FI Net Worth</label>
-    </div>
+        <label for="savings">Savings Accounts</label>
+        <input type="number" id="savings" placeholder="e.g. 10000" />
 
-    <div class="input-group">
-      <label class="input-label" for="realEstate">Real Estate (not primary home)</label>
-      <input class="input-field" type="number" id="realEstate" placeholder="e.g. 120000" />
-      <label><input type="checkbox" class="fi-include" data-id="realEstate" checked> Include in FI Net Worth</label>
-    </div>
+        <label for="brokerage">Brokerage Accounts</label>
+        <input type="number" id="brokerage" placeholder="e.g. 25000" />
 
-    <div class="input-group">
-      <label class="input-label" for="homeValue">Primary Residence</label>
-      <input class="input-field" type="number" id="homeValue" placeholder="e.g. 300000" />
-      <label><input type="checkbox" class="fi-include" data-id="homeValue"> Include in FI Net Worth</label>
-    </div>
+        <label for="retirement">Retirement Accounts (401k, IRA, etc.)</label>
+        <input type="number" id="retirement" placeholder="e.g. 100000" />
 
-    <div class="input-group">
-      <label class="input-label" for="carValue">Car(s)</label>
-      <input class="input-field" type="number" id="carValue" placeholder="e.g. 20000" />
-      <label><input type="checkbox" class="fi-include" data-id="carValue"> Include in FI Net Worth</label>
-    </div>
+        <label for="realEstate">Real Estate Equity (market value minus loans)</label>
+        <input type="number" id="realEstate" placeholder="e.g. 200000" />
+        <label><input type="checkbox" id="realEstateFI" checked /> Include in FI Net Worth</label>
 
-    <!-- LIABILITIES -->
-    <h3 class="section-title">Liabilities</h3>
-    <div class="input-group">
-      <label class="input-label" for="mortgage">Mortgage</label>
-      <input class="input-field" type="number" id="mortgage" placeholder="e.g. 250000" />
-    </div>
+        <label for="otherAssets">Other Assets (cars, valuables, business, etc.)</label>
+        <input type="number" id="otherAssets" placeholder="e.g. 15000" />
+        <label><input type="checkbox" id="otherAssetsFI" /> Include in FI Net Worth</label>
+      </fieldset>
 
-    <div class="input-group">
-      <label class="input-label" for="loans">Loans</label>
-      <input class="input-field" type="number" id="loans" placeholder="e.g. 15000" />
-    </div>
+      <fieldset>
+        <legend><strong>Liabilities</strong></legend>
 
-    <div class="input-group">
-      <label class="input-label" for="credit">Credit Card Debt</label>
-      <input class="input-field" type="number" id="credit" placeholder="e.g. 5000" />
-    </div>
+        <label for="mortgage">Mortgage Balance</label>
+        <input type="number" id="mortgage" placeholder="e.g. 180000" />
 
-    <!-- CALCULATE BUTTON -->
-    <div class="input-group">
-      <button class="btn" onclick="calculateNetWorth()">Calculate</button>
-    </div>
+        <label for="studentLoans">Student Loans</label>
+        <input type="number" id="studentLoans" placeholder="e.g. 20000" />
 
-    <!-- RESULTS -->
-    <div class="result-container">
-      <div class="result-box">
-        <p><strong>Total Assets:</strong> $<span id="totalAssets">0</span></p>
-        <p><strong>Total Liabilities:</strong> $<span id="totalLiabilities">0</span></p>
-        <p><strong>Net Worth:</strong> $<span id="netWorth">0</span></p>
-        <p><strong>FI Net Worth:</strong> $<span id="fiNetWorth">0</span></p>
-      </div>
-    </div>
+        <label for="carLoans">Car Loans</label>
+        <input type="number" id="carLoans" placeholder="e.g. 10000" />
 
-    <!-- CHART -->
-    <div class="result-container">
-      <canvas id="netWorthChart" class="chart-style"></canvas>
-    </div>
-  </div>
+        <label for="creditCards">Credit Card Debt</label>
+        <input type="number" id="creditCards" placeholder="e.g. 5000" />
 
-  <script>
-    function calculateNetWorth() {
-      const assetIds = ['cash', 'investments', 'retirement', 'realEstate', 'homeValue', 'carValue'];
-      const fiAssetCheckboxes = document.querySelectorAll('.fi-include');
-      const liabilities = ['mortgage', 'loans', 'credit'];
+        <label for="otherDebts">Other Debts</label>
+        <input type="number" id="otherDebts" placeholder="e.g. 3000" />
+      </fieldset>
 
-      let totalAssets = 0;
-      let totalFiAssets = 0;
-      let totalLiabilities = 0;
+      <button type="submit">Calculate</button>
+    </form>
 
-      assetIds.forEach(id => {
-        const value = parseFloat(document.getElementById(id).value) || 0;
-        totalAssets += value;
+    <canvas id="netWorthChart" width="400" height="200"></canvas>
 
-        const checkbox = document.querySelector(`.fi-include[data-id="${id}"]`);
-        if (checkbox && checkbox.checked) {
-          totalFiAssets += value;
-        }
-      });
+    <section id="results" class="results-section">
+      <!-- Results will show here -->
+    </section>
+  </main>
 
-      liabilities.forEach(id => {
-        const value = parseFloat(document.getElementById(id).value) || 0;
-        totalLiabilities += value;
-      });
+  <footer>
+    <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
+  </footer>
 
-      const netWorth = totalAssets - totalLiabilities;
-      const fiNetWorth = totalFiAssets - totalLiabilities;
-
-      document.getElementById('totalAssets').textContent = totalAssets.toLocaleString();
-      document.getElementById('totalLiabilities').textContent = totalLiabilities.toLocaleString();
-      document.getElementById('netWorth').textContent = netWorth.toLocaleString();
-      document.getElementById('fiNetWorth').textContent = fiNetWorth.toLocaleString();
-
-      renderChart(netWorth, fiNetWorth);
-    }
-
-    let chart;
-    function renderChart(netWorth, fiNetWorth) {
-      const ctx = document.getElementById('netWorthChart').getContext('2d');
-      if (chart) chart.destroy();
-
-      chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Net Worth', 'FI Net Worth'],
-          datasets: [{
-            label: 'Amount ($)',
-            data: [netWorth, fiNetWorth],
-            backgroundColor: ['#f97316', '#22c55e']
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (context) => `$${context.formattedValue}`
-              }
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                callback: (value) => `$${value}`
-              }
-            }
-          }
-        }
-      });
-    }
-  </script>
+  <script src="/calculators/net-worth-tracker-script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
 
