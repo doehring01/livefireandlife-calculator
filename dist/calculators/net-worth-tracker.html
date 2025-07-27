@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Net Worth Tracker</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="../styles.css" />
   <style>
     .form-grid {
       display: flex;
@@ -44,11 +43,11 @@
     <nav>
       <div class="logo">FIRE and Life</div>
       <ul class="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="our-financial-calculators.html">Calculators</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="our-financial-calculators.html" class="active">Calculators</a></li>
+        <li><a href="../blog/">Blog</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -63,7 +62,7 @@
         <div class="input-group">
           <label>Cash</label>
           <input type="number" id="cash" placeholder="0" />
-          <input type="checkbox" id="cashFI" checked title="Include in FI" />
+          <input type="checkbox" id="cashFI" checked />
         </div>
         <div class="input-group">
           <label>Savings</label>
@@ -139,6 +138,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="./net-worth-tracker-script.js"></script>
+  <script src="./net-worth-tracker-script.js"></script>
 </body>
 </html>
+
