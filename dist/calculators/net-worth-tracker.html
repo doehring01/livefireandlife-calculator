@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Net Worth Tracker | FIREandLIFE</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Net Worth Tracker</h1>
+    <p>Track your Net Worth and FI Net Worth side by side.</p>
+    <p><strong>Note:</strong> FI Net Worth includes only assets you could access or draw income from before traditional retirement age. Excludes primary home, cars, etc.</p>
+  </header>
+
+  <main>
+    <form id="networth-form">
+      <fieldset>
+        <legend><strong>Assets</strong></legend>
+        <div>
+          <label>Checking/Savings: $<input type="number" id="cash" /></label>
+          <label><input type="checkbox" id="cash-fi" checked /> Include in FI Net Worth</label>
+        </div>
+        <div>
+          <label>Brokerage (Taxable): $<input type="number" id="brokerage" /></label>
+          <label><input type="checkbox" id="brokerage-fi" checked /> Include in FI Net Worth</label>
+        </div>
+        <div>
+          <label>Retirement Accounts (401k, IRA): $<input type="number" id="retirement" /></label>
+          <label><input type="checkbox" id="retirement-fi" checked /> Include in FI Net Worth</label>
+        </div>
+        <div>
+          <label>Real Estate (Rentals): $<input type="number" id="realestate" /></label>
+          <label><input type="checkbox" id="realestate-fi" checked /> Include in FI Net Worth</label>
+        </div>
+        <div>
+          <label>Primary Residence: $<input type="number" id="home" /></label>
+          <label><input type="checkbox" id="home-fi" /> Include in FI Net Worth</label>
+        </div>
+        <div>
+          <label>Vehicles: $<input type="number" id="vehicles" /></label>
+          <label><input type="checkbox" id="vehicles-fi" /> Include in FI Net Worth</label>
+        </div>
+        <div>
+          <label>Other Assets: $<input type="number" id="otherAssets" /></label>
+          <label><input type="checkbox" id="otherAssets-fi" /> Include in FI Net Worth</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><strong>Liabilities</strong></legend>
+        <div>
+          <label>Mortgage: $<input type="number" id="mortgage" /></label>
+        </div>
+        <div>
+          <label>Auto Loans: $<input type="number" id="autoLoans" /></label>
+        </div>
+        <div>
+          <label>Student Loans: $<input type="number" id="studentLoans" /></label>
+        </div>
+        <div>
+          <label>Credit Cards & Other Debt: $<input type="number" id="otherDebts" /></label>
+        </div>
+      </fieldset>
+
+      <button type="submit">Calculate Net Worth</button>
+    </form>
+
+    <section id="results" style="margin-top: 20px;"></section>
+    <canvas id="networthChart" width="400" height="200" style="margin-top: 40px;"></canvas>
+  </main>
+
+  <script>
+    document.getElementById("networth-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const assets = [
+        { id: "cash", fi: "cash-fi" },
+        { id: "brokerage", fi: "brokerage-fi" },
+        { id: "retirement", fi: "retirement-fi" },
+        { id: "realestate", fi: "realestate-fi" },
+        { id: "home", fi: "home-fi" },
+        { id: "vehicles", fi: "vehicles-fi" },
+        { id: "otherAssets", fi: "otherAssets-fi" },
+      ];
+
+      const liabilities = ["mortgage", "autoLoans", "studentLoans", "otherDebts"];
+
+      let totalAssets = 0;
+      let fiAssets = 0;
+      let totalLiabilities = 0;
+
+      assets.forEach(({ id, fi }) => {
+        const value = parseFloat(document.getElementById(id).value) || 0;
+        const includeInFI = document.getElementById(fi).checked;
+        totalAssets += value;
+        if (includeInFI) fiAssets += value;
+      });
+
+      liabilities.forEach((id) => {
+        const value = parseFloat(document.getElementById(id).value) || 0;
+        totalLiabilities += value;
+      });
+
+      const netWorth = totalAssets - totalLiabilities;
+      const fiNetWorth = fiAssets - totalLiabilities;
+
+      const resultsHTML = `
+        <h2>Results</h2>
+        <strong>Total Assets:</strong> $${totalAssets.toLocaleString()}<br/>
+        <strong>FI Assets:</strong> $${fiAssets.toLocaleString()}<br/>
+        <strong>Total Liabilities:</strong> $${totalLiabilities.toLocaleString()}<br/>
+        <strong>Net Worth:</strong> $${netWorth.toLocaleString()}<br/>
+        <strong>FI Net Worth:</strong> $${fiNetWorth.toLocaleString()}
+      `;
+
+      document.getElementById("results").innerHTML = resultsHTML;
+
+      const ctx = document.getElementById('networthChart').getContext('2d');
+      if (window.netWorthChart) window.netWorthChart.destroy();
+
+      window.netWorthChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Net Worth', 'FI Net Worth'],
+          datasets: [{
+            label: 'Amount ($)',
+            data: [netWorth, fiNetWorth],
+            backgroundColor: ['#F15A29', '#FFD700'],
+            borderColor: ['#F15A29', '#FFD700'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true }
+          },
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: {
+              label: function(context) {
+                return `$${context.parsed.y.toLocaleString()}`;
+              }
+            }}
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
