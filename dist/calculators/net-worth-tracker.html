@@ -44,7 +44,7 @@
       <div class="logo">FIRE and Life</div>
       <ul class="nav-links">
         <li><a href="/">Home</a></li>
-        <li><a href="/calculators/our-financial-calculators.html" class="active">Calculators</a></li>
+        <li><a href="/calculators/">Calculators</a></li>
         <li><a href="/blog/">Blog</a></li>
         <li><a href="/about.html">About</a></li>
         <li><a href="/contact.html">Contact</a></li>
@@ -57,69 +57,26 @@
     <p>Track your total and FI Net Worth. Use the checkboxes to include/exclude assets for FI calculations.</p>
 
     <form id="netWorthForm" class="form-grid">
-      <!-- Column for Assets -->
+      <!-- Assets Column -->
       <div class="column">
         <h2>Assets</h2>
-        <div class="input-group">
-          <label>Cash</label>
-          <input type="number" id="cash" placeholder="0" />
-          <input type="checkbox" id="cashFI" checked />
-        </div>
-        <div class="input-group">
-          <label>Savings</label>
-          <input type="number" id="savings" placeholder="0" />
-          <input type="checkbox" id="savingsFI" checked />
-        </div>
-        <div class="input-group">
-          <label>Brokerage</label>
-          <input type="number" id="brokerage" placeholder="0" />
-          <input type="checkbox" id="brokerageFI" checked />
-        </div>
-        <div class="input-group">
-          <label>Retirement</label>
-          <input type="number" id="retirement" placeholder="0" />
-          <input type="checkbox" id="retirementFI" checked />
-        </div>
-        <div class="input-group">
-          <label>HSA</label>
-          <input type="number" id="hsa" placeholder="0" />
-          <input type="checkbox" id="hsaFI" checked />
-        </div>
-        <div class="input-group">
-          <label>Home Equity</label>
-          <input type="number" id="home" placeholder="0" />
-          <input type="checkbox" id="homeFI" />
-        </div>
-        <div class="input-group">
-          <label>Other Assets</label>
-          <input type="number" id="otherAssets" placeholder="0" />
-          <input type="checkbox" id="otherAssetsFI" />
-        </div>
+        <div class="input-group"><label>Cash</label><input type="number" id="cash" placeholder="0" /><input type="checkbox" id="cashFI" checked /></div>
+        <div class="input-group"><label>Savings</label><input type="number" id="savings" placeholder="0" /><input type="checkbox" id="savingsFI" checked /></div>
+        <div class="input-group"><label>Brokerage</label><input type="number" id="brokerage" placeholder="0" /><input type="checkbox" id="brokerageFI" checked /></div>
+        <div class="input-group"><label>Retirement</label><input type="number" id="retirement" placeholder="0" /><input type="checkbox" id="retirementFI" checked /></div>
+        <div class="input-group"><label>HSA</label><input type="number" id="hsa" placeholder="0" /><input type="checkbox" id="hsaFI" checked /></div>
+        <div class="input-group"><label>Home Equity</label><input type="number" id="home" placeholder="0" /><input type="checkbox" id="homeFI" /></div>
+        <div class="input-group"><label>Other Assets</label><input type="number" id="otherAssets" placeholder="0" /><input type="checkbox" id="otherAssetsFI" /></div>
       </div>
 
-      <!-- Column for Liabilities -->
+      <!-- Liabilities Column -->
       <div class="column">
         <h2>Liabilities</h2>
-        <div class="input-group">
-          <label>Mortgage</label>
-          <input type="number" id="mortgage" placeholder="0" />
-        </div>
-        <div class="input-group">
-          <label>Car Loans</label>
-          <input type="number" id="carLoans" placeholder="0" />
-        </div>
-        <div class="input-group">
-          <label>Student Loans</label>
-          <input type="number" id="studentLoans" placeholder="0" />
-        </div>
-        <div class="input-group">
-          <label>Credit Cards</label>
-          <input type="number" id="creditCards" placeholder="0" />
-        </div>
-        <div class="input-group">
-          <label>Other Debts</label>
-          <input type="number" id="otherDebts" placeholder="0" />
-        </div>
+        <div class="input-group"><label>Mortgage</label><input type="number" id="mortgage" placeholder="0" /></div>
+        <div class="input-group"><label>Car Loans</label><input type="number" id="carLoans" placeholder="0" /></div>
+        <div class="input-group"><label>Student Loans</label><input type="number" id="studentLoans" placeholder="0" /></div>
+        <div class="input-group"><label>Credit Cards</label><input type="number" id="creditCards" placeholder="0" /></div>
+        <div class="input-group"><label>Other Debts</label><input type="number" id="otherDebts" placeholder="0" /></div>
       </div>
 
       <div style="width: 100%; text-align: center; margin-top: 1rem;">
@@ -139,9 +96,9 @@
     <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
   </footer>
 
-  <!-- Load Chart.js before script -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="./net-worth-tracker-script.js"></script>
 </body>
 </html>
+
 
