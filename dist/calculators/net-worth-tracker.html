@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Net Worth & FI Net Worth Tracker</title>
+  <title>Net Worth Tracker</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -21,65 +21,67 @@
   </header>
 
   <main class="container">
-    <h1 class="page-title">Net Worth & FI Net Worth Tracker</h1>
-
+    <h1 class="page-title">Net Worth Tracker</h1>
     <p>
-      <strong>Net Worth</strong> is the total of everything you own minus what you owe. 
-      <strong>FI Net Worth</strong> (Financial Independence Net Worth) excludes non-liquid assets you do not plan to sell 
-      (e.g., primary home, vehicles). Use this to track your progress toward financial independence.
+      Your <strong>Net Worth</strong> is the total of all your assets minus your liabilities.<br />
+      <strong>FI Net Worth</strong> excludes assets you cannot easily access for early retirement (like your primary home or traditional 401(k)).
     </p>
 
-    <form id="net-worth-form">
-      <fieldset>
-        <legend><strong>Assets</strong></legend>
+    <form id="netWorthForm">
+      <h2>Assets</h2>
+      <label for="cash">Cash & Checking</label>
+      <input type="number" id="cash" placeholder="e.g. 5000" />
 
-        <label for="checking">Checking Accounts</label>
-        <input type="number" id="checking" placeholder="e.g. 5000" />
+      <label for="savings">Savings</label>
+      <input type="number" id="savings" placeholder="e.g. 10000" />
 
-        <label for="savings">Savings Accounts</label>
-        <input type="number" id="savings" placeholder="e.g. 10000" />
+      <label for="brokerage">Brokerage Accounts</label>
+      <input type="number" id="brokerage" placeholder="e.g. 25000" />
 
-        <label for="brokerage">Brokerage Accounts</label>
-        <input type="number" id="brokerage" placeholder="e.g. 25000" />
+      <label for="retirement">Retirement Accounts (401k, IRA, etc)</label>
+      <input type="number" id="retirement" placeholder="e.g. 75000" />
+      <input type="checkbox" id="includeRetirement" checked />
+      <label for="includeRetirement" class="inline-label">Include in FI Net Worth</label>
 
-        <label for="retirement">Retirement Accounts (401k, IRA, etc.)</label>
-        <input type="number" id="retirement" placeholder="e.g. 100000" />
+      <label for="hsa">HSA</label>
+      <input type="number" id="hsa" placeholder="e.g. 3000" />
+      <input type="checkbox" id="includeHSA" checked />
+      <label for="includeHSA" class="inline-label">Include in FI Net Worth</label>
 
-        <label for="realEstate">Real Estate Equity (market value minus loans)</label>
-        <input type="number" id="realEstate" placeholder="e.g. 200000" />
-        <label><input type="checkbox" id="realEstateFI" checked /> Include in FI Net Worth</label>
+      <label for="home">Home Equity</label>
+      <input type="number" id="home" placeholder="e.g. 100000" />
+      <input type="checkbox" id="includeHome" />
+      <label for="includeHome" class="inline-label">Include in FI Net Worth</label>
 
-        <label for="otherAssets">Other Assets (cars, valuables, business, etc.)</label>
-        <input type="number" id="otherAssets" placeholder="e.g. 15000" />
-        <label><input type="checkbox" id="otherAssetsFI" /> Include in FI Net Worth</label>
-      </fieldset>
+      <label for="otherAssets">Other Assets</label>
+      <input type="number" id="otherAssets" placeholder="e.g. 15000" />
+      <input type="checkbox" id="includeOtherAssets" />
+      <label for="includeOtherAssets" class="inline-label">Include in FI Net Worth</label>
 
-      <fieldset>
-        <legend><strong>Liabilities</strong></legend>
+      <h2>Liabilities</h2>
+      <label for="mortgage">Mortgage</label>
+      <input type="number" id="mortgage" placeholder="e.g. 200000" />
 
-        <label for="mortgage">Mortgage Balance</label>
-        <input type="number" id="mortgage" placeholder="e.g. 180000" />
+      <label for="carLoans">Car Loans</label>
+      <input type="number" id="carLoans" placeholder="e.g. 15000" />
 
-        <label for="studentLoans">Student Loans</label>
-        <input type="number" id="studentLoans" placeholder="e.g. 20000" />
+      <label for="studentLoans">Student Loans</label>
+      <input type="number" id="studentLoans" placeholder="e.g. 30000" />
 
-        <label for="carLoans">Car Loans</label>
-        <input type="number" id="carLoans" placeholder="e.g. 10000" />
+      <label for="creditCards">Credit Cards</label>
+      <input type="number" id="creditCards" placeholder="e.g. 5000" />
 
-        <label for="creditCards">Credit Card Debt</label>
-        <input type="number" id="creditCards" placeholder="e.g. 5000" />
-
-        <label for="otherDebts">Other Debts</label>
-        <input type="number" id="otherDebts" placeholder="e.g. 3000" />
-      </fieldset>
+      <label for="otherLiabilities">Other Liabilities</label>
+      <input type="number" id="otherLiabilities" placeholder="e.g. 2000" />
 
       <button type="submit">Calculate</button>
     </form>
 
-    <canvas id="netWorthChart" width="400" height="200"></canvas>
-
-    <section id="results" class="results-section">
-      <!-- Results will show here -->
+    <section class="results-section">
+      <h2>Results</h2>
+      <p><strong>Total Net Worth:</strong> $<span id="netWorthResult">0</span></p>
+      <p><strong>FI Net Worth:</strong> $<span id="fiNetWorthResult">0</span></p>
+      <canvas id="netWorthChart" width="400" height="400"></canvas>
     </section>
   </main>
 
@@ -87,8 +89,7 @@
     <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
   </footer>
 
-  <script src="/calculators/net-worth-tracker-script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/calculators/net-worth-tracker-script.js"></script>
 </body>
 </html>
-
