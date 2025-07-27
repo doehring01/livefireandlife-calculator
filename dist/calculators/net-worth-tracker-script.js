@@ -53,14 +53,13 @@ document.getElementById("netWorthForm").addEventListener("submit", function (e) 
     return;
   }
 
-  if (window.netWorthChart) {
-    window.netWorthChart.destroy();
-  }
-
-  // Ensure Chart.js is loaded
   if (typeof Chart === "undefined") {
     console.error("❌ Chart.js not loaded");
     return;
+  }
+
+  if (window.netWorthChart && typeof window.netWorthChart.destroy === "function") {
+    window.netWorthChart.destroy();
   }
 
   window.netWorthChart = new Chart(ctx, {
@@ -87,4 +86,3 @@ document.getElementById("netWorthForm").addEventListener("submit", function (e) 
 
   console.log("✅ Chart rendered successfully");
 });
-
