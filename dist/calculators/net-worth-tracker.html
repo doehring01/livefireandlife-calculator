@@ -1,23 +1,50 @@
-<!-- Net Worth Tracker -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Net Worth Tracker | FIREandLife</title>
+  <meta name="description" content="Track your total net worth and FI net worth side by side, with interactive charts." />
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    .form-grid { display: flex; gap: 2rem; flex-wrap: wrap; }
-    .column { flex: 1; min-width: 300px; }
-    .input-group { margin-bottom: 1rem; display: flex; justify-content: space-between; }
-    .results-section { margin-top: 2rem; text-align: center; }
-    canvas { margin-top: 1rem; max-width: 400px; }
+    .form-grid {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .column {
+      flex: 1;
+      min-width: 300px;
+    }
+    .input-group {
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .input-group label {
+      flex: 1;
+    }
+    .input-group input[type="number"] {
+      width: 120px;
+      margin-left: 1rem;
+    }
+    .results-section {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    canvas {
+      margin-top: 1rem;
+      max-width: 400px;
+    }
   </style>
 </head>
 <body>
 <header>
   <nav>
-    <div class="logo"><img src="../assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
+    <div class="logo">
+      <img src="../assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;">
+    </div>
     <ul class="nav-links">
       <li><a href="../index.html">Home</a></li>
       <li><a href="index.html" class="active">Calculators</a></li>
@@ -30,28 +57,77 @@
 
 <main class="container">
   <h1 class="page-title">Net Worth Tracker</h1>
-  <p>Track your total and FI Net Worth. Use the checkboxes to include/exclude assets for FI calculations.</p>
+  <p style="text-align:center; max-width:700px; margin:0 auto;">
+    Track your total net worth and FI net worth. Use the checkboxes to include/exclude assets from FI calculations.
+  </p>
 
   <form id="netWorthForm" class="form-grid">
     <div class="column">
       <h2>Assets</h2>
-      <div class="input-group"><label>Cash</label><input type="number" id="cash" /><input type="checkbox" id="cashFI" checked /></div>
-      <div class="input-group"><label>Savings</label><input type="number" id="savings" /><input type="checkbox" id="savingsFI" checked /></div>
-      <div class="input-group"><label>Brokerage</label><input type="number" id="brokerage" /><input type="checkbox" id="brokerageFI" checked /></div>
-      <div class="input-group"><label>Retirement</label><input type="number" id="retirement" /><input type="checkbox" id="retirementFI" checked /></div>
-      <div class="input-group"><label>HSA</label><input type="number" id="hsa" /><input type="checkbox" id="hsaFI" checked /></div>
-      <div class="input-group"><label>Home Equity</label><input type="number" id="home" /><input type="checkbox" id="homeFI" /></div>
-      <div class="input-group"><label>Other Assets</label><input type="number" id="otherAssets" /><input type="checkbox" id="otherAssetsFI" /></div>
+      <div class="input-group">
+        <label for="cash">Cash</label>
+        <input type="number" id="cash" placeholder="0" />
+        <input type="checkbox" id="cashFI" checked title="Include in FI" />
+      </div>
+      <div class="input-group">
+        <label for="savings">Savings</label>
+        <input type="number" id="savings" placeholder="0" />
+        <input type="checkbox" id="savingsFI" checked />
+      </div>
+      <div class="input-group">
+        <label for="brokerage">Brokerage</label>
+        <input type="number" id="brokerage" placeholder="0" />
+        <input type="checkbox" id="brokerageFI" checked />
+      </div>
+      <div class="input-group">
+        <label for="retirement">Retirement</label>
+        <input type="number" id="retirement" placeholder="0" />
+        <input type="checkbox" id="retirementFI" checked />
+      </div>
+      <div class="input-group">
+        <label for="hsa">HSA</label>
+        <input type="number" id="hsa" placeholder="0" />
+        <input type="checkbox" id="hsaFI" checked />
+      </div>
+      <div class="input-group">
+        <label for="home">Home Equity</label>
+        <input type="number" id="home" placeholder="0" />
+        <input type="checkbox" id="homeFI" />
+      </div>
+      <div class="input-group">
+        <label for="otherAssets">Other Assets</label>
+        <input type="number" id="otherAssets" placeholder="0" />
+        <input type="checkbox" id="otherAssetsFI" />
+      </div>
     </div>
+
     <div class="column">
       <h2>Liabilities</h2>
-      <div class="input-group"><label>Mortgage</label><input type="number" id="mortgage" /></div>
-      <div class="input-group"><label>Car Loans</label><input type="number" id="carLoans" /></div>
-      <div class="input-group"><label>Student Loans</label><input type="number" id="studentLoans" /></div>
-      <div class="input-group"><label>Credit Cards</label><input type="number" id="creditCards" /></div>
-      <div class="input-group"><label>Other Debts</label><input type="number" id="otherDebts" /></div>
+      <div class="input-group">
+        <label for="mortgage">Mortgage</label>
+        <input type="number" id="mortgage" placeholder="0" />
+      </div>
+      <div class="input-group">
+        <label for="carLoans">Car Loans</label>
+        <input type="number" id="carLoans" placeholder="0" />
+      </div>
+      <div class="input-group">
+        <label for="studentLoans">Student Loans</label>
+        <input type="number" id="studentLoans" placeholder="0" />
+      </div>
+      <div class="input-group">
+        <label for="creditCards">Credit Cards</label>
+        <input type="number" id="creditCards" placeholder="0" />
+      </div>
+      <div class="input-group">
+        <label for="otherDebts">Other Debts</label>
+        <input type="number" id="otherDebts" placeholder="0" />
+      </div>
     </div>
-    <div style="width:100%; text-align:center;"><button type="submit">Calculate</button></div>
+
+    <div style="width:100%; text-align:center; margin-top:1rem;">
+      <button type="submit" class="btn">Calculate</button>
+    </div>
   </form>
 
   <section class="results-section">
@@ -67,6 +143,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="./net-worth-tracker-script.js"></script>
+<script src="net-worth-tracker-script.js"></script>
 </body>
 </html>
