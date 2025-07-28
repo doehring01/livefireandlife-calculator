@@ -3,16 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FI Take-Home Pay Calculator | FIREandLife</title>
+  <title>Take-Home Pay Calculator | FIREandLife</title>
+  <meta name="description" content="Estimate your after-tax income, accounting for deductions and contributions." />
   <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .results-section {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    canvas {
+      margin-top: 1.5rem;
+      max-width: 700px;
+    }
+  </style>
 </head>
 <body>
 <header>
   <nav>
-    <div class="logo"><img src="../assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
+    <div class="logo">
+      <img src="../assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;">
+    </div>
     <ul class="nav-links">
       <li><a href="../index.html">Home</a></li>
-      <li><a href="index.html" class="active">Calculators</a></li>
+      <li><a href="index.html">Calculators</a></li>
       <li><a href="../blog/index.html">Blog</a></li>
       <li><a href="../about.html">About</a></li>
       <li><a href="../contact.html">Contact</a></li>
@@ -21,7 +34,8 @@
 </header>
 
 <main class="container">
-  <h1 class="page-title">FI Take-Home Pay Calculator</h1>
+  <h1 class="page-title">Take-Home Pay Calculator</h1>
+  <p>Estimate your after-tax income, including contributions and deductions, so you can plan smarter.</p>
 
   <form id="calculator-form">
     <label for="income">Gross Annual Income</label>
@@ -42,17 +56,19 @@
     <label for="state">Select Your State</label>
     <select id="state">
       <option value="AL">Alabama</option>
+      <option value="AK">Alaska</option>
+      <option value="AZ">Arizona</option>
+      <option value="AR">Arkansas</option>
       <option value="CA">California</option>
       <option value="CO" selected>Colorado</option>
-      <option value="TX">Texas</option>
-      <option value="FL">Florida</option>
-      <!-- Add all states -->
+      <!-- Add remaining states as needed -->
     </select>
 
-    <button type="submit">Calculate</button>
+    <button type="submit" class="btn">Calculate</button>
   </form>
-
+  
   <canvas id="resultsChart" width="400" height="200"></canvas>
+
   <section id="results" class="results-section"></section>
 </main>
 
@@ -60,8 +76,7 @@
   <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
 </footer>
 
-<script src="./take-home-pay-script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="take-home-pay-script.js"></script>
 </body>
 </html>
-<!-- Take-Home Pay Calculator -->
