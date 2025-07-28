@@ -4,15 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Early Retirement Estimator | FIREandLife</title>
+  <meta name="description" content="Estimate how long it will take to reach Financial Independence based on income, expenses, and savings." />
   <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .results-section {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    canvas {
+      margin-top: 1.5rem;
+      max-width: 700px;
+    }
+  </style>
 </head>
 <body>
 <header>
   <nav>
-    <div class="logo"><img src="../assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
+    <div class="logo">
+      <img src="../assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;">
+    </div>
     <ul class="nav-links">
       <li><a href="../index.html">Home</a></li>
-      <li><a href="index.html" class="active">Calculators</a></li>
+      <li><a href="index.html">Calculators</a></li>
       <li><a href="../blog/index.html">Blog</a></li>
       <li><a href="../about.html">About</a></li>
       <li><a href="../contact.html">Contact</a></li>
@@ -22,7 +35,7 @@
 
 <main class="container">
   <h1 class="page-title">Early Retirement Estimator</h1>
-  <p>Estimate when you'll achieve Financial Independence based on your savings, expenses, and investment growth.</p>
+  <p>Estimate when you can achieve Financial Independence based on your savings, expenses, and investment assumptions.</p>
 
   <form id="fiForm">
     <label for="age">Current Age</label>
@@ -43,7 +56,7 @@
     <label for="fiMultiplier">FI Multiplier (default: 25)</label>
     <input type="number" id="fiMultiplier" placeholder="e.g. 25" value="25" />
 
-    <button type="submit">Estimate FI Date</button>
+    <button type="submit" class="btn">Estimate FI Date</button>
   </form>
 
   <section class="results-section">
@@ -60,7 +73,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="./early-retirement-estimator.js"></script>
+<script src="early-retirement-estimator.js"></script>
 </body>
 </html>
-<!-- Early Retirement Estimator -->
+
