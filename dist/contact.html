@@ -3,25 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact - LifeLifeAndFire</title>
+  <title>Contact - FIREandLife</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- header -->
+  <header>
+    <nav>
+      <div class="logo">FIRE and Life</div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/calculators/">Calculators</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <main>
+  <main class="container">
     <section>
       <h1>Contact Us</h1>
       <p>Have a question, feedback, or just want to say hello? Reach out using the form below.</p>
-      <form action="#" method="POST">
-        <label>Name:<br><input type="text" name="name" required></label><br><br>
-        <label>Email:<br><input type="email" name="email" required></label><br><br>
-        <label>Message:<br><textarea name="message" rows="5" required></textarea></label><br><br>
+      <form name="contact" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="contact" />
+        
+        <label>Name:<br>
+          <input type="text" name="name" required>
+        </label><br><br>
+        
+        <label>Email:<br>
+          <input type="email" name="email" required>
+        </label><br><br>
+        
+        <label>Message:<br>
+          <textarea name="message" rows="5" required></textarea>
+        </label><br><br>
+        
         <button type="submit">Send Message</button>
       </form>
     </section>
   </main>
 
-  <!-- footer -->
+  <footer>
+    <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
+  </footer>
 </body>
 </html>
