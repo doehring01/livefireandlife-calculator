@@ -2,110 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact - FIREandLife</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact | FIREandLife</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    .contact-container {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 2rem;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-
-    form label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
-    }
-
-    form input, form textarea {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-
-    form button {
-      background-color: #004aad;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    form button:hover {
-      background-color: #003580;
-    }
-
-    .success-message {
-      display: none;
-      color: green;
-      margin-top: 1rem;
-      font-weight: bold;
-    }
-  </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="logo">FIRE and Life</div>
-      <ul class="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/calculators/">Calculators</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/contact.html" class="active">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+<header>
+  <nav>
+    <div class="logo"><img src="assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calculators/index.html">Calculators</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </nav>
+</header>
 
-  <main class="container">
-    <section class="contact-container">
-      <h1>Contact Us</h1>
-      <p>Have a question, feedback, or just want to say hello? Fill out the form below.</p>
+<main class="container">
+  <h1>Contact Us</h1>
+  <p>Have questions or feedback? Reach out below.</p>
+  <form name="contact" method="POST" data-netlify="true">
+    <input type="hidden" name="form-name" value="contact" />
+    <label>Name:<br><input type="text" name="name" required></label><br><br>
+    <label>Email:<br><input type="email" name="email" required></label><br><br>
+    <label>Message:<br><textarea name="message" rows="5" required></textarea></label><br><br>
+    <button type="submit">Send Message</button>
+  </form>
+</main>
 
-      <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
-        <!-- Required hidden fields for Netlify -->
-        <input type="hidden" name="form-name" value="contact" />
-        <p style="display:none;">
-          <label>Don’t fill this out: <input name="bot-field" /></label>
-        </p>
-
-        <label>Name</label>
-        <input type="text" name="name" required />
-
-        <label>Email</label>
-        <input type="email" name="email" required />
-
-        <label>Message</label>
-        <textarea name="message" rows="5" required></textarea>
-
-        <div data-netlify-recaptcha="true"></div>
-
-        <button type="submit">Send Message</button>
-      </form>
-
-      <p class="success-message" id="successMessage">Thank you! Your message has been sent successfully.</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
-  </footer>
-
-  <script>
-    // Display success message without redirect
-    document.querySelector("form").addEventListener("submit", function () {
-      document.getElementById("successMessage").style.display = "block";
-    });
-  </script>
+<footer>
+  <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
+</footer>
 </body>
 </html>
+
