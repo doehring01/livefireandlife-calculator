@@ -4,12 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact | FIREandLife</title>
+  <meta name="description" content="Get in touch with FIREandLife for questions, feedback, or collaboration." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 <header>
   <nav>
-    <div class="logo"><img src="assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
+    <div class="logo">
+      <img src="assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;">
+    </div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="calculators/index.html">Calculators</a></li>
@@ -22,13 +25,21 @@
 
 <main class="container">
   <h1>Contact Us</h1>
-  <p>Have questions or feedback? Reach out below.</p>
+  <p>Have questions, feedback, or ideas? Fill out the form below and we’ll get back to you soon.</p>
+
   <form name="contact" method="POST" data-netlify="true">
     <input type="hidden" name="form-name" value="contact" />
-    <label>Name:<br><input type="text" name="name" required></label><br><br>
-    <label>Email:<br><input type="email" name="email" required></label><br><br>
-    <label>Message:<br><textarea name="message" rows="5" required></textarea></label><br><br>
-    <button type="submit">Send Message</button>
+
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="you@example.com" required />
+
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="5" placeholder="Type your message here..." required></textarea>
+
+    <button type="submit" class="btn">Send Message</button>
   </form>
 </main>
 
