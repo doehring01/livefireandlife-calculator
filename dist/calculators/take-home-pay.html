@@ -3,44 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FI Take-Home Pay Calculator</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <title>FI Take-Home Pay Calculator | FIREandLife</title>
+  <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="logo">FIRE and Life</div>
-      <ul class="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/calculators/our-financial-calculators.html" class="active">Calculators</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+<header>
+  <nav>
+    <div class="logo"><img src="../assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="index.html" class="active">Calculators</a></li>
+      <li><a href="../blog/index.html">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
 
-  <main class="container">
-    <h1 class="page-title">FI Take-Home Pay Calculator</h1>
+<main class="container">
+  <h1 class="page-title">FI Take-Home Pay Calculator</h1>
 
-    <form id="calculator-form">
-      <label for="income">Gross Annual Income</label>
-      <input type="number" id="income" placeholder="e.g. 85000" required />
+  <form id="calculator-form">
+    <label for="income">Gross Annual Income</label>
+    <input type="number" id="income" placeholder="e.g. 85000" required />
 
-      <label for="k401">401(k) Contributions</label>
-      <input type="number" id="k401" placeholder="e.g. 19500" />
+    <label for="k401">401(k) Contributions</label>
+    <input type="number" id="k401" placeholder="e.g. 19500" />
 
-      <label for="ira">IRA Contributions</label>
-      <input type="number" id="ira" placeholder="e.g. 6000" />
+    <label for="ira">IRA Contributions</label>
+    <input type="number" id="ira" placeholder="e.g. 6000" />
 
-      <label for="hsa">HSA Contributions</label>
-      <input type="number" id="hsa" placeholder="e.g. 3600" />
+    <label for="hsa">HSA Contributions</label>
+    <input type="number" id="hsa" placeholder="e.g. 3600" />
 
-      <label for="health">Annual Health Premiums</label>
-      <input type="number" id="health" placeholder="e.g. 7200" />
+    <label for="health">Annual Health Premiums</label>
+    <input type="number" id="health" placeholder="e.g. 7200" />
 
-      <label for="state">Select Your State</label>
-      <select id="state">
+    <label for="state">Select Your State</label>
+    <select id="state">
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>
         <option value="AZ">Arizona</option>
@@ -91,24 +91,20 @@
         <option value="WV">West Virginia</option>
         <option value="WI">Wisconsin</option>
         <option value="WY">Wyoming</option>
-      </select>
+    </select>
 
-      <button type="submit">Calculate</button>
-    </form>
-    
-    <canvas id="resultsChart" width="400" height="200"></canvas>
+    <button type="submit">Calculate</button>
+  </form>
 
-    <section id="results" class="results-section">
-      <!-- Results will be rendered here by JavaScript -->
-    </section>
-  </main>
+  <canvas id="resultsChart" width="400" height="200"></canvas>
+  <section id="results" class="results-section"></section>
+</main>
 
-  <footer>
-    <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
-  </footer>
+<footer>
+  <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
+</footer>
 
-  <script src="./take-home-pay-script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<script src="./take-home-pay-script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
