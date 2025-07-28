@@ -1,19 +1,236 @@
+/* ===========================
+   Global Reset & Base
+=========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/* Brand-based Styling */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', Tahoma, sans-serif; color: #333333; background: #F9F9F9; line-height: 1.6; }
-.container { max-width: 1100px; margin: 0 auto; padding: 1rem; }
-header { background: #FFFFFF; border-bottom: 1px solid #ddd; }
-nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem; }
-nav .logo img { height: 40px; }
-.nav-links { list-style: none; display: flex; gap: 1.5rem; }
-.nav-links a { text-decoration: none; color: #333333; font-weight: 600; }
-.nav-links a:hover, .nav-links a.active { color: #FF6F61; }
-.page-title, h1, h2, h3 { color: #333333; margin-bottom: 1rem; }
-.btn, button { background: #FF6F61; color: white; padding: 0.75rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; text-decoration: none; transition: background 0.2s ease-in-out; }
-.btn:hover, button:hover { background: #E65A4F; }
-.btn-secondary { background: #FFD166; color: #333333; }
-.btn-secondary:hover { background: #FFB347; }
-form { display: flex; flex-direction: column; gap: 1rem; }
-input, select, textarea { padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; background: #FFFFFF; }
-footer { text-align: center; padding: 1rem; font-size: 0.9rem; color: #777; margin-top: 3rem; background: #FFFFFF; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333333; /* Charcoal */
+  background-color: #F9F9F9;
+  line-height: 1.6;
+}
+
+/* ===========================
+   Layout Containers
+=========================== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ===========================
+   Header & Navigation
+=========================== */
+header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5E5E5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333333;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #FF6F61; /* Ember Orange */
+}
+
+/* ===========================
+   Typography
+=========================== */
+h1, h2, h3 {
+  color: #333333;
+  margin-bottom: 1rem;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* ===========================
+   Buttons
+=========================== */
+.btn, button {
+  background-color: #FF6F61; /* Ember Orange */
+  color: white;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover,
+button:hover {
+  background-color: #E65A4F; /* Darker Orange */
+}
+
+.btn-secondary {
+  background-color: #FFD166; /* Sunrise Yellow */
+  color: #333333;
+}
+
+.btn-secondary:hover {
+  background-color: #FFB347;
+}
+
+/* ===========================
+   Forms
+=========================== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+input, select, textarea {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* ===========================
+   Hero Section
+=========================== */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: #FF6F61; /* Ember Orange */
+  color: white;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.hero .btn-primary {
+  background-color: #FFD166;
+  color: #333333;
+}
+
+/* ===========================
+   Cards / Sections
+=========================== */
+.section {
+  padding: 2rem 1rem;
+}
+
+.calculator-grid,
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.calculator-card,
+.card {
+  background-color: #FFFFFF;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.calculator-card h3,
+.card h3 {
+  color: #333333;
+  margin-bottom: 0.75rem;
+}
+
+.calculator-card p,
+.card p {
+  flex-grow: 1;
+  margin-bottom: 1rem;
+  color: #555555;
+}
+
+/* ===========================
+   Newsletter Section
+=========================== */
+.newsletter {
+  background-color: #FF6F61;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 8px;
+  margin-top: 3rem;
+}
+
+.newsletter input[type="email"] {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  max-width: 250px;
+}
+
+.newsletter button {
+  padding: 0.75rem 1.5rem;
+  background-color: #FFD166;
+  border: none;
+  color: #333333;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.newsletter button:hover {
+  background-color: #FFB347;
+}
+
+/* ===========================
+   Footer
+=========================== */
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 3rem;
+  background-color: #FFFFFF;
+}
