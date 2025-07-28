@@ -7,7 +7,6 @@
   <meta name="description" content="Tools and resources to help you achieve Financial Independence without sacrificing the life you love." />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Homepage custom styles */
     .hero {
       text-align: center;
       padding: 3rem 1rem;
@@ -100,16 +99,16 @@
 </head>
 <body>
   <header>
-    <nav>
+    <nav style="display:flex; justify-content:space-between; align-items:center; padding:1rem; background:#fff; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
       <div class="logo">
-        <img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;">
+        <img src="assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;">
       </div>
-      <ul class="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/calculators/">Calculators</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/contact.html">Contact</a></li>
+      <ul class="nav-links" style="list-style:none; display:flex; gap:1.5rem; margin:0;">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="calculators/our-financial-calculators.html">Calculators</a></li>
+        <li><a href="blog/index.html">Blog</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -119,7 +118,7 @@
     <section class="hero">
       <h1>Financial Independence Made Simple</h1>
       <p>Plan smarter. Live better. Tools and resources for your FI journey—without sacrificing what matters most.</p>
-      <a href="/calculators/" class="btn-primary">Explore Calculators</a>
+      <a href="calculators/our-financial-calculators.html" class="btn-primary">Explore Calculators</a>
     </section>
 
     <!-- Why FIREandLife -->
@@ -135,17 +134,17 @@
         <div class="card">
           <h3>Take-Home Pay Calculator</h3>
           <p>See your real income after taxes and deductions.</p>
-          <a href="/calculators/take-home-pay.html" class="btn">Try It</a>
+          <a href="calculators/take-home-pay.html" class="btn">Try It</a>
         </div>
         <div class="card">
           <h3>Net Worth Tracker</h3>
           <p>Track your total net worth and FI net worth in one place.</p>
-          <a href="/calculators/net-worth-tracker.html" class="btn">Track Now</a>
+          <a href="calculators/net-worth-tracker.html" class="btn">Track Now</a>
         </div>
         <div class="card">
           <h3>Early Retirement Estimator</h3>
           <p>Estimate how long until you reach Financial Independence.</p>
-          <a href="/calculators/early-retirement-estimator.html" class="btn">Plan Ahead</a>
+          <a href="calculators/early-retirement-estimator.html" class="btn">Plan Ahead</a>
         </div>
       </div>
     </section>
@@ -157,12 +156,12 @@
         <div class="card">
           <h3>5 Ways to Maximize Your Take-Home Pay</h3>
           <p>Learn how to increase your real income without asking for a raise.</p>
-          <a href="/blog/maximize-take-home-pay.html" class="btn">Read More</a>
+          <a href="blog/maximize-take-home-pay.html" class="btn">Read More</a>
         </div>
         <div class="card">
           <h3>The FI Formula: Explained</h3>
           <p>Understand the math behind Financial Independence and calculate your FI number.</p>
-          <a href="/blog/fi-formula-explained.html" class="btn">Read More</a>
+          <a href="blog/fi-formula-explained.html" class="btn">Read More</a>
         </div>
       </div>
     </section>
@@ -180,7 +179,7 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
+    <p style="text-align:center; padding:1rem;">&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
   </footer>
 </body>
 </html>
