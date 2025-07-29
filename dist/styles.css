@@ -1,6 +1,4 @@
-/* ------------------------------
-   GLOBAL RESET & BASE STYLES
---------------------------------*/
+/* Reset and Basics */
 * {
   margin: 0;
   padding: 0;
@@ -9,8 +7,8 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: #F9F9F9;
   color: #333333;
+  background: #F9F9F9;
   line-height: 1.6;
 }
 
@@ -20,9 +18,7 @@ body {
   padding: 1rem;
 }
 
-/* ------------------------------
-   HEADER & NAVIGATION
---------------------------------*/
+/* Header Navigation */
 header {
   background: #FFFFFF;
   border-bottom: 1px solid #ddd;
@@ -49,59 +45,41 @@ nav .logo img {
   text-decoration: none;
   color: #333333;
   font-weight: 600;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease-in-out;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-  color: #FF6F61; /* Brand orange */
+  color: #FF6F61; /* Brand Orange Accent */
 }
 
-/* ------------------------------
-   HERO SECTION
---------------------------------*/
-.hero {
-  text-align: center;
-  padding: 3rem 1rem;
-  background: #F7F7F7; /* Light gray */
-  color: #333;
-}
-
-.hero h1 {
-  font-size: 2.5rem;
+/* Typography */
+.page-title,
+h1,
+h2,
+h3 {
+  color: #333333;
   margin-bottom: 1rem;
 }
 
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* ------------------------------
-   BUTTON STYLES
---------------------------------*/
+/* Buttons */
 .btn,
-.btn-primary,
 button {
-  background: #FF6F61; /* Brand orange */
+  background: #FF6F61; /* Brand Orange */
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
   text-decoration: none;
   display: inline-block;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease-in-out;
 }
 
 .btn:hover,
-.btn-primary:hover,
 button:hover {
-  background: #E65A4F; /* Darker orange */
+  background: #E65A4F; /* Darker Orange Hover */
 }
 
 .btn-secondary {
@@ -113,29 +91,68 @@ button:hover {
   background: #FFB347;
 }
 
-/* ------------------------------
-   SECTIONS
---------------------------------*/
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+input,
+select,
+textarea {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: #FFFFFF;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: #F2F2F2; /* Light Gray Background */
+  color: #333;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.hero .btn-primary {
+  background: #FF6F61;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.hero .btn-primary:hover {
+  background: #E65A4F;
+}
+
+/* Sections */
 .section {
   padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .section h2 {
   text-align: center;
   margin-bottom: 1rem;
-  color: #333;
+  color: #333333;
 }
 
-.section p {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto;
-  color: #555;
-}
-
-/* ------------------------------
-   GRID & CARDS
---------------------------------*/
+/* Grid Layout */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -154,7 +171,7 @@ button:hover {
 }
 
 .card h3 {
-  color: #333;
+  color: #FF6F61;
   margin-bottom: 0.5rem;
 }
 
@@ -163,76 +180,45 @@ button:hover {
   color: #555;
 }
 
-/* ------------------------------
-   FORMS & INPUTS
---------------------------------*/
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-input,
-select,
-textarea {
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-  background: #FFFFFF;
-}
-
-input:focus,
-textarea:focus {
-  border-color: #FF6F61;
-  outline: none;
-}
-
-/* ------------------------------
-   NEWSLETTER SECTION
---------------------------------*/
-.newsletter {
-  background: #FFFFFF;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  max-width: 700px;
-  margin: 3rem auto;
+.card .btn {
+  background: #FF6F61;
+  color: white;
   text-align: center;
-  padding: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
 }
 
-.newsletter h2 {
-  margin-bottom: 0.5rem;
+.card .btn:hover {
+  background: #E65A4F;
+}
+
+/* Newsletter Block */
+.newsletter {
+  background-color: #F2F2F2;
   color: #333;
-}
-
-.newsletter p {
-  margin-bottom: 1rem;
-  color: #555;
-}
-
-.newsletter form {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 8px;
+  margin-top: 3rem;
 }
 
 .newsletter input[type="email"] {
   padding: 0.75rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  flex: 1;
+  margin-right: 0.5rem;
   max-width: 250px;
 }
 
 .newsletter button {
-  background: #FF6F61;
-  color: white;
-  border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  background: #FF6F61;
+  border: none;
+  color: white;
   font-weight: bold;
+  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -240,9 +226,7 @@ textarea:focus {
   background: #E65A4F;
 }
 
-/* ------------------------------
-   FOOTER
---------------------------------*/
+/* Footer */
 footer {
   text-align: center;
   padding: 1rem;
