@@ -21,7 +21,6 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      text-align: center;
     }
     .blog-category-card h3 {
       color: #333;
@@ -31,31 +30,41 @@
       margin-bottom: 1rem;
       color: #555;
     }
-    .blog-category-card .btn {
-      display: inline-block;
-      background: #FF6F61;
-      color: white;
-      padding: 0.75rem 1rem;
-      border-radius: 4px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    .blog-category-card .btn:hover {
-      background: #E65A4F;
-    }
     .post-list {
-      margin-top: 1rem;
-      text-align: left;
+      margin-top: 0.5rem;
+      padding-left: 1rem;
     }
     .post-list li {
       margin-bottom: 0.5rem;
     }
     .post-list a {
-      color: #004aad;
+      color: #FF6F61;
       font-weight: 600;
       text-decoration: none;
     }
     .post-list a:hover {
+      text-decoration: underline;
+    }
+    /* Sidebar/Widget */
+    .sidebar {
+      margin-top: 3rem;
+      padding: 1.5rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    .sidebar h3 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    .sidebar ul li {
+      margin-bottom: 0.5rem;
+    }
+    .sidebar ul li a {
+      color: #FF6F61;
+      text-decoration: none;
+    }
+    .sidebar ul li a:hover {
       text-decoration: underline;
     }
   </style>
@@ -82,6 +91,7 @@
     Practical advice, strategies, and tools to help you achieve Financial Independence without sacrificing fulfillment.
   </p>
 
+  <!-- Blog Categories -->
   <div class="blog-category-grid">
     <!-- Category 1 -->
     <div class="blog-category-card">
@@ -106,10 +116,20 @@
       <h3>Life & Fulfillment</h3>
       <p>How to enjoy life today while working toward FI.</p>
       <ul class="post-list">
-        <li><em>Coming soon...</em></li>
+        <li><em>Coming soon: Balancing FI and Happiness</em></li>
+        <li><em>Coming soon: Why Joy Matters on the FI Journey</em></li>
       </ul>
     </div>
   </div>
+
+  <!-- Sidebar Widget for Popular Posts -->
+  <section class="sidebar">
+    <h3>Top Posts</h3>
+    <ul>
+      <li><a href="maximize-take-home-pay.html">5 Ways to Maximize Your Take-Home Pay</a></li>
+      <li><a href="fi-formula-explained.html">The FI Formula: Explained</a></li>
+    </ul>
+  </section>
 
   <!-- Newsletter Signup -->
   <section class="newsletter" style="margin-top:3rem;">
