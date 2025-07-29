@@ -2,44 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FIREandLife - Financial Clarity for Life</title>
   <meta name="description" content="Tools and resources to help you achieve Financial Independence without sacrificing the life you love." />
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    .hero {
-      text-align: center;
-      padding: 3rem 1rem;
-      background: #FF6F61;
-      color: white;
-    }
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-    }
-    .hero .btn-primary {
-      background: #FFD166;
-      color: #333;
-      padding: 0.75rem 1.5rem;
-      border-radius: 4px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    .section {
-      padding: 2rem 1rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .section h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-      color: #333;
-    }
-  </style>
 </head>
 <body>
 <header>
@@ -58,25 +24,87 @@
 </header>
 
 <main>
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Financial Independence Without Losing Today</h1>
-    <p>FI isn’t about deprivation—it’s about freedom. We help you plan smarter, live better, and enjoy life now while building the future you want.</p>
-    <a href="calculators/index.html" class="btn-primary">Explore Calculators</a>
+  <!-- HERO SECTION -->
+  <section class="hero" style="text-align:center; padding:3rem 1rem; background:#f7f7f7; color:#333;">
+    <h1 style="font-size:2.5rem; margin-bottom:1rem;">Financial Independence Made Simple</h1>
+    <p style="font-size:1.2rem; margin-bottom:2rem; max-width:700px; margin:auto;">
+      Plan smarter. Live better. Tools and resources for your FI journey—without sacrificing what matters most.
+    </p>
+    <a href="calculators/index.html" class="btn-primary" style="
+      background:#FF6F61; color:white; padding:0.75rem 1.5rem;
+      border-radius:4px; font-weight:bold; text-decoration:none;">
+      Explore Calculators
+    </a>
   </section>
 
-  <!-- Why FIREandLife -->
-  <section class="section">
-    <h2>Why Balance Matters</h2>
-    <p style="text-align:center; max-width:700px; margin:0 auto;">
-      At FIREandLife, we believe the path to FI should be balanced with joy and purpose today.
-      <br><br>
-      <strong>Because:</strong><br>
-      1. Life still happens on the way to FI.<br>
-      2. Deprivation isn’t sustainable—or healthy.<br>
-      3. If you can’t enjoy life now, you won’t later.<br>
-      4. The real goal isn’t saving the most money—it’s living intentionally.<br>
+  <!-- WHY FIREandLife -->
+  <section class="section" style="padding:2rem 1rem; max-width:900px; margin:auto;">
+    <h2 style="text-align:center; margin-bottom:1rem; color:#333;">Why FIREandLife?</h2>
+    <p style="text-align:center; max-width:700px; margin:auto; font-size:1rem; color:#555;">
+      We believe the pursuit of Financial Independence should never come at the expense of living a fulfilling life today. 
+      Life happens on the path to FI—unexpected turns, challenges, and opportunities. Denying yourself joy for years isn't the answer. 
+      If you don’t know how to enjoy life now, you won’t know how to live it once you’ve reached FI. 
+      And most importantly, finding purpose beyond saving money is key to true financial freedom.
     </p>
+  </section>
+
+  <!-- FEATURED CALCULATORS -->
+  <section class="section" style="padding:2rem 1rem;">
+    <h2 style="text-align:center; margin-bottom:1rem; color:#333;">Featured Calculators</h2>
+    <div class="grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-top:1.5rem;">
+      <div class="card">
+        <h3>Take-Home Pay Calculator</h3>
+        <p>See your real income after taxes and deductions.</p>
+        <a href="calculators/take-home-pay.html" class="btn">Try It</a>
+      </div>
+      <div class="card">
+        <h3>Net Worth Tracker</h3>
+        <p>Track your total net worth and FI net worth in one place.</p>
+        <a href="calculators/net-worth-tracker.html" class="btn">Track Now</a>
+      </div>
+      <div class="card">
+        <h3>Early Retirement Estimator</h3>
+        <p>Estimate how long until you reach Financial Independence.</p>
+        <a href="calculators/early-retirement-estimator.html" class="btn">Plan Ahead</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG PREVIEW -->
+  <section class="section" style="padding:2rem 1rem;">
+    <h2 style="text-align:center; margin-bottom:1rem; color:#333;">From the Blog</h2>
+    <div class="grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem;">
+      <div class="card">
+        <h3>5 Ways to Maximize Your Take-Home Pay</h3>
+        <p>Learn how to increase your real income without asking for a raise.</p>
+        <a href="blog/maximize-take-home-pay.html" class="btn">Read More</a>
+      </div>
+      <div class="card">
+        <h3>The FI Formula: Explained</h3>
+        <p>Understand the math behind Financial Independence and calculate your FI number.</p>
+        <a href="blog/fi-formula-explained.html" class="btn">Read More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER SIGNUP -->
+  <section class="newsletter" style="
+    background:white; border:1px solid #ddd; border-radius:8px;
+    max-width:700px; margin:3rem auto; text-align:center; padding:2rem;">
+    <h2 style="margin-bottom:0.5rem; color:#333;">Join Our Newsletter</h2>
+    <p style="margin-bottom:1rem; color:#555;">
+      Get tips, tools, and strategies for Financial Independence delivered to your inbox.
+    </p>
+    <!-- Mailchimp Signup Form -->
+    <form action="http://eepurl.com/jkcf3o" method="post" target="_blank" novalidate style="display:flex; justify-content:center; flex-wrap:wrap; gap:0.5rem;">
+      <input type="email" name="EMAIL" placeholder="Your email address" required style="
+        padding:0.75rem; border:1px solid #ccc; border-radius:4px; flex:1; max-width:250px;">
+      <button type="submit" style="
+        background:#FF6F61; color:white; border:none; padding:0.75rem 1.5rem;
+        border-radius:4px; font-weight:bold; cursor:pointer;">
+        Subscribe
+      </button>
+    </form>
   </section>
 </main>
 
