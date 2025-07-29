@@ -206,4 +206,48 @@ textarea:focus {
   color: #333;
 }
 
-.news
+.newsletter p {
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.newsletter form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.newsletter input[type="email"] {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+  max-width: 250px;
+}
+
+.newsletter button {
+  background: #FF6F61;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.newsletter button:hover {
+  background: #E65A4F;
+}
+
+/* ------------------------------
+   FOOTER
+--------------------------------*/
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 3rem;
+  background: #FFFFFF;
+}
