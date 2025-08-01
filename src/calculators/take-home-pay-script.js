@@ -1,20 +1,20 @@
-console.log("🚀 Take-Home Pay Calculator Loaded");
+console.log("🚀 Take-Home Pay Calculator Script Loaded");
 
-let chartInstance;
+let chart;
 
 document.getElementById("calculator-form").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const income = parseFloat(document.getElementById('income').value || 0);
-  const k401 = parseFloat(document.getElementById('k401').value || 0);
-  const ira = parseFloat(document.getElementById('ira').value || 0);
-  const hsa = parseFloat(document.getElementById('hsa').value || 0);
-  const health = parseFloat(document.getElementById('health').value || 0);
+  const income = parseFloat(document.getElementById("income").value || 0);
+  const k401 = parseFloat(document.getElementById("k401").value || 0);
+  const ira = parseFloat(document.getElementById("ira").value || 0);
+  const hsa = parseFloat(document.getElementById("hsa").value || 0);
+  const health = parseFloat(document.getElementById("health").value || 0);
 
   const totalContributions = k401 + ira + hsa;
   const taxableIncome = income - totalContributions;
 
-  // Simple federal tax estimation (2024 single filer)
+  // Federal tax brackets (simplified 2024 single filer)
   let federalTax = 0;
   if (taxableIncome <= 11600) {
     federalTax = 0;
@@ -29,31 +29,28 @@ document.getElementById("calculator-form").addEventListener("submit", function (
   const takeHomePay = income - federalTax - health - totalContributions;
 
   // Update results
-  document.getElementById('results').innerHTML = `
-    <strong>Taxable Income:</strong> $${taxableIncome.toFixed(2)}<br/>
-    <strong>Federal Tax:</strong> $${federalTax.toFixed(2)}<br/>
-    <strong>Total Contributions:</strong> $${totalContributions.toFixed(2)}<br/>
-    <strong>Health Premiums:</strong> $${health.toFixed(2)}<br/>
-    <strong>Estimated Take-Home Pay:</strong> $${takeHomePay.toFixed(2)}
-  `;
+  document.getElementById("taxableIncome").textContent = taxableIncome.toLocaleString();
+  document.getElementById("federalTax").textContent = federalTax.toLocaleString();
+  document.getElementById("totalContributions").textContent = totalContributions.toLocaleString();
+  document.getElementById("takeHomePay").textContent = takeHomePay.toLocaleString();
 
-  // Render chart
-  const ctx = document.getElementById('resultsChart').getContext('2d');
-  if (chartInstance) chartInstance.destroy();
+  // Render Chart
+  const ctx = document.getElementById("resultsChart").getContext("2d");
+  if (chart) chart.destroy();
 
-  chartInstance = new Chart(ctx, {
-    type: 'pie',
+  chart = new Chart(ctx, {
+    type: "pie",
     data: {
-      labels: ['Federal Tax', 'Contributions', 'Health Premiums', 'Take-Home Pay'],
+      labels: ["Federal Tax", "Contributions", "Health Premiums", "Take-Home Pay"],
       datasets: [{
         data: [federalTax, totalContributions, health, takeHomePay],
-        backgroundColor: ['#FFD166', '#06D6A0', '#118AB2', '#FF6F61']
+        backgroundColor: ["#FF6F61", "#FFD166", "#90E0EF", "#4CAF50"]
       }]
     },
     options: {
       responsive: true,
       plugins: {
-        legend: { position: 'bottom' },
+        legend: { position: "bottom" },
         tooltip: {
           callbacks: {
             label: (context) => `$${context.raw.toLocaleString()}`
