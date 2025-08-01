@@ -13,28 +13,56 @@
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1">---</span></p>
-<p class="p1"><span class="s1">layout: default.njk</span></p>
-<p class="p1"><span class="s1">title: Contact | FIREandLife</span></p>
-<p class="p1"><span class="s1">description: Get in touch with FIREandLife for questions, feedback, or collaboration opportunities.</span></p>
-<p class="p1"><span class="s1">---</span></p>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;title&gt;Contact | FIREandLife&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta name="description" content="Have questions or feedback? Contact us today!"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;link rel="stylesheet" href="styles.css" /&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;header&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;nav&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="logo"&gt;&lt;img src="assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;ul class="nav-links"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;li&gt;&lt;a href="calculators/index.html"&gt;Calculators&lt;/a&gt;&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;li&gt;&lt;a href="blog/index.html"&gt;Blog&lt;/a&gt;&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;li&gt;&lt;a href="about.html"&gt;About&lt;/a&gt;&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;li&gt;&lt;a href="contact.html" class="active"&gt;Contact&lt;/a&gt;&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/ul&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/nav&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/header&gt;</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;h1&gt;Contact Us&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1">&lt;p&gt;Have a question, feedback, or just want to say hello? Use the form below.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">&lt;main class="container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;h1&gt;Contact Us&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;p&gt;Have a question, feedback, or just want to say hello? Fill out the form below and we'll get back to you.&lt;/p&gt;</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;form name="contact" method="POST" data-netlify="true"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;input type="hidden" name="form-name" value="contact" /&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;label&gt;Name:&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;input type="text" name="name" required&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;label&gt;Email:&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;input type="email" name="email" required&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;label&gt;Message:&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;textarea name="message" rows="5" required&gt;&lt;/textarea&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;button type="submit"&gt;Send Message&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/form&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;form name="contact" method="POST" data-netlify="true"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;input type="hidden" name="form-name" value="contact" /&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;label&gt;Name:&lt;br&gt;&lt;input type="text" name="name" required&gt;&lt;/label&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;label&gt;Email:&lt;br&gt;&lt;input type="email" name="email" required&gt;&lt;/label&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;label&gt;Message:&lt;br&gt;&lt;textarea name="message" rows="5" required&gt;&lt;/textarea&gt;&lt;/label&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button type="submit"&gt;Send Message&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/form&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;!-- Newsletter --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;section class="newsletter" style="margin-top:2rem;"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h2&gt;Join Our Newsletter&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;p&gt;Get the latest tips, strategies, and tools for Financial Independence straight to your inbox.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;form action="http://eepurl.com/jkcf3o" method="post" target="_blank" novalidate&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;input type="email" name="EMAIL" placeholder="Your email address" required /&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button type="submit"&gt;Subscribe&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/form&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/main&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;footer&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;p&gt;&amp;copy; 2025 FIRE and Life. Built with ❤️ for the FI community.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/footer&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
 </body>
 </html>
