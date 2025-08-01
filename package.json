@@ -1,0 +1,13 @@
+{
+  "name": "livefireandlife",
+  "version": "1.0.0",
+  "description": "FIREandLife static site powered by Eleventy",
+  "scripts": {
+    "build": "npx @11ty/eleventy",
+    "start": "npx @11ty/eleventy --serve"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "nunjucks": "^3.2.4"
+  }
+}
