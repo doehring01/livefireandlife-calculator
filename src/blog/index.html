@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog | FIREandLife</title>
+  <meta name="description" content="Explore practical financial tips, FI strategies, and ways to live a fulfilling life while pursuing Financial Independence." />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .blog-category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .blog-category-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .blog-category-card h3 {
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    .blog-category-card p {
+      margin-bottom: 1rem;
+      color: #555;
+    }
+    .post-list {
+      margin-top: 0.5rem;
+      padding-left: 1rem;
+    }
+    .post-list li {
+      margin-bottom: 0.5rem;
+    }
+    .post-list a {
+      color: #FF6F61;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .post-list a:hover {
+      text-decoration: underline;
+    }
+    /* Sidebar/Widget */
+    .sidebar {
+      margin-top: 3rem;
+      padding: 1.5rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    .sidebar h3 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    .sidebar ul li {
+      margin-bottom: 0.5rem;
+    }
+    .sidebar ul li a {
+      color: #FF6F61;
+      text-decoration: none;
+    }
+    .sidebar ul li a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <nav>
+    <div class="logo">
+      <img src="../assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;">
+    </div>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../calculators/index.html">Calculators</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="container">
+  <h1 class="page-title">Financial Clarity Blog</h1>
+  <p style="text-align:center; max-width:700px; margin:0 auto;">
+    Practical advice, strategies, and tools to help you achieve Financial Independence without sacrificing fulfillment.
+  </p>
+
+  <!-- Blog Categories -->
+  <div class="blog-category-grid">
+    <!-- Category 1 -->
+    <div class="blog-category-card">
+      <h3>The Money Basics</h3>
+      <p>Foundational strategies to take control of your money.</p>
+      <ul class="post-list">
+        <li><a href="maximize-take-home-pay.html">5 Ways to Maximize Your Take-Home Pay</a></li>
+      </ul>
+    </div>
+
+    <!-- Category 2 -->
+    <div class="blog-category-card">
+      <h3>The Essentials of FI</h3>
+      <p>Understand the math and mindset behind Financial Independence.</p>
+      <ul class="post-list">
+        <li><a href="fi-formula-explained.html">The FI Formula: Explained</a></li>
+      </ul>
+    </div>
+
+    <!-- Category 3 -->
+    <div class="blog-category-card">
+      <h3>Life & Fulfillment</h3>
+      <p>How to enjoy life today while working toward FI.</p>
+      <ul class="post-list">
+        <li><em>Coming soon: Balancing FI and Happiness</em></li>
+        <li><em>Coming soon: Why Joy Matters on the FI Journey</em></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Sidebar Widget for Popular Posts -->
+  <section class="sidebar">
+    <h3>Top Posts</h3>
+    <ul>
+      <li><a href="maximize-take-home-pay.html">5 Ways to Maximize Your Take-Home Pay</a></li>
+      <li><a href="fi-formula-explained.html">The FI Formula: Explained</a></li>
+    </ul>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section class="newsletter" style="margin-top:3rem;">
+    <h2>Join Our Newsletter</h2>
+    <p>Get tips, tools, and strategies for Financial Independence delivered to your inbox.</p>
+    <form action="http://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+      <input type="email" name="EMAIL" placeholder="Your email address" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
+</footer>
+</body>
+</html>

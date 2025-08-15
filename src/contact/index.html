@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact • FIREandLife</title>
+  <link rel="stylesheet" href="/styles.css?v=20250811c" />
+</head>
+<body>
+<header>
+  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+    <div class="logo"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
+    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculators/">Calculators</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/" aria-current="page">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+  <h1>Contact</h1>
+  <p>Questions, feedback, or partnership ideas? We’d love to hear from you.</p>
+
+  <!-- Replace with your real form/embed -->
+  <form style="margin-top:1rem;" onsubmit="return false;">
+    <div style="margin-bottom:.5rem;">
+      <label for="name">Name</label><br/>
+      <input id="name" type="text" required style="padding:.5rem;width:100%;max-width:420px;">
+    </div>
+    <div style="margin-bottom:.5rem;">
+      <label for="email">Email</label><br/>
+      <input id="email" type="email" required style="padding:.5rem;width:100%;max-width:420px;">
+    </div>
+    <div style="margin-bottom:.5rem;">
+      <label for="msg">Message</label><br/>
+      <textarea id="msg" rows="5" required style="padding:.5rem;width:100%;max-width:640px;"></textarea>
+    </div>
+    <button type="submit" class="btn">Send</button>
+  </form>
+</main>
+
+<footer><p style="text-align:center;padding:1rem;">&copy; 2025 FIRE and Life.</p></footer>
+</body>
+</html>
+
