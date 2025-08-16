@@ -125,6 +125,22 @@ permalink: /calculators/take-home-pay/index.html
       <option value="WI">Wisconsin</option>
       <option value="WY">Wyoming</option>
     </select>
+<!-- Display options -->
+<div class="form-row" style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap">
+  <div>
+    <label for="displayFrequency">Show Take-Home As</label>
+    <select id="displayFrequency">
+      <option value="annual" selected>Annual</option>
+      <option value="monthly">Monthly (÷12)</option>
+      <option value="biweekly">Biweekly (÷26)</option>
+      <option value="weekly">Weekly (÷52)</option>
+    </select>
+  </div>
+  <div>
+    <label>&nbsp;</label><br>
+    <button type="button" id="set401kMax" class="btn">Set 401(k) to annual max</button>
+  </div>
+</div>
 
     <button type="submit" class="btn">Calculate</button>
   </form>
