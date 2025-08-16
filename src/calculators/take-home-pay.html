@@ -12,7 +12,6 @@ permalink: /calculators/take-home-pay/index.html
   <style>
     .results-section { margin-top: 2rem; text-align: center; }
     canvas { margin-top: 1.5rem; max-width: 700px; }
-    /* small polish for the toggle */
     .form-row { margin: .75rem 0; }
     .toggle { display:inline-flex; gap:1rem; margin:.25rem 0 .5rem; }
     .suffix,.prefix { opacity:.75; }
@@ -50,17 +49,18 @@ permalink: /calculators/take-home-pay/index.html
         <label><input type="radio" name="k401Mode" id="k401DollarMode" value="dollar"> Dollar</label>
       </div>
 
-      <div id="k401PercentGroup" style="display:flex;align-items:center;gap:.5rem">
+      <!-- Use class-based visibility so only one input is shown -->
+      <div id="k401PercentGroup" class="flex">
         <input id="k401Percent" type="number" min="0" max="100" step="0.5" placeholder="e.g., 19">
         <span class="suffix">%</span>
       </div>
 
-      <div id="k401DollarGroup" style="display:none;align-items:center;gap:.5rem">
+      <div id="k401DollarGroup" class="hidden">
         <span class="prefix">$</span>
         <input id="k401" type="number" min="0" step="50" placeholder="e.g., 18000">
       </div>
 
-      <small class="help">Enter a percentage of income or an annual dollar amount. We’ll keep them in sync.</small>
+      <small class="help">Enter a percentage of income or an annual dollar amount. We’ll keep them in sync for you.</small>
     </div>
 
     <label for="ira">IRA Contributions</label>
@@ -125,22 +125,6 @@ permalink: /calculators/take-home-pay/index.html
       <option value="WI">Wisconsin</option>
       <option value="WY">Wyoming</option>
     </select>
-<!-- Display options -->
-<div class="form-row" style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap">
-  <div>
-    <label for="displayFrequency">Show Take-Home As</label>
-    <select id="displayFrequency">
-      <option value="annual" selected>Annual</option>
-      <option value="monthly">Monthly (÷12)</option>
-      <option value="biweekly">Biweekly (÷26)</option>
-      <option value="weekly">Weekly (÷52)</option>
-    </select>
-  </div>
-  <div>
-    <label>&nbsp;</label><br>
-    <button type="button" id="set401kMax" class="btn">Set 401(k) to annual max</button>
-  </div>
-</div>
 
     <button type="submit" class="btn">Calculate</button>
   </form>
@@ -157,10 +141,11 @@ permalink: /calculators/take-home-pay/index.html
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
+<!-- Chart.js first -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- Your existing calculator logic -->
+<!-- Main calculator logic (renders chart + results table) -->
 <script src="/calculators/take-home-pay-script.js"></script>
-<!-- Toggle logic (keeps #k401 in sync with %/$) -->
+<!-- %/$ toggle logic (keeps fields in sync and triggers recalcs) -->
 <script src="/calculators/take-home-pay-toggle.js"></script>
 </body>
 </html>

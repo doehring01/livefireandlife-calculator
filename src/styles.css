@@ -251,3 +251,37 @@ footer {
   margin-top: 3rem;
   background: #FFFFFF;
 }
+#results .cards { display:grid; gap:1rem; }
+@media (min-width:700px){ #results .cards { grid-template-columns: repeat(2, minmax(240px, 1fr)); } }
+.card { background:#fff; border:1px solid #eee; border-radius:8px; padding:1rem; }
+.card h3 { margin:0 0 .5rem 0; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+/* Toggle helpers (used by %/$ UI) */
+.hidden { display: none !important; }
+.flex   { display: flex !important; align-items: center; gap: .5rem; }
+
+/* Chart sizing */
+#resultsChart { max-width: 700px; height: 260px; display: block; margin: 1rem auto; }
+.results-section { margin-top: 1.5rem; }
+
+/* Results table */
+.table-wrap { overflow-x: auto; margin-top: 1rem; }
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.results-table th, .results-table td {
+  padding: .75rem .9rem;
+  text-align: right;
+  border-bottom: 1px solid #f2f2f2;
+  white-space: nowrap;
+}
+.results-table th:first-child, .results-table td:first-child { text-align: left; }
+.results-table thead th { background: #fafafa; font-weight: 600; }
+.results-table tbody tr:hover { background: #fcfcfc; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
