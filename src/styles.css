@@ -320,3 +320,6 @@ footer::after {
   margin: 0.5rem auto 0;
   padding: 0 1rem;
 }
+
+footer .legal-links { margin-top: .25rem; font-size: 0.9rem; }
+footer .legal-links a { color: #666; text-decoration: underline; }
