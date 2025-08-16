@@ -6,31 +6,20 @@ if (window.__THP_INIT__) {
 
   console.log("🚀 Take-Home Pay Calculator Loaded");
 
-  /** ─────────────────────────────────────────
-   * Globals / helpers
-   * ─────────────────────────────────────────*/
   let chartInstance;
+  const K401_MAX_2025 = 23000; // TODO: confirm current-year limit
 
-  // Update yearly (employee elective deferral limit)
-  const K401_MAX_2025 = 23000; // TODO: confirm current-year amount
+  const per = {
+    annual:   (x) => x,
+    monthly:  (x) => x / 12,
+    biweekly: (x) => x / 26,
+    weekly:   (x) => x / 52,
+  };
 
-  function perPeriod(amountAnnual, freq) {
-    switch (freq) {
-      case "monthly":  return amountAnnual / 12;
-      case "biweekly": return amountAnnual / 26;
-      case "weekly":   return amountAnnual / 52;
-      default:         return amountAnnual; // annual
-    }
-  }
-  function fmt0(n)   { return Number(n).toLocaleString(undefined, { maximumFractionDigits: 0 }); }
-  function toNum(v)  { const n = parseFloat(v); return Number.isFinite(n) ? n : 0; }
-  function debounce(fn, ms = 150) {
-    let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
-  }
+  function fmt0(n) { return Number(n).toLocaleString(undefined, { maximumFractionDigits: 0 }); }
+  function toNum(v) { const n = parseFloat(v); return Number.isFinite(n) ? n : 0; }
+  function debounce(fn, ms = 150) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
 
-  /** ─────────────────────────────────────────
-   * Core calculation (your logic, refactored)
-   * ─────────────────────────────────────────*/
   function calculateResults() {
     const income = toNum(document.getElementById("income")?.value);
     const k401   = toNum(document.getElementById("k401")?.value);
@@ -38,14 +27,10 @@ if (window.__THP_INIT__) {
     const hsa    = toNum(document.getElementById("hsa")?.value);
     const health = toNum(document.getElementById("health")?.value);
 
-    // Display frequency (defaults to annual)
-    const freqSel = document.getElementById("displayFrequency");
-    const freq = freqSel ? freqSel.value : "annual";
+    const totalContrib  = k401 + ira + hsa;
+    const taxableIncome = income - totalContrib;
 
-    const totalContributions = k401 + ira + hsa;
-    const taxableIncome = income - totalContributions;
-
-    // Simple federal tax estimation (2024 single filer)
+    // Simple federal tax (2024 single filer)
     let federalTax = 0;
     if (taxableIncome <= 11600) {
       federalTax = 0;
@@ -57,44 +42,70 @@ if (window.__THP_INIT__) {
       federalTax = (47150 - 11600) * 0.1 + (100525 - 47150) * 0.12 + (taxableIncome - 100525) * 0.22;
     }
 
-    const takeHomeAnnual = income - federalTax - health - totalContributions;
-    const takeHomePer    = perPeriod(takeHomeAnnual, freq);
+    const takeHomeAnnual = income - federalTax - health - totalContrib;
 
-    // Render results (cards)
-    const resultsHtml = `
-      <div class="cards">
-        <div class="card">
-          <h3>Total Take-Home (${freq.charAt(0).toUpperCase() + freq.slice(1)})</h3>
-          <div class="mono" style="font-size:1.6rem">$${fmt0(takeHomePer)}</div>
-          <small>Annual: $${fmt0(takeHomeAnnual)}</small>
-        </div>
-        <div class="card">
-          <h3>Pre-Tax Contributions</h3>
-          <div>$${fmt0(totalContributions)} / yr</div>
-          <small>401(k): $${fmt0(k401)} · IRA: $${fmt0(ira)} · HSA: $${fmt0(hsa)}</small>
-          <div style="margin-top:.5rem">
-            <button type="button" class="btn" id="apply401kMaxInline">Set 401(k) to annual max</button>
+    // Summary + table
+    const resultsEl = document.getElementById("results");
+    if (resultsEl) {
+      const table = `
+        <div class="cards">
+          <div class="card">
+            <h3>Annual Summary</h3>
+            <div class="mono" style="font-size:1.25rem">Take-Home: $${fmt0(takeHomeAnnual)}</div>
+            <small>Federal Tax: $${fmt0(federalTax)} · Health: $${fmt0(health)} · Contributions: $${fmt0(totalContrib)}</small>
           </div>
         </div>
-        <div class="card">
-          <h3>Federal Taxes (est.)</h3>
-          <div class="mono">$${fmt0(federalTax)} / yr</div>
-          <small>Taxable Income: $${fmt0(taxableIncome)}</small>
-        </div>
-        <div class="card">
-          <h3>Health Premiums</h3>
-          <div class="mono">$${fmt0(health)} / yr</div>
-        </div>
-      </div>
-    `;
-    const resultsEl = document.getElementById("results");
-    if (resultsEl) resultsEl.innerHTML = resultsHtml;
+        <div class="table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Annual</th>
+                <th>Monthly</th>
+                <th>Biweekly</th>
+                <th>Weekly</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Take-Home Pay</strong></td>
+                <td>$${fmt0(per.annual(takeHomeAnnual))}</td>
+                <td>$${fmt0(per.monthly(takeHomeAnnual))}</td>
+                <td>$${fmt0(per.biweekly(takeHomeAnnual))}</td>
+                <td>$${fmt0(per.weekly(takeHomeAnnual))}</td>
+              </tr>
+              <tr>
+                <td>Federal Tax (est.)</td>
+                <td>$${fmt0(per.annual(federalTax))}</td>
+                <td>$${fmt0(per.monthly(federalTax))}</td>
+                <td>$${fmt0(per.biweekly(federalTax))}</td>
+                <td>$${fmt0(per.weekly(federalTax))}</td>
+              </tr>
+              <tr>
+                <td>Health Premiums</td>
+                <td>$${fmt0(per.annual(health))}</td>
+                <td>$${fmt0(per.monthly(health))}</td>
+                <td>$${fmt0(per.biweekly(health))}</td>
+                <td>$${fmt0(per.weekly(health))}</td>
+              </tr>
+              <tr>
+                <td>Pre-Tax Contributions</td>
+                <td>$${fmt0(per.annual(totalContrib))}</td>
+                <td>$${fmt0(per.monthly(totalContrib))}</td>
+                <td>$${fmt0(per.biweekly(totalContrib))}</td>
+                <td>$${fmt0(per.weekly(totalContrib))}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>`;
+      resultsEl.innerHTML = table;
+    }
 
-    // --- SAFE CHART RENDER (no NaNs/negatives) ---
+    // Chart (safe values)
     const canvas = document.getElementById("resultsChart");
     if (!canvas || typeof Chart === "undefined") return;
 
-    const parts = [takeHomeAnnual, federalTax, health, totalContributions].map(v => {
+    const parts = [takeHomeAnnual, federalTax, health, totalContrib].map(v => {
       const n = Number.isFinite(v) ? v : 0;
       return n < 0 ? 0 : n;
     });
@@ -110,12 +121,10 @@ if (window.__THP_INIT__) {
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false,
+          maintainAspectRatio: true,
           plugins: {
             legend: { position: "bottom" },
-            tooltip: {
-              callbacks: { label: (c) => `${c.label}: $${fmt0(c.parsed)} / yr` }
-            }
+            tooltip: { callbacks: { label: (c) => `${c.label}: $${fmt0(c.parsed)} / yr` } }
           }
         }
       });
@@ -124,39 +133,25 @@ if (window.__THP_INIT__) {
     }
   }
 
-  // Expose for other scripts (toggle) and provide debounced version
+  // Expose + debounced
   window.calculateResults = calculateResults;
   window.calculateResultsDebounced = debounce(calculateResults, 150);
 
-  /** ─────────────────────────────────────────
-   * UI wiring: submit, frequency, 401k max
-   * ─────────────────────────────────────────*/
+  // Form events: submit and live input
   const form = document.getElementById("calculator-form");
   if (form && !form.__thpSubmitBound) {
     form.__thpSubmitBound = true;
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      calculateResults();
-    });
+    form.addEventListener("submit", (e) => { e.preventDefault(); calculateResults(); });
+    form.addEventListener("input", window.calculateResultsDebounced);
   }
 
-  (function attachUiHelpers(){
-    const freqSel  = document.getElementById("displayFrequency");
+  // Inline 401k max button support (and top button if present)
+  (function wireMaxButtons(){
     const k401El   = document.getElementById("k401");
     const incomeEl = document.getElementById("income");
-
-    if (freqSel && !freqSel.__thpBound) {
-      freqSel.__thpBound = true;
-      freqSel.addEventListener("change", () => {
-        window.calculateResultsDebounced();
-      });
-    }
-
     function set401kMax() {
       if (!k401El) return;
       k401El.value = K401_MAX_2025;
-
-      // keep percent input in sync if Percent mode is active
       const pctMode  = document.getElementById("k401PercentMode");
       const pctInput = document.getElementById("k401Percent");
       const income   = toNum(incomeEl && incomeEl.value);
@@ -165,29 +160,15 @@ if (window.__THP_INIT__) {
       }
       window.calculateResultsDebounced();
     }
-
     const btnTop = document.getElementById("set401kMax");
-    if (btnTop && !btnTop.__thpBound) {
-      btnTop.__thpBound = true;
-      btnTop.addEventListener("click", set401kMax);
-    }
-
-    // Inline card button (rendered dynamically) — delegate once
+    if (btnTop && !btnTop.__thpBound) { btnTop.__thpBound = true; btnTop.addEventListener("click", set401kMax); }
     if (!document.__thpClickDelegate) {
       document.__thpClickDelegate = true;
-      document.addEventListener("click", (e) => {
-        if (e.target && e.target.id === "apply401kMaxInline") {
-          set401kMax();
-        }
-      });
+      document.addEventListener("click", (e) => { if (e.target && e.target.id === "apply401kMaxInline") set401kMax(); });
     }
   })();
 
-  // Auto-calc once on load so the page doesn’t look empty
   document.addEventListener("DOMContentLoaded", () => {
-    if (typeof window.calculateResults === "function") {
-      window.calculateResults();
-    }
+    if (typeof window.calculateResults === "function") window.calculateResults();
   });
 }
-
