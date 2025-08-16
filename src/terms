@@ -1,0 +1,84 @@
+---
+permalink: /terms/index.html
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Terms of Use | FIRE and Life</title>
+  <meta name="description" content="Terms of Use for FIRE and Life." />
+  <link rel="stylesheet" href="/styles.css?v=legal1" />
+  <style>
+    .legal { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+    .legal h1 { margin-bottom: .5rem; }
+    .legal h2 { margin: 1.5rem 0 .5rem; }
+    .legal p, .legal li { color: #444; }
+    .muted { opacity: .75; font-size: .95rem; }
+    .legal ul { margin-left: 1.2rem; }
+  </style>
+</head>
+<body>
+<header>
+  <nav>
+    <div class="logo">
+      <img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;">
+    </div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculators/">Calculators</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="legal">
+  <h1>Terms of Use</h1>
+  <p class="muted">Last updated: <span id="updated"></span></p>
+
+  <p>These Terms of Use (“Terms”) govern your access to and use of FIRE and Life (the “Site”), including the calculators, tools, and content. By using the Site, you agree to these Terms.</p>
+
+  <h2>Not Financial, Tax, or Legal Advice</h2>
+  <p>All information and tools on the Site are for educational purposes only and do not constitute financial, tax, legal, or other professional advice. Results are estimates and may not reflect your exact situation. Seek a qualified professional for advice tailored to you.</p>
+
+  <h2>Use of the Site</h2>
+  <ul>
+    <li>You agree not to misuse the Site, attempt to access it by unauthorized means, or disrupt its operation.</li>
+    <li>You are responsible for the accuracy of information you input into calculators or transmit to us.</li>
+  </ul>
+
+  <h2>Intellectual Property</h2>
+  <p>Content on the Site, including text, graphics, and code, is owned by us or our licensors and protected by law. You may not reproduce, distribute, or create derivative works without permission, except for personal, non-commercial use.</p>
+
+  <h2>Third-Party Links & Services</h2>
+  <p>The Site may link to third-party websites or use third-party services (e.g., analytics, email providers). We are not responsible for third-party content or practices.</p>
+
+  <h2>Disclaimer of Warranties</h2>
+  <p>The Site is provided “as is” and “as available” without warranties of any kind, express or implied, including merchantability, fitness for a particular purpose, and non-infringement.</p>
+
+  <h2>Limitation of Liability</h2>
+  <p>To the fullest extent permitted by law, we will not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, resulting from your use of the Site.</p>
+
+  <h2>Indemnification</h2>
+  <p>You agree to indemnify and hold us harmless from claims arising out of your misuse of the Site or violation of these Terms.</p>
+
+  <h2>Changes to the Terms</h2>
+  <p>We may update these Terms from time to time. We will update the “Last updated” date and may provide additional notice for material changes. Continued use of the Site constitutes acceptance of the updated Terms.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about these Terms: <a href="mailto:hello@livefireandlife.com">hello@livefireandlife.com</a></p>
+</main>
+
+<footer>
+  <p>&copy; <span id="year"></span> FIRE and Life.</p>
+  <p><a href="/terms/">Terms of Use</a> · <a href="/privacy/">Privacy Policy</a></p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('updated').textContent = new Date().toLocaleDateString();
+</script>
+</body>
+</html>
