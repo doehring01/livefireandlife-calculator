@@ -6,6 +6,7 @@ if (window.__THP_INIT__) {
 
   console.log("🚀 Take-Home Pay Calculator Loaded");
 
+  // ───────────────── Helpers ─────────────────
   let chartInstance;
   const K401_MAX_2025 = 23000; // TODO: confirm current-year limit
 
@@ -16,13 +17,21 @@ if (window.__THP_INIT__) {
     weekly:   (x) => x / 52,
   };
 
-  function fmt0(n) { return Number(n).toLocaleString(undefined, { maximumFractionDigits: 0 }); }
+  function fmt0(n)  { return Number(n).toLocaleString(undefined, { maximumFractionDigits: 0 }); }
   function toNum(v) { const n = parseFloat(v); return Number.isFinite(n) ? n : 0; }
   function debounce(fn, ms = 150) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
 
+  // ───────────────── Core Calc ─────────────────
   function calculateResults() {
     const income = toNum(document.getElementById("income")?.value);
-    const k401   = toNum(document.getElementById("k401")?.value);
+
+    // Prefer $ field; if blank, derive from % (so contributions always work).
+    let k401 = toNum(document.getElementById("k401")?.value);
+    const k401Pct = toNum(document.getElementById("k401Percent")?.value);
+    if (k401 <= 0 && k401Pct > 0 && income > 0) {
+      k401 = Math.round((income * k401Pct) / 100);
+    }
+
     const ira    = toNum(document.getElementById("ira")?.value);
     const hsa    = toNum(document.getElementById("hsa")?.value);
     const health = toNum(document.getElementById("health")?.value);
@@ -30,7 +39,7 @@ if (window.__THP_INIT__) {
     const totalContrib  = k401 + ira + hsa;
     const taxableIncome = income - totalContrib;
 
-    // Simple federal tax (2024 single filer)
+    // Simple federal tax (2024 single filer) — same tiers as before
     let federalTax = 0;
     if (taxableIncome <= 11600) {
       federalTax = 0;
@@ -44,7 +53,7 @@ if (window.__THP_INIT__) {
 
     const takeHomeAnnual = income - federalTax - health - totalContrib;
 
-    // Summary + table
+    // ── Results summary + table ──
     const resultsEl = document.getElementById("results");
     if (resultsEl) {
       const table = `
@@ -52,7 +61,9 @@ if (window.__THP_INIT__) {
           <div class="card">
             <h3>Annual Summary</h3>
             <div class="mono" style="font-size:1.25rem">Take-Home: $${fmt0(takeHomeAnnual)}</div>
-            <small>Federal Tax: $${fmt0(federalTax)} · Health: $${fmt0(health)} · Contributions: $${fmt0(totalContrib)}</small>
+            <small>
+              Federal Tax: $${fmt0(federalTax)} · Health: $${fmt0(health)} · Contributions: $${fmt0(totalContrib)}
+            </small>
           </div>
         </div>
         <div class="table-wrap">
@@ -101,7 +112,7 @@ if (window.__THP_INIT__) {
       resultsEl.innerHTML = table;
     }
 
-    // Chart (safe values)
+    // ── Chart (safe values) ──
     const canvas = document.getElementById("resultsChart");
     if (!canvas || typeof Chart === "undefined") return;
 
@@ -133,25 +144,27 @@ if (window.__THP_INIT__) {
     }
   }
 
-  // Expose + debounced
+  // Expose + debounced for other scripts (toggle)
   window.calculateResults = calculateResults;
   window.calculateResultsDebounced = debounce(calculateResults, 150);
 
-  // Form events: submit and live input
+  // ───────────────── UI wiring ─────────────────
   const form = document.getElementById("calculator-form");
   if (form && !form.__thpSubmitBound) {
     form.__thpSubmitBound = true;
     form.addEventListener("submit", (e) => { e.preventDefault(); calculateResults(); });
+    // Live updates while typing
     form.addEventListener("input", window.calculateResultsDebounced);
   }
 
-  // Inline 401k max button support (and top button if present)
+  // Support an inline/max button if present
   (function wireMaxButtons(){
     const k401El   = document.getElementById("k401");
     const incomeEl = document.getElementById("income");
     function set401kMax() {
       if (!k401El) return;
       k401El.value = K401_MAX_2025;
+      // keep % in sync when in percent mode
       const pctMode  = document.getElementById("k401PercentMode");
       const pctInput = document.getElementById("k401Percent");
       const income   = toNum(incomeEl && incomeEl.value);
@@ -168,7 +181,23 @@ if (window.__THP_INIT__) {
     }
   })();
 
+  // Ensure a sane initial toggle UI and do the first render
   document.addEventListener("DOMContentLoaded", () => {
+    const percentGroup  = document.getElementById('k401PercentGroup');
+    const dollarGroup   = document.getElementById('k401DollarGroup');
+    const percentModeEl = document.getElementById('k401PercentMode');
+    const dollarModeEl  = document.getElementById('k401DollarMode');
+
+    if (percentGroup && dollarGroup && percentModeEl && dollarModeEl) {
+      if (percentModeEl.checked) {
+        percentGroup.classList.add('flex');   percentGroup.classList.remove('hidden');
+        dollarGroup.classList.add('hidden');  dollarGroup.classList.remove('flex');
+      } else if (dollarModeEl.checked) {
+        dollarGroup.classList.add('flex');    dollarGroup.classList.remove('hidden');
+        percentGroup.classList.add('hidden'); percentGroup.classList.remove('flex');
+      }
+    }
+
     if (typeof window.calculateResults === "function") window.calculateResults();
   });
 }
