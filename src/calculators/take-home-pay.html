@@ -8,13 +8,12 @@ permalink: /calculators/take-home-pay/index.html
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Take-Home Pay Calculator | FIREandLife</title>
   <meta name="description" content="Estimate your after-tax income, accounting for deductions and contributions." />
-  <link rel="stylesheet" href="/styles.css?v=thp2" />
-  <!-- tiny inline helpers so toggle works even if styles.css is cached -->
+  <link rel="stylesheet" href="/styles.css?v=thp3" />
   <style>
-    .hidden{display:none!important}
-    .flex{display:flex!important;align-items:center;gap:.5rem}
     .results-section{margin-top:2rem;text-align:center}
     canvas{margin-top:1.5rem;max-width:700px}
+    .form-row{margin:.75rem 0}
+    .suffix,.prefix{opacity:.75}
   </style>
 </head>
 <body>
@@ -41,27 +40,17 @@ permalink: /calculators/take-home-pay/index.html
     <label for="income">Gross Annual Income</label>
     <input type="number" id="income" placeholder="e.g. 95000" required />
 
-    <!-- 401(k) Contribution: % / $ toggle -->
-    <div class="form-row" style="margin:.75rem 0">
-      <label><strong>401(k) Contributions</strong></label>
-      <div class="toggle" style="display:inline-flex;gap:1rem;margin:.25rem 0 .5rem">
-        <label><input type="radio" name="k401Mode" id="k401PercentMode" value="percent" checked> Percent</label>
-        <label><input type="radio" name="k401Mode" id="k401DollarMode" value="dollar"> Dollar</label>
+    <!-- 401(k) Contribution: Percent only -->
+    <div class="form-row">
+      <label for="k401Percent"><strong>401(k) Contribution (%)</strong></label>
+      <div style="display:flex;align-items:center;gap:.5rem">
+        <input id="k401Percent" type="number" min="0" max="100" step="0.5" placeholder="e.g., 10">
+        <span class="suffix">%</span>
       </div>
-
-      <!-- show ONE row at a time via classes -->
-      <div id="k401PercentGroup" class="flex">
-        <input id="k401Percent" type="number" min="0" max="100" step="0.5" placeholder="e.g., 19">
-        <span class="suffix" style="opacity:.75">%</span>
-      </div>
-
-      <div id="k401DollarGroup" class="hidden">
-        <span class="prefix" style="opacity:.75">$</span>
-        <input id="k401" type="number" min="0" step="50" placeholder="e.g., 18000">
-      </div>
-
-      <small class="help">Enter a percentage of income or an annual dollar amount. We’ll keep them in sync for you.</small>
+      <small class="help">Enter the percentage of your gross income you contribute pre-tax.</small>
     </div>
+
+    <!-- (We removed the Dollar input entirely) -->
 
     <label for="ira">IRA Contributions</label>
     <input type="number" id="ira" placeholder="e.g. 6000" />
@@ -139,9 +128,8 @@ permalink: /calculators/take-home-pay/index.html
 
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
-<!-- Order matters: Chart.js → main → toggle. Add cache-busting ?v=thp2 -->
+<!-- Chart.js first, then main script (with cache-buster) -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/calculators/take-home-pay-script.js?v=thp2"></script>
-<script src="/calculators/take-home-pay-toggle.js?v=thp2"></script>
+<script src="/calculators/take-home-pay-script.js?v=thp3"></script>
 </body>
 </html>
