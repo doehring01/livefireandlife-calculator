@@ -1,85 +1,99 @@
-// Keeps #k401 (dollars) as the canonical value your existing math already uses.
-(function () {
-  const incomeEl = document.getElementById('income');   // annual gross income ($)
-  const k401El   = document.getElementById('k401');     // existing 401k dollar input
-  const kPctEl   = document.getElementById('k401Percent');
+// src/calculators/take-home-pay-toggle.js
+if (window.__THP_TOGGLE_INIT__) {
+  console.warn("THP: toggle already initialized, skipping.");
+} else {
+  window.__THP_TOGGLE_INIT__ = true;
 
-  const pctMode  = document.getElementById('k401PercentMode');
-  const $Mode    = document.getElementById('k401DollarMode');
-  const pctGroup = document.getElementById('k401PercentGroup');
-  const $Group   = document.getElementById('k401DollarGroup');
+  // Elements
+  const incomeEl        = document.getElementById('income');
+  const k401El          = document.getElementById('k401');
+  const k401PercentEl   = document.getElementById('k401Percent');
+  const percentModeEl   = document.getElementById('k401PercentMode');
+  const dollarModeEl    = document.getElementById('k401DollarMode');
+  const percentGroup    = document.getElementById('k401PercentGroup');
+  const dollarGroup     = document.getElementById('k401DollarGroup');
 
-  if (!incomeEl || !k401El || !kPctEl || !pctMode || !$Mode) return;
-
-  const toNumber = n => {
-    const v = parseFloat(n);
-    return Number.isFinite(v) ? v : 0;
-  };
-  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
-
-  function syncFromPercent() {
-    const income = toNumber(incomeEl.value);
-    const pct    = clamp(toNumber(kPctEl.value), 0, 100);
-    const annual = Math.round((income * pct) / 100);
-    k401El.value = annual;
-    triggerRecalc();
+  if (!incomeEl || !k401El || !k401PercentEl || !percentModeEl || !dollarModeEl || !percentGroup || !dollarGroup) {
+    console.warn("THP toggle: required elements not found; aborting init.");
+    return;
   }
 
-  function syncFromDollar() {
-    const income = toNumber(incomeEl.value);
-    const annual = Math.max(0, toNumber(k401El.value));
-    const pct    = income > 0 ? (annual / income) * 100 : 0;
-    kPctEl.value = (Math.round(pct * 10) / 10).toFixed(1);
-    triggerRecalc();
-  }
-
-  function switchMode(mode) {
-    if (mode === 'percent') {
-      pctGroup.style.display = '';
-      $Group.style.display   = 'none';
-      syncFromPercent();
-    } else {
-      pctGroup.style.display = 'none';
-      $Group.style.display   = '';
-      syncFromDollar();
-    }
-  }
-
-  // Wire events
-  pctMode.addEventListener('change', () => switchMode('percent'));
-  $Mode.addEventListener('change',   () => switchMode('dollar'));
-  kPctEl.addEventListener('input',   syncFromPercent);
-  k401El.addEventListener('input',   syncFromDollar);
-  incomeEl.addEventListener('input', () => (pctMode.checked ? syncFromPercent() : syncFromDollar()));
-
-  // Notify your existing calc logic
+  // Helper to trigger recalculation (debounced if available)
   function triggerRecalc() {
-    if (typeof window.calculateResults === 'function') {
+    if (typeof window.calculateResultsDebounced === 'function') {
+      window.calculateResultsDebounced();
+    } else if (typeof window.calculateResults === 'function') {
       window.calculateResults();
-    } else {
-      // Fallback: trigger typical input/change listeners on the $ field
-      k401El.dispatchEvent(new Event('input',  { bubbles: true }));
-      k401El.dispatchEvent(new Event('change', { bubbles: true }));
     }
   }
 
-  // Optional: read ?income= and ?k401pct= from URL for shareable scenarios
-  try {
-    const params = new URLSearchParams(location.search);
-    if (params.has('income')) incomeEl.value = params.get('income');
-    if (params.has('k401pct')) {
-      pctMode.checked = true; $Mode.checked = false; switchMode('percent');
-      kPctEl.value = params.get('k401pct');
-      syncFromPercent();
-    } else if (params.has('k401')) {
-      pctMode.checked = false; $Mode.checked = true; switchMode('dollar');
-      k401El.value = params.get('k401');
-      syncFromDollar();
-    } else {
-      switchMode('percent'); // default
-    }
-  } catch (e) {
-    switchMode('percent');
+  function clamp(n, min, max) {
+    return Math.max(min, Math.min(max, n));
   }
-})();
+
+  // Sync percent -> dollars
+  function percentToDollar() {
+    const income = parseFloat(incomeEl.value || '0') || 0;
+    const pct    = clamp(parseFloat(k401PercentEl.value || '0') || 0, 0, 100);
+    const dollars = income > 0 ? (income * pct / 100) : 0;
+    k401El.value = Math.round(dollars);
+    triggerRecalc();
+  }
+
+  // Sync dollars -> percent
+  function dollarToPercent() {
+    const income = parseFloat(incomeEl.value || '0') || 0;
+    const dollars = parseFloat(k401El.value || '0') || 0;
+    const pct = income > 0 ? (dollars / income * 100) : 0;
+    k401PercentEl.value = Math.round(pct * 10) / 10; // 1 decimal
+    triggerRecalc();
+  }
+
+  // Toggle UI
+  function showPercentMode() {
+    percentGroup.style.display = 'flex';
+    dollarGroup.style.display  = 'none';
+    percentModeEl.checked = true;
+    // when switching to percent mode, derive dollars from current percent
+    percentToDollar();
+  }
+  function showDollarMode() {
+    percentGroup.style.display = 'none';
+    dollarGroup.style.display  = 'flex';
+    dollarModeEl.checked = true;
+    // when switching to dollar mode, derive percent from current dollars
+    dollarToPercent();
+  }
+
+  // Event bindings (guard so we don’t double-bind)
+  if (!percentModeEl.__thpBound) {
+    percentModeEl.__thpBound = true;
+    percentModeEl.addEventListener('change', () => { if (percentModeEl.checked) showPercentMode(); });
+  }
+  if (!dollarModeEl.__thpBound) {
+    dollarModeEl.__thpBound = true;
+    dollarModeEl.addEventListener('change', () => { if (dollarModeEl.checked) showDollarMode(); });
+  }
+  if (!k401PercentEl.__thpBound) {
+    k401PercentEl.__thpBound = true;
+    k401PercentEl.addEventListener('input', percentToDollar);
+    k401PercentEl.addEventListener('change', percentToDollar);
+  }
+  if (!k401El.__thpBound) {
+    k401El.__thpBound = true;
+    k401El.addEventListener('input', dollarToPercent);
+    k401El.addEventListener('change', dollarToPercent);
+  }
+  if (!incomeEl.__thpBound) {
+    incomeEl.__thpBound = true;
+    // Changing income should update the other field based on current mode
+    incomeEl.addEventListener('input', () => {
+      if (percentModeEl.checked) percentToDollar();
+      else dollarToPercent();
+    });
+  }
+
+  // Initial state: show Percent mode by default (matches your HTML)
+  showPercentMode();
+}
 
