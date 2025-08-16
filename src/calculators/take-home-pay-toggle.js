@@ -4,7 +4,6 @@ if (window.__THP_TOGGLE_INIT__) {
 } else {
   window.__THP_TOGGLE_INIT__ = true;
 
-  // Elements
   const incomeEl        = document.getElementById('income');
   const k401El          = document.getElementById('k401');
   const k401PercentEl   = document.getElementById('k401Percent');
@@ -18,7 +17,6 @@ if (window.__THP_TOGGLE_INIT__) {
     return;
   }
 
-  // Helper to trigger recalculation (debounced if available)
   function triggerRecalc() {
     if (typeof window.calculateResultsDebounced === 'function') {
       window.calculateResultsDebounced();
@@ -26,12 +24,8 @@ if (window.__THP_TOGGLE_INIT__) {
       window.calculateResults();
     }
   }
+  function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
 
-  function clamp(n, min, max) {
-    return Math.max(min, Math.min(max, n));
-  }
-
-  // Sync percent -> dollars
   function percentToDollar() {
     const income = parseFloat(incomeEl.value || '0') || 0;
     const pct    = clamp(parseFloat(k401PercentEl.value || '0') || 0, 0, 100);
@@ -39,33 +33,27 @@ if (window.__THP_TOGGLE_INIT__) {
     k401El.value = Math.round(dollars);
     triggerRecalc();
   }
-
-  // Sync dollars -> percent
   function dollarToPercent() {
-    const income = parseFloat(incomeEl.value || '0') || 0;
+    const income  = parseFloat(incomeEl.value || '0') || 0;
     const dollars = parseFloat(k401El.value || '0') || 0;
     const pct = income > 0 ? (dollars / income * 100) : 0;
-    k401PercentEl.value = Math.round(pct * 10) / 10; // 1 decimal
+    k401PercentEl.value = Math.round(pct * 10) / 10;
     triggerRecalc();
   }
 
-  // Toggle UI
   function showPercentMode() {
-    percentGroup.style.display = 'flex';
-    dollarGroup.style.display  = 'none';
-    percentModeEl.checked = true;
-    // when switching to percent mode, derive dollars from current percent
+    percentGroup.classList.remove('hidden'); percentGroup.classList.add('flex');
+    dollarGroup.classList.remove('flex');    dollarGroup.classList.add('hidden');
+    percentModeEl.checked = true; dollarModeEl.checked = false;
     percentToDollar();
   }
   function showDollarMode() {
-    percentGroup.style.display = 'none';
-    dollarGroup.style.display  = 'flex';
-    dollarModeEl.checked = true;
-    // when switching to dollar mode, derive percent from current dollars
+    dollarGroup.classList.remove('hidden');  dollarGroup.classList.add('flex');
+    percentGroup.classList.remove('flex');   percentGroup.classList.add('hidden');
+    dollarModeEl.checked = true; percentModeEl.checked = false;
     dollarToPercent();
   }
 
-  // Event bindings (guard so we don’t double-bind)
   if (!percentModeEl.__thpBound) {
     percentModeEl.__thpBound = true;
     percentModeEl.addEventListener('change', () => { if (percentModeEl.checked) showPercentMode(); });
@@ -76,24 +64,22 @@ if (window.__THP_TOGGLE_INIT__) {
   }
   if (!k401PercentEl.__thpBound) {
     k401PercentEl.__thpBound = true;
-    k401PercentEl.addEventListener('input', percentToDollar);
+    k401PercentEl.addEventListener('input',  percentToDollar);
     k401PercentEl.addEventListener('change', percentToDollar);
   }
   if (!k401El.__thpBound) {
     k401El.__thpBound = true;
-    k401El.addEventListener('input', dollarToPercent);
+    k401El.addEventListener('input',  dollarToPercent);
     k401El.addEventListener('change', dollarToPercent);
   }
   if (!incomeEl.__thpBound) {
     incomeEl.__thpBound = true;
-    // Changing income should update the other field based on current mode
     incomeEl.addEventListener('input', () => {
       if (percentModeEl.checked) percentToDollar();
       else dollarToPercent();
     });
   }
 
-  // Initial state: show Percent mode by default (matches your HTML)
+  // Initial state (matches HTML default)
   showPercentMode();
 }
-
