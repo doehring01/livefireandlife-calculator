@@ -47,61 +47,80 @@ if (window.__THP_INIT__) {
     const takeHomeAnnual = income - federalTax - health - totalContrib;
 
     // Results summary + table
-    const resultsEl = document.getElementById("results");
-    if (resultsEl) {
-      resultsEl.innerHTML = `
-        <div class="cards">
-          <div class="card">
-            <h3>Annual Summary</h3>
-            <div class="mono" style="font-size:1.25rem">Take-Home: $${fmt0(takeHomeAnnual)}</div>
-            <small>Federal Tax: $${fmt0(federalTax)} · Health: $${fmt0(health)} · Contributions: $${fmt0(totalContrib)}</small>
-          </div>
-        </div>
-        <div class="table-wrap">
-          <table class="results-table">
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Annual</th>
-                <th>Monthly</th>
-                <th>Biweekly</th>
-                <th>Weekly</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Take-Home Pay</strong></td>
-                <td>$${fmt0(per.annual(takeHomeAnnual))}</td>
-                <td>$${fmt0(per.monthly(takeHomeAnnual))}</td>
-                <td>$${fmt0(per.biweekly(takeHomeAnnual))}</td>
-                <td>$${fmt0(per.weekly(takeHomeAnnual))}</td>
-              </tr>
-              <tr>
-                <td>Federal Tax (est.)</td>
-                <td>$${fmt0(per.annual(federalTax))}</td>
-                <td>$${fmt0(per.monthly(federalTax))}</td>
-                <td>$${fmt0(per.biweekly(federalTax))}</td>
-                <td>$${fmt0(per.weekly(federalTax))}</td>
-              </tr>
-              <tr>
-                <td>Health Premiums</td>
-                <td>$${fmt0(per.annual(health))}</td>
-                <td>$${fmt0(per.monthly(health))}</td>
-                <td>$${fmt0(per.biweekly(health))}</td>
-                <td>$${fmt0(per.weekly(health))}</td>
-              </tr>
-              <tr>
-                <td>Pre-Tax Contributions</td>
-                <td>$${fmt0(per.annual(totalContrib))}</td>
-                <td>$${fmt0(per.monthly(totalContrib))}</td>
-                <td>$${fmt0(per.biweekly(totalContrib))}</td>
-                <td>$${fmt0(per.weekly(totalContrib))}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>`;
-    }
+const resultsEl = document.getElementById("results");
+if (resultsEl) {
+  resultsEl.innerHTML = `
+    <div class="cards">
+      <div class="card">
+        <h3>Annual Summary</h3>
+        <div class="mono" style="font-size:1.25rem">Take-Home: $${fmt0(takeHomeAnnual)}</div>
+        <small>
+          Federal Tax: $${fmt0(federalTax)} · 
+          Health: $${fmt0(health)} · 
+          Contributions: $${fmt0(totalContrib)}
+        </small>
+      </div>
+    </div>
 
+    <div class="table-wrap">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Annual</th>
+            <th>Monthly</th>
+            <th>Biweekly</th>
+            <th>Weekly</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Gross Income</strong></td>
+            <td>$${fmt0(per.annual(gross))}</td>
+            <td>$${fmt0(per.monthly(gross))}</td>
+            <td>$${fmt0(per.biweekly(gross))}</td>
+            <td>$${fmt0(per.weekly(gross))}</td>
+          </tr>
+          <tr>
+            <td>Federal Tax (est.)</td>
+            <td>$${fmt0(per.annual(federalTax))}</td>
+            <td>$${fmt0(per.monthly(federalTax))}</td>
+            <td>$${fmt0(per.biweekly(federalTax))}</td>
+            <td>$${fmt0(per.weekly(federalTax))}</td>
+          </tr>
+          <tr>
+            <td>State Tax (est.)</td>
+            <td>$${fmt0(per.annual(stateTax))}</td>
+            <td>$${fmt0(per.monthly(stateTax))}</td>
+            <td>$${fmt0(per.biweekly(stateTax))}</td>
+            <td>$${fmt0(per.weekly(stateTax))}</td>
+          </tr>
+          <tr>
+            <td>Health Premiums</td>
+            <td>$${fmt0(per.annual(health))}</td>
+            <td>$${fmt0(per.monthly(health))}</td>
+            <td>$${fmt0(per.biweekly(health))}</td>
+            <td>$${fmt0(per.weekly(health))}</td>
+          </tr>
+          <tr>
+            <td>Pre-Tax Contributions</td>
+            <td>$${fmt0(per.annual(totalContrib))}</td>
+            <td>$${fmt0(per.monthly(totalContrib))}</td>
+            <td>$${fmt0(per.biweekly(totalContrib))}</td>
+            <td>$${fmt0(per.weekly(totalContrib))}</td>
+          </tr>
+          <tr>
+            <td><strong>Take-Home Pay</strong></td>
+            <td>$${fmt0(per.annual(takeHomeAnnual))}</td>
+            <td>$${fmt0(per.monthly(takeHomeAnnual))}</td>
+            <td>$${fmt0(per.biweekly(takeHomeAnnual))}</td>
+            <td>$${fmt0(per.weekly(takeHomeAnnual))}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  `;
+}
     // Chart (safe values)
     const canvas = document.getElementById("resultsChart");
     if (!canvas || typeof Chart === "undefined") return;
