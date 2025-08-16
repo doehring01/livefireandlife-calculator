@@ -308,3 +308,15 @@ footer {
 .results-table thead th { background: #fafafa; font-weight: 600; }
 .results-table tbody tr:hover { background: #fcfcfc; }
 .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+/* ——— Site-wide footer disclaimer (CSS-injected) ——— */
+footer::after {
+  content: "Disclaimer: The information and calculators on this site are for educational purposes only and do not constitute financial, tax, or legal advice. Results are estimates and may not reflect your exact situation. Consult a qualified professional for advice specific to your circumstances.";
+  display: block;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  opacity: 0.75;
+  max-width: 880px;
+  margin: 0.5rem auto 0;
+  padding: 0 1rem;
+}
