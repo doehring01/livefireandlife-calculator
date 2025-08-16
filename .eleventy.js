@@ -1,14 +1,15 @@
 module.exports = function(eleventyConfig) {
-  // Copy all assets
+  // Assets (images, CSS inside /assets, etc.)
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
-  // Only passthrough the toggle JS file (the main script is built by Eleventy)
-  eleventyConfig.addPassthroughCopy({ "src/calculators/take-home-pay-toggle.js": "calculators/take-home-pay-toggle.js" });
+  // Copy ONLY JS files from calculators (not HTML) so Eleventy still builds pages.
+  // This will include take-home-pay-script.js AND take-home-pay-toggle.js
+  eleventyConfig.addPassthroughCopy({ "src/calculators/*.js": "calculators" });
 
   return {
     dir: {
       input: "src",
-      output: "dist" // Change to "_site" if that’s your actual output folder
+      output: "dist"
     }
   };
 };
