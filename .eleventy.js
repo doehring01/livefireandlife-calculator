@@ -13,4 +13,12 @@ module.exports = function(eleventyConfig) {
     }
   };
 };
+module.exports = function(eleventyConfig) {
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+  eleventyConfig.addPassthroughCopy({ "src/calculators/take-home-pay-toggle.js": "calculators/take-home-pay-toggle.js" });
 
+  // NEW: pass the legal footer helper through to the site root
+  eleventyConfig.addPassthroughCopy({ "src/legal-footer.js": "legal-footer.js" });
+
+  return { dir: { input: "src", output: "dist" } };
+};
