@@ -1,16 +1,25 @@
+---
+permalink: /contact/index.html
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact • FIREandLife</title>
-  <link rel="stylesheet" href="/styles.css?v=20250811c" />
+  <title>Contact • FIRE and Life</title>
+  <meta name="description" content="Contact FIRE and Life with questions, feedback, or partnership ideas." />
+  <link rel="stylesheet" href="/styles.css?v=contact1" />
+  <style>
+    .help { font-size:.9rem; opacity:.75; }
+    .error { color:#b00020; font-size:.9rem; display:none; }
+    .field { margin-bottom: .9rem; max-width:640px; }
+  </style>
 </head>
 <body>
 <header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-    <div class="logo"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
-    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
+  <nav>
+    <div class="logo"><img src="/assets/logo-horizontal.png" alt="FIRE and Life" style="height:40px;"></div>
+    <ul class="nav-links">
       <li><a href="/">Home</a></li>
       <li><a href="/calculators/">Calculators</a></li>
       <li><a href="/blog/">Blog</a></li>
@@ -20,29 +29,82 @@
   </nav>
 </header>
 
-<main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+<main class="container" style="max-width:960px;margin:2rem auto;">
   <h1>Contact</h1>
   <p>Questions, feedback, or partnership ideas? We’d love to hear from you.</p>
 
-  <!-- Replace with your real form/embed -->
-  <form style="margin-top:1rem;" onsubmit="return false;">
-    <div style="margin-bottom:.5rem;">
+  <!-- Netlify Forms: no JS/backend required -->
+  <form
+    name="contact"
+    method="POST"
+    action="/contact/thanks/"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    class="contact-form"
+    novalidate
+  >
+    <!-- Netlify needs this hidden input to identify the form -->
+    <input type="hidden" name="form-name" value="contact" />
+    <!-- Honeypot (hidden field to trap bots) -->
+    <p class="hidden" aria-hidden="true" style="position:absolute;left:-9999px;">
+      <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+    </p>
+
+    <div class="field">
       <label for="name">Name</label><br/>
-      <input id="name" type="text" required style="padding:.5rem;width:100%;max-width:420px;">
+      <input id="name" name="name" type="text" required autocomplete="name" style="width:100%;padding:.65rem;">
+      <div class="error" id="nameError">Please enter your name.</div>
     </div>
-    <div style="margin-bottom:.5rem;">
+
+    <div class="field">
       <label for="email">Email</label><br/>
-      <input id="email" type="email" required style="padding:.5rem;width:100%;max-width:420px;">
+      <input id="email" name="email" type="email" required autocomplete="email" inputmode="email" style="width:100%;padding:.65rem;">
+      <div class="error" id="emailError">Please enter a valid email address.</div>
     </div>
-    <div style="margin-bottom:.5rem;">
-      <label for="msg">Message</label><br/>
-      <textarea id="msg" rows="5" required style="padding:.5rem;width:100%;max-width:640px;"></textarea>
+
+    <div class="field">
+      <label for="subject">Subject <span class="help">(optional)</span></label><br/>
+      <input id="subject" name="subject" type="text" autocomplete="on" style="width:100%;padding:.65rem;">
     </div>
+
+    <div class="field">
+      <label for="message">Message</label><br/>
+      <textarea id="message" name="message" rows="6" required style="width:100%;padding:.65rem;"></textarea>
+      <div class="error" id="messageError">Please enter a message.</div>
+    </div>
+
+    <p class="help">By submitting, you agree that we may use your details to respond to your request. See our
+      <a href="/privacy/">Privacy Policy</a>.
+    </p>
+
     <button type="submit" class="btn">Send</button>
   </form>
 </main>
 
-<footer><p style="text-align:center;padding:1rem;">&copy; 2025 FIRE and Life.</p></footer>
+<footer>
+  <p>&copy; <span id="year"></span> FIRE and Life.</p>
+  <p class="legal-links"><a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a></p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Light client-side validation for better UX (optional)
+  const form = document.querySelector('form.contact-form');
+  form?.addEventListener('submit', (e) => {
+    let ok = true;
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const msg = document.getElementById('message');
+
+    const show = (id, show) => { const el = document.getElementById(id); if (el) el.style.display = show ? 'block' : 'none'; };
+
+    if (!name.value.trim()) { ok = false; show('nameError', true); } else { show('nameError', false); }
+    if (!email.validity.valid) { ok = false; show('emailError', true); } else { show('emailError', false); }
+    if (!msg.value.trim()) { ok = false; show('messageError', true); } else { show('messageError', false); }
+
+    if (!ok) e.preventDefault();
+  });
+</script>
 </body>
 </html>
-
