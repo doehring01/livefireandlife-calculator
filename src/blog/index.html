@@ -3,147 +3,108 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Blog | FIREandLife</title>
-  <meta name="description" content="Explore practical financial tips, FI strategies, and ways to live a fulfilling life while pursuing Financial Independence." />
-  <link rel="stylesheet" href="../styles.css" />
-  <style>
-    .blog-category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .blog-category-card {
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .blog-category-card h3 {
-      color: #333;
-      margin-bottom: 0.5rem;
-    }
-    .blog-category-card p {
-      margin-bottom: 1rem;
-      color: #555;
-    }
-    .post-list {
-      margin-top: 0.5rem;
-      padding-left: 1rem;
-    }
-    .post-list li {
-      margin-bottom: 0.5rem;
-    }
-    .post-list a {
-      color: #FF6F61;
-      font-weight: 600;
-      text-decoration: none;
-    }
-    .post-list a:hover {
-      text-decoration: underline;
-    }
-    /* Sidebar/Widget */
-    .sidebar {
-      margin-top: 3rem;
-      padding: 1.5rem;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    }
-    .sidebar h3 {
-      margin-bottom: 1rem;
-      color: #333;
-    }
-    .sidebar ul li {
-      margin-bottom: 0.5rem;
-    }
-    .sidebar ul li a {
-      color: #FF6F61;
-      text-decoration: none;
-    }
-    .sidebar ul li a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <title>Blog • FIREandLife</title>
+  <meta name="description" content="Stories, scenarios, and tools to help you pursue Financial Independence without sacrificing what matters most." />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
 <header>
-  <nav>
+  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
     <div class="logo">
-      <img src="../assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;">
+      <a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a>
     </div>
-    <ul class="nav-links">
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="../calculators/index.html">Calculators</a></li>
-      <li><a href="index.html" class="active">Blog</a></li>
-      <li><a href="../about.html">About</a></li>
-      <li><a href="../contact.html">Contact</a></li>
+    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculators/">Calculators</a></li>
+      <li><a href="/blog/" aria-current="page">Blog</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
     </ul>
   </nav>
 </header>
 
-<main class="container">
-  <h1 class="page-title">Financial Clarity Blog</h1>
-  <p style="text-align:center; max-width:700px; margin:0 auto;">
-    Practical advice, strategies, and tools to help you achieve Financial Independence without sacrificing fulfillment.
+<main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+  <h1>FIREandLife Blog</h1>
+  <p style="color:#555;margin-top:.5rem;">
+    Real scenarios, practical math, and tools for Financial Independence—without losing sight of a life well-lived.
   </p>
 
-  <!-- Blog Categories -->
-  <div class="blog-category-grid">
-    <!-- Category 1 -->
-    <div class="blog-category-card">
-      <h3>The Money Basics</h3>
-      <p>Foundational strategies to take control of your money.</p>
-      <ul class="post-list">
-        <li><a href="maximize-take-home-pay.html">5 Ways to Maximize Your Take-Home Pay</a></li>
-      </ul>
-    </div>
-
-    <!-- Category 2 -->
-    <div class="blog-category-card">
-      <h3>The Essentials of FI</h3>
-      <p>Understand the math and mindset behind Financial Independence.</p>
-      <ul class="post-list">
-        <li><a href="fi-formula-explained.html">The FI Formula: Explained</a></li>
-      </ul>
-    </div>
-
-    <!-- Category 3 -->
-    <div class="blog-category-card">
-      <h3>Life & Fulfillment</h3>
-      <p>How to enjoy life today while working toward FI.</p>
-      <ul class="post-list">
-        <li><em>Coming soon: Balancing FI and Happiness</em></li>
-        <li><em>Coming soon: Why Joy Matters on the FI Journey</em></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Sidebar Widget for Popular Posts -->
-  <section class="sidebar">
-    <h3>Top Posts</h3>
-    <ul>
-      <li><a href="maximize-take-home-pay.html">5 Ways to Maximize Your Take-Home Pay</a></li>
-      <li><a href="fi-formula-explained.html">The FI Formula: Explained</a></li>
-    </ul>
+  <!-- Featured / newest post -->
+  <section class="section" style="padding:1.25rem 0 0;">
+    <article class="card" style="margin:1rem 0;">
+      <h2 style="margin-bottom:.25rem;">
+        <a href="/blog/balancing-fi-family.html">Balancing FI with Family Life: When More Savings Means Less Time</a>
+      </h2>
+      <p style="color:#555;margin-bottom:.75rem;">
+        How to think about the trade-off between aggressive retirement contributions and today’s cash flow, time, and family priorities—plus a side-by-side contribution scenario you can replicate.
+      </p>
+      <a class="btn" href="/blog/balancing-fi-family.html">Read More →</a>
+    </article>
   </section>
 
-  <!-- Newsletter Signup -->
-  <section class="newsletter" style="margin-top:3rem;">
-    <h2>Join Our Newsletter</h2>
-    <p>Get tips, tools, and strategies for Financial Independence delivered to your inbox.</p>
-    <form action="http://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
-      <input type="email" name="EMAIL" placeholder="Your email address" required />
-      <button type="submit">Subscribe</button>
-    </form>
+  <!-- All posts list -->
+  <section class="section" style="padding:1.25rem 0;">
+    <h2 style="margin-bottom:.5rem;">All Posts</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;">
+      <!-- If you add more posts, copy one of these cards and update the link/title/summary -->
+
+      <article class="card">
+        <h3 style="margin-bottom:.25rem;">
+          <a href="/blog/balancing-fi-family.html">Balancing FI with Family Life: When More Savings Means Less Time</a>
+        </h3>
+        <p style="color:#555;">Finding the sweet spot between long-term tax savings and the life you want to live right now.</p>
+        <a class="btn btn-secondary" href="/blog/balancing-fi-family.html">Read →</a>
+      </article>
+
+      <!-- If you published this one too, leave it. If not yet, you can remove this card for now. -->
+      <article class="card">
+        <h3 style="margin-bottom:.25rem;">
+          <a href="/blog/401k-tradeoffs.html">The Hidden Trade-Offs of 401(k) Contributions</a>
+        </h3>
+        <p style="color:#555;">Take-home pay vs. tax savings—see how different contribution levels shift your cash flow.</p>
+        <a class="btn btn-secondary" href="/blog/401k-tradeoffs.html">Read →</a>
+      </article>
+
+      <!-- Existing posts already in repo -->
+      <article class="card">
+        <h3 style="margin-bottom:.25rem;">
+          <a href="/blog/maximize-take-home-pay.html">5 Ways to Maximize Your Take-Home Pay</a>
+        </h3>
+        <p style="color:#555;">Practical levers to increase real income—benefits, withholding, and contribution strategy.</p>
+        <a class="btn btn-secondary" href="/blog/maximize-take-home-pay.html">Read →</a>
+      </article>
+
+      <article class="card">
+        <h3 style="margin-bottom:.25rem;">
+          <a href="/blog/fi-formula-explained.html">The FI Formula: Explained</a>
+        </h3>
+        <p style="color:#555;">Understand the math behind FI, your number, and how small changes move the timeline.</p>
+        <a class="btn btn-secondary" href="/blog/fi-formula-explained.html">Read →</a>
+      </article>
+
+      <!-- If you keep a “Finding Purpose” post -->
+      <article class="card">
+        <h3 style="margin-bottom:.25rem;">
+          <a href="/blog/finding-purpose-on-fi/">Finding Purpose on the Path to FI</a>
+        </h3>
+        <p style="color:#555;">Money is a means—not the end. Ideas for aligning goals with a meaningful life now.</p>
+        <a class="btn btn-secondary" href="/blog/finding-purpose-on-fi/">Read →</a>
+      </article>
+    </div>
   </section>
 </main>
 
 <footer>
-  <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
+  <p style="text-align:center;padding:1rem;">
+    &copy; <span id="year"></span> FIRE and Life ·
+    <a href="/privacy/">Privacy Policy</a> ·
+    <a href="/terms/">Terms</a><br/>
+    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
+  </p>
 </footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
