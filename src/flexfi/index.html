@@ -4,61 +4,76 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>What is FlexFI? • FIREandLife</title>
-  <link rel="stylesheet" href="/styles.css?v=20250816"/>
+  <meta name="description" content="FlexFI is a modern approach to Financial Independence that adapts your savings, work, and lifestyle choices to your stage of life." />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
 <header>
-  <nav>
-    <a href="/">Home</a> | 
-    <a href="/calculators/">Calculators</a> | 
-    <a href="/blog/">Blog</a> | 
-    <a href="/about/">About</a> | 
-    <a href="/contact/">Contact</a>
+  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+    <div class="logo"><a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a></div>
+    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculators/">Calculators</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/flexfi/" aria-current="page">FlexFI</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
   </nav>
 </header>
 
-<main class="container" style="max-width:800px;margin:2rem auto;padding:0 1rem;">
+<main class="container" style="max-width:900px;margin:2rem auto;padding:0 1rem;">
   <h1>What is FlexFI?</h1>
-  <p><strong>FlexFI</strong> is a modern approach to Financial Independence that recognizes life isn’t static. Unlike rigid savings formulas or one-size-fits-all goals, FlexFI adapts as your circumstances, priorities, and responsibilities change over time.</p>
+  <p><strong>FlexFI</strong> is a modern approach to Financial Independence that recognizes life isn’t static. Instead of aiming for a single, rigid savings rate or a one-time goal, FlexFI adapts your plan to the stage of life you’re in—while keeping your long-term trajectory to FI intact.</p>
 
   <h2>Why FlexFI?</h2>
-  <p>Traditional FI frameworks—like Lean FI, Coast FI, and Barista FI—are helpful, but they assume stability. In reality, your financial strategy needs to bend and flex as life evolves:</p>
   <ul>
-    <li><strong>Starting Out:</strong> You might aggressively save and invest while expenses are lower.</li>
-    <li><strong>Raising a Family:</strong> Priorities shift. Housing, childcare, and healthcare may require balancing take-home pay with retirement contributions.</li>
-    <li><strong>Midlife & Caregiving:</strong> Aging parents, career pivots, or health needs can change what “enough” looks like.</li>
-    <li><strong>Later Life:</strong> With kids launched and expenses dropping, you may choose to accelerate savings again to reach full FI earlier than traditional retirement age.</li>
+    <li><strong>Early career:</strong> lower expenses → higher savings rate may make sense.</li>
+    <li><strong>Raising kids / HCOL realities:</strong> shift to more take-home pay, still capture employer match and targeted pre-tax savings.</li>
+    <li><strong>Caregiving / health / career pivots:</strong> temporarily prioritize flexibility and liquidity.</li>
+    <li><strong>Empty nest / higher income years:</strong> accelerate contributions to pull FI forward.</li>
   </ul>
 
-  <h2>How FlexFI Works</h2>
-  <p>Instead of aiming for a single, unchanging savings rate, FlexFI embraces different phases:</p>
-  <ul>
-    <li>Adjusting contributions as your cost of living rises or falls</li>
-    <li>Balancing long-term growth with short-term flexibility</li>
-    <li>Re-evaluating your FI plan as life circumstances evolve</li>
-  </ul>
-
-  <h2>FlexFI vs. Traditional FI Paths</h2>
-  <table class="results-table">
-    <thead>
-      <tr><th>Approach</th><th>Philosophy</th></tr>
-    </thead>
+  <h2>How FlexFI relates to common FI flavors</h2>
+  <table class="results-table" style="margin:1rem 0;">
+    <thead><tr><th>Approach</th><th>Core idea</th></tr></thead>
     <tbody>
-      <tr><td>Lean FI</td><td>Achieve FI with minimal lifestyle expenses</td></tr>
-      <tr><td>Coast FI</td><td>Save early, then let compounding carry you</td></tr>
-      <tr><td>Barista FI</td><td>Reach partial FI, cover gap with part-time work</td></tr>
-      <tr><td><strong>FlexFI</strong></td><td>Adapt your FI journey dynamically across life stages</td></tr>
+      <tr><td>Lean FI</td><td>Minimal lifestyle to hit FI at a lower number.</td></tr>
+      <tr><td>Coast FI</td><td>Save early, then compound to traditional retirement without new contributions.</td></tr>
+      <tr><td>Barista FI</td><td>Use part-time work to bridge expenses while investments grow.</td></tr>
+      <tr><td><strong>FlexFI</strong></td><td><strong>Adapt across stages</strong>: adjust savings, work style, and spending as life evolves.</td></tr>
     </tbody>
   </table>
 
-  <h2>Why It Matters</h2>
-  <p>FlexFI acknowledges the reality many of us live: high housing costs, kids, healthcare, career transitions, or caregiving for loved ones. It gives you permission to adjust without “failing” at FI.</p>
+  <h2>Put FlexFI into practice</h2>
+  <ol>
+    <li><strong>Right-size contributions for this stage:</strong> Capture your <em>full employer match</em>, then tune your 401(k)/HSA/IRA based on cash-flow needs.</li>
+    <li><strong>Model the trade-offs:</strong> Use the <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> to see how different contribution levels affect your monthly breathing room.</li>
+    <li><strong>Revisit quarterly:</strong> Life changes—so should your plan. Set a reminder to check your numbers every quarter.</li>
+  </ol>
 
-  <p>By practicing FlexFI, you can stay on the path to Financial Independence while still prioritizing what matters most today.</p>
+  <div class="card" style="margin-top:1rem;">
+    <h3>Try a quick scenario</h3>
+    <p>Adjust your 401(k) from 10% to 18%, keep everything else constant, and compare the change in take-home pay vs. total pre-tax contributions. Does the timeline gain outweigh the monthly squeeze right now?</p>
+    <a class="btn" href="/calculators/take-home-pay/">Open the Take-Home Pay Calculator →</a>
+  </div>
+
+  <h2>Further reading</h2>
+  <ul>
+    <li><a href="/blog/balancing-fi-family.html">Balancing FI with Family Life: When More Savings Means Less Time</a></li>
+    <li><a href="/blog/fi-formula-explained.html">The FI Formula: Explained</a></li>
+    <li><a href="/blog/maximize-take-home-pay.html">5 Ways to Maximize Your Take-Home Pay</a></li>
+  </ul>
 </main>
 
 <footer>
-  <p style="text-align:center;padding:1rem;">&copy; 2025 FIRE and Life • For educational purposes only, not financial advice.</p>
+  <p style="text-align:center;padding:1rem;">
+    &copy; <span id="year"></span> FIRE and Life ·
+    <a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms</a><br/>
+    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
+  </p>
 </footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
