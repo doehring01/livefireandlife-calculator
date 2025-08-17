@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>[Post Title] • FIREandLife</title>
+  <meta name="description" content="[One-sentence SEO-friendly summary of your post]" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header>
+  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+    <div class="logo">
+      <a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a>
+    </div>
+    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculators/">Calculators</a></li>
+      <li><a href="/blog/" aria-current="page">Blog</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+  <article>
+    <header>
+      <h1>[Post Title]</h1>
+      <p style="color:#777;font-size:.9rem;">Published <time datetime="2025-08-16">August 16, 2025</time></p>
+    </header>
+
+    <section style="margin-top:1.5rem;">
+      <p><strong>Intro paragraph:</strong> Hook the reader, mention the problem/scenario, and hint at what they’ll learn in this post.</p>
+
+      <h2>Key Section One</h2>
+      <p>Details, explanations, maybe embed a calculator or chart here.</p>
+
+      <h2>Key Section Two</h2>
+      <p>Provide comparisons, examples, or case studies. You can include images like this:</p>
+      <figure style="margin:1rem 0;">
+        <img src="/assets/blog/example.png" alt="Example scenario" style="max-width:100%;height:auto;">
+        <figcaption style="text-align:center;color:#555;font-size:.85rem;">Caption for the image.</figcaption>
+      </figure>
+
+      <h2>Conclusion / Call to Action</h2>
+      <p>Wrap up with takeaways and invite readers to try the calculators, comment, or share.</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <p style="text-align:center;padding:1rem;">
+    &copy; <span id="year"></span> FIRE and Life ·
+    <a href="/privacy/">Privacy Policy</a> ·
+    <a href="/terms/">Terms</a><br/>
+    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
+  </p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
