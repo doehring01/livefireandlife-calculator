@@ -4,25 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Balancing FI with Family Life • FIREandLife</title>
+  <meta name="description" content="How to balance aggressive retirement contributions with real-life family priorities. See side-by-side contribution scenarios and use our Take-Home Pay Calculator to find your sweet spot." />
   <link rel="stylesheet" href="/styles.css" />
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-KHKJVXPJQM');
-</script>
-<!-- End Google Analytics -->
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KHKJVXPJQM');
+  </script>
+  <!-- End Google Analytics -->
+
+  <style>
+    .post-hero img{max-width:100%;height:auto;border-radius:8px}
+    .figure-grid{display:grid;grid-template-columns:1fr;gap:1rem;align-items:start;justify-items:center;max-width:1000px;margin:1rem auto}
+    .figure-grid figure,.figure-wide{margin:0;text-align:center}
+    .figure-grid img,.figure-wide img{max-width:100%;height:auto;border:1px solid #eee;border-radius:6px}
+    .figure-grid figcaption,.figure-wide figcaption{font-size:.9rem;color:#666;margin-top:.4rem}
+  </style>
 </head>
 <body>
 <header>
   <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-    <div class="logo"><a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a></div>
+    <div class="logo">
+      <a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife logo" style="height:40px;"></a>
+    </div>
     <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
       <li><a href="/">Home</a></li>
       <li><a href="/calculators/">Calculators</a></li>
       <li><a href="/blog/" aria-current="page">Blog</a></li>
+      <li><a href="/flexfi/">FlexFI</a></li>
       <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>
     </ul>
@@ -30,42 +43,73 @@
 </header>
 
 <main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
-  <h1>Balancing FI with Family Life: When More Savings Means Less Time</h1>
+  <article>
+    <h1>Balancing FI with Family Life: When More Savings Means Less Time</h1>
 
-  <p><strong>Financial Independence (FI)</strong> is often portrayed as a simple equation: spend less, save more, invest wisely, and eventually walk away from work. But for families juggling young kids, aging parents, or the costs of a high cost-of-living (HCOL) area, the path is far from simple. Sometimes, saving more means sacrificing time — time with your family, time for yourself, or time to simply live.</p>
+    <p><strong>Financial Independence (FI)</strong> is often presented like clean math—spend less, save more, invest—and you’re done. Real life is messier. If you’re raising kids, supporting aging parents, or living in a high cost-of-living area, every extra percent into a 401(k) might help future-you but squeeze present-you. Sometimes, saving more means sacrificing time—time with your family, time for yourself, time to simply live.</p>
 
-  <p>This post explores the trade-offs that come with balancing aggressive FI savings goals with family priorities, and how a simple tool like our <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> can help you choose the right balance.</p>
+    <p>This post looks at the trade-offs and shows how a quick pass with our <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> can help you choose a contribution level that fits your actual life.</p>
 
-  <h2>The Real-Life Dilemma</h2>
-  <p>Maxing out retirement accounts can move you toward FI — but if it leaves you short on monthly cash flow, you might end up cutting back on experiences, travel, or activities that create core family memories. Suddenly, the very thing you’re chasing — freedom and fulfillment — feels more distant.</p>
+    <h2>The Real-Life Dilemma</h2>
+    <p>Maxing accounts moves you toward FI. But if it leaves you tight on monthly cash flow, you may delay trips, activities, or childcare help that matter right now. The goal of FI is freedom; if your plan makes life feel smaller for years on end, it may be time to adjust.</p>
 
-  <h2>Seeing the Trade-Offs Clearly</h2>
-  <p>Below is a side-by-side comparison of two contribution strategies at the same income level. One prioritizes higher pre-tax savings; the other leaves more room in today’s budget.</p>
+    <h2>Seeing the Trade-Offs Clearly</h2>
+    <p>Same income, two contribution strategies. One prioritizes higher pre-tax savings; the other leaves more breathing room in today’s budget.</p>
 
-  <!-- Comparison images -->
-  <div style="display:grid;grid-template-columns:1fr;gap:1rem;align-items:start;justify-items:center;max-width:1000px;margin:1rem auto;">
-    <figure style="margin:0;text-align:center;">
-      <img src="/assets/blog/income_allocation_high_contrib.png" alt="Income Allocation — High Contributions" style="max-width:100%;height:auto;border:1px solid #eee;border-radius:6px;">
-      <figcaption style="font-size:.9rem;color:#666;margin-top:.4rem;">High Contributions ($23,075)</figcaption>
+    <!-- Two scenario images -->
+    <div class="figure-grid">
+      <figure>
+        <img src="/assets/income_allocation_high_contrib.png" alt="High contributions scenario: larger share to savings, smaller to monthly spending">
+        <figcaption>High Contributions (example: $23,075/yr)</figcaption>
+      </figure>
+      <figure>
+        <img src="/assets/income_allocation_moderate_contrib.png" alt="Moderate contributions scenario: more for necessities and wants, smaller savings slice">
+        <figcaption>Moderate Contributions (example: $13,100/yr)</figcaption>
+      </figure>
+    </div>
+
+    <!-- Optional combined comparison -->
+    <figure class="figure-wide" style="margin:2rem 0;">
+      <img src="/assets/income_allocation_comparison.png" alt="Bar chart comparing ‘Necessities / Wants / Savings’ between high vs. moderate contribution strategies">
+      <figcaption>Side-by-side income allocation comparison.</figcaption>
     </figure>
-    <figure style="margin:0;text-align:center;">
-      <img src="/assets/blog/income_allocation_moderate_contrib.png" alt="Income Allocation — Moderate Contributions" style="max-width:100%;height:auto;border:1px solid #eee;border-radius:6px;">
-      <figcaption style="font-size:.9rem;color:#666;margin-top:.4rem;">Moderate Contributions ($13,100)</figcaption>
-    </figure>
-  </div>
 
-  <h2>Time as a Currency</h2>
-  <p>Money is only one side of the equation. FI is about reclaiming your time. When deciding whether to contribute an extra few hundred dollars per paycheck, ask: does this meaningfully accelerate my FI date, or does it take away opportunities I’ll never get back?</p>
+    <h2>Time as a Currency</h2>
+    <p>Money compounds, but so do moments. Before bumping contributions, ask: <em>Will this meaningfully accelerate my FI date, or mostly reduce my quality of life this year?</em> There’s a middle lane where you still progress toward FI while funding what matters now.</p>
 
-  <h2>The Takeaway</h2>
-  <p>Achieving FI is not about deprivation — it’s about balance. Run scenarios, but let your values lead. Sometimes the “optimal” financial choice isn’t the optimal life choice.</p>
+    <h2>The Takeaway</h2>
+    <p>FI isn’t deprivation; it’s design. Run scenarios, adjust, repeat. And remember: the “optimal” spreadsheet answer isn’t always the optimal life answer.</p>
 
-  <p><em>Curious where your own balance lies? Try our free <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> to see how contributions impact your cash flow.</em></p>
+    <p><em>Want to test your own numbers?</em> Try the free <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> and see how contribution changes affect your cash flow.</p>
+
+    <hr style="margin:2rem 0;"/>
+    <section class="newsletter">
+      <h2>Get tools & real-world scenarios in your inbox</h2>
+      <p>Short, practical emails on FI, FlexFI, and living well on the way there.</p>
+      <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+        <input type="email" name="EMAIL" placeholder="Your email address" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </section>
+  </article>
 </main>
 
 <footer>
-  <p style="text-align:center;padding:1rem;">&copy; 2025 FIRE and Life · <a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms</a><br/>
-  <small>For educational purposes only. Not financial, tax, or legal advice.</small></p>
+  <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+    data-name="bmc-button" data-slug="FIREandLIFE" data-color="#FF5F5F" data-emoji=""
+    data-font="Lato" data-text="Buy me a coffee" data-outline-color="#000000"
+    data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
+
+  <p style="text-align:center;padding:1rem;">
+    &copy; <span id="year"></span> FIRE and Life ·
+    <a href="/privacy/">Privacy Policy</a> ·
+    <a href="/terms/">Terms</a><br/>
+    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
+  </p>
 </footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
