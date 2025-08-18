@@ -1,8 +1,3 @@
----
-permalink: /blog/
-pagination: false
----
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +6,6 @@ pagination: false
   <title>Blog • FIREandLife</title>
   <meta name="description" content="Stories, scenarios, and tools to help you pursue Financial Independence without sacrificing what matters most." />
   <link rel="stylesheet" href="/styles.css" />
-
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
   <script>
@@ -31,7 +25,7 @@ pagination: false
     <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
       <li><a href="/">Home</a></li>
       <li><a href="/calculators/">Calculators</a></li>
-      <li><a href="/blog/" aria-current="page">Blog</a></li>
+      <li><a href="/blog/">Blog</a></li>
       <li><a href="/flexfi/">FlexFI</a></li>
       <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>
@@ -45,65 +39,31 @@ pagination: false
     Real scenarios, practical math, and tools for Financial Independence—without losing sight of a life well-lived.
   </p>
 
-  <!-- ============ FEATURED / NEWEST POST ============ -->
-  <!-- Static featured (works now, even without collections) -->
+  <!-- Featured / newest post -->
   <section class="section" style="padding:1.25rem 0 0;">
     <article class="card" style="margin:1rem 0;">
       <h2 style="margin-bottom:.25rem;">
-        <a href="/blog/why-fi-is-more-than-the-4-percent-rule/">Why FI Is More Than the 4% Rule</a>
+        <a href="/blog/fi-mistakes-to-avoid.html">5 FI Mistakes to Avoid (and How to Fix Them)</a>
       </h2>
       <p style="color:#555;margin-bottom:.75rem;">
-        The 4% rule is a helpful starting point—but real FI means planning for taxes, volatility, healthcare, and changing life goals. Here’s how FlexFI reframes it.
+        Common pitfalls on the path to Financial Independence—and the practical fixes to keep your plan on track. Includes space to reflect and personalize corrective actions.
       </p>
-      <a class="btn" href="/blog/why-fi-is-more-than-the-4-percent-rule/">Read More →</a>
+      <a class="btn" href="/blog/fi-mistakes-to-avoid.html">Read More →</a>
     </article>
   </section>
 
-  <!-- ============ AUTO-LIST (Eleventy collections - optional) ============ -->
-  <!--
-    To enable automatic listing of all blog posts, add this front matter to each blog post file:
-
-    ---
-    tags: ["blog"]
-    title: Your Post Title
-    description: One-sentence teaser used on the blog index.
-    date: 2025-08-18
-    thumbnail: /assets/blog/your-thumb.jpg   # optional
-    permalink: /blog/your-post-slug/         # you already use this
-    ---
-
-    Then this loop will render the latest posts automatically.
-    Posts are sorted newest-first by 'date'. The featured item above is static, so
-    you can either leave it, or remove it and use the first item of the collection as featured.
-  -->
-  {% if collections.blog and collections.blog.length %}
+  <!-- All posts list -->
   <section class="section" style="padding:1.25rem 0;">
     <h2 style="margin-bottom:.5rem;">All Posts</h2>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;">
+      <article class="card">
+        <h3 style="margin-bottom:.25rem;">
+          <a href="/blog/fi-mistakes-to-avoid.html">5 FI Mistakes to Avoid (and How to Fix Them)</a>
+        </h3>
+        <p style="color:#555;">Common pitfalls on the path to Financial Independence—and the practical fixes to keep your plan on track.</p>
+        <a class="btn btn-secondary" href="/blog/fi-mistakes-to-avoid.html">Read →</a>
+      </article>
 
-      {% for post in collections.blog | reverse %}
-        <article class="card">
-          {% if post.data.thumbnail %}
-            <a href="{{ post.url }}"><img src="{{ post.data.thumbnail }}" alt="{{ post.data.title | default('Blog post') }}" style="width:100%;height:auto;" /></a>
-          {% endif %}
-          <h3 style="margin:.5rem 0 .25rem 0;">
-            <a href="{{ post.url }}">{{ post.data.title or 'Untitled' }}</a>
-          </h3>
-          {% if post.data.date %}
-            <p class="meta" style="color:#777;margin:0 0 .25rem 0;">{{ post.date | date('LLLL d, yyyy') }}</p>
-          {% endif %}
-          <p style="color:#555;">{{ post.data.description or '' }}</p>
-          <a class="btn btn-secondary" href="{{ post.url }}">Read →</a>
-        </article>
-      {% endfor %}
-
-    </div>
-  </section>
-  {% else %}
-  <!-- ============ FALLBACK STATIC LIST (if collections not configured) ============ -->
-  <section class="section" style="padding:1.25rem 0;">
-    <h2 style="margin-bottom:.5rem;">All Posts</h2>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;">
       <article class="card">
         <h3 style="margin-bottom:.25rem;">
           <a href="/blog/introducing-flexfi.html">Introducing FlexFI: A More Realistic Path to FI</a>
@@ -145,15 +105,10 @@ pagination: false
       </article>
     </div>
   </section>
-  {% endif %}
 </main>
 
 <footer>
-  <script src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
-    data-name="bmc-button" data-slug="FIREandLIFE" data-color="#FF5F5F"
-    data-emoji="" data-font="Lato" data-text="Buy me a coffee"
-    data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
-
+  <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="FIREandLIFE" data-color="#FF5F5F" data-emoji=""  data-font="Lato" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
   <p style="text-align:center;padding:1rem;">
     &copy; <span id="year"></span> FIRE and Life ·
     <a href="/privacy/">Privacy Policy</a> ·
@@ -162,6 +117,8 @@ pagination: false
   </p>
 </footer>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
