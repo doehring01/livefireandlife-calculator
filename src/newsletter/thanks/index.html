@@ -1,0 +1,106 @@
+---
+permalink: /newsletter/thanks/index.html
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>You're In! • FIREandLife Newsletter</title>
+  <meta name="description" content="Thanks for subscribing to FIREandLife. Here’s what to expect next—and a few great places to start." />
+  <link rel="stylesheet" href="/styles.css" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KHKJVXPJQM');
+  </script>
+  <!-- End Google Analytics -->
+  <style>
+    .hero-mini { text-align:center; padding:2rem 1rem; background:#fff; border:1px solid #eee; border-radius:10px; }
+    .hero-mini h1 { margin-bottom:.5rem; }
+    .pill { display:inline-block; padding:.25rem .6rem; font-size:.85rem; border-radius:999px; background:#fff3cd; color:#7a5b00; border:1px solid #ffe39a; }
+    .grid-two { display:grid; gap:1rem; grid-template-columns:1fr; margin-top:1.25rem; }
+    @media (min-width:800px){ .grid-two { grid-template-columns: 1fr 1fr; } }
+    .card .small { color:#666; font-size:.95rem; }
+    .muted { color:#666; }
+  </style>
+</head>
+<body>
+<header>
+  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.06);">
+    <div class="logo">
+      <a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a>
+    </div>
+    <ul class="nav-links" style="list-style:none;display:flex;gap:1.25rem;margin:0;flex-wrap:wrap;">
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculators/">Calculators</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/flexfi/">FlexFI</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+  <section class="hero-mini">
+    <span class="pill">Subscription confirmed</span>
+    <h1>You're in — welcome to <span style="white-space:nowrap;">FIREandLife</span> 🎉</h1>
+    <p class="muted">You’ll get practical tools, FlexFI strategies, and new calculators as they launch.</p>
+    <p class="muted" style="margin-top:.25rem;">Tip: add <strong>hello@livefireandlife.com</strong> to contacts so we don’t land in spam.</p>
+  </section>
+
+  <section class="section" style="padding:1.5rem 0 0;">
+    <h2 style="margin-bottom:.5rem;">Great places to start</h2>
+    <div class="grid-two">
+      <article class="card">
+        <h3>Take-Home Pay Calculator</h3>
+        <p class="small">See how contributions, FICA, and premiums affect what actually hits your bank account—plus an annual/monthly breakdown.</p>
+        <a class="btn" href="/calculators/take-home-pay/?utm_source=newsletter&utm_medium=thanks_page&utm_campaign=onboarding">Try it →</a>
+      </article>
+
+      <article class="card">
+        <h3>Why FI Is More Than the 4% Rule</h3>
+        <p class="small">The 4% rule is a starting point. FlexFI adds taxes, volatility, and changing life goals back into the plan.</p>
+        <a class="btn btn-secondary" href="/blog/why-fi-is-more-than-the-4-percent-rule/?utm_source=newsletter&utm_medium=thanks_page&utm_campaign=onboarding">Read the post →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" style="padding:1.5rem 0 0;">
+    <div class="card" style="border-left:4px solid #FF6F61;">
+      <h3 style="margin-bottom:.25rem;">CoastFI (soft-gated) — coming up next</h3>
+      <p class="small">You’ll get early access to our new CoastFI calculator. The core tool will be free; email subscribers like you unlock <em>extras</em> such as multi-scenario comparisons and downloadable results.</p>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem;">
+        <a class="btn" href="/calculators/?utm_source=newsletter&utm_medium=thanks_page&utm_campaign=coastfi_teaser">See all calculators</a>
+        <a class="btn btn-secondary" href="/flexfi/?utm_source=newsletter&utm_medium=thanks_page&utm_campaign=coastfi_teaser">Learn about FlexFI</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding:1.5rem 0 0;">
+    <h2 style="margin-bottom:.5rem;">What to expect</h2>
+    <ul class="small" style="line-height:1.7;margin-left:1rem;">
+      <li>Short, useful emails (typically weekly) with one practical idea you can apply.</li>
+      <li>Early looks at new calculators and templates.</li>
+      <li>No spam. Unsubscribe anytime with one click.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p style="text-align:center;padding:1rem;">
+    &copy; <span id="year"></span> FIRE and Life ·
+    <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a><br/>
+    <small>Educational purposes only. Not financial, tax, or legal advice.</small>
+  </p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
