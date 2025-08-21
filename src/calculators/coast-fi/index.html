@@ -1,0 +1,197 @@
+---
+permalink: /calculators/coast-fi/index.html
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CoastFI Calculator • FIRE and Life</title>
+  <meta name="description" content="See if you can stop contributing and still reach FI. CoastFI math with passive income, growth assumptions, and a clear progress check." />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* Page-specific polish */
+    .calc-grid { display:grid; gap:1rem; }
+    @media (min-width:900px){ .calc-grid { grid-template-columns: 1fr 1fr; } }
+    .field { margin-bottom:.75rem; }
+    .help { font-size:.9rem; opacity:.75; }
+    .cards { display:grid; gap:1rem; }
+    @media (min-width:700px){ .cards { grid-template-columns: repeat(2,minmax(240px,1fr)); } }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+    /* Soft-gate modal */
+    .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:9999; }
+    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+    .modal header { padding:1rem 1.25rem; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
+    .modal .body { padding:1rem 1.25rem; }
+    .modal .close { background:none; border:0; font-size:1.4rem; cursor:pointer; }
+    .hidden { display:none !important; }
+
+    /* Chart sizing */
+    #coastChart { max-width: 700px; height: 300px; display:block; margin: 1rem auto; }
+    .table-wrap { overflow-x:auto; margin-top:1rem; }
+    .results-table { width:100%; border-collapse:collapse; background:#fff; border:1px solid #eee; border-radius:8px; overflow:hidden; }
+    .results-table th, .results-table td { padding:.75rem .9rem; text-align:right; border-bottom:1px solid #f2f2f2; white-space:nowrap; }
+    .results-table th:first-child, .results-table td:first-child { text-align:left; }
+    .results-table thead th { background:#fafafa; font-weight:600; }
+  </style>
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date()); gtag('config', 'G-KHKJVXPJQM');
+  </script>
+</head>
+<body>
+<header>
+  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+    <div class="logo"><a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a></div>
+    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculators/">Calculators</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/flexfi/">FlexFI</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="container" style="max-width:1100px;margin:2rem auto;padding:0 1rem;">
+  <h1 class="page-title">CoastFI Calculator</h1>
+  <p>Wondering if you could stop contributing and still reach FI by your target age? Enter your details below. We include <strong>passive income</strong> (pensions, rental net, etc.) so the required portfolio shrinks accordingly.</p>
+
+  <div class="calc-grid" style="margin-top:1rem;">
+    <form id="coastForm" class="card">
+      <h2>Inputs</h2>
+
+      <div class="field">
+        <label for="currentAge">Current Age</label>
+        <input type="number" id="currentAge" min="0" value="30" />
+      </div>
+
+      <div class="field">
+        <label for="retireAge">Target Retirement Age</label>
+        <input type="number" id="retireAge" min="1" value="60" />
+      </div>
+
+      <div class="field">
+        <label for="currentPortfolio">Current Invested Portfolio ($)</label>
+        <input type="number" id="currentPortfolio" min="0" step="1000" value="150000" />
+      </div>
+
+      <div class="field">
+        <label for="retireSpend">Annual Spending Needed in Retirement ($, today’s dollars)</label>
+        <input type="number" id="retireSpend" min="0" step="500" value="40000" />
+        <div class="help">Exclude anything covered by passive income; we’ll subtract that just below.</div>
+      </div>
+
+      <div class="field">
+        <label for="passiveIncome">Annual Passive Income in Retirement ($)</label>
+        <input type="number" id="passiveIncome" min="0" step="500" value="5000" />
+        <div class="help">Pension, rental net, annuity income, part-time work you plan to keep, etc.</div>
+      </div>
+
+      <div class="field">
+        <label for="realReturn">Expected Real Investment Return (%/yr)</label>
+        <input type="number" id="realReturn" min="0" max="12" step="0.1" value="5.0" />
+        <div class="help">After inflation. 4–6% is a common range for planning.</div>
+      </div>
+
+      <div class="field">
+        <label for="swr">Safe Withdrawal Rate (%/yr)</label>
+        <input type="number" id="swr" min="2.5" max="5.0" step="0.1" value="4.0" />
+        <div class="help">4% is typical. Lower SWR → larger required portfolio.</div>
+      </div>
+
+      <button type="submit" class="btn">Calculate</button>
+    </form>
+
+    <section class="card" id="summaryCard">
+      <h2>Quick Result</h2>
+      <div id="quickSummary" class="mono" style="font-size:1.05rem;line-height:1.6;">
+        Enter your numbers and hit Calculate.
+      </div>
+
+      <div id="unlockBlock" class="hidden" style="margin-top:1rem;">
+        <p>Want the full breakdown (chart + table + personalized CoastFI number)?</p>
+        <button class="btn" id="unlockBtn">See Full Results</button>
+        <div class="help" style="margin-top:.5rem;">You’ll be asked to join the newsletter to unlock — free, 1–2 emails/week.</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Full results (soft-gated) -->
+  <section id="fullResults" class="hidden" style="margin-top:1rem;">
+    <div class="cards">
+      <div class="card">
+        <h3>Annual Summary</h3>
+        <div class="mono" id="summaryHeadline" style="font-size:1.25rem;">—</div>
+        <small id="summaryDetail" class="mono" style="display:block;margin-top:.25rem;">—</small>
+      </div>
+      <div class="card">
+        <h3>At Retirement (Target)</h3>
+        <div class="mono" id="atRetirement" style="font-size:1.05rem;line-height:1.6;">—</div>
+      </div>
+    </div>
+
+    <canvas id="coastChart"></canvas>
+
+    <div class="table-wrap">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Amount ($)</th>
+          </tr>
+        </thead>
+        <tbody id="resultsTableBody">
+          <!-- filled by JS -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p style="text-align:center;padding:1rem;">
+    &copy; <span id="year"></span> FIRE and Life ·
+    <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a><br/>
+    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
+  </p>
+</footer>
+
+<!-- Modal for soft-gate (embed your Mailchimp form inside .body) -->
+<div class="modal-backdrop" id="gateModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+    <header>
+      <h3 id="gateTitle" style="margin:0;">Unlock Full CoastFI Results</h3>
+      <button class="close" aria-label="Close" id="closeGate">&times;</button>
+    </header>
+    <div class="body">
+      <p>Pop in your email to unlock the full breakdown + chart. You’ll also get our best FI tips (1–2×/week) — unsubscribe anytime.</p>
+
+      <!-- OPTION A: Inline Mailchimp embed (paste your form HTML below) -->
+      <!-- Example placeholder: -->
+      <form action="https://YOUR_MAILCHIMP_POST_URL" method="post" target="_blank" novalidate style="margin-top:.5rem">
+        <input type="email" name="EMAIL" placeholder="Your email" required style="padding:.6rem; width:100%; max-width:360px;">
+        <!-- Redirect after submit to unlock.html (set this in MC form as well) -->
+        <input type="hidden" name="u" value="YOUR_U">
+        <input type="hidden" name="id" value="YOUR_ID">
+        <button type="submit" class="btn" style="margin-top:.5rem;">Unlock Now</button>
+      </form>
+
+      <p class="help" style="margin-top:.5rem">Prefer the popup? Use your Mailchimp popup instead and set its “thank-you redirect” to:
+        <code>/calculators/coast-fi/unlock.html</code>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/calculators/coast-fi/coastfi.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
