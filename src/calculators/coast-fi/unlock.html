@@ -1,0 +1,28 @@
+---
+permalink: /calculators/coast-fi/unlock.html
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unlocking CoastFI…</title>
+  <meta http-equiv="refresh" content="1;url=/calculators/coast-fi/?unlocked=1">
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; display:grid; place-items:center; height:100vh; margin:0; }
+    .card { padding:1.25rem 1.5rem; border:1px solid #eee; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.08); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1 style="margin:0 0 .5rem 0;">Thanks! Unlocking your full results…</h1>
+    <p>You’ll be redirected back to the calculator automatically.</p>
+    <p><a href="/calculators/coast-fi/?unlocked=1">Continue now</a></p>
+  </div>
+
+  <script>
+    // Also set localStorage now in case referrer blocks the query string path
+    try { localStorage.setItem("coastfiUnlocked", "1"); } catch(e) {}
+  </script>
+</body>
+</html>
