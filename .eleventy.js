@@ -22,3 +22,12 @@ module.exports = function(eleventyConfig) {
 
   return { dir: { input: "src", output: "dist" } };
 };
+// .eleventy.js
+module.exports = function(eleventyConfig) {
+  // Copy the entire assets folder to /assets in the build
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+
+  return {
+    dir: { input: "src", output: "dist" } // keep your current dirs
+  };
+};
