@@ -31,3 +31,12 @@ module.exports = function(eleventyConfig) {
     dir: { input: "src", output: "dist" } // keep your current dirs
   };
 };
+
+
+module.exports = function(eleventyConfig) {
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+  // ✅ Passthrough only JS from calculators (keeps HTML handled by Eleventy)
+  eleventyConfig.addPassthroughCopy("src/calculators/**/*.js");
+
+  return { dir: { input: "src", output: "dist" } };
+};
