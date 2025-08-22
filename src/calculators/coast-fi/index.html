@@ -9,8 +9,8 @@ permalink: /calculators/coast-fi/index.html
   <title>CoastFI Calculator • FIRE and Life</title>
   <meta name="description" content="See if you can stop contributing and still reach FI. CoastFI math with passive income, growth assumptions, and a clear progress check." />
   <link rel="stylesheet" href="/styles.css" />
+
   <style>
-    /* Page-specific polish */
     .calc-grid { display:grid; gap:1rem; }
     @media (min-width:900px){ .calc-grid { grid-template-columns: 1fr 1fr; } }
     .field { margin-bottom:.75rem; }
@@ -19,16 +19,27 @@ permalink: /calculators/coast-fi/index.html
     @media (min-width:700px){ .cards { grid-template-columns: repeat(2,minmax(240px,1fr)); } }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 
+    /* Chart sizing (prevents the super-tall canvas) */
+    .chart-wrap {
+      position: relative;
+      max-width: 760px;
+      height: 300px;     /* Adjust this to taste */
+      margin: 1rem auto;
+    }
+    #coastChart {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
     /* Soft-gate modal */
     .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:9999; }
-    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,0.25); }
     .modal header { padding:1rem 1.25rem; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
     .modal .body { padding:1rem 1.25rem; }
     .modal .close { background:none; border:0; font-size:1.4rem; cursor:pointer; }
     .hidden { display:none !important; }
 
-    /* Chart sizing */
-    #coastChart { max-width: 700px; height: 300px; display:block; margin: 1rem auto; }
     .table-wrap { overflow-x:auto; margin-top:1rem; }
     .results-table { width:100%; border-collapse:collapse; background:#fff; border:1px solid #eee; border-radius:8px; overflow:hidden; }
     .results-table th, .results-table td { padding:.75rem .9rem; text-align:right; border-bottom:1px solid #f2f2f2; white-space:nowrap; }
@@ -57,7 +68,6 @@ permalink: /calculators/coast-fi/index.html
       <li><a href="/contact/">Contact</a></li>
     </ul>
   </nav>
-  <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/72d54d5d34e330e9be28f8b0b/76cbee2dfa420e118252735bb.js");</script>
 </header>
 
 <main class="container" style="max-width:1100px;margin:2rem auto;padding:0 1rem;">
@@ -119,7 +129,7 @@ permalink: /calculators/coast-fi/index.html
       <div id="unlockBlock" class="hidden" style="margin-top:1rem;">
         <p>Want the full breakdown (chart + table + personalized CoastFI number)?</p>
         <button class="btn" id="unlockBtn">See Full Results</button>
-        <div class="help" style="margin-top:.5rem;">You’ll be asked to join the newsletter to unlock — free, 1–2 emails/week.</div>
+        <div class="help" style="margin-top:.5rem;">Join the newsletter to unlock (free, 1–2 emails/week).</div>
       </div>
     </section>
   </div>
@@ -138,7 +148,9 @@ permalink: /calculators/coast-fi/index.html
       </div>
     </div>
 
-    <canvas id="coastChart"></canvas>
+    <div class="chart-wrap">
+      <canvas id="coastChart"></canvas>
+    </div>
 
     <div class="table-wrap">
       <table class="results-table">
@@ -164,7 +176,7 @@ permalink: /calculators/coast-fi/index.html
   </p>
 </footer>
 
-<!-- Modal for soft-gate (embed your Mailchimp form inside .body) -->
+<!-- Soft-gate modal with inline Mailchimp form (Option A) -->
 <div class="modal-backdrop" id="gateModal">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
     <header>
@@ -174,19 +186,17 @@ permalink: /calculators/coast-fi/index.html
     <div class="body">
       <p>Pop in your email to unlock the full breakdown + chart. You’ll also get our best FI tips (1–2×/week) — unsubscribe anytime.</p>
 
-      <!-- OPTION A: Inline Mailchimp embed (paste your form HTML below) -->
-      <!-- Example placeholder: -->
-      <form action="https://YOUR_MAILCHIMP_POST_URL" method="post" target="_blank" novalidate style="margin-top:.5rem">
+      <!-- Replace the action/u/id with your Mailchimp inline form values -->
+      <form action="https://YOUR_MC_DC.list-manage.com/subscribe/post" method="post" target="_blank" novalidate style="margin-top:.5rem">
         <input type="email" name="EMAIL" placeholder="Your email" required style="padding:.6rem; width:100%; max-width:360px;">
-        <!-- Redirect after submit to unlock.html (set this in MC form as well) -->
         <input type="hidden" name="u" value="YOUR_U">
         <input type="hidden" name="id" value="YOUR_ID">
+        <!-- In Mailchimp form settings, set the thank-you redirect to /calculators/coast-fi/unlock.html -->
         <button type="submit" class="btn" style="margin-top:.5rem;">Unlock Now</button>
       </form>
 
-      <p class="help" style="margin-top:.5rem">Prefer the popup? Use your Mailchimp popup instead and set its “thank-you redirect” to:
-        <code>/calculators/coast-fi/unlock.html</code>
-      </p>
+      <p class="help" style="margin-top:.5rem">Using the Mailchimp <em>popup</em> instead? Great—just set the popup’s thank-you redirect to:
+        <code>/calculators/coast-fi/unlock.html</code>. You can ignore this inline form.</p>
     </div>
   </div>
 </div>
