@@ -5,40 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Early Retirement Estimator • FIREandLife</title>
   <link rel="stylesheet" href="/styles.css?v=20250811c" />
-  <!-- Google Analytics -->
+  <!-- GA -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-KHKJVXPJQM');
+    gtag('js', new Date()); gtag('config','G-KHKJVXPJQM');
   </script>
-  <!-- End Google Analytics -->
   <style>
-    /* small helpers for a clean default look; adjust in your CSS as needed */
-    .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
-    .grid { display: grid; gap: 1rem; }
-    .grid-12 { grid-template-columns: repeat(12, 1fr); }
-    .span-12 { grid-column: span 12; } .span-6 { grid-column: span 6; }
-    .span-4 { grid-column: span 4; } .span-3 { grid-column: span 3; }
-    .card { background: #fff; border: 1px solid #e9edf2; border-radius: .5rem; padding: 1rem; }
-    .soft { background:#f7fafc; border:1px solid #e9edf2; border-radius:.5rem; padding:1rem; }
-    label { display:block; font-weight:600; margin-bottom:.25rem; }
-    input, select, button { width:100%; padding:.55rem .65rem; border:1px solid #cfd8e3; border-radius:.35rem; }
-    button { cursor:pointer; }
-    table { width:100%; border-collapse: collapse; }
-    th, td { padding:.5rem; border-bottom:1px solid #eef2f7; }
-    .sr-only { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
-    .muted { font-size:.9rem; opacity:.8; }
-    .row { display:flex; gap:.5rem; flex-wrap:wrap; }
-    .badge { display:inline-block; padding:.2rem .5rem; border:1px solid #e2e8f0; border-radius:999px; font-size:.8rem; }
+    :root{
+      --bg:#ffffff; --soft:#f7fafc; --border:#e9edf2; --ink:#0f172a; --muted:#475569;
+      --accent:#ff6b5d; --accent-ink:#fff;
+    }
+    body{background:var(--bg); color:var(--ink);}
+    .container{max-width:1100px;margin:2rem auto;padding:0 1rem;}
+    h1{margin-bottom:.75rem}
+    .lead{color:var(--muted); margin:.25rem 0 1rem}
+    .grid{display:grid; gap:1rem}
+    .grid-12{grid-template-columns:repeat(12,1fr)}
+    .span-12{grid-column:span 12} .span-6{grid-column:span 6} .span-4{grid-column:span 4} .span-3{grid-column:span 3}
+    .card{background:#fff;border:1px solid var(--border);border-radius:.6rem;padding:1rem}
+    .soft{background:var(--soft);border:1px solid var(--border);border-radius:.6rem;padding:1rem}
+    label{display:block;font-weight:600;margin-bottom:.25rem}
+    input,select,button{width:100%;padding:.7rem .75rem;border:1px solid #cfd8e3;border-radius:.4rem;font-size:16px}
+    input,select{background:#fff}
+    small.help{display:block;color:var(--muted);margin-top:.25rem;font-size:.85rem;line-height:1.3}
+    button{cursor:pointer}
+    .row{display:flex;gap:.5rem;flex-wrap:wrap}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;border:1px solid #e2e8f0;border-radius:999px;padding:.25rem .55rem;font-size:.85rem}
+    .btn{background:var(--accent);color:var(--accent-ink);border:none}
+    .btn.secondary{background:#fff;color:#111;border:1px solid #cbd5e1}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:.6rem;border-bottom:1px solid #eef2f7}
+    .muted{color:var(--muted)}
+    /* Mobile tweaks */
+    @media (max-width: 680px){
+      .grid-12{grid-template-columns:repeat(6,1fr)}
+      .span-3,.span-4,.span-6,.span-12{grid-column:1 / -1}
+      .row > *{flex:1 1 100%}
+      .btn, .badge{width:100%}
+    }
+    /* Modal (newsletter soft-gate) */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:1rem;z-index:50}
+    .modal{background:#fff;border-radius:.7rem;max-width:520px;width:100%;padding:1rem;border:1px solid var(--border)}
+    .modal h3{margin:.25rem 0}
   </style>
 </head>
 <body>
 <header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.06);">
     <div class="logo"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
-    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
+    <ul class="nav-links" style="list-style:none;display:flex;gap:1.2rem;margin:0;">
       <li><a href="/">Home</a></li>
       <li><a href="/calculators/" aria-current="page">Calculators</a></li>
       <li><a href="/blog/">Blog</a></li>
@@ -50,82 +67,93 @@
 
 <main class="container">
   <h1>Early Retirement Estimator</h1>
+  <p class="lead">Estimate when you’ll reach <strong>FI</strong> (financial independence), see the <strong>FI number</strong>, and how faster contributions shift your timeline. Choose “Real” values to view results in today’s purchasing power.</p>
 
-  <section id="ere" aria-labelledby="ere-title">
-    <p id="ere-title" class="sr-only">Early Retirement Estimator</p>
-
-    <!-- Inputs -->
+  <section id="ere">
+    <!-- INPUTS -->
     <form id="ere-form" class="grid grid-12" style="align-items:end">
       <div class="span-3">
         <label for="currentBalance">Current portfolio balance</label>
-        <input id="currentBalance" type="number" min="0" step="100" value="50000" inputmode="decimal" />
+        <input id="currentBalance" type="number" value="50000" min="0" step="100" inputmode="decimal" aria-describedby="hb1"/>
+        <small id="hb1" class="help">Total invested today across accounts.</small>
       </div>
 
       <div class="span-3">
         <label for="contributionMonthly">Monthly contribution</label>
-        <input id="contributionMonthly" type="number" min="0" step="50" value="1000" inputmode="decimal" />
+        <input id="contributionMonthly" type="number" value="1000" min="0" step="50" inputmode="decimal" aria-describedby="hb2"/>
+        <small id="hb2" class="help">Average monthly deposits (401k, IRA, brokerage, etc.).</small>
       </div>
 
       <div class="span-3">
         <label for="contributionBump">Add’l monthly contribution (optional)</label>
-        <input id="contributionBump" type="number" min="0" step="50" value="0" inputmode="decimal" />
+        <input id="contributionBump" type="number" value="0" min="0" step="50" inputmode="decimal" aria-describedby="hb3"/>
+        <small id="hb3" class="help">Extra amount you’ll add later (e.g., after childcare/mortgage ends).</small>
       </div>
+
       <div class="span-3">
         <label for="bumpYear">Bump starts after year</label>
-        <input id="bumpYear" type="number" min="0" step="1" value="5" />
+        <input id="bumpYear" type="number" value="5" min="0" step="1" aria-describedby="hb4"/>
+        <small id="hb4" class="help">When that extra contribution begins.</small>
       </div>
 
       <div class="span-3">
         <label for="returnPct">Expected annual return (%)</label>
-        <input id="returnPct" type="number" step="0.1" value="6.0" />
+        <input id="returnPct" type="number" value="6.0" step="0.1" aria-describedby="hb5"/>
+        <small id="hb5" class="help">Long-term average (before inflation) if viewing “Nominal.”</small>
       </div>
+
       <div class="span-3">
         <label for="inflationPct">Inflation (%)</label>
-        <input id="inflationPct" type="number" step="0.1" value="2.0" />
+        <input id="inflationPct" type="number" value="2.0" step="0.1" aria-describedby="hb6"/>
+        <small id="hb6" class="help">Used to show “Real” results in today’s dollars.</small>
       </div>
+
       <div class="span-3">
         <label for="useReal">Show values</label>
-        <select id="useReal" aria-describedby="useRealDesc">
+        <select id="useReal" aria-describedby="hb7">
           <option value="real" selected>Inflation-adjusted (real)</option>
           <option value="nominal">Nominal</option>
         </select>
-        <small id="useRealDesc" class="muted">Real values show purchasing power.</small>
+        <small id="hb7" class="help">Real = easier to compare over time; Nominal = raw dollars.</small>
       </div>
 
       <div class="span-3">
         <label for="annualSpend">Target annual spending (retirement)</label>
-        <input id="annualSpend" type="number" min="0" step="100" value="60000" inputmode="decimal" />
+        <input id="annualSpend" type="number" value="60000" min="0" step="100" inputmode="decimal" aria-describedby="hb8"/>
+        <small id="hb8" class="help">How much you plan to spend per year in retirement (today’s $ if Real).</small>
       </div>
+
       <div class="span-3">
         <label for="withdrawalRate">Withdrawal rate (%)</label>
-        <input id="withdrawalRate" type="number" step="0.1" value="4.0" />
+        <input id="withdrawalRate" type="number" value="4.0" step="0.1" aria-describedby="hb9"/>
+        <small id="hb9" class="help">Common choices: 4.0, 3.5, or 3.0 depending on risk tolerance.</small>
       </div>
 
       <div class="span-3">
         <label for="maxYears">Max years to simulate</label>
-        <input id="maxYears" type="number" min="1" max="70" step="1" value="50" />
+        <input id="maxYears" type="number" value="50" min="1" max="70" step="1" aria-describedby="hb10"/>
+        <small id="hb10" class="help">We’ll stop early if you hit FI first.</small>
       </div>
+
       <div class="span-3">
         <label for="currentAge">Your current age (optional)</label>
-        <input id="currentAge" type="number" min="0" max="100" step="1" value="35" />
+        <input id="currentAge" type="number" value="35" min="0" max="100" step="1" aria-describedby="hb11"/>
+        <small id="hb11" class="help">We’ll estimate your age at FI.</small>
       </div>
 
       <div class="span-12 row">
-        <button type="button" id="runBtn">Update results</button>
-        <button type="button" id="downloadCsvBtn">Download CSV</button>
-        <label class="badge" style="align-self:center;">
-          <input id="compare200" type="checkbox" style="margin-right:.4rem" />
-          Compare “+ $200/mo”
-        </label>
+        <button type="button" id="runBtn" class="btn">Update results</button>
+        <button type="button" id="downloadCsvBtn" class="btn secondary">Download CSV</button>
+        <label class="badge"><input id="compare200" type="checkbox" /> Compare “+ $200/mo”</label>
       </div>
     </form>
 
-    <!-- Summary -->
+    <!-- OUTPUTS -->
     <section aria-live="polite" class="grid grid-12" style="margin-top:1rem">
       <div class="span-4 soft">
         <h3 style="margin:.25rem 0">FI Number</h3>
         <div><strong id="fiNumber">$0</strong></div>
-        <small class="muted">Spending ÷ withdrawal rate</small>
+        <small class="muted">FI = annual spending ÷ withdrawal rate.</small>
       </div>
       <div class="span-4 soft">
         <h3 style="margin:.25rem 0">Estimated FI date</h3>
@@ -139,282 +167,241 @@
       </div>
     </section>
 
-    <!-- Insight box -->
+    <!-- Insight -->
     <div class="card" id="insightBox" style="margin-top:1rem; display:none;">
       <strong>What speeds this up?</strong>
       <p id="insightText" class="muted" style="margin:.35rem 0 0 0;"></p>
     </div>
 
     <!-- Chart -->
-    <div class="card" style="margin-top:1rem;">
-      <canvas id="fiChart" height="160" aria-label="Net worth growth to FI line chart" role="img"></canvas>
+    <div class="card" style="margin-top:1rem">
+      <canvas id="fiChart" height="170" aria-label="Net worth growth to FI line chart" role="img"></canvas>
     </div>
 
     <!-- Table -->
     <div style="margin-top:1rem;overflow:auto">
       <table id="fiTable">
         <thead>
-          <tr>
-            <th style="text-align:left">Year</th>
-            <th style="text-align:right">End Balance</th>
-            <th style="text-align:right">Total Contribs</th>
-          </tr>
+          <tr><th style="text-align:left">Year</th><th style="text-align:right">End Balance</th><th style="text-align:right">Total Contribs</th></tr>
         </thead>
         <tbody></tbody>
       </table>
     </div>
 
-    <!-- Newsletter CTA (optional wire-up to Mailchimp/Netlify Forms) -->
-    <div class="soft" style="margin-top:1rem;">
-      <div class="row" style="align-items:center; justify-content:space-between;">
-        <div>
-          <strong>Get your plan by email</strong>
-          <div class="muted">Tips to reach FI sooner + new tools.</div>
-        </div>
-        <form id="ctaForm" class="row" onsubmit="event.preventDefault(); alert('Wire this to Mailchimp/Netlify Forms.');">
-          <input type="email" id="ctaEmail" placeholder="you@example.com" required style="min-width:260px;">
-          <button type="submit">Send my plan</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- Helper text -->
-    <details style="margin-top:1rem">
-      <summary>How this estimate works</summary>
-      <p style="margin-top:.5rem">
-        We project monthly compounding and monthly contributions. Your <em>FI Number</em> equals
-        annual spending divided by your chosen withdrawal rate. “Real” values remove inflation
-        so year-to-year amounts are comparable in purchasing power. “Coast-FI” is the date your
-        portfolio could coast (no new contributions) and still reach FI by the end of the horizon
-        at your selected real growth rate.
-      </p>
+    <!-- How to read outputs -->
+    <details class="soft" style="margin-top:1rem">
+      <summary><strong>How to read the outputs</strong></summary>
+      <ul style="margin:.75rem 0 0 1rem;line-height:1.55">
+        <li><strong>FI Number</strong> is your target nest egg to fund spending at your chosen withdrawal rate.</li>
+        <li><strong>Real vs Nominal</strong>: Real shows everything in today’s dollars (removes inflation).</li>
+        <li><strong>Half-FI</strong> ≈ halfway to the target; <strong>Coast-FI</strong> ≈ when compounding alone can carry you to FI.</li>
+        <li>Use <strong>“+ $200/mo”</strong> to see how small increases accelerate your FI date.</li>
+      </ul>
     </details>
   </section>
 </main>
 
 <footer><p style="text-align:center;padding:1rem;">&copy; 2025 FIRE and Life.</p></footer>
 
-<!-- Charts -->
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Newsletter soft-gate modal -->
+<div class="modal-backdrop" id="nlBackdrop" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitle">
+    <h3 id="nlTitle">Get the CSV + weekly FI tips</h3>
+    <p class="muted" style="margin:.25rem 0 1rem">Enter your email to receive the download and our best calculators & guides (1–2 emails/week). Unsubscribe anytime.</p>
+    <!-- Replace the form below with your Mailchimp embed ACTION & hidden fields if you wish -->
+    <form id="nlForm" class="grid" style="grid-template-columns:1fr auto; gap:.5rem">
+      <input id="nlEmail" type="email" placeholder="you@example.com" required />
+      <button class="btn" type="submit">Send the CSV</button>
+      <small class="muted span-12">We’ll store a cookie so you won’t be asked again on this device.</small>
+    </form>
+    <div class="row" style="margin-top:.75rem;justify-content:space-between">
+      <button class="btn secondary" id="nlCloseBtn" type="button">Maybe later</button>
+    </div>
+  </div>
+</div>
+
 <script>
 (() => {
-  const $ = (id) => document.getElementById(id);
-  const fmt = (n) => n.toLocaleString(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-  const mRate = (annualPct) => Math.pow(1 + (annualPct/100), 1/12) - 1;
+  const $ = (id)=>document.getElementById(id);
+  const fmt = (n)=> n.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});
+  const mRate = (a)=> Math.pow(1 + (a/100), 1/12) - 1;
 
-  function simulate({ startBal, contribMonthly, contribBump, bumpYear, retPct, inflPct, useReal, spend, wrPct, maxYears }) {
+  function simulate({startBal,contribMonthly,contribBump,bumpYear,retPct,inflPct,useReal,spend,wrPct,maxYears}){
     const months = Math.max(12, Math.min(70*12, Math.floor(maxYears*12)));
-    const rNom = mRate(retPct);
-    const rInfl = mRate(inflPct);
-    const rReal = ((1 + rNom) / (1 + rInfl)) - 1;
-    const r = (useReal === 'real') ? rReal : rNom;
+    const rNom = mRate(retPct), rInfl = mRate(inflPct);
+    const rReal = ((1+rNom)/(1+rInfl))-1;
+    const r = (useReal==='real') ? rReal : rNom;
 
-    const bal = new Array(months+1).fill(0);
-    const totalContrib = new Array(months+1).fill(0);
-    bal[0] = startBal;
+    const bal = Array(months+1).fill(0);
+    const totalContrib = Array(months+1).fill(0);
+    bal[0]=startBal;
 
-    const FI = spend / (wrPct/100);
+    const FI = spend/(wrPct/100);
     const bumpMonth = Math.max(0, Math.floor(bumpYear*12));
 
-    for (let m = 1; m <= months; m++) {
-      const thisContrib = contribMonthly + (m >= bumpMonth ? contribBump : 0);
-      totalContrib[m] = totalContrib[m-1] + thisContrib;
-      bal[m] = bal[m-1] * (1 + r) + thisContrib;
+    for(let m=1;m<=months;m++){
+      const add = contribMonthly + (m>=bumpMonth ? contribBump : 0);
+      totalContrib[m]=totalContrib[m-1]+add;
+      bal[m]=bal[m-1]*(1+r)+add;
     }
 
-    const halfFI = FI / 2;
-    const findCross = (target) => {
-      for (let m=0; m<=months; m++) if (bal[m] >= target) return m;
-      return null;
-    };
+    const halfFI = FI/2;
+    const cross = (target)=>{ for(let m=0;m<=months;m++){ if(bal[m]>=target) return m; } return null; };
+    const fiMonth = cross(FI), halfFiMonth = cross(halfFI);
 
-    const fiMonth = findCross(FI);
-    const halfFiMonth = findCross(halfFI);
-
-    // Coast-FI (simple): earliest month where compounding alone reaches FI by end
-    let coastMonth = null;
-    for (let m = 0; m <= months; m++) {
-      const remain = months - m;
-      const future = bal[m] * Math.pow(1 + r, remain);
-      if (future >= FI) { coastMonth = m; break; }
+    // Coast-FI (simple)
+    let coastMonth=null;
+    for(let m=0;m<=months;m++){
+      const remain=months-m;
+      const future=bal[m]*Math.pow(1+r,remain);
+      if(future>=FI){coastMonth=m;break;}
     }
 
-    return { bal, totalContrib, months, r, FI, fiMonth, halfFiMonth, coastMonth };
+    return {bal,totalContrib,months,FI,fiMonth,halfFiMonth,coastMonth};
   }
 
-  const inputs = {
-    currentBalance: $('currentBalance'),
-    contributionMonthly: $('contributionMonthly'),
-    contributionBump: $('contributionBump'),
-    bumpYear: $('bumpYear'),
-    returnPct: $('returnPct'),
-    inflationPct: $('inflationPct'),
-    useReal: $('useReal'),
-    annualSpend: $('annualSpend'),
-    withdrawalRate: $('withdrawalRate'),
-    maxYears: $('maxYears'),
-    currentAge: $('currentAge'),
-    compare200: $('compare200'),
+  // inputs
+  const inputs={
+    currentBalance:$('currentBalance'),
+    contributionMonthly:$('contributionMonthly'),
+    contributionBump:$('contributionBump'),
+    bumpYear:$('bumpYear'),
+    returnPct:$('returnPct'),
+    inflationPct:$('inflationPct'),
+    useReal:$('useReal'),
+    annualSpend:$('annualSpend'),
+    withdrawalRate:$('withdrawalRate'),
+    maxYears:$('maxYears'),
+    currentAge:$('currentAge'),
+    compare200:$('compare200'),
   };
 
-  const fiNumberEl = $('fiNumber');
-  const fiDateEl = $('fiDate');
-  const fiYearsEl = $('fiYears');
-  const fiAgeNoteEl = $('fiAgeNote');
-  const halfFiDateEl = $('halfFiDate');
-  const coastFiDateEl = $('coastFiDate');
-  const tableBody = $('fiTable').querySelector('tbody');
-  const runBtn = $('runBtn');
-  const dlBtn = $('downloadCsvBtn');
-  const insightBox = $('insightBox');
-  const insightText = $('insightText');
+  // outputs
+  const fiNumberEl=$('fiNumber'), fiDateEl=$('fiDate'), fiYearsEl=$('fiYears'), fiAgeNoteEl=$('fiAgeNote');
+  const halfFiDateEl=$('halfFiDate'), coastFiDateEl=$('coastFiDate'), tableBody=document.querySelector('#fiTable tbody');
+  const insightBox=$('insightBox'), insightText=$('insightText');
 
-  const ctx = $('fiChart').getContext('2d');
-  let chart;
-
-  function renderChart(labels, baseBalances, FI, compBalances=null) {
-    const datasets = [
-      { label: 'Portfolio balance', data: baseBalances, borderWidth: 2, fill: false, tension: 0.15, pointRadius: 0 },
-      { label: 'FI target', data: baseBalances.map(() => FI), borderWidth: 1, borderDash: [6,6], fill: false, pointRadius: 0 }
+  // chart
+  const ctx=$('fiChart').getContext('2d'); let chart;
+  function renderChart(labels, base, FI, comp=null){
+    const datasets=[
+      {label:'Portfolio balance', data:base, borderWidth:2, fill:false, tension:.15, pointRadius:0},
+      {label:'FI target', data:base.map(()=>FI), borderWidth:1, borderDash:[6,6], fill:false, pointRadius:0}
     ];
-    if (Array.isArray(compBalances)) {
-      datasets.push({ label: 'Balance (+$200/mo)', data: compBalances, borderWidth: 2, fill: false, tension: 0.15, pointRadius: 0 });
-    }
-    const data = { labels, datasets };
-
+    if (Array.isArray(comp)){ datasets.push({label:'Balance (+$200/mo)', data:comp, borderWidth:2, fill:false, tension:.15, pointRadius:0}); }
     if (chart) chart.destroy();
-    chart = new Chart(ctx, {
-      type: 'line',
-      data,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: { mode: 'index', intersect: false },
-        plugins: {
-          legend: { display: true },
-          tooltip: {
-            callbacks: {
-              label: (ctx) => {
-                const label = ctx.dataset.label || '';
-                return `${label}: ${fmt(ctx.raw)}`;
-              }
-            }
-          }
-        },
-        scales: {
-          x: { title: { display: true, text: 'Year' } },
-          y: { title: { display: true, text: 'Balance' }, ticks: { callback: v => fmt(v) } }
-        }
-      }
-    });
+    chart=new Chart(ctx,{type:'line',data:{labels,datasets},options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index', intersect:false},
+      plugins:{legend:{display:true}, tooltip:{callbacks:{label:(c)=>`${c.dataset.label}: ${fmt(c.raw)}`}}},
+      scales:{x:{title:{display:true,text:'Year'}}, y:{title:{display:true,text:'Balance'}, ticks:{callback:v=>fmt(v)}}}
+    }});
   }
 
-  function ymdPlusMonths(d, months) { const dt = new Date(d.getTime()); dt.setMonth(dt.getMonth()+months); return dt; }
+  function ymdPlusMonths(d,m){const dt=new Date(d.getTime()); dt.setMonth(dt.getMonth()+m); return dt;}
 
-  function run() {
-    const now = new Date();
+  function run(){
+    const now=new Date();
 
-    const startBal = +inputs.currentBalance.value || 0;
-    const contribMonthly = +inputs.contributionMonthly.value || 0;
-    const contribBump = +inputs.contributionBump.value || 0;
-    const bumpYear = +inputs.bumpYear.value || 0;
+    const startBal=+inputs.currentBalance.value||0;
+    const contribMonthly=+inputs.contributionMonthly.value||0;
+    const contribBump=+inputs.contributionBump.value||0;
+    const bumpYear=+inputs.bumpYear.value||0;
+    const retPct=+inputs.returnPct.value||0;
+    const inflPct=+inputs.inflationPct.value||0;
+    const useReal=inputs.useReal.value;
+    const spend=+inputs.annualSpend.value||0;
+    const wrPct=+inputs.withdrawalRate.value||4.0;
+    const maxYears=+inputs.maxYears.value||50;
+    const currentAge=+inputs.currentAge.value||null;
 
-    const retPct = +inputs.returnPct.value || 0;
-    const inflPct = +inputs.inflationPct.value || 0;
-    const useReal = inputs.useReal.value;
+    const base=simulate({startBal,contribMonthly,contribBump,bumpYear,retPct,inflPct,useReal,spend,wrPct,maxYears});
+    const doComp=inputs.compare200.checked;
+    const comp= doComp ? simulate({startBal,contribMonthly:contribMonthly+200,contribBump,bumpYear,retPct,inflPct,useReal,spend,wrPct,maxYears}) : null;
 
-    const spend = +inputs.annualSpend.value || 0;
-    const wrPct = +inputs.withdrawalRate.value || 4.0;
-    const maxYears = +inputs.maxYears.value || 50;
-    const currentAge = +inputs.currentAge.value || null;
-
-    // Baseline sim
-    const res = simulate({ startBal, contribMonthly, contribBump, bumpYear, retPct, inflPct, useReal, spend, wrPct, maxYears });
-
-    // Comparison sim (+$200/mo)
-    const doCompare = inputs.compare200.checked;
-    let resComp = null;
-    if (doCompare) {
-      resComp = simulate({ startBal, contribMonthly: contribMonthly+200, contribBump, bumpYear, retPct, inflPct, useReal, spend, wrPct, maxYears });
+    // outputs
+    fiNumberEl.textContent=fmt(base.FI);
+    let fiText='Not reached in horizon', fiYears='—', ageNote='';
+    if (base.fiMonth!==null){
+      const d=ymdPlusMonths(now, base.fiMonth);
+      fiText=d.toLocaleDateString(undefined,{year:'numeric',month:'short'});
+      fiYears=(base.fiMonth/12).toFixed(1);
+      if (!Number.isNaN(currentAge)) ageNote=`Age at FI ≈ ${(currentAge + base.fiMonth/12).toFixed(1)}`;
     }
+    fiDateEl.textContent=fiText; fiYearsEl.textContent=fiYears; fiAgeNoteEl.textContent=ageNote;
+    const fmtMil=(m)=> m===null?'—': ymdPlusMonths(now,m).toLocaleDateString(undefined,{year:'numeric',month:'short'});
+    halfFiDateEl.textContent=fmtMil(base.halfFiMonth); coastFiDateEl.textContent=fmtMil(base.coastMonth);
 
-    // Summary numbers
-    fiNumberEl.textContent = fmt(res.FI);
-    let fiDateText = 'Not reached in horizon', fiYearsText = '—', ageNote = '';
-    if (res.fiMonth !== null) {
-      const fiDate = ymdPlusMonths(now, res.fiMonth);
-      fiDateText = fiDate.toLocaleDateString(undefined, { year:'numeric', month:'short' });
-      fiYearsText = (res.fiMonth/12).toFixed(1);
-      if (!Number.isNaN(currentAge)) ageNote = `Age at FI ≈ ${(currentAge + res.fiMonth/12).toFixed(1)}`;
-    }
-    fiDateEl.textContent = fiDateText;
-    fiYearsEl.textContent = fiYearsText;
-    fiAgeNoteEl.textContent = ageNote;
-
-    const fmtMilestone = (m) => m===null ? '—' : ymdPlusMonths(now, m).toLocaleDateString(undefined, { year:'numeric', month:'short' });
-    halfFiDateEl.textContent = fmtMilestone(res.halfFiMonth);
-    coastFiDateEl.textContent = fmtMilestone(res.coastMonth);
-
-    // Table (annual)
-    tableBody.innerHTML = '';
-    const labels = [];
-    const yearEndBalances = [];
-    const yearEndBalancesComp = [];
-    for (let y=1; y<=Math.ceil(res.months/12); y++) {
-      const idx = Math.min(y*12, res.months);
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${now.getFullYear()+y}</td>
-        <td style="text-align:right">${fmt(res.bal[idx])}</td>
-        <td style="text-align:right">${fmt(res.totalContrib[idx])}</td>
-      `;
+    // table & labels
+    tableBody.innerHTML=''; const labels=[], yearEnd=[], yearEndComp=[];
+    for(let y=1;y<=Math.ceil(base.months/12);y++){
+      const idx=Math.min(y*12, base.months);
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${now.getFullYear()+y}</td><td style="text-align:right">${fmt(base.bal[idx])}</td><td style="text-align:right">${fmt(base.totalContrib[idx])}</td>`;
       tableBody.appendChild(tr);
       labels.push(now.getFullYear()+y);
-      yearEndBalances.push(res.bal[idx]);
-      if (resComp) yearEndBalancesComp.push(resComp.bal[idx]);
+      yearEnd.push(base.bal[idx]);
+      if (comp) yearEndComp.push(comp.bal[idx]);
     }
 
-    // Chart
-    renderChart(labels, yearEndBalances, res.FI, resComp ? yearEndBalancesComp : null);
+    renderChart(labels, yearEnd, base.FI, comp?yearEndComp:null);
 
-    // Insight box (“what speeds this up?”)
-    if (resComp && res.fiMonth !== null && resComp.fiMonth !== null) {
-      const deltaMonths = res.fiMonth - resComp.fiMonth;
-      if (deltaMonths > 0) {
-        insightBox.style.display = 'block';
-        const yrs = (deltaMonths/12).toFixed(1);
-        insightText.textContent = `Adding $200/month could bring FI forward by about ${yrs} years (from ${fiDateEl.textContent} to ${ymdPlusMonths(now, resComp.fiMonth).toLocaleDateString(undefined,{year:'numeric',month:'short'})}).`;
-      } else {
-        insightBox.style.display = 'none';
-      }
-    } else {
-      insightBox.style.display = 'none';
-    }
+    // insight
+    if (comp && base.fiMonth!==null && comp.fiMonth!==null){
+      const delta=base.fiMonth-comp.fiMonth;
+      if (delta>0){
+        insightBox.style.display='block';
+        const yrs=(delta/12).toFixed(1);
+        insightText.textContent=`Adding $200/month could bring FI forward by about ${yrs} years (from ${fiDateEl.textContent} to ${ymdPlusMonths(now, comp.fiMonth).toLocaleDateString(undefined,{year:'numeric',month:'short'})}).`;
+      } else { insightBox.style.display='none'; }
+    } else { insightBox.style.display='none'; }
   }
 
-  document.querySelectorAll('#ere-form input, #ere-form select').forEach(el => {
-    el.addEventListener('input', run);
-    el.addEventListener('change', run);
+  // bind
+  document.querySelectorAll('#ere-form input, #ere-form select').forEach(el=>{
+    el.addEventListener('input', run); el.addEventListener('change', run);
   });
   $('runBtn').addEventListener('click', run);
 
-  // CSV export (from current table)
-  $('downloadCsvBtn').addEventListener('click', () => {
-    const rows = [['Year','End Balance','Total Contributions']];
-    document.querySelectorAll('#fiTable tbody tr').forEach(tr => {
-      const tds = tr.querySelectorAll('td');
-      const clean = (s) => s.replace(/[^0-9\.-]/g,'');
-      rows.push([tds[0].textContent, clean(tds[1].textContent), clean(tds[2].textContent)]);
-    });
-    const csv = rows.map(r => r.join(',')).join('\n');
-    const blob = new Blob([csv], { type:'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'early-retirement-estimator.csv'; a.click();
-    URL.revokeObjectURL(url);
+  // CSV (soft-gate)
+  const subscribed = ()=> localStorage.getItem('lf_subscribed')==='true';
+  const openNL = ()=> { const b=$('nlBackdrop'); b.style.display='flex'; b.setAttribute('aria-hidden','false'); };
+  const closeNL = ()=> { const b=$('nlBackdrop'); b.style.display='none'; b.setAttribute('aria-hidden','true'); };
+
+  $('downloadCsvBtn').addEventListener('click', ()=>{
+    if (!subscribed()) { openNL(); return; }
+    downloadCsv();
   });
 
-  // initial render
+  $('nlCloseBtn').addEventListener('click', closeNL);
+
+  // Replace with your Mailchimp form integration if desired:
+  $('nlForm').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    // TODO: swap for real subscribe call or embed
+    const email=$('nlEmail').value.trim();
+    if (!email) return;
+    localStorage.setItem('lf_subscribed','true');
+    closeNL();
+    setTimeout(downloadCsv, 250);
+  });
+
+  function downloadCsv(){
+    const rows=[['Year','End Balance','Total Contributions']];
+    document.querySelectorAll('#fiTable tbody tr').forEach(tr=>{
+      const tds=tr.querySelectorAll('td'); const clean=s=>s.replace(/[^0-9\.-]/g,'');
+      rows.push([tds[0].textContent, clean(tds[1].textContent), clean(tds[2].textContent)]);
+    });
+    const csv=rows.map(r=>r.join(',')).join('\n');
+    const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+    const url=URL.createObjectURL(blob); const a=document.createElement('a');
+    a.href=url; a.download='early-retirement-estimator.csv'; a.click(); URL.revokeObjectURL(url);
+  }
+
+  // first render
   run();
 })();
 </script>
