@@ -1,0 +1,11 @@
+<footer>
+  <p style="text-align:center;padding:1rem;">
+    &copy; <span id="year"></span> FIRE and Life ·
+    <a href="{{ '/privacy/' | relative_url }}">Privacy Policy</a> ·
+    <a href="{{ '/terms/' | relative_url }}">Terms</a><br/>
+    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
+  </p>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</footer>
