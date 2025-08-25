@@ -18,6 +18,14 @@ permalink: /blog/
     gtag('config', 'G-KHKJVXPJQM');
   </script>
   <!-- End Google Analytics -->
+  <style>
+    /* tiny helpers for the list archive */
+    .post-list {margin: 0; padding: 0; list-style: none;}
+    .post-list li {display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0; border-bottom:1px solid #eef2f7;}
+    .post-list a {text-decoration:none;}
+    .post-date {color:#64748b; white-space:nowrap;}
+    .grid-cards {display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem;}
+  </style>
 </head>
 <body>
 <header>
@@ -46,25 +54,25 @@ permalink: /blog/
   <section class="section" style="padding:1.25rem 0 0;">
     <article class="card" style="margin:1rem 0;">
       <h2 style="margin-bottom:.25rem;">
-        <a href="/blog/why-fi-is-more-than-the-4-percent-rule/">Why FI Is More Than the 4% Rule</a>
+        <a href="/blog/tracking-net-worth-simple-way.html">Tracking Your Net Worth (the Simple Way)</a>
       </h2>
       <p style="color:#555;margin-bottom:.75rem;">
-        The 4% rule is a helpful starting point—but real FI means planning for taxes, volatility, healthcare, and changing life goals. Here’s how FlexFI reframes it.
+        A lightweight method to track assets, debts, and FI-eligible dollars—plus the free Net Worth Tracker you can use today.
       </p>
-      <a class="btn" href="/blog/why-fi-is-more-than-the-4-percent-rule/">Read More →</a>
+      <a class="btn" href="/blog/tracking-net-worth-simple-way.html">Read More →</a>
     </article>
   </section>
 
-  <!-- All posts list -->
+  <!-- Recent posts in cards -->
   <section class="section" style="padding:1.25rem 0;">
-    <h2 style="margin-bottom:.5rem;">All Posts</h2>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;">
+    <h2 style="margin-bottom:.5rem;">Recent posts</h2>
 
+    <div class="grid-cards">
       <article class="card">
         <h3 style="margin-bottom:.25rem;">
           <a href="/blog/why-fi-is-more-than-the-4-percent-rule/">Why FI Is More Than the 4% Rule</a>
         </h3>
-        <p style="color:#555;">Think beyond a single withdrawal rate. Use FlexFI to adapt to taxes, volatility, and changing life priorities.</p>
+        <p style="color:#555;">The 4% rule is a helpful starting point—but real FI means planning for taxes, volatility, healthcare, and changing life goals. Here’s how FlexFI reframes it.</p>
         <a class="btn btn-secondary" href="/blog/why-fi-is-more-than-the-4-percent-rule/">Read →</a>
       </article>
 
@@ -99,25 +107,29 @@ permalink: /blog/
         <p style="color:#555;">Understand the math behind FI, your number, and how small changes move the timeline.</p>
         <a class="btn btn-secondary" href="/blog/fi-formula-explained.html">Read →</a>
       </article>
-
-      <article class="card">
-        <h3 style="margin-bottom:.25rem;">
-          <a href="/blog/finding-purpose-on-fi/">Finding Purpose on the Path to FI</a>
-        </h3>
-        <p style="color:#555;">Money is a means—not the end. Ideas for aligning goals with a meaningful life now.</p>
-        <a class="btn btn-secondary" href="/blog/finding-purpose-on-fi/">Read →</a>
-      </article>
-
     </div>
   </section>
+
+  <!-- Older posts: compact list -->
+  <section class="section" style="padding:1.25rem 0;">
+    <h2 style="margin-bottom:.5rem;">Older posts</h2>
+    <ul class="post-list">
+      <li>
+        <a href="/blog/finding-purpose-on-fi/">Finding Purpose on the Path to FI</a>
+        <span class="post-date">2025</span>
+      </li>
+      <!-- Add more past posts here as your archive grows -->
+    </ul>
+  </section>
+
   <section class="newsletter" style="margin-top:2rem;">
-  <h2>Join Our Newsletter</h2>
-  <p>Get tools, calculators, and real-world scenarios for Financial Independence—without losing sight of life today.</p>
-  <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
-    <input type="email" name="EMAIL" placeholder="Your email address" required />
-    <button type="submit">Subscribe</button>
-  </form>
-</section>
+    <h2>Join Our Newsletter</h2>
+    <p>Get tools, calculators, and real-world scenarios for Financial Independence—without losing sight of life today.</p>
+    <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+      <input type="email" name="EMAIL" placeholder="Your email address" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
 </main>
 
 <footer>
