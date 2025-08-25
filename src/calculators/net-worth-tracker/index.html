@@ -60,6 +60,49 @@
       .quick .full{grid-column:1 / -1}
       .chart-card canvas{ height:180px !important; max-height:180px !important; }
     }
+
+    /* ===== BUTTON LABEL VISIBILITY: local hard override ===== */
+    /* Tabs: dark text when inactive, white when active (Safari-safe) */
+    .tabs > button {
+      color: #0f172a !important;
+      -webkit-text-fill-color: #0f172a !important;
+      background: #fff !important;
+      border: 1px solid #cbd5e1 !important;
+    }
+    .tabs > button.active {
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff !important;
+      background: #0f172a !important;
+      border-color: #0f172a !important;
+    }
+
+    /* Table action buttons: Edit/Delete */
+    td.actions > button,
+    .actions > button {
+      color: #0f172a !important;
+      -webkit-text-fill-color: #0f172a !important;
+      background: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
+      border-radius: .35rem !important;
+      padding: .35rem .55rem !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      line-height: 1.2 !important;
+    }
+    td.actions > button + button,
+    .actions > button + button { margin-left: .35rem !important; }
+
+    /* Keep the orange “Add” button white-on-coral */
+    #qAdd.btn {
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff !important;
+    }
+
+    /* Nuke any icon pseudo-elements that might hide labels */
+    .tabs > button::before, .tabs > button::after,
+    td.actions > button::before, td.actions > button::after {
+      content: none !important;
+    }
   </style>
 </head>
 <body>
@@ -271,3 +314,4 @@
 <script src="/calculators/net-worth-tracker.inline.js" defer></script>
 </body>
 </html>
+
