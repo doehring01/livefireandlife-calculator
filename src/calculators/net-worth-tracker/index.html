@@ -151,7 +151,7 @@
 <!-- FAB: Add item -->
 <button id="openFormFab" class="btn fab" aria-haspopup="dialog" aria-controls="itemModal">＋ Add item</button>
 
-<!-- Modal: Add/Edit item (improved inputs) -->
+<!-- Modal: Add/Edit item -->
 <div class="backdrop" id="backdrop" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <h3 id="modalTitle" style="margin:.25rem 0">Add or Edit Item</h3>
@@ -382,7 +382,14 @@
   }
   function closeModal(){ backdrop.style.display='none'; backdrop.setAttribute('aria-hidden','true'); }
 
-  const onTableClick = (e)=>{
+  // Open/close bindings (no duplicate declarations)
+  openFormFab.addEventListener('click', ()=> openModal());
+  cancelBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', (e)=> { if (e.target===backdrop) closeModal(); });
+  document.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeModal(); });
+
+  // Table actions → open modal prefilled / delete
+  function onTableClick(e){
     const btn = e.target.closest('button[data-act]');
     if (!btn) return;
     const id  = btn.getAttribute('data-id');
@@ -391,7 +398,9 @@
     if (!it) return;
     if (act==='edit'){ openModal(it); }
     if (act==='del'){ items = items.filter(x=>x.id!==id); saveItems(items); renderLists(); }
-  };
+  }
+  assetsBody.addEventListener('click', onTableClick);
+  liabilitiesBody.addEventListener('click', onTableClick);
 
   // Save helpers
   function persistEntry(id){
@@ -408,15 +417,6 @@
     saveItems(items);
     renderLists();
   }
-
-  // Bind modal & tables
-  const openFormFab = $('openFormFab');
-  openFormFab.addEventListener('click', ()=> openModal());
-  const cancelBtn = $('cancelBtn');
-  cancelBtn.addEventListener('click', closeModal);
-  backdrop.addEventListener('click', (e)=> { if (e.target===backdrop) closeModal(); });
-  assetsBody.addEventListener('click', onTableClick);
-  liabilitiesBody.addEventListener('click', onTableClick);
 
   // Form submit
   itemForm.addEventListener('submit', (e)=>{
@@ -456,11 +456,7 @@
   });
 
   // ===== Initial render =====
-  function renderMixPieInit(){ renderMixPie(); } // helper for clarity
-  function init(){
-    renderLists(); renderHistory(); renderMixPieInit();
-  }
-  init();
+  renderLists(); renderHistory();
 })();
 </script>
 </body>
