@@ -475,3 +475,40 @@ button, .btn, .actions button, .tabs button { font-weight:600; }
 
 /* optional: spacing between Edit/Delete */
 .actions button + button { margin-left:.35rem !important; }
+
+/* --- Fix invisible labels (strong overrides) --- */
+
+/* Tabs: force dark text when NOT active, white text when active */
+.tabs > button:not(.active) {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  background: #fff !important;
+  border: 1px solid #cbd5e1 !important;
+}
+.tabs > button.active {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  background: #0f172a !important;
+  border-color: #0f172a !important;
+}
+
+/* Row action buttons (Edit/Delete) */
+td.actions > button {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  background: #fff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: .35rem !important;
+  padding: .35rem .55rem !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+td.actions > button + button { margin-left: .35rem !important; }
+
+/* Nuke any icon-only pseudo-elements that might mask text */
+.tabs > button::before, .tabs > button::after,
+td.actions > button::before, td.actions > button::after {
+  content: none !important;
+}
+
