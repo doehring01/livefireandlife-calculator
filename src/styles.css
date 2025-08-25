@@ -435,3 +435,43 @@ button, .btn, .actions button, .tabs button {
 /* Optional: make button text a touch bolder for readability */
 button, .btn, .actions button, .tabs button { font-weight:600; }
 
+
+/* --- BUTTON TEXT HOTFIX (force visible labels) --- */
+.tabs button, .actions button, .btn {
+  /* make sure real text is used, not hidden */
+  color: #0f172a !important;                     /* dark ink */
+  -webkit-text-fill-color: #0f172a !important;   /* Safari fix */
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  letter-spacing: normal !important;
+  text-indent: 0 !important;
+  text-transform: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  visibility: visible !important;
+  overflow: visible !important;
+  background-clip: border-box !important;
+  -webkit-background-clip: border-box !important;
+}
+
+/* inactive vs active tabs */
+.tabs button { background:#fff; border:1px solid #cbd5e1; color:#0f172a !important; }
+.tabs button.active { background:#0f172a; border-color:#0f172a; color:#fff !important; }
+
+/* row action buttons */
+.actions button{
+  background:#fff !important;
+  border:1px solid #cbd5e1 !important;
+  border-radius:.35rem !important;
+  padding:.35rem .55rem !important;
+}
+
+/* kill icon-only pseudo elements that may hide text */
+.tabs button::before, .tabs button::after,
+.actions button::before, .actions button::after {
+  content: none !important;
+}
+
+/* optional: spacing between Edit/Delete */
+.actions button + button { margin-left:.35rem !important; }
