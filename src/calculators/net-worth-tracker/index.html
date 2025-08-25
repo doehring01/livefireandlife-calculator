@@ -44,14 +44,16 @@
     label{display:block;font-weight:600;margin-bottom:.25rem}
     input,select{width:100%;padding:.7rem .75rem;border:1px solid #cfd8e3;border-radius:.4rem;font-size:16px;background:#fff}
     small.help{display:block;color:var(--muted);margin-top:.25rem;font-size:.85rem;line-height:1.3}
-    /* FAB */
-    .fab{position:fixed;right:16px;bottom:16px;border-radius:999px;padding:.85rem 1rem;box-shadow:0 6px 18px rgba(0,0,0,.15)}
     /* Toast */
     #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;padding:.6rem .9rem;border-radius:.5rem;opacity:0;pointer-events:none;transition:opacity .25s;z-index:60}
-    /* Mobile */
+    /* Quick add row */
+    .quick{display:grid;grid-template-columns: 1fr 1fr 2fr 1fr 1fr auto; gap:.5rem; align-items:end}
+    .quick .btn{height:42px}
     @media (max-width: 800px){
       .grid-12{grid-template-columns:repeat(6,1fr)}
       .span-6,.span-4,.span-3,.span-12{grid-column:1 / -1}
+      .quick{grid-template-columns: 1fr 1fr; }
+      .quick .full{grid-column:1 / -1}
     }
   </style>
 </head>
@@ -89,6 +91,42 @@
 
   <!-- Tab: Accounts -->
   <section id="tab-items">
+    <!-- Quick Add row -->
+    <div class="card" style="margin-bottom:.75rem">
+      <h3 style="margin:.25rem 0">Quick add</h3>
+      <div class="quick">
+        <div>
+          <label for="qType">Type</label>
+          <select id="qType"><option value="asset">Asset</option><option value="liability">Liability</option></select>
+        </div>
+        <div>
+          <label for="qCategory">Category</label>
+          <select id="qCategory">
+            <option>Checking</option><option>Savings</option><option>Brokerage</option>
+            <option>401k/IRA</option><option>HSA</option><option>Home Equity</option>
+            <option>Car</option><option>Other</option>
+          </select>
+        </div>
+        <div class="full">
+          <label for="qName">Name</label>
+          <input id="qName" type="text" placeholder="e.g., Vanguard Brokerage"/>
+        </div>
+        <div>
+          <label for="qAmount">Amount</label>
+          <input id="qAmount" type="number" inputmode="decimal" step="0.01" min="0" value="0"/>
+        </div>
+        <div>
+          <label for="qFi">Counts toward FI?</label>
+          <select id="qFi"><option value="yes" selected>Yes</option><option value="no">No</option></select>
+        </div>
+        <div>
+          <label>&nbsp;</label>
+          <button id="qAdd" class="btn" type="button">Add</button>
+        </div>
+      </div>
+      <small class="muted" style="display:block;margin-top:.5rem">Tip: Primary home/car are usually <em>not</em> FI-eligible, but you can override.</small>
+    </div>
+
     <div class="grid grid-12">
       <div class="span-6 card">
         <h3 style="margin:.25rem 0">Asset Mix</h3>
@@ -109,14 +147,6 @@
             <thead><tr><th style="text-align:left">Name</th><th>Category</th><th style="text-align:center">—</th><th style="text-align:right">Amount</th><th style="text-align:right">Actions</th></tr></thead>
             <tbody id="liabilitiesBody"></tbody>
           </table>
-        </details>
-        <details class="soft" style="margin-top:.5rem">
-          <summary><strong>What counts as an asset vs liability?</strong></summary>
-          <ul class="muted" style="margin:.6rem 0 0 1rem;line-height:1.55">
-            <li><strong>Assets:</strong> Checking, Savings, Brokerage, 401k/IRA/HSA, Cash value policy, Home equity, Car value</li>
-            <li><strong>Liabilities:</strong> Mortgage, Student loans, Auto loans, Credit cards, Personal loans</li>
-            <li><strong>FI-eligible:</strong> Usually Brokerage, 401k/IRA/HSA, Cash. Primary home & car typically <em>not</em> counted, but you can override.</li>
-          </ul>
         </details>
       </div>
     </div>
@@ -148,19 +178,16 @@
   </section>
 </main>
 
-<!-- FAB: Add item -->
-<button id="openFormFab" class="btn fab" aria-haspopup="dialog" aria-controls="itemModal">＋ Add item</button>
-
-<!-- Modal: Add/Edit item -->
+<!-- Modal: Edit item only -->
 <div class="backdrop" id="backdrop" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <h3 id="modalTitle" style="margin:.25rem 0">Add or Edit Item</h3>
+    <h3 id="modalTitle" style="margin:.25rem 0">Edit Item</h3>
     <form id="itemForm" class="grid" style="grid-template-columns:repeat(2,1fr); gap:.75rem; align-items:end">
       <input type="hidden" id="editId" value="">
       <div class="span-12">
         <label for="itemType">Type</label>
         <select id="itemType">
-          <option value="asset" selected>Asset</option>
+          <option value="asset">Asset</option>
           <option value="liability">Liability</option>
         </select>
       </div>
@@ -175,7 +202,7 @@
       <div>
         <label for="itemCountsFi">Counts toward FI?</label>
         <select id="itemCountsFi">
-          <option value="yes" selected>Yes</option>
+          <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
         <small class="help">Primary home/car usually “No”.</small>
@@ -189,13 +216,13 @@
         <input id="itemAmount" type="number" inputmode="decimal" step="0.01" min="0" value="0" />
       </div>
       <div class="span-12" style="display:flex;gap:.5rem;flex-wrap:wrap">
-        <button class="btn" type="submit" id="saveBtn">Save item</button>
-        <button class="btn secondary" type="button" id="saveAddBtn">Save & add another</button>
+        <button class="btn" type="submit" id="saveBtn">Update item</button>
         <button class="btn secondary" type="button" id="cancelBtn">Cancel</button>
       </div>
     </form>
   </div>
 </div>
+
 <!-- tiny toast -->
 <div id="toast">Saved</div>
 
@@ -263,13 +290,15 @@
   const netWorthEl = $('netWorth');
   const fiEligibleTotalEl = $('fiEligibleTotal');
 
-  // Modal refs
+  // Quick add refs
+  const qType=$('qType'), qCategory=$('qCategory'), qName=$('qName'), qAmount=$('qAmount'), qFi=$('qFi'), qAdd=$('qAdd');
+
+  // Modal refs (edit only)
   const backdrop = $('backdrop');
-  const openFormFab = $('openFormFab');
   const itemForm = $('itemForm');
   const editId = $('editId'), itemType = $('itemType'), itemCategory = $('itemCategory'),
         itemCountsFi = $('itemCountsFi'), itemName = $('itemName'), itemAmount = $('itemAmount'),
-        saveBtn = $('saveBtn'), cancelBtn = $('cancelBtn'), saveAddBtn = $('saveAddBtn');
+        saveBtn = $('saveBtn'), cancelBtn = $('cancelBtn');
 
   // Tabs
   document.querySelectorAll('.tabs button').forEach(btn=>{
@@ -360,35 +389,46 @@
       options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>fmt(v)}}}});
   }
 
-  // ===== Modal logic (autofocus & defaults) =====
-  function openModal(editItem=null){
+  // ===== Quick add logic =====
+  function addQuick(){
+    const entry = {
+      id: uid(),
+      type: qType.value,
+      category: qCategory.value || 'Other',
+      name: (qName.value || '').trim() || (qType.value==='asset'?'Asset':'Liability'),
+      amount: parseFloat(qAmount.value || '0') || 0,
+      countsFi: (qType.value==='asset') ? (qFi.value==='yes') : false
+    };
+    items.push(entry);
+    saveItems(items);
+    renderLists();
+    showToast('Item added');
+    qName.value=''; qAmount.value='0'; // keep type/category/fI for faster entry
+    qName.focus();
+  }
+  qAdd.addEventListener('click', addQuick);
+  qName.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addQuick(); }});
+  qAmount.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addQuick(); }});
+
+  // ===== Modal logic (edit) =====
+  function openModal(editItem){
+    if (!editItem) return;
     backdrop.style.display='flex'; backdrop.setAttribute('aria-hidden','false');
-    if (editItem){
-      $('modalTitle').textContent='Edit Item';
-      editId.value = editItem.id;
-      itemType.value = editItem.type;
-      itemCategory.value = editItem.category || 'Other';
-      itemCountsFi.value = editItem.countsFi ? 'yes' : 'no';
-      itemName.value = editItem.name || '';
-      itemAmount.value = (editItem.amount ?? 0);
-      saveBtn.textContent='Update item';
-    } else {
-      $('modalTitle').textContent='Add Item';
-      editId.value=''; itemType.value='asset'; itemCategory.value='Checking';
-      itemCountsFi.value='yes'; itemName.value=''; itemAmount.value='0';
-      saveBtn.textContent='Save item';
-    }
+    $('modalTitle').textContent='Edit Item';
+    editId.value = editItem.id;
+    itemType.value = editItem.type;
+    itemCategory.value = editItem.category || 'Other';
+    itemCountsFi.value = editItem.countsFi ? 'yes' : 'no';
+    itemName.value = editItem.name || '';
+    itemAmount.value = (editItem.amount ?? 0);
+    saveBtn.textContent='Update item';
     setTimeout(()=> itemName.focus(), 50);
   }
   function closeModal(){ backdrop.style.display='none'; backdrop.setAttribute('aria-hidden','true'); }
-
-  // Open/close bindings (no duplicate declarations)
-  openFormFab.addEventListener('click', ()=> openModal());
   cancelBtn.addEventListener('click', closeModal);
   backdrop.addEventListener('click', (e)=> { if (e.target===backdrop) closeModal(); });
   document.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeModal(); });
 
-  // Table actions → open modal prefilled / delete
   function onTableClick(e){
     const btn = e.target.closest('button[data-act]');
     if (!btn) return;
@@ -402,36 +442,22 @@
   assetsBody.addEventListener('click', onTableClick);
   liabilitiesBody.addEventListener('click', onTableClick);
 
-  // Save helpers
-  function persistEntry(id){
+  itemForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const id = editId.value.trim();
     const entry = {
-      id: id || uid(),
+      id,
       type: itemType.value,
       category: itemCategory.value || 'Other',
       name: (itemName.value || '').trim() || (itemType.value==='asset'?'Asset':'Liability'),
       amount: parseFloat(itemAmount.value || '0') || 0,
       countsFi: (itemType.value==='asset') ? (itemCountsFi.value==='yes') : false
     };
-    if (id){ items = items.map(it => it.id===id ? entry : it); }
-    else { items.push(entry); }
+    items = items.map(it => it.id===id ? entry : it);
     saveItems(items);
     renderLists();
-  }
-
-  // Form submit
-  itemForm.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const id = editId.value.trim();
-    persistEntry(id);
-    showToast(id ? 'Updated' : 'Item added');
+    showToast('Updated');
     closeModal();
-  });
-  saveAddBtn.addEventListener('click', ()=>{
-    const id = editId.value.trim();
-    persistEntry(id);
-    showToast('Item added');
-    editId.value=''; itemName.value=''; itemAmount.value='0'; saveBtn.textContent='Save item';
-    setTimeout(()=> itemName.focus(), 50);
   });
 
   // ===== History actions =====
