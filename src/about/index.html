@@ -1,15 +1,11 @@
----
-permalink: /about/index.html
----
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>About • FIRE and Life</title>
-  <meta name="description" content="About FIRE and Life: tools, calculators, and real-world scenarios to pursue Financial Independence without sacrificing a life well-lived." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About • FIREandLife</title>
+  <meta name="description" content="FIREandLife helps you pursue Financial Independence with flexible, real-life planning. Learn our FlexFI philosophy and meet the creator." />
+  <link rel="icon" href="/assets/favicon.png">
   <link rel="stylesheet" href="/styles.css" />
 
   <!-- Google Analytics -->
@@ -17,10 +13,8 @@ permalink: /about/index.html
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-KHKJVXPJQM');
+    gtag('js', new Date()); gtag('config', 'G-KHKJVXPJQM');
   </script>
-  <!-- End GA -->
 </head>
 <body>
 <header>
@@ -33,63 +27,146 @@ permalink: /about/index.html
       <li><a href="/calculators/">Calculators</a></li>
       <li><a href="/blog/">Blog</a></li>
       <li><a href="/flexfi/">FlexFI</a></li>
-      <li><a href="/about/" aria-current="page">About</a></li>
+      <li><a href="/about/" class="active">About</a></li>
       <li><a href="/contact/">Contact</a></li>
     </ul>
   </nav>
 </header>
 
-<main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
-  <h1>About FIRE and Life</h1>
-  <p>
-    FIRE and Life exists to make Financial Independence practical and humane. We build calculators, 
-    write scenario-based posts, and share tools that help you move toward FI—without sacrificing the seasons of life that matter most.
-  </p>
-
-  <section id="what-is-fi" class="section" style="scroll-margin-top: 90px;">
-    <h2>What is Financial Independence (FI)?</h2>
-    <p>
-      Financial Independence means your investments and passive income can cover your living expenses,
-      giving you the freedom to choose how you spend your time. Many people start with the “25× annual expenses”
-      rule of thumb (a 4% withdrawal rate) as a quick way to estimate an FI number—but your plan should reflect 
-      your life, not just a number.
-    </p>
-    <p>
-      At FIRE and Life we focus on <a href="/flexfi/">FlexFI</a>—adapting your plan to life’s seasons 
-      while still moving forward: starting a family, living in a high cost-of-living area, caring for parents, 
-      changing careers, or simply making space for what matters.
-    </p>
-    <p>
-      Ready to explore the numbers? Start with the 
-      <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> and 
-      our <a href="/blog/fi-formula-explained.html">FI Formula guide</a>.
-    </p>
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>About FIREandLife</h1>
+    <p>We help you pursue Financial Independence without sacrificing the seasons of life that matter most. That’s FlexFI.</p>
+    <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;">
+      <a class="btn" href="/calculators/">Explore Calculators</a>
+      <a class="btn btn-secondary" href="/blog/">Read the Blog</a>
+    </div>
   </section>
 
+  <!-- Mission -->
   <section class="section">
-    <h2>Our approach</h2>
-    <ul style="margin-left:1rem; line-height:1.8;">
-      <li><strong>Clarity over complexity:</strong> simple tools and clear assumptions.</li>
-      <li><strong>Trade-offs, not dogma:</strong> tax optimization vs. real life today.</li>
-      <li><strong>FlexFI mindset:</strong> your plan can adapt and still make progress.</li>
-    </ul>
-  </section>
-
-  <section class="section">
-    <h2>Say hello</h2>
+    <h2>Our Mission</h2>
     <p>
-      Questions, feedback, or partnership ideas? We’d love to hear from you—reach out on the 
-      <a href="/contact/">contact page</a>.
+      Traditional FI advice often locks you into one rigid path: maximize savings, wait it out, and <em>then</em> live. We think there’s a better way.
+      <strong>FlexFI</strong> is a practical, adaptable approach that lets you keep moving toward FI while adjusting to real life—kids, careers, health, and changing priorities.
     </p>
   </section>
-  <section class="newsletter" style="margin-top:2rem;">
-  <h2>Join Our Newsletter</h2>
-  <p>Get tools, calculators, and real-world scenarios for Financial Independence—without losing sight of life today.</p>
-  <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
-    <input type="email" name="EMAIL" placeholder="Your email address" required />
-    <button type="submit">Subscribe</button>
-  </form>
-</section>
+
+  <!-- Pillars / What Makes Us Different -->
+  <section class="section">
+    <h2>The FlexFI Principles</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>1) Adapt by Season</h3>
+        <p>Dial savings up or down as life changes—without losing sight of the long-term plan.</p>
+      </article>
+      <article class="card">
+        <h3>2) Plan for Reality</h3>
+        <p>Taxes, healthcare, sequence risk, childcare—our tools and posts factor in the messy stuff.</p>
+      </article>
+      <article class="card">
+        <h3>3) Measure What Matters</h3>
+        <p>Track both total net worth and <em>FI-eligible</em> assets so your number actually reflects spending power.</p>
+      </article>
+      <article class="card">
+        <h3>4) Simple > Perfect</h3>
+        <p>Clear calculators and scenarios you can use today beat spreadsheets you’ll never open.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Tools highlight -->
+  <section class="section">
+    <h2>Built for Action</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>Net Worth Tracker</h3>
+        <p>Track assets and liabilities, and mark which assets count toward FI.</p>
+        <a class="btn" href="/calculators/net-worth-tracker/">Track Now</a>
+      </article>
+      <article class="card">
+        <h3>Take-Home Pay Calculator</h3>
+        <p>See your real paycheck after tax, benefits, and contribution changes.</p>
+        <a class="btn" href="/calculators/take-home-pay/">Try It</a>
+      </article>
+      <article class="card">
+        <h3>Early Retirement Estimator</h3>
+        <p>Estimate how long until you hit your FI number—then pressure-test it.</p>
+        <a class="btn" href="/calculators/early-retirement-estimator/">Plan Ahead</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- Founder bio (optional headshot) -->
+  <section class="section">
+    <h2>Who’s Behind This</h2>
+    <div class="grid">
+      <article class="card" style="display:flex;gap:1rem;align-items:flex-start;">
+        <img src="/assets/founder.jpg" alt="Founder headshot" style="width:96px;height:96px;object-fit:cover;border-radius:50%;border:1px solid #eee;" onerror="this.style.display='none'">
+        <div>
+          <h3 style="margin-top:0;">Hi, I’m the human behind FIREandLife.</h3>
+          <p>
+            I’m a long-time finance nerd and builder of practical tools. I started FIREandLife to share clear, scenario-based planning that embraces trade-offs—
+            because money is a means, not the end. I write the posts and build the calculators. Everything here is for education only; please
+            consider professional advice for your specific situation.
+          </p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+            <a class="btn btn-secondary" href="/contact/">Get in touch</a>
+            <a class="btn" href="/blog/">Latest from the blog</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Trust / promises -->
+  <section class="section">
+    <h2>What You Can Expect</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>No Hype</h3>
+        <p>Clear math. Real trade-offs. No “one magic number.”</p>
+      </article>
+      <article class="card">
+        <h3>Privacy First</h3>
+        <p>Calculators run in your browser. We don’t see your inputs.</p>
+      </article>
+      <article class="card">
+        <h3>Continuous Improvement</h3>
+        <p>We iterate quickly based on reader feedback and real-world use.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <h2>FAQ</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>What is FlexFI?</h3>
+        <p>It’s a flexible approach to FI that adapts savings, spending, and investing to life’s seasons while still moving you forward.</p>
+      </article>
+      <article class="card">
+        <h3>Are these calculators free?</h3>
+        <p>Yes. They’re free to use. Some downloads (like CSV exports) may be soft-gated to our newsletter so you don’t miss updates.</p>
+      </article>
+      <article class="card">
+        <h3>Is this financial advice?</h3>
+        <p>No—everything here is educational. Consider hiring a qualified professional for advice tailored to you.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Newsletter CTA -->
+  <section class="newsletter">
+    <h2>Join Our Newsletter</h2>
+    <p>Tools, calculators, and real-world scenarios—delivered occasionally, no spam.</p>
+    <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+      <input type="email" name="EMAIL" placeholder="Your email address" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
 </main>
 
 <footer>
