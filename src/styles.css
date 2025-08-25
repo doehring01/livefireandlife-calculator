@@ -359,3 +359,25 @@ footer .legal-links a { color: #666; text-decoration: underline; }
     display: inline-block;
   }
 }
+
+
+/* Compact charts */
+.chart-card{ padding:.75rem }
+.chart-card h3{ margin:.1rem 0 }
+.chart-card small{ margin-bottom:.25rem; display:block }
+.chart-card canvas{
+  display:block;
+  width:100% !important;
+  height:200px !important;     /* <- shrink vertical height */
+  max-height:200px !important;
+}
+
+/* History chart a bit shorter on mobile */
+@media (max-width: 800px){
+  .chart-card canvas{ height:180px !important; max-height:180px !important; }
+}
+
+/* General spacing trims to reduce page length */
+.section-tight{ margin-bottom:.75rem }
+.summary{ margin-bottom:.5rem }
+details.accordion{ margin-top:.5rem }
