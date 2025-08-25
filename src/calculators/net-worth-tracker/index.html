@@ -19,27 +19,38 @@
     }
     body{background:var(--bg); color:var(--ink);}
     .container{max-width:1100px;margin:2rem auto;padding:0 1rem;}
-    .grid{display:grid; gap:1rem}
+    .grid{display:grid;gap:1rem}
     .grid-12{grid-template-columns:repeat(12,1fr)}
-    .span-12{grid-column:span 12} .span-8{grid-column:span 8} .span-6{grid-column:span 6} .span-4{grid-column:span 4}
+    .span-12{grid-column:span 12} .span-6{grid-column:span 6} .span-4{grid-column:span 4} .span-3{grid-column:span 3}
     .card{background:#fff;border:1px solid var(--border);border-radius:.6rem;padding:1rem}
     .soft{background:var(--soft);border:1px solid var(--border);border-radius:.6rem;padding:1rem}
-    label{display:block;font-weight:600;margin-bottom:.25rem}
-    input,select,button{width:100%;padding:.7rem .75rem;border:1px solid #cfd8e3;border-radius:.4rem;font-size:16px}
-    button{cursor:pointer}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:.6rem;border-bottom:1px solid #eef2f7; vertical-align:middle}
     .muted{color:var(--muted)}
-    .row{display:flex;gap:.5rem;flex-wrap:wrap}
-    .btn{background:var(--accent);color:var(--accent-ink);border:none}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:.55rem;border-bottom:1px solid #eef2f7;vertical-align:middle}
+    .actions button{padding:.35rem .55rem;border:1px solid #cbd5e1;border-radius:.35rem;background:#fff}
+    .btn{padding:.7rem .9rem;border:none;border-radius:.45rem;background:var(--accent);color:var(--accent-ink);font-size:16px;cursor:pointer}
     .btn.secondary{background:#fff;color:#111;border:1px solid #cbd5e1}
-    .actions button{padding:.35rem .55rem;font-size:.85rem}
+    .tabs{display:flex;gap:.5rem;margin:1rem 0}
+    .tabs button{background:#fff;border:1px solid #cbd5e1;border-radius:999px;padding:.5rem .9rem;cursor:pointer}
+    .tabs button.active{background:var(--ink);border-color:var(--ink);color:#fff}
+    /* Sticky summary bar */
+    .summary{position:sticky;top:0;z-index:10;background:var(--bg);padding:.5rem 0;margin-bottom:.5rem}
+    /* Accordions */
+    .accordion > summary{cursor:pointer;list-style:none;padding:.6rem .25rem;border-bottom:1px solid #eef2f7;font-weight:600}
+    .accordion[open] > summary{border-bottom:none}
+    /* Modal */
+    .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:1rem;z-index:50}
+    .modal{max-width:520px;width:100%;background:#fff;border:1px solid var(--border);border-radius:.7rem;padding:1rem}
+    label{display:block;font-weight:600;margin-bottom:.25rem}
+    input,select{width:100%;padding:.7rem .75rem;border:1px solid #cfd8e3;border-radius:.4rem;font-size:16px;background:#fff}
+    small.help{display:block;color:var(--muted);margin-top:.25rem;font-size:.85rem;line-height:1.3}
+    /* FAB */
+    .fab{position:fixed;right:16px;bottom:16px;border-radius:999px;padding:.85rem 1rem;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+    /* Mobile */
     @media (max-width: 800px){
       .grid-12{grid-template-columns:repeat(6,1fr)}
-      .span-8,.span-6,.span-4,.span-12{grid-column:1 / -1}
-      .row > *{flex:1 1 100%}
+      .span-6,.span-4,.span-3,.span-12{grid-column:1 / -1}
     }
-    .tag{display:inline-block; padding:.15rem .45rem; border:1px solid #e2e8f0; border-radius:999px; font-size:.8rem}
   </style>
 </head>
 <body>
@@ -58,169 +69,148 @@
 
 <main class="container">
   <h1>Net Worth Tracker</h1>
-  <p class="muted" style="margin:.25rem 0 1rem">Track your assets and liabilities privately in your browser. Take a monthly snapshot to build your history. Choose which assets <strong>count toward FI</strong> (for most people, home equity and cars do <em>not</em>).</p>
+  <p class="muted" style="margin:.25rem 0 1rem">Track your accounts privately in your browser. Mark which assets <strong>count toward FI</strong> (home equity/car usually don’t). Snapshot monthly to build your chart.</p>
 
-  <!-- Quick note with examples -->
-  <section class="soft" style="margin-bottom:1rem">
-    <strong>Examples</strong>
-    <div style="display:grid; gap:.5rem; margin-top:.5rem">
-      <div><span class="tag">Assets</span> Checking • Savings • Brokerage • 401(k)/IRA/HSA • Cash value life policy • Home equity • Car value</div>
-      <div><span class="tag">Liabilities</span> Mortgage balance • Student loans • Auto loans • Credit cards • Personal loans</div>
-      <div class="muted">FI-eligible assets typically <em>exclude</em> primary home/car values because they don’t generate spendable income. You can override this per item.</div>
+  <!-- Sticky summary -->
+  <section class="summary grid grid-12">
+    <div class="span-3 soft"><strong>Total Assets</strong><div id="totalAssets">$0</div></div>
+    <div class="span-3 soft"><strong>Total Liabilities</strong><div id="totalLiabilities">$0</div></div>
+    <div class="span-3 soft"><strong>Net Worth</strong><div id="netWorth">$0</div></div>
+    <div class="span-3 soft"><strong>FI-Eligible Assets</strong><div id="fiEligibleTotal">$0</div><small class="muted">Items marked “Counts toward FI.”</small></div>
+  </section>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="active" data-tab="items">Accounts</button>
+    <button data-tab="history">History</button>
+  </div>
+
+  <!-- Tab: Accounts -->
+  <section id="tab-items">
+    <div class="grid grid-12">
+      <div class="span-6 card">
+        <h3 style="margin:.25rem 0">Asset Mix</h3>
+        <small class="muted">FI-eligible vs not-eligible highlighted.</small>
+        <canvas id="mixChart" height="220" aria-label="Asset mix pie"></canvas>
+      </div>
+      <div class="span-6 card">
+        <details class="accordion" open>
+          <summary>Assets</summary>
+          <table>
+            <thead><tr><th style="text-align:left">Name</th><th>Category</th><th style="text-align:center">FI?</th><th style="text-align:right">Amount</th><th style="text-align:right">Actions</th></tr></thead>
+            <tbody id="assetsBody"></tbody>
+          </table>
+        </details>
+        <details class="accordion" open style="margin-top:.5rem">
+          <summary>Liabilities</summary>
+          <table>
+            <thead><tr><th style="text-align:left">Name</th><th>Category</th><th style="text-align:center">—</th><th style="text-align:right">Amount</th><th style="text-align:right">Actions</th></tr></thead>
+            <tbody id="liabilitiesBody"></tbody>
+          </table>
+        </details>
+        <details class="soft" style="margin-top:.5rem">
+          <summary><strong>What counts as an asset vs liability?</strong></summary>
+          <ul class="muted" style="margin:.6rem 0 0 1rem;line-height:1.55">
+            <li><strong>Assets:</strong> Checking, Savings, Brokerage, 401k/IRA/HSA, Cash value policy, Home equity, Car value</li>
+            <li><strong>Liabilities:</strong> Mortgage, Student loans, Auto loans, Credit cards, Personal loans</li>
+            <li><strong>FI-eligible:</strong> Usually Brokerage, 401k/IRA/HSA, Cash. Primary home & car typically <em>not</em> counted, but you can override.</li>
+          </ul>
+        </details>
+      </div>
     </div>
   </section>
 
-  <!-- Overview -->
-  <section class="grid grid-12">
-    <div class="span-3 soft">
-      <h3 style="margin:.25rem 0">Total Assets</h3>
-      <div><strong id="totalAssets">$0</strong></div>
-    </div>
-    <div class="span-3 soft">
-      <h3 style="margin:.25rem 0">Total Liabilities</h3>
-      <div><strong id="totalLiabilities">$0</strong></div>
-    </div>
-    <div class="span-3 soft">
-      <h3 style="margin:.25rem 0">Net Worth</h3>
-      <div><strong id="netWorth">$0</strong></div>
-    </div>
-    <div class="span-3 soft">
-      <h3 style="margin:.25rem 0">FI-Eligible Assets</h3>
-      <div><strong id="fiEligibleTotal">$0</strong></div>
-      <small class="muted">Sum of items marked “Counts toward FI.”</small>
+  <!-- Tab: History -->
+  <section id="tab-history" hidden>
+    <div class="card">
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:space-between;align-items:center">
+        <div>
+          <h3 style="margin:.25rem 0">Net Worth History</h3>
+          <div class="muted">Snapshot monthly to build your trend.</div>
+        </div>
+        <div class="row">
+          <button class="btn" id="snapshotBtn" type="button">Snapshot this month</button>
+          <button class="btn secondary" id="exportCsvBtn" type="button">Export CSV</button>
+        </div>
+      </div>
+      <div style="margin-top:1rem">
+        <canvas id="nwChart" height="210" aria-label="Net worth history"></canvas>
+      </div>
+      <div style="margin-top:1rem;overflow:auto">
+        <table>
+          <thead><tr><th style="text-align:left">Date</th><th style="text-align:right">Net Worth</th></tr></thead>
+          <tbody id="historyBody"></tbody>
+        </table>
+      </div>
     </div>
   </section>
+</main>
 
-  <!-- Add/Edit Item -->
-  <section class="card" style="margin-top:1rem">
-    <h3 style="margin:.25rem 0">Add or Edit an Item</h3>
-    <form id="itemForm" class="grid grid-12" style="align-items:end">
+<!-- FAB: Add item -->
+<button id="openFormFab" class="btn fab" aria-haspopup="dialog" aria-controls="itemModal">＋ Add item</button>
+
+<!-- Modal: Add/Edit item -->
+<div class="backdrop" id="backdrop" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h3 id="modalTitle" style="margin:.25rem 0">Add or Edit Item</h3>
+    <form id="itemForm" class="grid" style="grid-template-columns:repeat(2,1fr); gap:.75rem; align-items:end">
       <input type="hidden" id="editId" value="">
-      <div class="span-3">
+      <div class="span-12">
         <label for="itemType">Type</label>
         <select id="itemType">
           <option value="asset" selected>Asset</option>
           <option value="liability">Liability</option>
         </select>
       </div>
-      <div class="span-3">
+      <div>
         <label for="itemCategory">Category</label>
         <select id="itemCategory">
-          <option>Checking</option>
-          <option>Savings</option>
-          <option>Brokerage</option>
-          <option>401k/IRA</option>
-          <option>HSA</option>
-          <option>Home Equity</option>
-          <option>Car</option>
-          <option>Other</option>
+          <option>Checking</option><option>Savings</option><option>Brokerage</option>
+          <option>401k/IRA</option><option>HSA</option><option>Home Equity</option>
+          <option>Car</option><option>Other</option>
         </select>
       </div>
-      <div class="span-3">
-        <label for="itemName">Name</label>
-        <input id="itemName" type="text" placeholder="e.g., Vanguard Brokerage" required />
-      </div>
-      <div class="span-3">
-        <label for="itemAmount">Amount</label>
-        <input id="itemAmount" type="number" step="0.01" min="0" value="0" inputmode="decimal" required />
-      </div>
-      <div class="span-3">
+      <div>
         <label for="itemCountsFi">Counts toward FI?</label>
         <select id="itemCountsFi">
           <option value="yes" selected>Yes</option>
           <option value="no">No</option>
         </select>
-        <small class="muted">Primary home/car usually “No”.</small>
+        <small class="help">Primary home/car usually “No”.</small>
       </div>
-      <div class="span-12 row">
-        <button class="btn" type="submit" id="saveBtn">Add item</button>
-        <button class="btn secondary" type="button" id="resetFormBtn">Reset form</button>
+      <div class="span-12">
+        <label for="itemName">Name</label>
+        <input id="itemName" type="text" placeholder="e.g., Vanguard Brokerage" required />
+      </div>
+      <div class="span-12">
+        <label for="itemAmount">Amount</label>
+        <input id="itemAmount" type="number" step="0.01" min="0" value="0" inputmode="decimal" required />
+      </div>
+      <div class="span-12" style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn" type="submit" id="saveBtn">Save item</button>
+        <button class="btn secondary" type="button" id="cancelBtn">Cancel</button>
       </div>
     </form>
-  </section>
-
-  <!-- Lists + Pie -->
-  <section class="grid grid-12" style="margin-top:1rem">
-    <div class="span-8 card">
-      <h3 style="margin:.25rem 0">Assets</h3>
-      <table>
-        <thead><tr><th style="text-align:left">Name</th><th>Category</th><th style="text-align:center">FI?</th><th style="text-align:right">Amount</th><th style="text-align:right">Actions</th></tr></thead>
-        <tbody id="assetsBody"></tbody>
-      </table>
-
-      <h3 style="margin:1.25rem 0 .25rem">Liabilities</h3>
-      <table>
-        <thead><tr><th style="text-align:left">Name</th><th>Category</th><th style="text-align:center">—</th><th style="text-align:right">Amount</th><th style="text-align:right">Actions</th></tr></thead>
-        <tbody id="liabilitiesBody"></tbody>
-      </table>
-    </div>
-
-    <div class="span-4 card">
-      <h3 style="margin:.25rem 0">Asset Mix</h3>
-      <small class="muted">Shows how assets split by category. Highlight denotes FI-eligible vs not.</small>
-      <canvas id="mixChart" height="260" aria-label="Asset mix pie chart" role="img" style="margin-top:.5rem"></canvas>
-      <div style="margin-top:.5rem">
-        <span class="tag" id="fiLegend">FI-eligible</span>
-        <span class="tag" id="nfiLegend">Not FI-eligible</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- History -->
-  <section class="card" style="margin-top:1rem">
-    <div class="row" style="justify-content:space-between; align-items:center">
-      <div>
-        <h3 style="margin:.25rem 0">Net Worth History</h3>
-        <div class="muted">Take a snapshot (usually monthly) to build your trend.</div>
-      </div>
-      <div class="row" style="gap:.5rem">
-        <button class="btn" id="snapshotBtn" type="button">Snapshot this month</button>
-        <button class="btn secondary" id="exportCsvBtn" type="button">Export history CSV</button>
-      </div>
-    </div>
-    <div style="margin-top:1rem">
-      <canvas id="nwChart" height="160" aria-label="Net worth history sparkline" role="img"></canvas>
-    </div>
-    <div style="margin-top:1rem;overflow:auto">
-      <table>
-        <thead><tr><th style="text-align:left">Date</th><th style="text-align:right">Net Worth</th></tr></thead>
-        <tbody id="historyBody"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Help -->
-  <details class="soft" style="margin-top:1rem">
-    <summary><strong>How this tracker works</strong></summary>
-    <ul style="margin:.75rem 0 0 1rem;line-height:1.55">
-      <li><strong>Private:</strong> Stored in your browser (localStorage). No account needed.</li>
-      <li><strong>Counts toward FI?</strong> Toggle per asset. Generally “Yes” for 401k/IRA/HSA/Brokerage; “No” for primary home/car.</li>
-      <li><strong>Snapshots:</strong> Update balances and snapshot monthly to build the chart.</li>
-      <li><strong>Export:</strong> Download history to CSV anytime.</li>
-    </ul>
-  </details>
-</main>
+  </div>
+</div>
 
 <footer><p style="text-align:center;padding:1rem;">&copy; 2025 FIRE and Life.</p></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 (() => {
-  // ---------- Utilities ----------
+  // ===== Utilities & Storage =====
   const $ = (id)=>document.getElementById(id);
   const fmt = (n)=> n.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});
   const uid = ()=> Math.random().toString(36).slice(2,9);
 
-  // storage keys (v2 adds category + countsFi)
   const STORAGE_ITEMS_V2 = 'lf_nw_items_v2';
   const STORAGE_ITEMS_V1 = 'lf_nw_items_v1';
-  const STORAGE_HISTORY = 'lf_nw_history_v1';
+  const STORAGE_HISTORY  = 'lf_nw_history_v1';
 
   function migrateIfNeeded(){
     const v2 = localStorage.getItem(STORAGE_ITEMS_V2);
     if (v2) return JSON.parse(v2);
-
-    // try v1 -> upgrade
     const v1 = localStorage.getItem(STORAGE_ITEMS_V1);
     if (!v1) return [];
     let items = [];
@@ -231,249 +221,23 @@
       name: it.name || 'Item',
       amount: +it.amount || 0,
       category: 'Other',
-      countsFi: true  // default true; we’ll flip some below by category if we can infer
+      countsFi: true
     }));
     localStorage.setItem(STORAGE_ITEMS_V2, JSON.stringify(upgraded));
     return upgraded;
   }
-
-  function loadItems(){ try{ return migrateIfNeeded(); }catch(e){ return []; } }
+  function loadItems(){ try{ return migrateIfNeeded(); } catch(e){ return []; } }
   function saveItems(items){ localStorage.setItem(STORAGE_ITEMS_V2, JSON.stringify(items)); }
   function loadHistory(){ try{ return JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || []; }catch(e){ return []; } }
   function saveHistory(history){ localStorage.setItem(STORAGE_HISTORY, JSON.stringify(history)); }
 
-  // ---------- State ----------
-  let items = loadItems();       // {id,type,name,amount,category,countsFi}
-  let history = loadHistory();   // {dateISO, netWorthNumber}
-
-  // set sensible FI defaults for known categories on first run
+  // ===== State =====
+  let items = loadItems();
+  let history = loadHistory();
   if (items.length && !items.some(i => 'countsFi' in i === false)) {
     items = items.map(i => ({...i, countsFi: (i.category==='Home Equity'||i.category==='Car') ? false : (i.countsFi ?? true)}));
     saveItems(items);
   }
-
-  // ---------- DOM refs ----------
-  const assetsBody = $('assetsBody');
-  const liabilitiesBody = $('liabilitiesBody');
-  const historyBody = $('historyBody');
-
-  const totalAssetsEl = $('totalAssets');
-  const totalLiabilitiesEl = $('totalLiabilities');
-  const netWorthEl = $('netWorth');
-  const fiEligibleTotalEl = $('fiEligibleTotal');
-
-  // form
-  const editId = $('editId');
-  const itemType = $('itemType');
-  const itemCategory = $('itemCategory');
-  const itemName = $('itemName');
-  const itemAmount = $('itemAmount');
-  const itemCountsFi = $('itemCountsFi');
-  const saveBtn = $('saveBtn');
-  const resetFormBtn = $('resetFormBtn');
-
-  // buttons
-  const snapshotBtn = $('snapshotBtn');
-  const exportCsvBtn = $('exportCsvBtn');
-
-  // charts
-  const ctxNW = $('nwChart').getContext('2d');
-  const ctxMix = $('mixChart').getContext('2d');
-  let chartNW, chartMix;
-
-  // ---------- Render ----------
-  function computeTotals(){
-    const assets = items.filter(i=>i.type==='asset').reduce((s,i)=>s + (+i.amount||0),0);
-    const liabs  = items.filter(i=>i.type==='liability').reduce((s,i)=>s + (+i.amount||0),0);
-    const fiElig = items.filter(i=>i.type==='asset' && i.countsFi).reduce((s,i)=>s + (+i.amount||0),0);
-    return { assets, liabs, net: assets - liabs, fiElig };
-  }
-
-  function renderLists(){
-    assetsBody.innerHTML = '';
-    liabilitiesBody.innerHTML = '';
-
-    items.filter(i=>i.type==='asset').forEach(addRow(assetsBody, true));
-    items.filter(i=>i.type==='liability').forEach(addRow(liabilitiesBody, false));
-
-    const {assets, liabs, net, fiElig} = computeTotals();
-    totalAssetsEl.textContent = fmt(assets);
-    totalLiabilitiesEl.textContent = fmt(liabs);
-    netWorthEl.textContent = fmt(net);
-    fiEligibleTotalEl.textContent = fmt(fiElig);
-
-    renderMixPie();
-  }
-
-  function addRow(tbody, isAsset){
-    return (i)=>{
-      const tr = document.createElement('tr');
-      const fiCell = isAsset ? `<td style="text-align:center">${i.countsFi ? '✅' : '—'}</td>` : `<td style="text-align:center">—</td>`;
-      tr.innerHTML = `
-        <td>${escapeHtml(i.name)}</td>
-        <td>${escapeHtml(i.category || 'Other')}</td>
-        ${fiCell}
-        <td style="text-align:right">${fmt(+i.amount||0)}</td>
-        <td style="text-align:right" class="actions">
-          <button type="button" data-act="edit" data-id="${i.id}" class="btn secondary">Edit</button>
-          <button type="button" data-act="del" data-id="${i.id}" class="btn secondary">Delete</button>
-        </td>`;
-      tbody.appendChild(tr);
-    };
-  }
-
-  function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;' }[m])); }
-
-  function renderHistory(){
-    historyBody.innerHTML = '';
-    history.forEach(h=>{
-      const tr = document.createElement('tr');
-      const d = new Date(h.dateISO);
-      tr.innerHTML = `<td>${d.toLocaleDateString(undefined,{year:'numeric',month:'short'})}</td><td style="text-align:right">${fmt(h.netWorthNumber)}</td>`;
-      historyBody.appendChild(tr);
-    });
-
-    const labels = history.map(h => new Date(h.dateISO).toLocaleDateString(undefined,{year:'2-digit', month:'short'}));
-    const data = history.map(h => h.netWorthNumber);
-
-    if (chartNW) chartNW.destroy();
-    chartNW = new Chart(ctxNW, {
-      type: 'line',
-      data: { labels, datasets: [{ label: 'Net worth', data, borderWidth: 2, fill: false, tension: 0.15, pointRadius: 2 }] },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: { x: { title: { display: false } }, y: { title: { display: false }, ticks: { callback: v => fmt(v) } } }
-      }
-    });
-  }
-
-  function renderMixPie(){
-    // aggregate assets by category, but split into FI-eligible vs not
-    const map = new Map(); // key = `${category}|${fi}`
-    items.filter(i=>i.type==='asset').forEach(i=>{
-      const key = (i.category||'Other') + '|' + (i.countsFi ? 'fi' : 'nfi');
-      map.set(key, (map.get(key)||0) + (+i.amount||0));
-    });
-
-    const labels = [], data = [];
-    const bg = [];
-    map.forEach((val, key)=>{
-      const [cat, flag] = key.split('|');
-      labels.push(`${cat} ${flag==='fi'?'(FI)':'(non-FI)'}`);
-      data.push(val);
-      bg.push(flag==='fi' ? 'rgba(26, 115, 232, 0.3)' : 'rgba(203, 213, 225, 0.6)'); // default Chart.js colors are fine; slight alpha
-    });
-
-    if (chartMix) chartMix.destroy();
-    chartMix = new Chart(ctxMix, {
-      type: 'pie',
-      data: { labels, datasets: [{ data, backgroundColor: bg }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins:{ legend:{ position:'bottom' } } }
-    });
-  }
-
-  // ---------- Actions ----------
-  function upsertItem(e){
-    e.preventDefault();
-    const id = editId.value.trim();
-    const entry = {
-      id: id || uid(),
-      type: itemType.value,
-      category: itemCategory.value || 'Other',
-      name: itemName.value.trim() || (itemType.value==='asset' ? 'Asset' : 'Liability'),
-      amount: parseFloat(itemAmount.value || '0'),
-      countsFi: (itemType.value==='asset') ? (itemCountsFi.value==='yes') : false
-    };
-    // auto-default: if category is Home Equity or Car, default countsFi=false
-    if (itemType.value==='asset' && (entry.category==='Home Equity' || entry.category==='Car')) {
-      entry.countsFi = (itemCountsFi.value==='yes'); // user can override, but initial UI suggests No
-    }
-
-    if (id){
-      items = items.map(it => it.id===id ? entry : it);
-      saveBtn.textContent = 'Add item';
-    } else {
-      items.push(entry);
-    }
-    saveItems(items);
-    renderLists();
-    resetForm();
-  }
-
-  function resetForm(){
-    editId.value = '';
-    itemType.value = 'asset';
-    itemCategory.value = 'Checking';
-    itemName.value = '';
-    itemAmount.value = '0';
-    itemCountsFi.value = 'yes';
-    saveBtn.textContent = 'Add item';
-  }
-
-  function onTableClick(e){
-    const btn = e.target.closest('button[data-act]');
-    if (!btn) return;
-    const id = btn.getAttribute('data-id');
-    const act = btn.getAttribute('data-act');
-    const it = items.find(x=>x.id===id);
-    if (!it) return;
-
-    if (act==='edit'){
-      editId.value = it.id;
-      itemType.value = it.type;
-      itemCategory.value = it.category || 'Other';
-      itemName.value = it.name;
-      itemAmount.value = it.amount;
-      itemCountsFi.value = it.countsFi ? 'yes' : 'no';
-      saveBtn.textContent = 'Update item';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (act==='del'){
-      items = items.filter(x=>x.id!==id);
-      saveItems(items);
-      renderLists();
-    }
-  }
-
-  function computeTotalsForSnapshot(){
-    const { assets, liabs, net, fiElig } = computeTotals();
-    return { assets, liabs, net, fiElig };
-  }
-
-  function takeSnapshot(){
-    const { net } = computeTotalsForSnapshot();
-    const now = new Date();
-    const monthKey = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-    const idx = history.findIndex(h => h.dateISO === monthKey);
-    const entry = { dateISO: monthKey, netWorthNumber: net };
-    if (idx >= 0) history[idx] = entry; else history.push(entry);
-    history.sort((a,b)=> new Date(a.dateISO) - new Date(b.dateISO));
-    saveHistory(history);
-    renderHistory();
-  }
-
-  function exportHistoryCsv(){
-    const rows = [['Date','Net Worth']];
-    history.forEach(h=>{
-      rows.push([ new Date(h.dateISO).toISOString().slice(0,10), h.netWorthNumber ]);
-    });
-    const csv = rows.map(r=>r.join(',')).join('\n');
-    const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'net-worth-history.csv'; a.click();
-    URL.revokeObjectURL(url);
-  }
-
-  // ---------- Bind ----------
-  $('itemForm').addEventListener('submit', upsertItem);
-  resetFormBtn.addEventListener('click', resetForm);
-  assetsBody.addEventListener('click', onTableClick);
-  liabilitiesBody.addEventListener('click', onTableClick);
-  snapshotBtn.addEventListener('click', takeSnapshot);
-  exportCsvBtn.addEventListener('click', exportHistoryCsv);
-
-  // ---------- Initial seed if totally empty ----------
   if (items.length === 0) {
     items = [
       { id: uid(), type:'asset', name:'Checking',    category:'Checking',  amount: 3000,  countsFi:true },
@@ -484,9 +248,193 @@
     saveItems(items);
   }
 
-  // initial render
-  renderLists();
-  renderHistory();
+  // ===== DOM refs =====
+  const assetsBody = $('assetsBody');
+  const liabilitiesBody = $('liabilitiesBody');
+  const historyBody = $('historyBody');
+  const totalAssetsEl = $('totalAssets');
+  const totalLiabilitiesEl = $('totalLiabilities');
+  const netWorthEl = $('netWorth');
+  const fiEligibleTotalEl = $('fiEligibleTotal');
+
+  // Modal refs
+  const backdrop = $('backdrop');
+  const openFormFab = $('openFormFab');
+  const itemForm = $('itemForm');
+  const editId = $('editId'), itemType = $('itemType'), itemCategory = $('itemCategory'),
+        itemCountsFi = $('itemCountsFi'), itemName = $('itemName'), itemAmount = $('itemAmount'),
+        saveBtn = $('saveBtn'), cancelBtn = $('cancelBtn');
+
+  // Tabs
+  document.querySelectorAll('.tabs button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      $('tab-items').hidden = tab !== 'items';
+      $('tab-history').hidden = tab !== 'history';
+    });
+  });
+
+  // ===== Charts =====
+  const ctxMix = $('mixChart').getContext('2d');
+  const ctxNW  = $('nwChart')?.getContext?.('2d');
+  let chartMix, chartNW;
+
+  function computeTotals(){
+    const assets = items.filter(i=>i.type==='asset').reduce((s,i)=>s+(+i.amount||0),0);
+    const liabs  = items.filter(i=>i.type==='liability').reduce((s,i)=>s+(+i.amount||0),0);
+    const fiElig = items.filter(i=>i.type==='asset' && i.countsFi).reduce((s,i)=>s+(+i.amount||0),0);
+    return { assets, liabs, net: assets-liabs, fiElig };
+  }
+
+  function renderSummary(){
+    const { assets, liabs, net, fiElig } = computeTotals();
+    totalAssetsEl.textContent = fmt(assets);
+    totalLiabilitiesEl.textContent = fmt(liabs);
+    netWorthEl.textContent = fmt(net);
+    fiEligibleTotalEl.textContent = fmt(fiElig);
+  }
+
+  function renderLists(){
+    assetsBody.innerHTML = ''; liabilitiesBody.innerHTML = '';
+    items.filter(i=>i.type==='asset').forEach(addRow(assetsBody,true));
+    items.filter(i=>i.type==='liability').forEach(addRow(liabilitiesBody,false));
+    renderSummary(); renderMixPie();
+  }
+
+  function addRow(tbody, isAsset){
+    return (i)=>{
+      const tr=document.createElement('tr');
+      const fiCell = isAsset ? `<td style="text-align:center">${i.countsFi ? '✅' : '—'}</td>` : `<td style="text-align:center">—</td>`;
+      tr.innerHTML = `
+        <td>${escapeHtml(i.name)}</td>
+        <td>${escapeHtml(i.category||'Other')}</td>
+        ${fiCell}
+        <td style="text-align:right">${fmt(+i.amount||0)}</td>
+        <td style="text-align:right" class="actions">
+          <button data-act="edit" data-id="${i.id}">Edit</button>
+          <button data-act="del" data-id="${i.id}">Delete</button>
+        </td>`;
+      tbody.appendChild(tr);
+    };
+  }
+  function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;' }[m])); }
+
+  function renderMixPie(){
+    const map = new Map(); // `${category}|${fi}`
+    items.filter(i=>i.type==='asset').forEach(i=>{
+      const key = (i.category||'Other') + '|' + (i.countsFi?'fi':'nfi');
+      map.set(key, (map.get(key)||0) + (+i.amount||0));
+    });
+    const labels=[], data=[], bg=[];
+    map.forEach((val,key)=>{
+      const [cat,flag]=key.split('|');
+      labels.push(`${cat} ${flag==='fi'?'(FI)':'(non-FI)'}`);
+      data.push(val);
+      bg.push(flag==='fi' ? 'rgba(26,115,232,.35)' : 'rgba(203,213,225,.7)');
+    });
+    if (chartMix) chartMix.destroy();
+    chartMix = new Chart(ctxMix,{type:'pie',data:{labels,datasets:[{data,backgroundColor:bg}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+  }
+
+  function renderHistory(){
+    if (!ctxNW) return;
+    historyBody.innerHTML='';
+    history.forEach(h=>{
+      const tr=document.createElement('tr');
+      const d=new Date(h.dateISO);
+      tr.innerHTML = `<td>${d.toLocaleDateString(undefined,{year:'numeric',month:'short'})}</td><td style="text-align:right">${fmt(h.netWorthNumber)}</td>`;
+      historyBody.appendChild(tr);
+    });
+    const labels = history.map(h=> new Date(h.dateISO).toLocaleDateString(undefined,{year:'2-digit',month:'short'}));
+    const data   = history.map(h=> h.netWorthNumber);
+    if (chartNW) chartNW.destroy();
+    chartNW = new Chart(ctxNW,{type:'line',data:{labels,datasets:[{label:'Net worth',data, borderWidth:2, fill:false, tension:.15, pointRadius:2}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>fmt(v)}}}});
+  }
+
+  // ===== Modal logic =====
+  function openModal(editItem=null){
+    backdrop.style.display='flex'; backdrop.setAttribute('aria-hidden','false');
+    if (editItem){
+      $('modalTitle').textContent='Edit Item';
+      editId.value = editItem.id;
+      itemType.value = editItem.type;
+      itemCategory.value = editItem.category || 'Other';
+      itemCountsFi.value = editItem.countsFi ? 'yes' : 'no';
+      itemName.value = editItem.name;
+      itemAmount.value = editItem.amount;
+      saveBtn.textContent='Update item';
+    } else {
+      $('modalTitle').textContent='Add Item';
+      editId.value=''; itemType.value='asset'; itemCategory.value='Checking';
+      itemCountsFi.value='yes'; itemName.value=''; itemAmount.value='0';
+      saveBtn.textContent='Save item';
+    }
+  }
+  function closeModal(){ backdrop.style.display='none'; backdrop.setAttribute('aria-hidden','true'); }
+
+  openFormFab.addEventListener('click', ()=> openModal());
+  cancelBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', (e)=> { if (e.target===backdrop) closeModal(); });
+
+  // Table actions → open modal prefilled / delete
+  function onTableClick(e){
+    const btn = e.target.closest('button[data-act]');
+    if (!btn) return;
+    const id  = btn.getAttribute('data-id');
+    const act = btn.getAttribute('data-act');
+    const it  = items.find(x=>x.id===id);
+    if (!it) return;
+    if (act==='edit'){ openModal(it); }
+    if (act==='del'){ items = items.filter(x=>x.id!==id); saveItems(items); renderLists(); }
+  }
+  assetsBody.addEventListener('click', onTableClick);
+  liabilitiesBody.addEventListener('click', onTableClick);
+
+  // Save item
+  itemForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const id = editId.value.trim();
+    const entry = {
+      id: id || uid(),
+      type: itemType.value,
+      category: itemCategory.value || 'Other',
+      name: itemName.value.trim() || (itemType.value==='asset'?'Asset':'Liability'),
+      amount: parseFloat(itemAmount.value || '0'),
+      countsFi: (itemType.value==='asset') ? (itemCountsFi.value==='yes') : false
+    };
+    if (id){ items = items.map(it => it.id===id ? entry : it); }
+    else { items.push(entry); }
+    saveItems(items);
+    renderLists();
+    closeModal();
+  });
+
+  // ===== History actions =====
+  $('snapshotBtn').addEventListener('click', ()=>{
+    const { net } = computeTotals();
+    const now=new Date();
+    const monthKey = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+    const idx = history.findIndex(h=>h.dateISO===monthKey);
+    const entry = { dateISO: monthKey, netWorthNumber: net };
+    if (idx>=0) history[idx]=entry; else history.push(entry);
+    history.sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO));
+    saveHistory(history); renderHistory();
+  });
+
+  $('exportCsvBtn').addEventListener('click', ()=>{
+    const rows=[['Date','Net Worth']];
+    history.forEach(h=> rows.push([ new Date(h.dateISO).toISOString().slice(0,10), h.netWorthNumber ]));
+    const csv=rows.map(r=>r.join(',')).join('\n');
+    const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+    const url=URL.createObjectURL(blob); const a=document.createElement('a');
+    a.href=url; a.download='net-worth-history.csv'; a.click(); URL.revokeObjectURL(url);
+  });
+
+  // ===== Initial render =====
+  renderLists(); renderHistory();
 })();
 </script>
 </body>
