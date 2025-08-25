@@ -5,21 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Net Worth Tracker • FIREandLife</title>
   <link rel="stylesheet" href="/styles.css?v=20250811c" />
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-KHKJVXPJQM');
-</script>
-<!-- End Google Analytics -->
+  <!-- GA -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KHKJVXPJQM');
+  </script>
+  <style>
+    :root{
+      --bg:#ffffff; --soft:#f7fafc; --border:#e9edf2; --ink:#0f172a; --muted:#475569;
+      --accent:#ff6b5d; --accent-ink:#fff;
+    }
+    body{background:var(--bg); color:var(--ink);}
+    .container{max-width:1100px;margin:2rem auto;padding:0 1rem;}
+    .grid{display:grid; gap:1rem}
+    .grid-12{grid-template-columns:repeat(12,1fr)}
+    .span-12{grid-column:span 12} .span-8{grid-column:span 8} .span-6{grid-column:span 6} .span-4{grid-column:span 4}
+    .card{background:#fff;border:1px solid var(--border);border-radius:.6rem;padding:1rem}
+    .soft{background:var(--soft);border:1px solid var(--border);border-radius:.6rem;padding:1rem}
+    label{display:block;font-weight:600;margin-bottom:.25rem}
+    input,select,button{width:100%;padding:.7rem .75rem;border:1px solid #cfd8e3;border-radius:.4rem;font-size:16px}
+    button{cursor:pointer}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:.6rem;border-bottom:1px solid #eef2f7}
+    .muted{color:var(--muted)}
+    .row{display:flex;gap:.5rem;flex-wrap:wrap}
+    .btn{background:var(--accent);color:var(--accent-ink);border:none}
+    .btn.secondary{background:#fff;color:#111;border:1px solid #cbd5e1}
+    .actions button{padding:.35rem .55rem;font-size:.85rem}
+    @media (max-width: 800px){
+      .grid-12{grid-template-columns:repeat(6,1fr)}
+      .span-8,.span-6,.span-4,.span-12{grid-column:1 / -1}
+      .row > *{flex:1 1 100%}
+    }
+  </style>
 </head>
 <body>
 <header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.06);">
     <div class="logo"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
-    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
+    <ul class="nav-links" style="list-style:none;display:flex;gap:1.2rem;margin:0;">
       <li><a href="/">Home</a></li>
       <li><a href="/calculators/" aria-current="page">Calculators</a></li>
       <li><a href="/blog/">Blog</a></li>
@@ -29,12 +56,327 @@
   </nav>
 </header>
 
-<main class="container" style="max-width:1100px;margin:2rem auto;padding:0 1rem;">
+<main class="container">
   <h1>Net Worth Tracker</h1>
-  <!-- paste your tracker UI/logic here -->
+  <p class="muted" style="margin:.25rem 0 1rem">Track your assets and liabilities privately in your browser. Take a monthly snapshot to build your **net worth history** and visualize your progress.</p>
+
+  <!-- Overview -->
+  <section class="grid grid-12">
+    <div class="span-4 soft">
+      <h3 style="margin:.25rem 0">Total Assets</h3>
+      <div><strong id="totalAssets">$0</strong></div>
+      <small class="muted">Sum of all positive-value accounts.</small>
+    </div>
+    <div class="span-4 soft">
+      <h3 style="margin:.25rem 0">Total Liabilities</h3>
+      <div><strong id="totalLiabilities">$0</strong></div>
+      <small class="muted">Debt balances (mortgage, loans, cards).</small>
+    </div>
+    <div class="span-4 soft">
+      <h3 style="margin:.25rem 0">Net Worth</h3>
+      <div><strong id="netWorth">$0</strong></div>
+      <small class="muted">Assets − Liabilities.</small>
+    </div>
+  </section>
+
+  <!-- Add Item -->
+  <section class="card" style="margin-top:1rem">
+    <h3 style="margin:.25rem 0">Add or Edit an Item</h3>
+    <form id="itemForm" class="grid grid-12" style="align-items:end">
+      <input type="hidden" id="editId" value="">
+      <div class="span-4">
+        <label for="itemType">Type</label>
+        <select id="itemType">
+          <option value="asset" selected>Asset</option>
+          <option value="liability">Liability</option>
+        </select>
+      </div>
+      <div class="span-4">
+        <label for="itemName">Name</label>
+        <input id="itemName" type="text" placeholder="e.g., Checking, 401k, Mortgage" required />
+      </div>
+      <div class="span-4">
+        <label for="itemAmount">Amount</label>
+        <input id="itemAmount" type="number" step="0.01" min="0" value="0" inputmode="decimal" required />
+      </div>
+      <div class="span-12 row">
+        <button class="btn" type="submit" id="saveBtn">Add item</button>
+        <button class="btn secondary" type="button" id="resetFormBtn">Reset form</button>
+      </div>
+      <small class="muted span-12">Tip: Enter balances as of today. You can update any time and take a snapshot monthly.</small>
+    </form>
+  </section>
+
+  <!-- Lists -->
+  <section class="grid grid-12" style="margin-top:1rem">
+    <div class="span-6 card">
+      <h3 style="margin:.25rem 0">Assets</h3>
+      <table>
+        <thead><tr><th style="text-align:left">Name</th><th style="text-align:right">Amount</th><th style="text-align:right">Actions</th></tr></thead>
+        <tbody id="assetsBody"></tbody>
+      </table>
+    </div>
+    <div class="span-6 card">
+      <h3 style="margin:.25rem 0">Liabilities</h3>
+      <table>
+        <thead><tr><th style="text-align:left">Name</th><th style="text-align:right">Amount</th><th style="text-align:right">Actions</th></tr></thead>
+        <tbody id="liabilitiesBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- History -->
+  <section class="card" style="margin-top:1rem">
+    <div class="row" style="justify-content:space-between; align-items:center">
+      <div>
+        <h3 style="margin:.25rem 0">Net Worth History</h3>
+        <div class="muted">Take a snapshot (usually monthly) to build your trend.</div>
+      </div>
+      <div class="row" style="gap:.5rem">
+        <button class="btn" id="snapshotBtn" type="button">Snapshot this month</button>
+        <button class="btn secondary" id="exportCsvBtn" type="button">Export history CSV</button>
+      </div>
+    </div>
+    <div style="margin-top:1rem">
+      <canvas id="nwChart" height="160" aria-label="Net worth history sparkline" role="img"></canvas>
+    </div>
+    <div style="margin-top:1rem;overflow:auto">
+      <table>
+        <thead><tr><th style="text-align:left">Date</th><th style="text-align:right">Net Worth</th></tr></thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Help -->
+  <details class="soft" style="margin-top:1rem">
+    <summary><strong>How this tracker works</strong></summary>
+    <ul style="margin:.75rem 0 0 1rem;line-height:1.55">
+      <li><strong>Private:</strong> Your data is stored in your browser (localStorage). No servers involved.</li>
+      <li><strong>Add items:</strong> List all accounts. Assets are positive balances; liabilities are amounts you owe.</li>
+      <li><strong>Update balances:</strong> Edit items anytime. Then hit <em>Snapshot</em> to record the new month.</li>
+      <li><strong>History & sparkline:</strong> Each snapshot adds a point to your net worth chart.</li>
+      <li><strong>Export:</strong> Download your history as CSV.</li>
+    </ul>
+  </details>
 </main>
 
 <footer><p style="text-align:center;padding:1rem;">&copy; 2025 FIRE and Life.</p></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(() => {
+  // ---------- Utilities ----------
+  const $ = (id)=>document.getElementById(id);
+  const fmt = (n)=> n.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});
+  const uid = ()=> Math.random().toString(36).slice(2,9);
+
+  const STORAGE_ITEMS = 'lf_nw_items_v1';
+  const STORAGE_HISTORY = 'lf_nw_history_v1';
+
+  function loadItems(){
+    try{ return JSON.parse(localStorage.getItem(STORAGE_ITEMS)) || []; }catch(e){ return []; }
+  }
+  function saveItems(items){
+    localStorage.setItem(STORAGE_ITEMS, JSON.stringify(items));
+  }
+  function loadHistory(){
+    try{ return JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || []; }catch(e){ return []; }
+  }
+  function saveHistory(history){
+    localStorage.setItem(STORAGE_HISTORY, JSON.stringify(history));
+  }
+
+  // ---------- State ----------
+  let items = loadItems();       // {id, type:'asset'|'liability', name, amount}
+  let history = loadHistory();   // {dateISO, netWorthNumber}
+
+  // ---------- DOM refs ----------
+  const assetsBody = $('assetsBody');
+  const liabilitiesBody = $('liabilitiesBody');
+  const historyBody = $('historyBody');
+
+  const totalAssetsEl = $('totalAssets');
+  const totalLiabilitiesEl = $('totalLiabilities');
+  const netWorthEl = $('netWorth');
+
+  // form
+  const editId = $('editId');
+  const itemType = $('itemType');
+  const itemName = $('itemName');
+  const itemAmount = $('itemAmount');
+  const saveBtn = $('saveBtn');
+  const resetFormBtn = $('resetFormBtn');
+
+  // buttons
+  const snapshotBtn = $('snapshotBtn');
+  const exportCsvBtn = $('exportCsvBtn');
+
+  // chart
+  const ctx = $('nwChart').getContext('2d');
+  let chart;
+
+  // ---------- Render ----------
+  function computeTotals(){
+    const assets = items.filter(i=>i.type==='asset').reduce((s,i)=>s + (+i.amount||0),0);
+    const liabs  = items.filter(i=>i.type==='liability').reduce((s,i)=>s + (+i.amount||0),0);
+    return { assets, liabs, net: assets - liabs };
+  }
+
+  function renderLists(){
+    assetsBody.innerHTML = '';
+    liabilitiesBody.innerHTML = '';
+
+    items.filter(i=>i.type==='asset').forEach(addRow(assetsBody));
+    items.filter(i=>i.type==='liability').forEach(addRow(liabilitiesBody));
+
+    const {assets, liabs, net} = computeTotals();
+    totalAssetsEl.textContent = fmt(assets);
+    totalLiabilitiesEl.textContent = fmt(liabs);
+    netWorthEl.textContent = fmt(net);
+  }
+
+  function addRow(tbody){
+    return (i)=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${escapeHtml(i.name)}</td>
+        <td style="text-align:right">${fmt(+i.amount||0)}</td>
+        <td style="text-align:right" class="actions">
+          <button type="button" data-act="edit" data-id="${i.id}" class="btn secondary">Edit</button>
+          <button type="button" data-act="del" data-id="${i.id}" class="btn secondary">Delete</button>
+        </td>`;
+      tbody.appendChild(tr);
+    };
+  }
+
+  function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;' }[m])); }
+
+  function renderHistory(){
+    historyBody.innerHTML = '';
+    history.forEach(h=>{
+      const tr = document.createElement('tr');
+      const d = new Date(h.dateISO);
+      tr.innerHTML = `<td>${d.toLocaleDateString(undefined,{year:'numeric',month:'short'})}</td><td style="text-align:right">${fmt(h.netWorthNumber)}</td>`;
+      historyBody.appendChild(tr);
+    });
+
+    const labels = history.map(h => new Date(h.dateISO).toLocaleDateString(undefined,{year:'2-digit', month:'short'}));
+    const data = history.map(h => h.netWorthNumber);
+
+    if (chart) chart.destroy();
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: { labels, datasets: [{ label: 'Net worth', data, borderWidth: 2, fill: false, tension: 0.15, pointRadius: 2 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { title: { display: false } },
+          y: { title: { display: false }, ticks: { callback: v => fmt(v) } }
+        }
+      }
+    });
+  }
+
+  // ---------- Actions ----------
+  function upsertItem(e){
+    e.preventDefault();
+    const id = editId.value.trim();
+    const entry = {
+      id: id || uid(),
+      type: itemType.value,
+      name: itemName.value.trim() || (itemType.value==='asset' ? 'Asset' : 'Liability'),
+      amount: parseFloat(itemAmount.value || '0')
+    };
+    if (id){
+      items = items.map(it => it.id===id ? entry : it);
+      saveBtn.textContent = 'Add item';
+    } else {
+      items.push(entry);
+    }
+    saveItems(items);
+    renderLists();
+    resetForm();
+  }
+
+  function resetForm(){
+    editId.value = '';
+    itemType.value = 'asset';
+    itemName.value = '';
+    itemAmount.value = '0';
+    saveBtn.textContent = 'Add item';
+  }
+
+  function onTableClick(e){
+    const btn = e.target.closest('button[data-act]');
+    if (!btn) return;
+    const id = btn.getAttribute('data-id');
+    const act = btn.getAttribute('data-act');
+    const it = items.find(x=>x.id===id);
+    if (!it) return;
+
+    if (act==='edit'){
+      editId.value = it.id;
+      itemType.value = it.type;
+      itemName.value = it.name;
+      itemAmount.value = it.amount;
+      saveBtn.textContent = 'Update item';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (act==='del'){
+      items = items.filter(x=>x.id!==id);
+      saveItems(items);
+      renderLists();
+    }
+  }
+
+  function takeSnapshot(){
+    const { net } = computeTotals();
+    const now = new Date();
+    const monthKey = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+    // Replace snapshot for this month if exists
+    const idx = history.findIndex(h => h.dateISO === monthKey);
+    const entry = { dateISO: monthKey, netWorthNumber: net };
+    if (idx >= 0) history[idx] = entry; else history.push(entry);
+    // sort ascending by date
+    history.sort((a,b)=> new Date(a.dateISO) - new Date(b.dateISO));
+    saveHistory(history);
+    renderHistory();
+  }
+
+  function exportHistoryCsv(){
+    const rows = [['Date','Net Worth']];
+    history.forEach(h=>{
+      rows.push([ new Date(h.dateISO).toISOString().slice(0,10), h.netWorthNumber ]);
+    });
+    const csv = rows.map(r=>r.join(',')).join('\n');
+    const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'net-worth-history.csv'; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // ---------- Bind ----------
+  $('itemForm').addEventListener('submit', upsertItem);
+  resetFormBtn.addEventListener('click', resetForm);
+  assetsBody.addEventListener('click', onTableClick);
+  liabilitiesBody.addEventListener('click', onTableClick);
+  snapshotBtn.addEventListener('click', takeSnapshot);
+  exportCsvBtn.addEventListener('click', exportHistoryCsv);
+
+  // ---------- Initial render (with sample placeholders if empty) ----------
+  if (items.length === 0) {
+    items = [
+      { id: uid(), type:'asset', name:'Checking', amount: 3000 },
+      { id: uid(), type:'asset', name:'Brokerage', amount: 15000 },
+      { id: uid(), type:'liability', name:'Credit Card', amount: 500 }
+    ];
+    saveItems(items);
+  }
+  renderLists();
+  renderHistory();
+})();
+</script>
 </body>
 </html>
-
