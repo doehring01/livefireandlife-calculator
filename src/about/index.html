@@ -1,19 +1,25 @@
+---
+permalink: /about/
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>About • FIREandLife</title>
-  <meta name="description" content="FIREandLife helps you pursue Financial Independence with flexible, real-life planning. Learn our FlexFI philosophy and meet the creator." />
-  <link rel="icon" href="/assets/favicon.png">
-  <link rel="stylesheet" href="/styles.css" />
+  <meta name="description" content="FIREandLife helps you pursue Financial Independence without sacrificing a life well-lived. Learn about FlexFI and the team."/>
+  <!-- Use the shared root stylesheet -->
+  <link rel="stylesheet" href="/styles.css"/>
+  <link rel="icon" href="/assets/favicon.png"/>
 
-  <!-- Google Analytics -->
+  <!-- GA (optional, same as other pages) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date()); gtag('config', 'G-KHKJVXPJQM');
+    gtag('js', new Date());
+    gtag('config', 'G-KHKJVXPJQM');
   </script>
 </head>
 <body>
@@ -27,114 +33,60 @@
       <li><a href="/calculators/">Calculators</a></li>
       <li><a href="/blog/">Blog</a></li>
       <li><a href="/flexfi/">FlexFI</a></li>
-      <li><a href="/about/" class="active">About</a></li>
+      <li><a href="/about/" aria-current="page" class="active">About</a></li>
       <li><a href="/contact/">Contact</a></li>
     </ul>
   </nav>
 </header>
 
-<main>
-  <!-- Hero -->
-  <section class="hero">
+<main class="container">
+  <!-- Intro -->
+  <section class="section" style="padding-top:1.5rem">
     <h1>About FIREandLife</h1>
-    <p>We help you pursue Financial Independence without sacrificing the seasons of life that matter most. That’s FlexFI.</p>
-    <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;">
-      <a class="btn" href="/calculators/">Explore Calculators</a>
-      <a class="btn btn-secondary" href="/blog/">Read the Blog</a>
-    </div>
-  </section>
-
-  <!-- Mission -->
-  <section class="section">
-    <h2>Our Mission</h2>
-    <p>
-      Traditional FI advice often locks you into one rigid path: maximize savings, wait it out, and <em>then</em> live. We think there’s a better way.
-      <strong>FlexFI</strong> is a practical, adaptable approach that lets you keep moving toward FI while adjusting to real life—kids, careers, health, and changing priorities.
+    <p style="max-width:780px;margin:.5rem 0 0;color:#555">
+      We help you pursue Financial Independence (<strong>FI</strong>) without sacrificing the seasons of life that matter most.
+      That’s <strong>FlexFI</strong>: an adaptive approach to saving, investing, and spending that changes as life changes—kids,
+      career shifts, recessions, caretaking, or a well-earned break.
     </p>
   </section>
 
-  <!-- Pillars / What Makes Us Different -->
+  <!-- What is FlexFI -->
   <section class="section">
-    <h2>The FlexFI Principles</h2>
+    <h2>What is FlexFI?</h2>
     <div class="grid">
       <article class="card">
-        <h3>1) Adapt by Season</h3>
-        <p>Dial savings up or down as life changes—without losing sight of the long-term plan.</p>
+        <h3>Adaptive Plan</h3>
+        <p>Dial savings up or down as life evolves—without losing the long-term trajectory.</p>
       </article>
       <article class="card">
-        <h3>2) Plan for Reality</h3>
-        <p>Taxes, healthcare, sequence risk, childcare—our tools and posts factor in the messy stuff.</p>
+        <h3>Real-World Math</h3>
+        <p>Cash-flow-first calculators (taxes, healthcare, volatility) that reflect how money actually moves.</p>
       </article>
       <article class="card">
-        <h3>3) Measure What Matters</h3>
-        <p>Track both total net worth and <em>FI-eligible</em> assets so your number actually reflects spending power.</p>
-      </article>
-      <article class="card">
-        <h3>4) Simple > Perfect</h3>
-        <p>Clear calculators and scenarios you can use today beat spreadsheets you’ll never open.</p>
+        <h3>Purpose Over Percentages</h3>
+        <p>FI is more than a single withdrawal rate. Plan for the life you want, then fund it intentionally.</p>
       </article>
     </div>
   </section>
 
-  <!-- Tools highlight -->
+  <!-- What you'll find -->
   <section class="section">
-    <h2>Built for Action</h2>
+    <h2>What You’ll Find Here</h2>
     <div class="grid">
       <article class="card">
-        <h3>Net Worth Tracker</h3>
-        <p>Track assets and liabilities, and mark which assets count toward FI.</p>
-        <a class="btn" href="/calculators/net-worth-tracker/">Track Now</a>
+        <h3>Calculators & Tools</h3>
+        <p>From take-home pay to net worth history, everything runs in your browser—no logins, no data collection.</p>
+        <a class="btn" href="/calculators/">Explore Calculators</a>
       </article>
       <article class="card">
-        <h3>Take-Home Pay Calculator</h3>
-        <p>See your real paycheck after tax, benefits, and contribution changes.</p>
-        <a class="btn" href="/calculators/take-home-pay/">Try It</a>
+        <h3>Scenarios & Playbooks</h3>
+        <p>How real families navigate raises, childcare costs, market dips, and sabbaticals—step by step.</p>
+        <a class="btn btn-secondary" href="/blog/">Read the Blog</a>
       </article>
       <article class="card">
-        <h3>Early Retirement Estimator</h3>
-        <p>Estimate how long until you hit your FI number—then pressure-test it.</p>
-        <a class="btn" href="/calculators/early-retirement-estimator/">Plan Ahead</a>
-      </article>
-    </div>
-  </section>
-
-  <!-- Founder bio (optional headshot) -->
-  <section class="section">
-    <h2>Who’s Behind This</h2>
-    <div class="grid">
-      <article class="card" style="display:flex;gap:1rem;align-items:flex-start;">
-        <img src="/assets/founder.jpg" alt="Founder headshot" style="width:96px;height:96px;object-fit:cover;border-radius:50%;border:1px solid #eee;" onerror="this.style.display='none'">
-        <div>
-          <h3 style="margin-top:0;">Hi, I’m the human behind FIREandLife.</h3>
-          <p>
-            I’m a long-time finance nerd and builder of practical tools. I started FIREandLife to share clear, scenario-based planning that embraces trade-offs—
-            because money is a means, not the end. I write the posts and build the calculators. Everything here is for education only; please
-            consider professional advice for your specific situation.
-          </p>
-          <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-            <a class="btn btn-secondary" href="/contact/">Get in touch</a>
-            <a class="btn" href="/blog/">Latest from the blog</a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- Trust / promises -->
-  <section class="section">
-    <h2>What You Can Expect</h2>
-    <div class="grid">
-      <article class="card">
-        <h3>No Hype</h3>
-        <p>Clear math. Real trade-offs. No “one magic number.”</p>
-      </article>
-      <article class="card">
-        <h3>Privacy First</h3>
-        <p>Calculators run in your browser. We don’t see your inputs.</p>
-      </article>
-      <article class="card">
-        <h3>Continuous Improvement</h3>
-        <p>We iterate quickly based on reader feedback and real-world use.</p>
+        <h3>FlexFI Framework</h3>
+        <p>Principles you can reuse: prioritize, model, decide, and review. Simple enough to repeat monthly.</p>
+        <a class="btn btn-secondary" href="/flexfi/">Learn FlexFI</a>
       </article>
     </div>
   </section>
@@ -142,26 +94,26 @@
   <!-- FAQ -->
   <section class="section">
     <h2>FAQ</h2>
-    <div class="grid">
-      <article class="card">
-        <h3>What is FlexFI?</h3>
-        <p>It’s a flexible approach to FI that adapts savings, spending, and investing to life’s seasons while still moving you forward.</p>
-      </article>
-      <article class="card">
-        <h3>Are these calculators free?</h3>
-        <p>Yes. They’re free to use. Some downloads (like CSV exports) may be soft-gated to our newsletter so you don’t miss updates.</p>
-      </article>
-      <article class="card">
-        <h3>Is this financial advice?</h3>
-        <p>No—everything here is educational. Consider hiring a qualified professional for advice tailored to you.</p>
-      </article>
+    <div class="card">
+      <details open class="accordion">
+        <summary>Do you store my data?</summary>
+        <p style="margin-top:.5rem;color:#555">No. The calculators run locally in your browser. Your entries are saved to your device (localStorage) only.</p>
+      </details>
+      <details class="accordion" style="margin-top:.5rem">
+        <summary>Is this financial advice?</summary>
+        <p style="margin-top:.5rem;color:#555">Educational only. We share frameworks and math to inform your choices. Not financial, tax, or legal advice.</p>
+      </details>
+      <details class="accordion" style="margin-top:.5rem">
+        <summary>How can I support FIREandLife?</summary>
+        <p style="margin-top:.5rem;color:#555">Share a post, subscribe to the newsletter, or <a href="/contact/">send feedback</a>. It all helps.</p>
+      </details>
     </div>
   </section>
 
-  <!-- Newsletter CTA -->
+  <!-- Newsletter -->
   <section class="newsletter">
-    <h2>Join Our Newsletter</h2>
-    <p>Tools, calculators, and real-world scenarios—delivered occasionally, no spam.</p>
+    <h2>Join the Newsletter</h2>
+    <p>Get new tools and practical scenarios—no spam, unsubscribe anytime.</p>
     <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
       <input type="email" name="EMAIL" placeholder="Your email address" required />
       <button type="submit">Subscribe</button>
@@ -178,8 +130,6 @@
   </p>
 </footer>
 
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
