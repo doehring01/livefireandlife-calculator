@@ -14,94 +14,94 @@
     gtag('js', new Date()); gtag('config','G-KHKJVXPJQM');
   </script>
   <style>
-    :root{ --bg:#ffffff; --soft:#f7fafc; --border:#e9edf2; --ink:#0f172a; --muted:#475569; --accent:#ff6b5d; --accent-ink:#fff; }
+    :root{ --bg:#ffffff; --soft:#f7fafc; --border:#e9edf2; --ink:#0f172a; --muted:#475569; }
+
     body{background:var(--bg); color:var(--ink);}
     .container{max-width:1100px;margin:2rem auto;padding:0 1rem;}
     .grid{display:grid;gap:1rem}
     .grid-12{grid-template-columns:repeat(12,1fr)}
-    .span-12{grid-column:span 12} .span-6{grid-column:span 6} .span-4{grid-column:span 4} .span-3{grid-column:span 3}
+    .span-12{grid-column:span 12} .span-6{grid-column:span 6} .span-3{grid-column:span 3}
     .card{background:#fff;border:1px solid var(--border);border-radius:.6rem;padding:1rem}
     .soft{background:var(--soft);border:1px solid var(--border);border-radius:.6rem;padding:1rem}
     .muted{color:var(--muted)}
     table{width:100%;border-collapse:collapse}
     th,td{padding:.55rem;border-bottom:1px solid #eef2f7;vertical-align:middle}
-    .actions button{padding:.35rem .55rem;border:1px solid #cbd5e1;border-radius:.35rem;background:#fff}
-    .btn{padding:.7rem .9rem;border:none;border-radius:.45rem;background:var(--accent);color:var(--accent-ink);font-size:16px;cursor:pointer}
-    .btn.secondary{background:#fff;color:#111;border:1px solid #cbd5e1}
-    .tabs{display:flex;gap:.5rem;margin:1rem 0}
-    .tabs button{background:#fff;border:1px solid #cbd5e1;border-radius:999px;padding:.5rem .9rem;cursor:pointer}
-    .tabs button.active{background:var(--ink);border-color:var(--ink);color:#fff}
+
+    /* --- BUTTON SYSTEM --- */
+    .btn {
+      background: #FF6F61; /* Brand orange */
+      color: white;
+      padding: 0.6rem 1.1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 0.95rem;
+      transition: background 0.2s ease;
+    }
+    .btn:hover { background:#E65A4F; }
+
+    .btn-secondary {
+      background:#FFD166;
+      color:#333;
+      padding:0.6rem 1.1rem;
+      border:none;
+      border-radius:4px;
+      font-weight:600;
+      font-size:0.95rem;
+      cursor:pointer;
+      transition: background 0.2s ease;
+    }
+    .btn-secondary:hover { background:#FFB347; }
+
+    .btn-tab {
+      background:#fff;
+      color:var(--ink);
+      border:1px solid #cbd5e1;
+      border-radius:999px;
+      padding:.5rem 1rem;
+      cursor:pointer;
+      font-weight:600;
+      font-size:0.95rem;
+    }
+    .btn-tab.active {
+      background:var(--ink);
+      border-color:var(--ink);
+      color:#fff;
+    }
+
     .summary{position:sticky;top:0;z-index:10;background:var(--bg);padding:.5rem 0;margin-bottom:.5rem}
     .accordion > summary{cursor:pointer;list-style:none;padding:.6rem .25rem;border-bottom:1px solid #eef2f7;font-weight:600}
     .accordion[open] > summary{border-bottom:none}
+
     .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:1rem;z-index:50}
     .modal{max-width:520px;width:100%;background:#fff;border:1px solid var(--border);border-radius:.7rem;padding:1rem}
+
     label{display:block;font-weight:600;margin-bottom:.25rem}
     input,select{width:100%;padding:.7rem .75rem;border:1px solid #cfd8e3;border-radius:.4rem;font-size:16px;background:#fff}
+
     #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;padding:.6rem .9rem;border-radius:.5rem;opacity:0;pointer-events:none;transition:opacity .25s;z-index:60}
+
     .quick{display:grid;grid-template-columns: 1fr 1fr 2fr 1fr 1fr auto; gap:.5rem; align-items:end}
     .quick .btn{height:42px}
 
     /* Compact charts */
     .chart-card{ padding:.75rem }
-    .chart-card h3{ margin:.1rem 0 }
-    .chart-card small{ margin-bottom:.25rem; display:block }
     .chart-card canvas{
       display:block;
       width:100% !important;
       height:200px !important;
       max-height:200px !important;
     }
-    /* History chart slightly shorter on small screens */
+
     @media (max-width: 800px){
       .grid-12{grid-template-columns:repeat(6,1fr)}
-      .span-6,.span-4,.span-3,.span-12{grid-column:1 / -1}
+      .span-6,.span-3,.span-12{grid-column:1 / -1}
       .quick{grid-template-columns: 1fr 1fr; }
       .quick .full{grid-column:1 / -1}
       .chart-card canvas{ height:180px !important; max-height:180px !important; }
-    }
-
-    /* ===== BUTTON LABEL VISIBILITY: local hard override ===== */
-    /* Tabs: dark text when inactive, white when active (Safari-safe) */
-    .tabs > button {
-      color: #0f172a !important;
-      -webkit-text-fill-color: #0f172a !important;
-      background: #fff !important;
-      border: 1px solid #cbd5e1 !important;
-    }
-    .tabs > button.active {
-      color: #ffffff !important;
-      -webkit-text-fill-color: #ffffff !important;
-      background: #0f172a !important;
-      border-color: #0f172a !important;
-    }
-
-    /* Table action buttons: Edit/Delete */
-    td.actions > button,
-    .actions > button {
-      color: #0f172a !important;
-      -webkit-text-fill-color: #0f172a !important;
-      background: #ffffff !important;
-      border: 1px solid #cbd5e1 !important;
-      border-radius: .35rem !important;
-      padding: .35rem .55rem !important;
-      font-size: 14px !important;
-      font-weight: 600 !important;
-      line-height: 1.2 !important;
-    }
-    td.actions > button + button,
-    .actions > button + button { margin-left: .35rem !important; }
-
-    /* Keep the orange “Add” button white-on-coral */
-    #qAdd.btn {
-      color: #ffffff !important;
-      -webkit-text-fill-color: #ffffff !important;
-    }
-
-    /* Nuke any icon pseudo-elements that might hide labels */
-    .tabs > button::before, .tabs > button::after,
-    td.actions > button::before, td.actions > button::after {
-      content: none !important;
     }
   </style>
 </head>
@@ -121,7 +121,7 @@
 
 <main class="container">
   <h1>Net Worth Tracker</h1>
-  <p class="muted" style="margin:.25rem 0 1rem">Track your accounts privately in your browser. Mark which assets <strong>count toward FI</strong> (home equity/car usually don’t). Snapshot monthly to build your chart.</p>
+  <p class="muted">Track your accounts privately in your browser. Mark which assets <strong>count toward FI</strong> (home equity/car usually don’t). Snapshot monthly to build your chart.</p>
 
   <!-- CHARTS FIRST -->
   <section class="grid grid-12" style="margin-bottom:1rem">
@@ -131,7 +131,7 @@
       <canvas id="mixChart" aria-label="Asset mix pie"></canvas>
     </div>
     <div class="span-6 soft">
-      <h3 style="margin:.25rem 0">What counts for FI?</h3>
+      <h3>What counts for FI?</h3>
       <ul class="muted" style="margin:.6rem 0 0 1rem;line-height:1.55">
         <li><strong>Usually counts:</strong> Brokerage, 401k/IRA, HSA, cash</li>
         <li><strong>Usually doesn’t:</strong> Primary home equity, car</li>
@@ -140,7 +140,7 @@
     </div>
   </section>
 
-  <!-- Sticky summary -->
+  <!-- Summary -->
   <section class="summary grid grid-12">
     <div class="span-3 soft"><strong>Total Assets</strong><div id="totalAssets">$0</div></div>
     <div class="span-3 soft"><strong>Total Liabilities</strong><div id="totalLiabilities">$0</div></div>
@@ -148,15 +148,16 @@
     <div class="span-3 soft"><strong>FI-Eligible Assets</strong><div id="fiEligibleTotal">$0</div><small class="muted">Items marked “Counts toward FI.”</small></div>
   </section>
 
+  <!-- Tabs -->
   <div class="tabs">
-    <button class="active" data-tab="items">Accounts</button>
-    <button data-tab="history">History</button>
+    <button class="btn-tab active" data-tab="items">Accounts</button>
+    <button class="btn-tab" data-tab="history">History</button>
   </div>
 
   <!-- Accounts -->
   <section id="tab-items">
-    <div class="card" style="margin-bottom:.75rem">
-      <h3 style="margin:.25rem 0">Quick add</h3>
+    <div class="card">
+      <h3>Quick add</h3>
       <div class="quick">
         <div>
           <label for="qType">Type</label>
@@ -176,7 +177,7 @@
         </div>
         <div>
           <label for="qAmount">Amount</label>
-          <input id="qAmount" type="number" inputmode="decimal" step="0.01" min="0" value="0"/>
+          <input id="qAmount" type="number" step="0.01" min="0" value="0"/>
         </div>
         <div>
           <label for="qFi">Counts toward FI?</label>
@@ -187,7 +188,6 @@
           <button id="qAdd" class="btn" type="button">Add</button>
         </div>
       </div>
-      <small class="muted" style="display:block;margin-top:.5rem">Tip: Primary home/car are usually <em>not</em> FI-eligible, but you can override.</small>
     </div>
 
     <div class="grid grid-12">
@@ -195,15 +195,14 @@
         <details class="accordion" open>
           <summary>Assets</summary>
           <table>
-            <thead><tr><th style="text-align:left">Name</th><th>Category</th><th style="text-align:center">FI?</th><th style="text-align:right">Amount</th><th style="text-align:right">Actions</th></tr></thead>
+            <thead><tr><th>Name</th><th>Category</th><th>FI?</th><th style="text-align:right">Amount</th><th style="text-align:right">Actions</th></tr></thead>
             <tbody id="assetsBody"></tbody>
           </table>
         </details>
-
-        <details class="accordion" open style="margin-top:.5rem">
+        <details class="accordion" open>
           <summary>Liabilities</summary>
           <table>
-            <thead><tr><th style="text-align:left">Name</th><th>Category</th><th style="text-align:center">—</th><th style="text-align:right">Amount</th><th style="text-align:right">Actions</th></tr></thead>
+            <thead><tr><th>Name</th><th>Category</th><th>—</th><th style="text-align:right">Amount</th><th style="text-align:right">Actions</th></tr></thead>
             <tbody id="liabilitiesBody"></tbody>
           </table>
         </details>
@@ -219,17 +218,17 @@
           <h3>Net Worth History</h3>
           <div class="muted">Snapshot monthly to build your trend.</div>
         </div>
-        <div class="row">
-          <button class="btn" id="snapshotBtn" type="button">Snapshot this month</button>
-          <button class="btn secondary" id="exportCsvBtn" type="button">Export CSV</button>
+        <div>
+          <button class="btn" id="snapshotBtn">Snapshot this month</button>
+          <button class="btn-secondary" id="exportCsvBtn">Export CSV</button>
         </div>
       </div>
       <div style="margin-top:1rem">
-        <canvas id="nwChart" aria-label="Net worth history"></canvas>
+        <canvas id="nwChart"></canvas>
       </div>
       <div style="margin-top:1rem;overflow:auto">
         <table>
-          <thead><tr><th style="text-align:left">Date</th><th style="text-align:right">Net Worth</th></tr></thead>
+          <thead><tr><th>Date</th><th style="text-align:right">Net Worth</th></tr></thead>
           <tbody id="historyBody"></tbody>
         </table>
       </div>
@@ -239,16 +238,13 @@
 
 <!-- Modal: Edit item -->
 <div class="backdrop" id="backdrop" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <h3 id="modalTitle" style="margin:.25rem 0">Edit Item</h3>
-    <form id="itemForm" class="grid" style="grid-template-columns:repeat(2,1fr); gap:.75rem; align-items:end">
+  <div class="modal">
+    <h3 id="modalTitle">Edit Item</h3>
+    <form id="itemForm" class="grid" style="grid-template-columns:repeat(2,1fr); gap:.75rem;">
       <input type="hidden" id="editId" value="">
       <div class="span-12">
         <label for="itemType">Type</label>
-        <select id="itemType">
-          <option value="asset">Asset</option>
-          <option value="liability">Liability</option>
-        </select>
+        <select id="itemType"><option value="asset">Asset</option><option value="liability">Liability</option></select>
       </div>
       <div>
         <label for="itemCategory">Category</label>
@@ -260,58 +256,48 @@
       </div>
       <div>
         <label for="itemCountsFi">Counts toward FI?</label>
-        <select id="itemCountsFi">
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-        <small class="help">Primary home/car usually “No”.</small>
+        <select id="itemCountsFi"><option value="yes">Yes</option><option value="no">No</option></select>
       </div>
       <div class="span-12">
         <label for="itemName">Name</label>
-        <input id="itemName" type="text" placeholder="e.g., Vanguard Brokerage" />
+        <input id="itemName" type="text"/>
       </div>
       <div class="span-12">
         <label for="itemAmount">Amount</label>
-        <input id="itemAmount" type="number" inputmode="decimal" step="0.01" min="0" value="0" />
+        <input id="itemAmount" type="number" step="0.01" min="0"/>
       </div>
       <div class="span-12" style="display:flex;gap:.5rem;flex-wrap:wrap">
         <button class="btn" type="submit" id="saveBtn">Update item</button>
-        <button class="btn secondary" type="button" id="cancelBtn">Cancel</button>
+        <button class="btn-secondary" type="button" id="cancelBtn">Cancel</button>
       </div>
     </form>
   </div>
 </div>
 
 <!-- Newsletter soft-gate modal -->
-<div class="backdrop" id="nlBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:1rem;z-index:60">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitle" style="max-width:460px;width:100%;">
-    <h3 id="nlTitle" style="margin:.25rem 0">Get the CSV download</h3>
-    <p class="muted" style="margin:.25rem 0 1rem">
-      Pop in your email to receive FIREandLife updates (tools & scenarios). If you’re already subscribed, just check the box and continue.
-    </p>
-    <form id="nlForm" action="https://eepurl.com/jkcf3o" method="post" target="_blank" class="grid" style="grid-template-columns:1fr;gap:.75rem">
+<div class="backdrop" id="nlBackdrop" style="display:none;">
+  <div class="modal" style="max-width:460px;width:100%;">
+    <h3 id="nlTitle">Get the CSV download</h3>
+    <p class="muted">Pop in your email to receive FIREandLife updates. If you’re already subscribed, just check the box and continue.</p>
+    <form id="nlForm" action="https://eepurl.com/jkcf3o" method="post" target="_blank" class="grid" style="gap:.75rem">
       <div>
         <label for="nlEmail">Email</label>
         <input id="nlEmail" name="EMAIL" type="email" required placeholder="you@example.com" />
       </div>
-      <label style="display:flex;align-items:center;gap:.5rem">
-        <input type="checkbox" id="nlAlready" /> I’m already subscribed
-      </label>
+      <label><input type="checkbox" id="nlAlready" /> I’m already subscribed</label>
       <div style="display:flex;gap:.5rem;flex-wrap:wrap">
         <button type="submit" class="btn">Continue & download</button>
-        <button type="button" id="nlSkip" class="btn secondary">Skip this time</button>
+        <button type="button" id="nlSkip" class="btn-secondary">Skip this time</button>
       </div>
     </form>
   </div>
 </div>
 
 <div id="toast">Saved</div>
-
 <footer><p style="text-align:center;padding:1rem;">&copy; <span id="year"></span> FIRE and Life.</p></footer>
 
-<!-- Only external scripts below -->
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 <script src="/calculators/net-worth-tracker.inline.js" defer></script>
 </body>
 </html>
-
