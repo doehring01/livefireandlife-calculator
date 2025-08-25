@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include head.html %}
+  <title>{% if page.title %}{{ page.title }} • {% endif %}FIREandLife</title>
+
+  {%- if page.extra_css -%}
+    {%- for href in page.extra_css -%}
+      <link rel="stylesheet" href="{{ href | relative_url }}">
+    {%- endfor -%}
+  {%- endif -%}
+</head>
+<body>
+  {% include header.html %}
+
+  <main class="container">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+
+  {%- if page.extra_js -%}
+    {%- for src in page.extra_js -%}
+      <script src="{{ src | relative_url }}" defer></script>
+    {%- endfor -%}
+  {%- endif -%}
+</body>
+</html>
