@@ -381,3 +381,30 @@ footer .legal-links a { color: #666; text-decoration: underline; }
 .section-tight{ margin-bottom:.75rem }
 .summary{ margin-bottom:.5rem }
 details.accordion{ margin-top:.5rem }
+
+/* Ensure tab text is visible when inactive */
+.tabs button{
+  color: var(--ink);                 /* dark text on white */
+}
+
+/* Active tab stays white-on-dark */
+.tabs button.active{
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+/* Make action buttons' text visible */
+.actions button{
+  color: var(--ink);                 /* dark text */
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: .35rem;
+  padding: .35rem .55rem;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+/* Optional: tiny spacing between Edit/Delete */
+.actions button + button{ margin-left: .35rem; }
+
