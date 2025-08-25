@@ -408,3 +408,30 @@ details.accordion{ margin-top:.5rem }
 /* Optional: tiny spacing between Edit/Delete */
 .actions button + button{ margin-left: .35rem; }
 
+
+/* --- Fix invisible button text (Safari/iOS safe overrides) --- */
+button, .btn, .actions button, .tabs button {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important; /* fixes transparent text on Safari */
+  text-indent: 0 !important;                   /* in case base CSS hides text via indent */
+  background-clip: border-box !important;      /* avoid text clipping tricks */
+  -webkit-background-clip: border-box !important;
+}
+
+/* Specific colors per button group */
+.tabs button{ color: var(--ink) !important; }
+.tabs button.active{ color:#fff !important; }
+
+.actions button{
+  color: var(--ink) !important;
+  background:#fff !important;
+  border:1px solid #cbd5e1 !important;
+  border-radius:.35rem; padding:.35rem .55rem; font-size:.9rem; line-height:1.1;
+}
+.actions button + button{ margin-left:.35rem; }
+
+.btn{ color: var(--accent-ink) !important; }   /* e.g., the coral “Add” button */
+
+/* Optional: make button text a touch bolder for readability */
+button, .btn, .actions button, .tabs button { font-weight:600; }
+
