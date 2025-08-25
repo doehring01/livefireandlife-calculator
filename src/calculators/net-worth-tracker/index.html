@@ -41,11 +41,24 @@
     #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;padding:.6rem .9rem;border-radius:.5rem;opacity:0;pointer-events:none;transition:opacity .25s;z-index:60}
     .quick{display:grid;grid-template-columns: 1fr 1fr 2fr 1fr 1fr auto; gap:.5rem; align-items:end}
     .quick .btn{height:42px}
+
+    /* Compact charts */
+    .chart-card{ padding:.75rem }
+    .chart-card h3{ margin:.1rem 0 }
+    .chart-card small{ margin-bottom:.25rem; display:block }
+    .chart-card canvas{
+      display:block;
+      width:100% !important;
+      height:200px !important;
+      max-height:200px !important;
+    }
+    /* History chart slightly shorter on small screens */
     @media (max-width: 800px){
       .grid-12{grid-template-columns:repeat(6,1fr)}
       .span-6,.span-4,.span-3,.span-12{grid-column:1 / -1}
       .quick{grid-template-columns: 1fr 1fr; }
       .quick .full{grid-column:1 / -1}
+      .chart-card canvas{ height:180px !important; max-height:180px !important; }
     }
   </style>
 </head>
@@ -69,10 +82,10 @@
 
   <!-- CHARTS FIRST -->
   <section class="grid grid-12" style="margin-bottom:1rem">
-    <div class="span-6 card">
-      <h3 style="margin:.25rem 0">Asset Mix</h3>
+    <div class="span-6 card chart-card">
+      <h3>Asset Mix</h3>
       <small class="muted">FI-eligible vs not-eligible highlighted.</small>
-      <canvas id="mixChart" height="220" aria-label="Asset mix pie"></canvas>
+      <canvas id="mixChart" aria-label="Asset mix pie"></canvas>
     </div>
     <div class="span-6 soft">
       <h3 style="margin:.25rem 0">What counts for FI?</h3>
@@ -157,10 +170,10 @@
 
   <!-- History -->
   <section id="tab-history" hidden>
-    <div class="card">
+    <div class="card chart-card">
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:space-between;align-items:center">
         <div>
-          <h3 style="margin:.25rem 0">Net Worth History</h3>
+          <h3>Net Worth History</h3>
           <div class="muted">Snapshot monthly to build your trend.</div>
         </div>
         <div class="row">
@@ -169,7 +182,7 @@
         </div>
       </div>
       <div style="margin-top:1rem">
-        <canvas id="nwChart" height="210" aria-label="Net worth history"></canvas>
+        <canvas id="nwChart" aria-label="Net worth history"></canvas>
       </div>
       <div style="margin-top:1rem;overflow:auto">
         <table>
