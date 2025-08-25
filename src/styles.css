@@ -1,291 +1,253 @@
 /* ------------------------------
-   CSS VARIABLES (safe defaults)
+   GLOBAL RESET & BASE STYLES
 --------------------------------*/
-:root{
-  --bg:#ffffff;
-  --ink:#0f172a;
-  --muted:#475569;
-  --border:#e9edf2;
-  --soft:#f7fafc;
-  --accent:#FF6F61;      /* brand coral */
-  --accent-dark:#E65A4F; /* hover coral */
-  --accent-ink:#ffffff;
-  --accent-2:#FFD166;    /* brand yellow */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* ------------------------------
-   RESET & BASE
---------------------------------*/
-* { margin:0; padding:0; box-sizing:border-box; }
-
-html, body { height: 100%; }
-
-body{
+body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color:#F9F9F9;
-  color:#333333;
-  line-height:1.6;
+  background-color: #F9F9F9;
+  color: #333333;
+  line-height: 1.6;
 }
 
-.container{ max-width:1100px; margin:0 auto; padding:1rem; }
-
-/* Utilities */
-.muted{ color:#555; }
-.hidden{ display:none !important; }
-.flex{ display:flex !important; align-items:center; gap:.5rem; }
-.mono{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
 
 /* ------------------------------
    HEADER & NAVIGATION
 --------------------------------*/
-header{ background:#fff; border-bottom:1px solid #ddd; }
-
-nav{
-  display:flex; justify-content:space-between; align-items:center; padding:1rem;
+header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #ddd;
 }
-nav .logo img{ height:40px; }
 
-.nav-links{ list-style:none; display:flex; gap:1.5rem; }
-.nav-links a{
-  text-decoration:none; color:#333; font-weight:600; transition:color .2s ease;
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
 }
-.nav-links a:hover, .nav-links a.active{ color:var(--accent); }
+
+nav .logo img {
+  height: 40px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333333;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #FF6F61; /* Brand orange */
+}
 
 /* ------------------------------
-   HERO
+   HERO SECTION
 --------------------------------*/
-.hero{ text-align:center; padding:3rem 1rem; background:#F7F7F7; color:#333; }
-.hero h1{ font-size:2.5rem; margin-bottom:1rem; }
-.hero p{ font-size:1.2rem; margin:0 auto 2rem; max-width:700px; }
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: #F7F7F7; /* Light gray */
+  color: #333;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ------------------------------
+   BUTTON STYLES
+--------------------------------*/
+.btn,
+.btn-primary,
+button {
+  background: #FF6F61; /* Brand orange */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s ease;
+}
+
+.btn:hover,
+.btn-primary:hover,
+button:hover {
+  background: #E65A4F; /* Darker orange */
+}
+
+.btn-secondary {
+  background: #FFD166;
+  color: #333333;
+}
+
+.btn-secondary:hover {
+  background: #FFB347;
+}
+
+/* ------------------------------
+   SECTIONS
+--------------------------------*/
+.section {
+  padding: 2rem 1rem;
+}
+
+.section h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.section p {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  color: #555;
+}
 
 /* ------------------------------
    GRID & CARDS
 --------------------------------*/
-.grid{
-  display:grid;
+.grid {
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap:1.5rem;
-  margin-top:1.5rem;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
 }
 
-.card{
-  background:#fff;
-  padding:1.5rem;
-  border-radius:8px;
-  border:1px solid #eee;
-  box-shadow:0 4px 8px rgba(0,0,0,.05);
-  display:flex; flex-direction:column; justify-content:space-between;
+.card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.card h3{ color:#333; margin-bottom:.5rem; }
-.card p{ color:#555; margin-bottom:1rem; }
+.card h3 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
 
-/* “Soft” panels (used on calculators pages) */
-.soft{
-  background:var(--soft);
-  border:1px solid var(--border);
-  border-radius:.6rem;
-  padding:1rem;
+.card p {
+  margin-bottom: 1rem;
+  color: #555;
 }
 
 /* ------------------------------
    FORMS & INPUTS
 --------------------------------*/
-form{ display:flex; flex-direction:column; gap:1rem; }
-
-input, select, textarea{
-  padding:.75rem;
-  border:1px solid #ccc;
-  border-radius:4px;
-  font-size:1rem;
-  background:#fff;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-input:focus, textarea:focus, select:focus{
-  border-color:var(--accent);
-  outline:none;
+input,
+select,
+textarea {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: #FFFFFF;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #FF6F61;
+  outline: none;
 }
 
 /* ------------------------------
-   BUTTONS (FIXED SCOPE)
+   NEWSLETTER SECTION
 --------------------------------*/
-/* Base <button> should be neutral; text must be visible */
-button{
-  -webkit-appearance:button;
-  appearance:button;
-  background:#fff;
-  color:#0f172a;
-  -webkit-text-fill-color:#0f172a;
-  border:1px solid #cbd5e1;
-  border-radius:6px;
-  padding:.6rem .9rem;
-  cursor:pointer;
-  font-weight:600;
-  transition: background .2s ease, color .2s ease, border-color .2s ease;
-}
-button:hover{ background:#f8fafc; }
-
-/* Brand buttons (explicit classes only) */
-.btn, .btn-primary{
-  background:var(--accent);
-  color:var(--accent-ink);
-  -webkit-text-fill-color:var(--accent-ink);
-  border:none;
-  border-radius:4px;
-  padding:.75rem 1.5rem;
-  display:inline-block;
-  text-decoration:none;
-}
-.btn:hover, .btn-primary:hover{ background:var(--accent-dark); }
-
-/* Secondary brand button */
-.btn-secondary{
-  background:var(--accent-2);
-  color:#333;
-  border:none;
-}
-.btn-secondary:hover{ background:#FFB347; }
-
-/* Inline action buttons inside tables */
-.actions button{
-  background:#fff !important;
-  color:#0f172a !important;
-  -webkit-text-fill-color:#0f172a !important;
-  border:1px solid #cbd5e1 !important;
-  border-radius:.35rem !important;
-  padding:.35rem .55rem !important;
-  font-size:.9rem !important;
-  line-height:1.2 !important;
-}
-.actions button + button{ margin-left:.35rem !important; }
-
-/* Tabs (pills) */
-.tabs{ display:flex; gap:.5rem; margin:1rem 0; flex-wrap:wrap; }
-.tabs button{
-  background:#fff !important;
-  color:#0f172a !important;
-  -webkit-text-fill-color:#0f172a !important;
-  border:1px solid #cbd5e1 !important;
-  border-radius:999px !important;
-  padding:.5rem .9rem !important;
-}
-.tabs button.active{
-  background:#0f172a !important;
-  color:#fff !important;
-  -webkit-text-fill-color:#fff !important;
-  border-color:#0f172a !important;
+.newsletter {
+  background: #FFFFFF;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-width: 700px;
+  margin: 3rem auto;
+  text-align: center;
+  padding: 2rem;
 }
 
-/* Kill icon-only pseudo elements that could hide text */
-button::before, button::after{ content: none !important; }
-
-/* ------------------------------
-   DETAILS / ACCORDION
---------------------------------*/
-details.accordion > summary{
-  cursor:pointer;
-  list-style:none;
-  padding:.6rem .25rem;
-  border-bottom:1px solid #eef2f7;
-  font-weight:600;
-}
-details.accordion[open] > summary{ border-bottom:none; }
-
-/* ------------------------------
-   SECTIONS
---------------------------------*/
-.section{ padding:2rem 1rem; }
-.section h2{ text-align:center; margin-bottom:1rem; color:#333; }
-.section p{ text-align:center; max-width:700px; margin:0 auto; color:#555; }
-
-/* ------------------------------
-   NEWSLETTER
---------------------------------*/
-.newsletter{
-  background:#fff;
-  border:1px solid #ddd;
-  border-radius:8px;
-  max-width:700px;
-  margin:3rem auto;
-  text-align:center;
-  padding:2rem;
-}
-.newsletter h2{ margin-bottom:.5rem; color:#333; }
-.newsletter p{ margin-bottom:1rem; color:#555; }
-.newsletter form{ display:flex; justify-content:center; flex-wrap:wrap; gap:.5rem; }
-.newsletter input[type="email"]{
-  padding:.75rem; border:1px solid #ccc; border-radius:4px; flex:1; max-width:250px;
-}
-.newsletter button{
-  background:var(--accent); color:#fff; border:none; padding:.75rem 1.5rem; border-radius:4px; font-weight:bold; cursor:pointer;
-}
-.newsletter button:hover{ background:var(--accent-dark); }
-
-/* ------------------------------
-   RESULTS / TABLES (calculators)
---------------------------------*/
-#results .cards{ display:grid; gap:1rem; }
-@media (min-width:700px){
-  #results .cards{ grid-template-columns: repeat(2, minmax(240px, 1fr)); }
+.newsletter h2 {
+  margin-bottom: 0.5rem;
+  color: #333;
 }
 
-.results-section{ margin-top:1.5rem; }
-.table-wrap{ overflow-x:auto; margin-top:1rem; }
-
-.results-table{
-  width:100%; border-collapse:collapse;
-  background:#fff; border:1px solid #eee; border-radius:8px; overflow:hidden;
-}
-.results-table th, .results-table td{
-  padding:.75rem .9rem; text-align:right; border-bottom:1px solid #f2f2f2; white-space:nowrap;
-}
-.results-table th:first-child, .results-table td:first-child{ text-align:left; }
-.results-table thead th{ background:#fafafa; font-weight:600; }
-.results-table tbody tr:hover{ background:#fcfcfc; }
-
-/* ------------------------------
-   CHARTS (compact blocks)
---------------------------------*/
-.chart-card{ padding:.75rem; }
-.chart-card h3{ margin:.1rem 0; }
-.chart-card small{ display:block; margin-bottom:.25rem; }
-.chart-card canvas{
-  display:block;
-  width:100% !important;
-  height:200px !important;
-  max-height:200px !important;
+.newsletter p {
+  margin-bottom: 1rem;
+  color: #555;
 }
 
-/* Legacy single results chart */
-#resultsChart{ max-width:700px; height:260px; display:block; margin:1rem auto; }
+.newsletter form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.newsletter input[type="email"] {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+  max-width: 250px;
+}
+
+.newsletter button {
+  background: #FF6F61;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.newsletter button:hover {
+  background: #E65A4F;
+}
 
 /* ------------------------------
    FOOTER
 --------------------------------*/
-footer{
-  text-align:center; padding:1rem; font-size:.9rem; color:#777; margin-top:3rem; background:#fff;
-}
-footer::after{
-  content:"Disclaimer: The information and calculators on this site are for educational purposes only and do not constitute financial, tax, or legal advice. Results are estimates and may not reflect your exact situation. Consult a qualified professional for advice specific to your circumstances.";
-  display:block; font-size:.8rem; line-height:1.35; opacity:.75; max-width:880px; margin:.5rem auto 0; padding:0 1rem;
-}
-footer .legal-links{ margin-top:.25rem; font-size:.9rem; }
-footer .legal-links a{ color:#666; text-decoration:underline; }
-
-/* ------------------------------
-   MOBILE POLISH
---------------------------------*/
-@media (max-width:780px){
-  nav{ padding:.75rem; }
-  .nav-links{ gap:.75rem; flex-wrap:wrap; justify-content:center; }
-  .nav-links a{ font-size:.95rem; padding:.25rem 0; }
-  nav .logo img{ height:34px; }
-}
-
-@media (max-width:480px){
-  .nav-links{
-    flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; gap:.75rem; padding-bottom:.25rem;
-  }
-  .nav-links li{ display:inline-block; }
-  .chart-card canvas{ height:180px !important; max-height:180px !important; }
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 3rem;
+  background: #FFFFFF;
 }
