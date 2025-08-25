@@ -512,3 +512,46 @@ td.actions > button::before, td.actions > button::after {
   content: none !important;
 }
 
+/* ===== Button text visibility fixes (scoped & strong) ===== */
+
+/* Scope the global orange style to only branded buttons, not every <button> */
+button { color: inherit; background: inherit; } /* neutralize base */
+.btn, .btn-primary {
+  background: #FF6F61;
+  color: #fff;
+}
+
+/* Tabs: visible labels */
+button[data-tab]:not(.active) {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  background: #fff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 999px;
+  padding: .5rem .9rem;
+  font-weight: 600;
+}
+button[data-tab].active {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  background: #0f172a !important;
+  border-color: #0f172a !important;
+}
+
+/* Row action buttons (Edit/Delete) */
+td.actions > button,
+.actions button {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  background: #fff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: .35rem !important;
+  padding: .35rem .55rem !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+td.actions > button + button { margin-left: .35rem !important; }
+
+/* Keep the coral “Add” button white-on-coral */
+#qAdd.btn { color: #fff !important; -webkit-text-fill-color: #fff !important; }
