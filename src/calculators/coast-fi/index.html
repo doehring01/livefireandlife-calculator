@@ -210,5 +210,27 @@ permalink: /calculators/coast-fi/index.html
   </div>
 </div>
 
+<script>
+(function(){
+  function handleUnlockClick(e){
+    e.preventDefault();
+    var gate = document.getElementById('nlBackdropCF');
+    if (gate) {
+      gate.style.display = 'flex';
+    } else {
+      // fallback if modal not on page or IDs don’t match
+      window.location.href = "/calculators/coast-fi/unlock.html";
+    }
+  }
+  var btn = document.getElementById('unlockBtn');
+  if (btn) {
+    btn.removeEventListener('click', handleUnlockClick);
+    btn.addEventListener('click', handleUnlockClick);
+  } else {
+    console.warn("CoastFI: #unlockBtn not found.");
+  }
+})();
+</script>
+
 </body>
 </html>
