@@ -1,0 +1,19 @@
+title: FIREandLife
+url: https://livefireandlife.com
+baseurl: ""      # keep empty since you’re at the domain root
+permalink: /:categories/:title/
+markdown: kramdown
+
+# Useful plugins (GitHub Pages supports these)
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-feed
+
+# Exclude Node/Eleventy leftovers
+exclude:
+  - node_modules
+  - dist
+  - .eleventy.js
+  - package.json
+  - package-lock.json
