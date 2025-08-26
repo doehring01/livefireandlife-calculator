@@ -19,18 +19,9 @@ permalink: /calculators/coast-fi/index.html
     @media (min-width:700px){ .cards { grid-template-columns: repeat(2,minmax(240px,1fr)); } }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 
-    /* Chart sizing (prevents the super-tall canvas) */
-    .chart-wrap {
-      position: relative;
-      max-width: 760px;
-      height: 300px;
-      margin: 1rem auto;
-    }
-    #coastChart {
-      width: 100% !important;
-      height: 100% !important;
-      display: block;
-    }
+    /* Chart sizing */
+    .chart-wrap { position: relative; max-width:760px; height:300px; margin:1rem auto; }
+    #coastChart { width:100% !important; height:100% !important; display:block; }
 
     /* Soft-gate modal */
     .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:9999; }
@@ -128,8 +119,9 @@ permalink: /calculators/coast-fi/index.html
 
       <div id="unlockBlock" class="hidden" style="margin-top:1rem;">
         <p>Want the full breakdown (chart + table + personalized CoastFI number)?</p>
-        <button class="btn" id="unlockBtn" type="button">See Full Results</button>
+        <button class="btn" id="unlockBtn" type="button" onclick="return openCoastGate(event)">See Full Results</button>
         <div class="help" style="margin-top:.5rem;">Join the newsletter to unlock (free, 1–2 emails/week).</div>
+        <noscript><p><a class="btn" href="/calculators/coast-fi/unlock.html">See Full Results</a></p></noscript>
       </div>
     </section>
   </div>
@@ -178,7 +170,7 @@ permalink: /calculators/coast-fi/index.html
 
 <!-- Libraries & app JS -->
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script defer src="/calculators/coast-fi/coastfi.js?v=20250825c"></script>
+<script defer src="/calculators/coast-fi/coastfi.js?v=20250825d"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
 <!-- Newsletter soft-gate modal (CoastFI) -->
@@ -209,27 +201,34 @@ permalink: /calculators/coast-fi/index.html
   </div>
 </div>
 
-<!-- Robust delegated handler: open modal or redirect fallback -->
+<!-- Tiny global shim to guarantee the unlock works even if external JS fails -->
 <script>
-(function () {
-  function openGate() {
+  function openCoastGate(e){
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    console.log('[CoastFI] unlock clicked (inline shim)');
     var gate = document.getElementById('nlBackdropCF');
-    if (gate) { gate.style.display = 'flex'; return true; }
+    if (gate) {
+      gate.style.display = 'flex';
+      return false;
+    }
+    // absolute fallback
+    window.location.href = '/calculators/coast-fi/unlock.html';
     return false;
   }
+</script>
 
+<!-- Defensive delegated handler (kept, but shim above already guarantees behavior) -->
+<script>
+(function () {
   document.addEventListener('click', function (e) {
     var t = e.target;
     if (!t || t.id !== 'unlockBtn') return;
-
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('[CoastFI] unlockBtn clicked');
-
-    if (openGate()) return;
-
-    console.log('[CoastFI] modal not found; redirecting to unlock.html');
-    window.location.href = '/calculators/coast-fi/unlock.html';
+    // if onclick shim already ran, do nothing
+    if (e.defaultPrevented) return;
+    try { openCoastGate(e); } catch(err) {
+      console.warn('CoastFI unlock handler error:', err);
+      window.location.href = '/calculators/coast-fi/unlock.html';
+    }
   });
 })();
 </script>
