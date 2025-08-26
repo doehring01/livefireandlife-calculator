@@ -34,7 +34,7 @@ permalink: /calculators/coast-fi/index.html
 
     /* Soft-gate modal */
     .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:9999; }
-    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,0.25); }
+    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,0.25); border:1px solid #e9edf2; }
     .modal header { padding:1rem 1.25rem; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
     .modal .body { padding:1rem 1.25rem; }
     .modal .close { background:none; border:0; font-size:1.4rem; cursor:pointer; }
@@ -128,7 +128,7 @@ permalink: /calculators/coast-fi/index.html
 
       <div id="unlockBlock" class="hidden" style="margin-top:1rem;">
         <p>Want the full breakdown (chart + table + personalized CoastFI number)?</p>
-        <button class="btn" id="unlockBtn">See Full Results</button>
+        <button class="btn" id="unlockBtn" type="button">See Full Results</button>
         <div class="help" style="margin-top:.5rem;">Join the newsletter to unlock (free, 1–2 emails/week).</div>
       </div>
     </section>
@@ -176,21 +176,19 @@ permalink: /calculators/coast-fi/index.html
   </p>
 </footer>
 
-<!-- Scripts -->
+<!-- Libraries & app JS -->
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script defer src="/calculators/coast-fi/coastfi.js?v=20250825a"></script>
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+<script defer src="/calculators/coast-fi/coastfi.js?v=20250825c"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
 <!-- Newsletter soft-gate modal (CoastFI) -->
-<div class="modal-backdrop" id="nlBackdropCF" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:1rem;z-index:60">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitleCF" style="max-width:460px;width:100%;background:#fff;border:1px solid #e9edf2;border-radius:.7rem;">
-    <header style="padding:1rem 1.25rem;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center">
+<div class="modal-backdrop" id="nlBackdropCF" style="display:none;align-items:center;justify-content:center;padding:1rem;">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitleCF">
+    <header>
       <h3 id="nlTitleCF" style="margin:0">See your full CoastFI results</h3>
       <button type="button" class="close" aria-label="Close" onclick="document.getElementById('nlBackdropCF').style.display='none'">✕</button>
     </header>
-    <div class="body" style="padding:1rem 1.25rem">
+    <div class="body">
       <p class="muted" style="margin:.25rem 0 1rem">
         Pop in your email to receive FIREandLife updates (tools & scenarios). If you’re already subscribed, just check the box and continue.
       </p>
@@ -211,25 +209,28 @@ permalink: /calculators/coast-fi/index.html
   </div>
 </div>
 
-<!-- Inline safety fallback: if JS didn’t wire up, still open modal or redirect -->
+<!-- Robust delegated handler: open modal or redirect fallback -->
 <script>
-(function(){
-  function handleUnlockClick(e){
-    e.preventDefault();
+(function () {
+  function openGate() {
     var gate = document.getElementById('nlBackdropCF');
-    if (gate) {
-      gate.style.display = 'flex';
-    } else {
-      window.location.href = "/calculators/coast-fi/unlock.html";
-    }
+    if (gate) { gate.style.display = 'flex'; return true; }
+    return false;
   }
-  var btn = document.getElementById('unlockBtn');
-  if (btn) {
-    btn.removeEventListener('click', handleUnlockClick);
-    btn.addEventListener('click', handleUnlockClick);
-  } else {
-    console.warn("CoastFI: #unlockBtn not found.");
-  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || t.id !== 'unlockBtn') return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('[CoastFI] unlockBtn clicked');
+
+    if (openGate()) return;
+
+    console.log('[CoastFI] modal not found; redirecting to unlock.html');
+    window.location.href = '/calculators/coast-fi/unlock.html';
+  });
 })();
 </script>
 
