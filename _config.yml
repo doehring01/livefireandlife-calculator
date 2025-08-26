@@ -1,28 +1,28 @@
+# --- Site basics
 title: FIREandLife
 url: https://livefireandlife.com
-baseurl: ""                # domain root
+baseurl: ""                # at domain root
 permalink: /:categories/:title/
 markdown: kramdown
 
-# Jekyll paths
-source: src                # <— content lives here
-destination: _site
+# --- Tell Jekyll where your site actually lives
+source: src                # look inside /src for pages
+layouts_dir: _layouts      # /src/_layouts
+includes_dir: _includes    # /src/_includes
 
-# Optional: if you later move assets under src/assets, they'll be copied automatically
-# defaults:
-#   - scope: { path: "" }
-#     values: { layout: default }
-
+# --- Plugins (all supported on GitHub Pages/Netlify)
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
   - jekyll-feed
 
-# Keep the build clean
+# --- What NOT to process
 exclude:
   - node_modules
   - dist
   - .eleventy.js
   - package.json
   - package-lock.json
-  - netlify/functions
+  - netlify.toml
+  - Gemfile
+  - Gemfile.lock
