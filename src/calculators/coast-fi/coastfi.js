@@ -1,32 +1,28 @@
-// coastfi.js (hardened unlock + small UX polish)
+// coastfi.js — soft-gated unlock (Mailchimp-style), with safe fallbacks
 console.log("🔵 CoastFI calculator loaded");
 
 let coastChart;
 
-// helpers
+// ---------- helpers ----------
 const $ = (id) => document.getElementById(id);
 const fmt0 = (n) => Number(n).toLocaleString(undefined, { maximumFractionDigits: 0 });
 const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
 const yearsUntil = (cur, target) => Math.max(0, (Number(target)||0) - (Number(cur)||0));
 
-// gate state
-const isUnlocked = () => {
-  try { return localStorage.getItem("coastfiUnlocked") === "1"; } catch(e){ return false; }
-};
-const unlock = () => { try { localStorage.setItem("coastfiUnlocked", "1"); } catch(e) {} };
+// ---------- gate state ----------
+const NEWS_KEY = "coastfiUnlocked"; // same idea as CSV gate; page-specific key
+const isUnlocked = () => { try { return localStorage.getItem(NEWS_KEY) === "1"; } catch(e){ return false; } };
+const unlock = () => { try { localStorage.setItem(NEWS_KEY, "1"); } catch(e){} };
 
-// show/hide
+// ---------- show/hide ----------
 const show = (el, yes) => { if (!el) return; el.classList.toggle("hidden", !yes); };
 
-// math
+// ---------- math ----------
 function computeCoast(inputs) {
-  const {
-    currentAge, retireAge, currentPortfolio,
-    retireSpend, passiveIncome, realReturnPct, swrPct,
-  } = inputs;
+  const { currentAge, retireAge, currentPortfolio, retireSpend, passiveIncome, realReturnPct, swrPct } = inputs;
 
   const nYears = yearsUntil(currentAge, retireAge);
-  const r = (Number(realReturnPct) || 0) / 100; // real return after inflation
+  const r = (Number(realReturnPct) || 0) / 100; // real return (after inflation)
   const swr = (Number(swrPct) || 0) / 100;
 
   const needFromPortfolio = Math.max(0, (Number(retireSpend)||0) - (Number(passiveIncome)||0));
@@ -43,7 +39,7 @@ function computeCoast(inputs) {
   return { nYears, r, swr, needFromPortfolio, requiredAtRetirement, requiredToday, progressPct, portfolioAtRetirement };
 }
 
-// quick summary
+// ---------- renderers ----------
 function renderQuickSummary(inputs, calc) {
   const q = $("quickSummary");
   const u = $("unlockBlock");
@@ -67,11 +63,9 @@ function renderQuickSummary(inputs, calc) {
     `;
   }
 
-  // show unlock CTA only if still gated
   show(u, !isUnlocked());
 }
 
-// full results
 function renderFullResults(inputs, calc) {
   const full = $("fullResults");
   show(full, true);
@@ -91,24 +85,6 @@ function renderFullResults(inputs, calc) {
     atRet.innerHTML = `
       Required portfolio: <strong>$${fmt0(calc.requiredAtRetirement)}</strong><br/>
       Projected portfolio (no more contributions): <strong>$${fmt0(calc.portfolioAtRetirement)}</strong>
-    `;
-  }
-
-  const tbody = $("resultsTableBody");
-  if (tbody) {
-    tbody.innerHTML = `
-      <tr><td>Current age</td><td>${inputs.currentAge}</td></tr>
-      <tr><td>Target retirement age</td><td>${inputs.retireAge}</td></tr>
-      <tr><td>Current portfolio</td><td>$${fmt0(inputs.currentPortfolio)}</td></tr>
-      <tr><td>Retirement spending (annual)</td><td>$${fmt0(inputs.retireSpend)}</td></tr>
-      <tr><td>Passive income at retirement (annual)</td><td>$${fmt0(inputs.passiveIncome)}</td></tr>
-      <tr><td>Needed from portfolio (annual)</td><td>$${fmt0(calc.needFromPortfolio)}</td></tr>
-      <tr><td>Safe withdrawal rate</td><td>${inputs.swrPct}%</td></tr>
-      <tr><td>Required portfolio at retirement</td><td>$${fmt0(calc.requiredAtRetirement)}</td></tr>
-      <tr><td>Expected real return</td><td>${inputs.realReturnPct}%</td></tr>
-      <tr><td>Years until retirement</td><td>${calc.nYears}</td></tr>
-      <tr><td><strong>CoastFI “number today”</strong></td><td><strong>$${fmt0(calc.requiredToday)}</strong></td></tr>
-      <tr><td>Progress</td><td>${fmt0(calc.progressPct)}%</td></tr>
     `;
   }
 
@@ -142,16 +118,72 @@ function renderFullResults(inputs, calc) {
   });
 }
 
-// init
+// ---------- soft-gate modal helpers (like CSV gate) ----------
+function openGate() {
+  const el = $("nlBackdropCF");
+  if (el) el.style.display = "flex";
+}
+function closeGate() {
+  const el = $("nlBackdropCF");
+  if (el) el.style.display = "none";
+}
+function attachGateHandlers() {
+  const form = $("nlFormCF");
+  const skip = $("nlSkipCF");
+  const already = $("nlAlreadyCF");
+  const backdrop = $("nlBackdropCF");
+
+  if (form) {
+    form.addEventListener("submit", () => {
+      try { localStorage.setItem(NEWS_KEY, "1"); } catch(e){}
+      // Give the form a moment to open Mailchimp tab, then unlock & show results
+      setTimeout(() => {
+        closeGate();
+        unlock();
+        if (window._coastLast) {
+          const { inputs, calc } = window._coastLast;
+          renderFullResults(inputs, calc);
+        }
+      }, 150);
+    });
+  }
+
+  if (skip) {
+    skip.addEventListener("click", () => {
+      closeGate();
+      unlock(); // allow “skip this time” → unlock
+      if (window._coastLast) {
+        const { inputs, calc } = window._coastLast;
+        renderFullResults(inputs, calc);
+      }
+    });
+  }
+
+  if (already) {
+    already.addEventListener("change", () => {
+      if (already.checked) {
+        try { localStorage.setItem(NEWS_KEY, "1"); } catch(e){}
+      }
+    });
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener("click", (e) => {
+      if (e.target === backdrop) closeGate();
+    });
+  }
+}
+
+// ---------- init ----------
 function init() {
-  // support redirect back with ?unlocked=1
+  // Support redirect back with ?unlocked=1 (future-proof)
   const params = new URLSearchParams(location.search);
   if (params.get("unlocked") === "1") {
     unlock();
-    history.replaceState({}, "", location.pathname); // clean the URL
+    history.replaceState({}, "", location.pathname);
   }
 
-  // form submit -> compute + render quick (and full if unlocked)
+  // Form submit -> compute
   const form = $("coastForm");
   if (form) {
     form.addEventListener("submit", (e) => {
@@ -166,40 +198,36 @@ function init() {
         swrPct: $("swr").value
       };
       const calc = computeCoast(inputs);
-      // remember last calc so unlock button can render immediately if already unlocked
-      window._coastLast = { inputs, calc };
+      window._coastLast = { inputs, calc }; // cache last calc
 
       renderQuickSummary(inputs, calc);
       if (isUnlocked()) renderFullResults(inputs, calc);
     });
   }
 
-  // 🔒 Soft-gate: robust unlock handler
+  // Unlock button behavior (CSV-like gate)
   const unlockBtn = $("unlockBtn");
   if (unlockBtn) {
     unlockBtn.addEventListener("click", (e) => {
       e.preventDefault();
-
-      // If already unlocked, just show full results from the last calc
       if (isUnlocked() && window._coastLast) {
-        console.log("➡️ Already unlocked: rendering full results immediately");
         const { inputs, calc } = window._coastLast;
         renderFullResults(inputs, calc);
         return;
       }
-
-      const modal = $("gateModal");
-      if (modal) {
-        console.log("➡️ Opening inline modal gate");
-        modal.style.display = "flex";
+      // Use inline modal if present; otherwise fallback to redirect
+      if ($("nlBackdropCF")) {
+        openGate();
       } else {
-        console.log("➡️ No modal present; redirecting to unlock page");
         window.location.href = "/calculators/coast-fi/unlock.html";
       }
     });
   }
 
-  // If already unlocked from a prior visit, keep full results hidden until a fresh calc
+  // Wire up modal (if present)
+  attachGateHandlers();
+
+  // Keep full results hidden until user calculates (and possibly unlocks)
   show($("fullResults"), false);
 }
 
