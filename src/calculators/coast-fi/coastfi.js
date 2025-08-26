@@ -1,25 +1,24 @@
-/* CoastFI calculator — hardened unlock flow (no modal required) */
+// coastfi.js (hardened unlock + small UX polish)
 console.log("🔵 CoastFI calculator loaded");
 
 let coastChart;
 
-// ---------- helpers ----------
+// helpers
 const $ = (id) => document.getElementById(id);
-const fmt0 = (n) => Number(n || 0).toLocaleString(undefined, { maximumFractionDigits: 0 });
+const fmt0 = (n) => Number(n).toLocaleString(undefined, { maximumFractionDigits: 0 });
 const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
-const yearsUntil = (cur, target) => Math.max(0, (Number(target) || 0) - (Number(cur) || 0));
+const yearsUntil = (cur, target) => Math.max(0, (Number(target)||0) - (Number(cur)||0));
 
-// soft-gate state
-const GATE_KEY = "coastfiUnlocked";
+// gate state
 const isUnlocked = () => {
-  try { return localStorage.getItem(GATE_KEY) === "1"; } catch { return false; }
+  try { return localStorage.getItem("coastfiUnlocked") === "1"; } catch(e){ return false; }
 };
-const unlock = () => { try { localStorage.setItem(GATE_KEY, "1"); } catch {} };
+const unlock = () => { try { localStorage.setItem("coastfiUnlocked", "1"); } catch(e) {} };
 
-// show/hide utility
-const show = (el, yes) => { if (el) el.classList.toggle("hidden", !yes); };
+// show/hide
+const show = (el, yes) => { if (!el) return; el.classList.toggle("hidden", !yes); };
 
-// ---------- math ----------
+// math
 function computeCoast(inputs) {
   const {
     currentAge, retireAge, currentPortfolio,
@@ -27,10 +26,10 @@ function computeCoast(inputs) {
   } = inputs;
 
   const nYears = yearsUntil(currentAge, retireAge);
-  const r = (Number(realReturnPct) || 0) / 100; // real (after inflation)
+  const r = (Number(realReturnPct) || 0) / 100; // real return after inflation
   const swr = (Number(swrPct) || 0) / 100;
 
-  const needFromPortfolio = Math.max(0, (Number(retireSpend) || 0) - (Number(passiveIncome) || 0));
+  const needFromPortfolio = Math.max(0, (Number(retireSpend)||0) - (Number(passiveIncome)||0));
   const requiredAtRetirement = swr > 0 ? (needFromPortfolio / swr) : Infinity;
 
   const denom = Math.pow(1 + r, nYears);
@@ -44,11 +43,11 @@ function computeCoast(inputs) {
   return { nYears, r, swr, needFromPortfolio, requiredAtRetirement, requiredToday, progressPct, portfolioAtRetirement };
 }
 
-// ---------- quick summary (always visible) ----------
+// quick summary
 function renderQuickSummary(inputs, calc) {
   const q = $("quickSummary");
   const u = $("unlockBlock");
-  if (!q) return;
+  if (!q || !u) return;
 
   if (calc.requiredToday <= 0) {
     q.innerHTML = `
@@ -56,7 +55,7 @@ function renderQuickSummary(inputs, calc) {
       <div class="help">You’re effectively “beyond CoastFI.” Unlock to see full details.</div>
     `;
   } else {
-    const status = (Number(inputs.currentPortfolio) || 0) >= calc.requiredToday
+    const status = (Number(inputs.currentPortfolio)||0) >= calc.requiredToday
       ? "✅ You’re at or beyond CoastFI."
       : "⏳ You’re not at CoastFI yet.";
 
@@ -64,15 +63,15 @@ function renderQuickSummary(inputs, calc) {
       <div>${status}</div>
       <div>CoastFI number today: <strong>$${fmt0(calc.requiredToday)}</strong></div>
       <div>Progress: <strong>${fmt0(calc.progressPct)}%</strong></div>
-      <div class="help">At your expected ${(Number(inputs.realReturnPct) || 0)}% real return for ${calc.nYears} years.</div>
+      <div class="help">At your expected ${Number(inputs.realReturnPct)||0}% real return for ${calc.nYears} years.</div>
     `;
   }
 
-  // Only show the unlock CTA if still gated
-  if (u) show(u, !isUnlocked());
+  // show unlock CTA only if still gated
+  show(u, !isUnlocked());
 }
 
-// ---------- full results (gated) ----------
+// full results
 function renderFullResults(inputs, calc) {
   const full = $("fullResults");
   show(full, true);
@@ -80,7 +79,7 @@ function renderFullResults(inputs, calc) {
   const headline = $("summaryHeadline");
   const detail = $("summaryDetail");
   if (headline && detail) {
-    const status = (Number(inputs.currentPortfolio) || 0) >= calc.requiredToday
+    const status = (Number(inputs.currentPortfolio)||0) >= calc.requiredToday
       ? "You’re at or beyond CoastFI."
       : "You haven’t reached CoastFI yet.";
     headline.textContent = status;
@@ -117,21 +116,21 @@ function renderFullResults(inputs, calc) {
   const canvas = $("coastChart");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  if (coastChart) { try { coastChart.destroy(); } catch {} }
+  if (coastChart) coastChart.destroy();
 
   const n = calc.nYears;
   const r = calc.r;
-  const yrs = Array.from({ length: n + 1 }, (_, i) => i);
-  const growth = yrs.map(i => (Number(inputs.currentPortfolio) || 0) * Math.pow(1 + r, i));
-  const reqLine = yrs.map(() => calc.requiredAtRetirement);
+  const seriesYears = [...Array(n+1)].map((_,i)=>i);
+  const growth = seriesYears.map(i => (Number(inputs.currentPortfolio)||0) * Math.pow(1+r, i));
+  const reqLine = seriesYears.map(_ => calc.requiredAtRetirement);
 
   coastChart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: yrs.map(y => `+${y}y`),
+      labels: seriesYears.map(y => `+${y}y`),
       datasets: [
         { label: "Portfolio (no new contributions)", data: growth, tension: 0.2 },
-        { label: "Required at retirement", data: reqLine, borderDash: [6, 6], tension: 0 }
+        { label: "Required at retirement", data: reqLine, borderDash: [6,6], tension: 0 }
       ]
     },
     options: {
@@ -143,57 +142,64 @@ function renderFullResults(inputs, calc) {
   });
 }
 
-// ---------- init ----------
+// init
 function init() {
-  // if redirected from /unlock
+  // support redirect back with ?unlocked=1
   const params = new URLSearchParams(location.search);
   if (params.get("unlocked") === "1") {
     unlock();
-    history.replaceState({}, "", location.pathname); // clean URL
+    history.replaceState({}, "", location.pathname); // clean the URL
   }
 
-  // form submit
+  // form submit -> compute + render quick (and full if unlocked)
   const form = $("coastForm");
   if (form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const inputs = {
-        currentAge: $("currentAge")?.value,
-        retireAge: $("retireAge")?.value,
-        currentPortfolio: $("currentPortfolio")?.value,
-        retireSpend: $("retireSpend")?.value,
-        passiveIncome: $("passiveIncome")?.value,
-        realReturnPct: $("realReturn")?.value,
-        swrPct: $("swr")?.value
+        currentAge: $("currentAge").value,
+        retireAge: $("retireAge").value,
+        currentPortfolio: $("currentPortfolio").value,
+        retireSpend: $("retireSpend").value,
+        passiveIncome: $("passiveIncome").value,
+        realReturnPct: $("realReturn").value,
+        swrPct: $("swr").value
       };
       const calc = computeCoast(inputs);
+      // remember last calc so unlock button can render immediately if already unlocked
+      window._coastLast = { inputs, calc };
+
       renderQuickSummary(inputs, calc);
       if (isUnlocked()) renderFullResults(inputs, calc);
     });
   }
 
-  // unlock button (hardened)
+  // 🔒 Soft-gate: robust unlock handler
   const unlockBtn = $("unlockBtn");
-  const modal = $("gateModal");               // page doesn’t include this—be defensive
-  const UNLOCK_URL = "/calculators/coast-fi/unlock.html";
-
   if (unlockBtn) {
-    unlockBtn.addEventListener("click", () => {
-      if (isUnlocked()) {
-        // Already unlocked; reveal full results area (after a calc it will populate)
-        show($("fullResults"), true);
+    unlockBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // If already unlocked, just show full results from the last calc
+      if (isUnlocked() && window._coastLast) {
+        console.log("➡️ Already unlocked: rendering full results immediately");
+        const { inputs, calc } = window._coastLast;
+        renderFullResults(inputs, calc);
         return;
       }
+
+      const modal = $("gateModal");
       if (modal) {
+        console.log("➡️ Opening inline modal gate");
         modal.style.display = "flex";
       } else {
-        // No modal present → redirect flow
-        window.location.href = UNLOCK_URL;
+        console.log("➡️ No modal present; redirecting to unlock page");
+        window.location.href = "/calculators/coast-fi/unlock.html";
       }
     });
   }
 
-  // start with full results hidden
+  // If already unlocked from a prior visit, keep full results hidden until a fresh calc
   show($("fullResults"), false);
 }
 
