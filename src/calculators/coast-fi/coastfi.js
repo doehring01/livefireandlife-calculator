@@ -54,14 +54,14 @@
     if (!q) return;
 
     if (calc.requiredToday <= 0) {
-      q.innerHTML = '' +
+      q.innerHTML =
         '<div>With passive income covering your spending, your required portfolio is $0.</div>' +
         '<div class="help">You’re effectively “beyond CoastFI.” Unlock to see full details.</div>';
     } else {
       var status = (Number(inputs.currentPortfolio) || 0) >= calc.requiredToday
         ? "✅ You’re at or beyond CoastFI."
         : "⏳ You’re not at CoastFI yet.";
-      q.innerHTML = '' +
+      q.innerHTML =
         '<div>' + status + '</div>' +
         '<div>CoastFI number today: <strong>$' + fmt0(calc.requiredToday) + '</strong></div>' +
         '<div>Progress: <strong>' + fmt0(calc.progressPct) + '%</strong></div>' +
@@ -82,20 +82,21 @@
         ? "You’re at or beyond CoastFI."
         : "You haven’t reached CoastFI yet.";
       headline.textContent = status;
-      detail.textContent = "CoastFI today: $" + fmt0(calc.requiredToday) +
+      detail.textContent =
+        "CoastFI today: $" + fmt0(calc.requiredToday) +
         " · Progress: " + fmt0(calc.progressPct) + "% · Years to target: " + calc.nYears;
     }
 
     var atRet = $("atRetirement");
     if (atRet) {
-      atRet.innerHTML = '' +
+      atRet.innerHTML =
         'Required portfolio: <strong>$' + fmt0(calc.requiredAtRetirement) + '</strong><br/>' +
         'Projected portfolio (no more contributions): <strong>$' + fmt0(calc.portfolioAtRetirement) + '</strong>';
     }
 
     var tbody = $("resultsTableBody");
     if (tbody) {
-      tbody.innerHTML = '' +
+      tbody.innerHTML =
         '<tr><td>Current age</td><td>' + inputs.currentAge + '</td></tr>' +
         '<tr><td>Target retirement age</td><td>' + inputs.retireAge + '</td></tr>' +
         '<tr><td>Current portfolio</td><td>$' + fmt0(inputs.currentPortfolio) + '</td></tr>' +
@@ -170,15 +171,18 @@
   // ===== Gate modal behaviors (Mailchimp inline) =====
   function openGate() {
     var gate = $("nlBackdropCF");
-    if (gate) { gate.style.display = "flex"; return true; }
-    return false;
+    if (!gate) return false;
+    // Defensive: only touch .style if the node exists
+    if (gate && gate.style) gate.style.display = "flex";
+    return true;
   }
   function closeGate() {
     var gate = $("nlBackdropCF");
-    if (gate) gate.style.display = "none";
+    if (gate && gate.style) gate.style.display = "none";
   }
   function handleUnlockClick(e) {
     if (e && e.preventDefault) e.preventDefault();
+
     // if already unlocked just show results
     if (isUnlocked()) {
       if (!lastInputs) { lastInputs = readInputs(); lastCalc = computeCoast(lastInputs); }
@@ -186,8 +190,10 @@
       show($("unlockBlock"), false);
       return;
     }
+
     // try modal, else fallback redirect
-    if (!openGate()) {
+    var opened = openGate();
+    if (!opened) {
       window.location.href = "/calculators/coast-fi/unlock.html";
     }
   }
@@ -207,14 +213,15 @@
     var form = $("coastForm");
     if (form) form.addEventListener("submit", handleCalculate);
 
-    // Wire unlock button
+    // Wire unlock button (remove any previous handlers to avoid duplicates)
     var unlockBtn = $("unlockBtn");
     if (unlockBtn) {
-      unlockBtn.removeEventListener("click", handleUnlockClick);
-      unlockBtn.addEventListener("click", handleUnlockClick);
+      try { unlockBtn.replaceWith(unlockBtn.cloneNode(true)); } catch (e) {}
+      unlockBtn = $("unlockBtn");
+      if (unlockBtn) unlockBtn.addEventListener("click", handleUnlockClick);
     }
 
-    // Modal close by clicking backdrop “X”
+    // Modal overlay click-to-close
     var modalBackdrop = $("nlBackdropCF");
     if (modalBackdrop) {
       modalBackdrop.addEventListener("click", function (e) {
