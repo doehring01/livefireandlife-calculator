@@ -19,23 +19,16 @@ permalink: /calculators/coast-fi/index.html
     @media (min-width:700px){ .cards { grid-template-columns: repeat(2,minmax(240px,1fr)); } }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 
-    /* Chart sizing */
     .chart-wrap { position: relative; max-width: 760px; height: 300px; margin: 1rem auto; }
     #coastChart { width: 100% !important; height: 100% !important; display: block; }
 
     /* Soft-gate modal */
     .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:9999; }
-    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,0.25); border:1px solid #e9edf2; }
+    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,0.25); }
     .modal header { padding:1rem 1.25rem; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
     .modal .body { padding:1rem 1.25rem; }
     .modal .close { background:none; border:0; font-size:1.4rem; cursor:pointer; }
     .hidden { display:none !important; }
-
-    .table-wrap { overflow-x:auto; margin-top:1rem; }
-    .results-table { width:100%; border-collapse:collapse; background:#fff; border:1px solid #eee; border-radius:8px; overflow:hidden; }
-    .results-table th, .results-table td { padding:.75rem .9rem; text-align:right; border-bottom:1px solid #f2f2f2; white-space:nowrap; }
-    .results-table th:first-child, .results-table td:first-child { text-align:left; }
-    .results-table thead th { background:#fafafa; font-weight:600; }
   </style>
 
   <!-- GA4 -->
@@ -64,25 +57,6 @@ permalink: /calculators/coast-fi/index.html
 <main class="container" style="max-width:1100px;margin:2rem auto;padding:0 1rem;">
   <h1 class="page-title">CoastFI Calculator</h1>
   <p>Wondering if you could stop contributing and still reach FI by your target age? Enter your details below. We include <strong>passive income</strong> (pensions, rental net, etc.) so the required portfolio shrinks accordingly.</p>
-
-<section class="section" style="margin-top:2rem;margin-bottom:2rem;max-width:800px">
-  <h2>What is CoastFI?</h2>
-  <p>
-    <strong>CoastFI</strong> is the point where you’ve already invested enough that—
-    if you stopped contributing today—your portfolio could grow on its own and
-    fully support your retirement at your target age. 
-  </p>
-  <p>
-    Think of it like putting your financial plan on “autopilot.” 
-    You can choose to keep contributing to accelerate your FI date, 
-    or simply “coast” and free up cash flow for other goals like 
-    travel, family, or reducing work hours.
-  </p>
-  <p class="help" style="margin-top:.5rem;font-size:.95rem;opacity:.8">
-    Example: If your CoastFI number today is $250,000 and you already have $260,000 invested, 
-    you’re technically at CoastFI—future growth alone should get you to full FI.
-  </p>
-</section>
 
   <div class="calc-grid" style="margin-top:1rem;">
     <form id="coastForm" class="card">
@@ -138,8 +112,9 @@ permalink: /calculators/coast-fi/index.html
 
       <div id="unlockBlock" class="hidden" style="margin-top:1rem;">
         <p>Want the full breakdown (chart + table + personalized CoastFI number)?</p>
-        <button class="btn" id="unlockBtn" type="button">See Full Results</button>
+        <button class="btn" id="unlockBtn" data-fallback="/calculators/coast-fi/unlock.html">See Full Results</button>
         <div class="help" style="margin-top:.5rem;">Join the newsletter to unlock (free, 1–2 emails/week).</div>
+        <noscript><p><a class="btn" href="/calculators/coast-fi/unlock.html">See Full Results</a></p></noscript>
       </div>
     </section>
   </div>
@@ -184,12 +159,12 @@ permalink: /calculators/coast-fi/index.html
   </p>
 </footer>
 
-<!-- Inline modal for soft-gate (IDs must match JS) -->
+<!-- Modal (Mailchimp soft-gate) -->
 <div class="modal-backdrop" id="nlBackdropCF" style="display:none;align-items:center;justify-content:center;padding:1rem;">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitleCF">
     <header>
       <h3 id="nlTitleCF" style="margin:0">See your full CoastFI results</h3>
-      <button type="button" class="close" aria-label="Close" onclick="document.getElementById('nlBackdropCF').style.display='none'">✕</button>
+      <button type="button" class="close" aria-label="Close" onclick="(function(){var m=document.getElementById('nlBackdropCF'); if(m&&m.style){m.style.display='none';}})()">✕</button>
     </header>
     <div class="body">
       <p class="muted" style="margin:.25rem 0 1rem">
@@ -212,9 +187,29 @@ permalink: /calculators/coast-fi/index.html
   </div>
 </div>
 
-<!-- Scripts (defer so DOM is ready before JS binds) -->
+<!-- Scripts (deferred) -->
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script defer src="/calculators/coast-fi/coastfi.js?v=20250825b"></script>
+<script defer src="/calculators/coast-fi/coastfi.js?v=20250826c"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<!-- Ultimate fallback: if something else hijacks the handler, still open modal or redirect -->
+<script>
+  (function(){
+    var btn = document.getElementById('unlockBtn');
+    if (!btn) return;
+    btn.addEventListener('click', function(e){
+      // if coastfi.js already handled this, it will have called preventDefault and opened modal
+      // This fallback only runs if nothing else intercepted
+      var m = document.getElementById('nlBackdropCF');
+      if (m && m.style) {
+        e.preventDefault();
+        m.style.display = 'flex';
+      } else {
+        // safety redirect
+        window.location.href = btn.getAttribute('data-fallback') || "/calculators/coast-fi/unlock.html";
+      }
+    }, { capture:false, passive:false });
+  })();
+</script>
 </body>
 </html>
