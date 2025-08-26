@@ -1,19 +1,28 @@
 title: FIREandLife
 url: https://livefireandlife.com
-baseurl: ""      # keep empty since you’re at the domain root
+baseurl: ""                # domain root
 permalink: /:categories/:title/
 markdown: kramdown
 
-# Useful plugins (GitHub Pages supports these)
+# Jekyll paths
+source: src                # <— content lives here
+destination: _site
+
+# Optional: if you later move assets under src/assets, they'll be copied automatically
+# defaults:
+#   - scope: { path: "" }
+#     values: { layout: default }
+
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
   - jekyll-feed
 
-# Exclude Node/Eleventy leftovers
+# Keep the build clean
 exclude:
   - node_modules
   - dist
   - .eleventy.js
   - package.json
   - package-lock.json
+  - netlify/functions
