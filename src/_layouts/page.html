@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  {% if page.description %}
+  <meta name="description" content="{{ page.description }}">
+  {% endif %}
+
+  <!-- Load the single site stylesheet that lives in src/styles.css -->
+  <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}" />
+
+  <!-- Favicon / logos (optional if you have them) -->
+  <link rel="icon" href="{{ '/assets/favicon.png' | relative_url }}">
+
+  <!-- GA4 (optional) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date()); gtag('config','G-KHKJVXPJQM');
+  </script>
+</head>
+<body>
+  <header>
+    <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.06);">
+      <div class="logo">
+        <a href="{{ '/' | relative_url }}">
+          <img src="{{ '/assets/logo-horizontal.png' | relative_url }}" alt="FIREandLife" style="height:40px;">
+        </a>
+      </div>
+      <ul class="nav-links" style="list-style:none;display:flex;gap:1.2rem;margin:0;">
+        <li><a href="{{ '/' | relative_url }}">Home</a></li>
+        <li><a href="{{ '/calculators/' | relative_url }}">Calculators</a></li>
+        <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
+        <li><a href="{{ '/flexfi/' | relative_url }}">FlexFI</a></li>
+        <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+        <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    {{ content }}
+  </main>
+
+  <footer>
+    <p style="text-align:center;padding:1rem;">
+      &copy; <span id="year"></span> FIRE and Life ·
+      <a href="{{ '/privacy/' | relative_url }}">Privacy</a> ·
+      <a href="{{ '/terms/'   | relative_url }}">Terms</a><br/>
+      <small>For educational purposes only. Not financial, tax, or legal advice.</small>
+    </p>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
