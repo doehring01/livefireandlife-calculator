@@ -1,64 +1,46 @@
 ---
-layout: default
-title: CoastFI Calculator • FIRE and Life
-permalink: /calculators/coast-fi/
+permalink: /calculators/coast-fi/index.html
+layout: page
+title: CoastFI Calculator
+description: See if you can stop contributing and still reach FI. CoastFI math with passive income, growth assumptions, and a clear progress check.
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CoastFI Calculator • FIRE and Life</title>
-  <meta name="description" content="See if you can stop contributing and still reach FI. CoastFI math with passive income, growth assumptions, and a clear progress check." />
-  <link rel="stylesheet" href="/styles.css" />
 
-  <style>
-    .calc-grid { display:grid; gap:1rem; }
-    @media (min-width:900px){ .calc-grid { grid-template-columns: 1fr 1fr; } }
-    .field { margin-bottom:.75rem; }
-    .help { font-size:.9rem; opacity:.75; }
-    .cards { display:grid; gap:1rem; }
-    @media (min-width:700px){ .cards { grid-template-columns: repeat(2,minmax(240px,1fr)); } }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+<link rel="stylesheet" href="/styles.css" />
 
-    .chart-wrap { position: relative; max-width: 760px; height: 300px; margin: 1rem auto; }
-    #coastChart { width: 100% !important; height: 100% !important; display: block; }
+<style>
+  .calc-grid { display:grid; gap:1rem; }
+  @media (min-width:900px){ .calc-grid { grid-template-columns: 1fr 1fr; } }
+  .field { margin-bottom:.75rem; }
+  .help { font-size:.9rem; opacity:.75; }
+  .cards { display:grid; gap:1rem; }
+  @media (min-width:700px){ .cards { grid-template-columns: repeat(2,minmax(240px,1fr)); } }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 
-    /* Soft-gate modal */
-    .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:9999; }
-    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,0.25); }
-    .modal header { padding:1rem 1.25rem; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
-    .modal .body { padding:1rem 1.25rem; }
-    .modal .close { background:none; border:0; font-size:1.4rem; cursor:pointer; }
-    .hidden { display:none !important; }
-  </style>
+  /* Chart sizing */
+  .chart-wrap { position:relative; max-width:760px; height:300px; margin:1rem auto; }
+  #coastChart { width:100% !important; height:100% !important; display:block; }
 
-  <!-- GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date()); gtag('config', 'G-KHKJVXPJQM');
-  </script>
-</head>
-<body>
-<header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-    <div class="logo"><a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a></div>
-    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
-      <li><a href="/">Home</a></li>
-      <li><a href="/calculators/">Calculators</a></li>
-      <li><a href="/blog/">Blog</a></li>
-      <li><a href="/flexfi/">FlexFI</a></li>
-      <li><a href="/about/">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-    </ul>
-  </nav>
-</header>
+  /* Soft-gate modal */
+  .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:9999; }
+  .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+  .modal header { padding:1rem 1.25rem; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
+  .modal .body { padding:1rem 1.25rem; }
+  .modal .close { background:none; border:0; font-size:1.4rem; cursor:pointer; }
+  .hidden { display:none !important; }
+
+  .table-wrap { overflow-x:auto; margin-top:1rem; }
+  .results-table { width:100%; border-collapse:collapse; background:#fff; border:1px solid #eee; border-radius:8px; overflow:hidden; }
+  .results-table th, .results-table td { padding:.75rem .9rem; text-align:right; border-bottom:1px solid #f2f2f2; white-space:nowrap; }
+  .results-table th:first-child, .results-table td:first-child { text-align:left; }
+  .results-table thead th { background:#fafafa; font-weight:600; }
+</style>
 
 <main class="container" style="max-width:1100px;margin:2rem auto;padding:0 1rem;">
   <h1 class="page-title">CoastFI Calculator</h1>
-  <p>Wondering if you could stop contributing and still reach FI by your target age? Enter your details below. We include <strong>passive income</strong> (pensions, rental net, etc.) so the required portfolio shrinks accordingly.</p>
+  <p>
+    Wondering if you could stop contributing and still reach FI by your target age? Enter your details below.
+    We include <strong>passive income</strong> (pensions, rental net, etc.), so the required portfolio shrinks accordingly.
+  </p>
 
   <div class="calc-grid" style="margin-top:1rem;">
     <form id="coastForm" class="card">
@@ -114,9 +96,8 @@ permalink: /calculators/coast-fi/
 
       <div id="unlockBlock" class="hidden" style="margin-top:1rem;">
         <p>Want the full breakdown (chart + table + personalized CoastFI number)?</p>
-        <button class="btn" id="unlockBtn" data-fallback="/calculators/coast-fi/unlock.html">See Full Results</button>
+        <button class="btn" id="unlockBtn">See Full Results</button>
         <div class="help" style="margin-top:.5rem;">Join the newsletter to unlock (free, 1–2 emails/week).</div>
-        <noscript><p><a class="btn" href="/calculators/coast-fi/unlock.html">See Full Results</a></p></noscript>
       </div>
     </section>
   </div>
@@ -142,33 +123,22 @@ permalink: /calculators/coast-fi/
     <div class="table-wrap">
       <table class="results-table">
         <thead>
-          <tr>
-            <th>Item</th>
-            <th>Amount ($)</th>
-          </tr>
+          <tr><th>Item</th><th>Amount ($)</th></tr>
         </thead>
-        <tbody id="resultsTableBody"></tbody>
+        <tbody id="resultsTableBody"><!-- filled by JS --></tbody>
       </table>
     </div>
   </section>
 </main>
 
-<footer>
-  <p style="text-align:center;padding:1rem;">
-    &copy; <span id="year"></span> FIRE and Life ·
-    <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a><br/>
-    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
-  </p>
-</footer>
-
-<!-- Modal (Mailchimp soft-gate) -->
-<div class="modal-backdrop" id="nlBackdropCF" style="display:none;align-items:center;justify-content:center;padding:1rem;">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitleCF">
-    <header>
+<!-- Newsletter soft-gate modal (CoastFI) -->
+<div class="modal-backdrop" id="nlBackdropCF" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:1rem;z-index:60">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitleCF" style="max-width:460px;width:100%;background:#fff;border:1px solid #e9edf2;border-radius:.7rem;">
+    <header style="padding:1rem 1.25rem;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center">
       <h3 id="nlTitleCF" style="margin:0">See your full CoastFI results</h3>
-      <button type="button" class="close" aria-label="Close" onclick="(function(){var m=document.getElementById('nlBackdropCF'); if(m&&m.style){m.style.display='none';}})()">✕</button>
+      <button type="button" class="close" aria-label="Close" onclick="document.getElementById('nlBackdropCF').style.display='none'">✕</button>
     </header>
-    <div class="body">
+    <div class="body" style="padding:1rem 1.25rem">
       <p class="muted" style="margin:.25rem 0 1rem">
         Pop in your email to receive FIREandLife updates (tools & scenarios). If you’re already subscribed, just check the box and continue.
       </p>
@@ -189,29 +159,6 @@ permalink: /calculators/coast-fi/
   </div>
 </div>
 
-<!-- Scripts (deferred) -->
+<!-- Scripts -->
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script defer src="/calculators/coast-fi/coastfi.js?v=20250826c"></script>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
-
-<!-- Ultimate fallback: if something else hijacks the handler, still open modal or redirect -->
-<script>
-  (function(){
-    var btn = document.getElementById('unlockBtn');
-    if (!btn) return;
-    btn.addEventListener('click', function(e){
-      // if coastfi.js already handled this, it will have called preventDefault and opened modal
-      // This fallback only runs if nothing else intercepted
-      var m = document.getElementById('nlBackdropCF');
-      if (m && m.style) {
-        e.preventDefault();
-        m.style.display = 'flex';
-      } else {
-        // safety redirect
-        window.location.href = btn.getAttribute('data-fallback') || "/calculators/coast-fi/unlock.html";
-      }
-    }, { capture:false, passive:false });
-  })();
-</script>
-</body>
-</html>
+<script defer src="/calculators/coast-fi/coastfi.js?v=20250825b"></script>
