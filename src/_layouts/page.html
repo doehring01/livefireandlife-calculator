@@ -6,11 +6,10 @@
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
   {% if page.description %}<meta name="description" content="{{ page.description }}"/>{% endif %}
 
-  <!-- SEO/Feed plugins (safe even if not installed) -->
   {% seo %}
 
-  <!-- Global CSS (cache-busted) -->
-  <link rel="stylesheet" href="{{ '/styles.css?v=' | append: site.time | relative_url }}">
+  {%- assign bust = site.time | date: '%Y%m%d%H%M%S' -%}
+  <link rel="stylesheet" href="{{ '/styles.css?v=' | append: bust | relative_url }}">
 </head>
 <body>
   {% include header.html %}
