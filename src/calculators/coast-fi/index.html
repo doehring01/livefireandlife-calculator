@@ -19,13 +19,11 @@ permalink: /calculators/coast-fi/index.html
     @media (min-width:700px){ .cards { grid-template-columns: repeat(2,minmax(240px,1fr)); } }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 
-    /* Chart sizing */
-    .chart-wrap { position: relative; max-width:760px; height:300px; margin:1rem auto; }
-    #coastChart { width:100% !important; height:100% !important; display:block; }
+    .chart-wrap { position: relative; max-width: 760px; height: 300px; margin: 1rem auto; }
+    #coastChart { width: 100% !important; height: 100% !important; display: block; }
 
-    /* Soft-gate modal */
     .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:9999; }
-    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,0.25); border:1px solid #e9edf2; }
+    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,0.25); }
     .modal header { padding:1rem 1.25rem; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
     .modal .body { padding:1rem 1.25rem; }
     .modal .close { background:none; border:0; font-size:1.4rem; cursor:pointer; }
@@ -119,9 +117,8 @@ permalink: /calculators/coast-fi/index.html
 
       <div id="unlockBlock" class="hidden" style="margin-top:1rem;">
         <p>Want the full breakdown (chart + table + personalized CoastFI number)?</p>
-        <button class="btn" id="unlockBtn" type="button" onclick="return openCoastGate(event)">See Full Results</button>
+        <button class="btn" id="unlockBtn" type="button">See Full Results</button>
         <div class="help" style="margin-top:.5rem;">Join the newsletter to unlock (free, 1–2 emails/week).</div>
-        <noscript><p><a class="btn" href="/calculators/coast-fi/unlock.html">See Full Results</a></p></noscript>
       </div>
     </section>
   </div>
@@ -152,9 +149,7 @@ permalink: /calculators/coast-fi/index.html
             <th>Amount ($)</th>
           </tr>
         </thead>
-        <tbody id="resultsTableBody">
-          <!-- filled by JS -->
-        </tbody>
+        <tbody id="resultsTableBody"><!-- filled by JS --></tbody>
       </table>
     </div>
   </section>
@@ -168,19 +163,14 @@ permalink: /calculators/coast-fi/index.html
   </p>
 </footer>
 
-<!-- Libraries & app JS -->
-<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script defer src="/calculators/coast-fi/coastfi.js?v=20250825d"></script>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
-
 <!-- Newsletter soft-gate modal (CoastFI) -->
 <div class="modal-backdrop" id="nlBackdropCF" style="display:none;align-items:center;justify-content:center;padding:1rem;">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitleCF">
-    <header>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitleCF" style="max-width:460px;width:100%;background:#fff;border:1px solid #e9edf2;border-radius:.7rem;">
+    <header style="padding:1rem 1.25rem;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center">
       <h3 id="nlTitleCF" style="margin:0">See your full CoastFI results</h3>
       <button type="button" class="close" aria-label="Close" onclick="document.getElementById('nlBackdropCF').style.display='none'">✕</button>
     </header>
-    <div class="body">
+    <div class="body" style="padding:1rem 1.25rem">
       <p class="muted" style="margin:.25rem 0 1rem">
         Pop in your email to receive FIREandLife updates (tools & scenarios). If you’re already subscribed, just check the box and continue.
       </p>
@@ -201,37 +191,9 @@ permalink: /calculators/coast-fi/index.html
   </div>
 </div>
 
-<!-- Tiny global shim to guarantee the unlock works even if external JS fails -->
-<script>
-  function openCoastGate(e){
-    if (e) { e.preventDefault(); e.stopPropagation(); }
-    console.log('[CoastFI] unlock clicked (inline shim)');
-    var gate = document.getElementById('nlBackdropCF');
-    if (gate) {
-      gate.style.display = 'flex';
-      return false;
-    }
-    // absolute fallback
-    window.location.href = '/calculators/coast-fi/unlock.html';
-    return false;
-  }
-</script>
-
-<!-- Defensive delegated handler (kept, but shim above already guarantees behavior) -->
-<script>
-(function () {
-  document.addEventListener('click', function (e) {
-    var t = e.target;
-    if (!t || t.id !== 'unlockBtn') return;
-    // if onclick shim already ran, do nothing
-    if (e.defaultPrevented) return;
-    try { openCoastGate(e); } catch(err) {
-      console.warn('CoastFI unlock handler error:', err);
-      window.location.href = '/calculators/coast-fi/unlock.html';
-    }
-  });
-})();
-</script>
-
+<!-- Scripts (deferred) -->
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script defer src="/calculators/coast-fi/coastfi.js?v=20250825c"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
