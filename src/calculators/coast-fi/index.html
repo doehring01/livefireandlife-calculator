@@ -19,11 +19,13 @@ permalink: /calculators/coast-fi/index.html
     @media (min-width:700px){ .cards { grid-template-columns: repeat(2,minmax(240px,1fr)); } }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 
+    /* Chart sizing */
     .chart-wrap { position: relative; max-width: 760px; height: 300px; margin: 1rem auto; }
     #coastChart { width: 100% !important; height: 100% !important; display: block; }
 
+    /* Soft-gate modal */
     .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:9999; }
-    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,0.25); }
+    .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,0.25); border:1px solid #e9edf2; }
     .modal header { padding:1rem 1.25rem; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
     .modal .body { padding:1rem 1.25rem; }
     .modal .close { background:none; border:0; font-size:1.4rem; cursor:pointer; }
@@ -62,6 +64,25 @@ permalink: /calculators/coast-fi/index.html
 <main class="container" style="max-width:1100px;margin:2rem auto;padding:0 1rem;">
   <h1 class="page-title">CoastFI Calculator</h1>
   <p>Wondering if you could stop contributing and still reach FI by your target age? Enter your details below. We include <strong>passive income</strong> (pensions, rental net, etc.) so the required portfolio shrinks accordingly.</p>
+
+<section class="section" style="margin-top:2rem;margin-bottom:2rem;max-width:800px">
+  <h2>What is CoastFI?</h2>
+  <p>
+    <strong>CoastFI</strong> is the point where you’ve already invested enough that—
+    if you stopped contributing today—your portfolio could grow on its own and
+    fully support your retirement at your target age. 
+  </p>
+  <p>
+    Think of it like putting your financial plan on “autopilot.” 
+    You can choose to keep contributing to accelerate your FI date, 
+    or simply “coast” and free up cash flow for other goals like 
+    travel, family, or reducing work hours.
+  </p>
+  <p class="help" style="margin-top:.5rem;font-size:.95rem;opacity:.8">
+    Example: If your CoastFI number today is $250,000 and you already have $260,000 invested, 
+    you’re technically at CoastFI—future growth alone should get you to full FI.
+  </p>
+</section>
 
   <div class="calc-grid" style="margin-top:1rem;">
     <form id="coastForm" class="card">
@@ -149,7 +170,7 @@ permalink: /calculators/coast-fi/index.html
             <th>Amount ($)</th>
           </tr>
         </thead>
-        <tbody id="resultsTableBody"><!-- filled by JS --></tbody>
+        <tbody id="resultsTableBody"></tbody>
       </table>
     </div>
   </section>
@@ -163,14 +184,14 @@ permalink: /calculators/coast-fi/index.html
   </p>
 </footer>
 
-<!-- Newsletter soft-gate modal (CoastFI) -->
+<!-- Inline modal for soft-gate (IDs must match JS) -->
 <div class="modal-backdrop" id="nlBackdropCF" style="display:none;align-items:center;justify-content:center;padding:1rem;">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitleCF" style="max-width:460px;width:100%;background:#fff;border:1px solid #e9edf2;border-radius:.7rem;">
-    <header style="padding:1rem 1.25rem;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitleCF">
+    <header>
       <h3 id="nlTitleCF" style="margin:0">See your full CoastFI results</h3>
       <button type="button" class="close" aria-label="Close" onclick="document.getElementById('nlBackdropCF').style.display='none'">✕</button>
     </header>
-    <div class="body" style="padding:1rem 1.25rem">
+    <div class="body">
       <p class="muted" style="margin:.25rem 0 1rem">
         Pop in your email to receive FIREandLife updates (tools & scenarios). If you’re already subscribed, just check the box and continue.
       </p>
@@ -191,9 +212,9 @@ permalink: /calculators/coast-fi/index.html
   </div>
 </div>
 
-<!-- Scripts (deferred) -->
+<!-- Scripts (defer so DOM is ready before JS binds) -->
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script defer src="/calculators/coast-fi/coastfi.js?v=20250825c"></script>
+<script defer src="/calculators/coast-fi/coastfi.js?v=20250825b"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
