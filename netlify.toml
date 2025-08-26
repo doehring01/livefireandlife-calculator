@@ -1,4 +1,11 @@
 [build]
-  command = "npx @11ty/eleventy"
-  publish = "dist"
+  command = "bundle exec jekyll build"
+  publish = "_site"
 
+[build.environment]
+  JEKYLL_ENV = "production"
+  RUBY_VERSION = "3.2.2"
+
+# Optional: cache gems
+[context.production]
+  environment = { BUNDLE_WITHOUT = "development:test" }
