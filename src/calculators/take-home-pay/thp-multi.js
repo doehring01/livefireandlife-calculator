@@ -1,11 +1,11 @@
-/* Multi-income Take-Home Pay Calculator (simplified model)
-   - Federal tax: standard deduction + 2024-ish brackets
-   - FICA per person: 6.2% SS to cap, 1.45% Medicare
-   - Pre-tax: 401k % of gross (traditional), HSA $ (pre-tax)
+/* Multi-income Take-Home Pay Calculator (simplified model + state tax)
+   - Federal: standard deduction + simple 2024-ish brackets
+   - State: flat/effective rate (selected dropdown), applied to a simplified state taxable base
+   - FICA per person: 6.2% SS to cap + 1.45% Medicare
+   - Pre-tax per person: 401k% (traditional), HSA $ (annual)
    - Health premiums: household-level annual $
 */
-
-console.log("🟧 THP multi-income loaded");
+console.log("🟧 THP multi-income + state loaded");
 
 // DOM helpers
 const $ = (id) => document.getElementById(id);
@@ -13,10 +13,10 @@ const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 const fmt0 = (n) => Number(n||0).toLocaleString(undefined,{maximumFractionDigits:0});
 const per = { annual:x=>x, monthly:x=>x/12, biweekly:x=>x/26, weekly:x=>x/52 };
 
-// Standard deduction (2024 approx)
+// Standard deduction (approx 2024)
 const STD_DED = { single:14600, mfj:29200, hoh:21900 };
 
-// Brackets (taxable income)
+// Federal brackets (taxable)
 const BRACKETS = {
   single: [
     [0,0.10],[11600,0.12],[47150,0.22],[100525,0.24],[191950,0.32],[243725,0.35],[609350,0.37]
@@ -49,11 +49,12 @@ function makeStreamCard(preset={}) {
     <div class="field">
       <label>401(k) Contribution (%)</label>
       <input type="number" class="k401" min="0" max="100" step="0.5" value="${preset.k401 ?? 10}">
-      <div class="help">Traditional 401(k) % of gross (pre-tax)</div>
+      <div class="help">Traditional 401(k) percentage of this income (annual).</div>
     </div>
     <div class="field">
-      <label>HSA Contributions ($)</label>
+      <label>HSA Contributions ($/year)</label>
       <input type="number" class="hsa" min="0" step="100" value="${preset.hsa ?? 0}">
+      <div class="help">This HSA input is <strong>annual</strong>, not monthly.</div>
     </div>
     <div class="field" style="display:flex;gap:.75rem;align-items:center;">
       <button type="button" class="btn btn-secondary clone">Duplicate</button>
@@ -85,12 +86,16 @@ function taxFromBrackets(taxable, filing){
 
 // Compute household
 function compute(inputs){
+  // Per-person payroll/FICA + pre-tax
   const streams = inputs.streams.map(s=>{
-    const k401 = s.gross * (s.k401/100);
-    const hsa  = s.hsa;
+    const k401 = s.gross * (s.k401/100); // pre-tax for fed & often state
+    const hsa  = s.hsa;                  // pre-tax (fed & usually state, and FICA)
     const pretax = k401 + hsa;
-    const ss   = Math.min(s.gross - hsa, SS_CAP) * SS_RATE;   // HSA reduces FICA wages
-    const medi = (s.gross - hsa) * MEDI_RATE;
+
+    // FICA wages exclude HSA (salary-reduction) but NOT 401k
+    const ficaWages = Math.max(0, s.gross - hsa);
+    const ss   = Math.min(ficaWages, SS_CAP) * SS_RATE;
+    const medi = ficaWages * MEDI_RATE;
     const fica = Math.max(0, ss + medi);
     return {...s, k401, hsa, pretax, fica};
   });
@@ -100,31 +105,51 @@ function compute(inputs){
   const ficaHH   = streams.reduce((a,s)=>a+s.fica,0);
   const health   = inputs.health;
 
+  // FEDERAL base (very simplified)
   const agiLike  = Math.max(0, grossHH - pretaxHH - health);
   const std      = STD_DED[inputs.filing] ?? STD_DED.single;
-  const taxable  = Math.max(0, agiLike - std);
-  const fedTax   = taxFromBrackets(taxable, inputs.filing);
+  const fedTaxable  = Math.max(0, agiLike - std);
+  const fedTax   = taxFromBrackets(fedTaxable, inputs.filing);
 
-  const takeHome = Math.max(0, grossHH - pretaxHH - health - fedTax - ficaHH);
+  // STATE tax (flat/effective model):
+  // Use a simple state-taxable base similar to federal but without standard deduction differences.
+  // We’ll treat state taxable ≈ (gross - pretaxHH - health). Then apply the flat rate chosen.
+  const stateRate = inputs.stateRate || 0;
+  const stateTaxBase = Math.max(0, grossHH - pretaxHH - health);
+  const stateTax = Math.max(0, stateTaxBase * stateRate);
 
-  return {streams, grossHH, pretaxHH, health, std, taxable, fedTax, ficaHH, takeHome};
+  // Net
+  const takeHome = Math.max(0, grossHH - pretaxHH - health - fedTax - stateTax - ficaHH);
+
+  return {
+    streams, grossHH, pretaxHH, health,
+    std, fedTaxable, fedTax,
+    stateRate, stateTaxBase, stateTax,
+    ficaHH, takeHome
+  };
 }
 
 // Render
 let chart;
-function render(r, filing){
+function render(r, filing, stateLabel){
   $("snapshot").innerHTML = `Household Gross: $${fmt0(r.grossHH)}<br>Est. Take-Home: <strong>$${fmt0(r.takeHome)}</strong>`;
 
   $("sumLine").textContent = `Take-Home: $${fmt0(r.takeHome)}`;
-  $("sumSmall").textContent = `Federal Tax: $${fmt0(r.fedTax)} · FICA: $${fmt0(r.ficaHH)} · Health: $${fmt0(r.health)} · Pre-Tax: $${fmt0(r.pretaxHH)} · Std Deduction: $${fmt0(r.std)}`;
+  $("sumSmall").textContent =
+    `Federal Tax: $${fmt0(r.fedTax)} · State Tax: $${fmt0(r.stateTax)} · FICA: $${fmt0(r.ficaHH)} · ` +
+    `Health: $${fmt0(r.health)} · Pre-Tax: $${fmt0(r.pretaxHH)} · Std Deduction: $${fmt0(r.std)}`;
 
+  // By person (allocate fed/state/health proportionally by gross)
   $("byPerson").innerHTML = r.streams.map((s,i)=>{
-    const fedShare = r.grossHH ? r.fedTax * (s.gross/r.grossHH) : 0;
-    const healthShare = r.grossHH ? r.health * (s.gross/r.grossHH) : 0;
-    const net = s.gross - s.pretax - s.fica - fedShare - healthShare;
+    const share = r.grossHH ? (s.gross / r.grossHH) : 0;
+    const fedShare = r.fedTax * share;
+    const stateShare = r.stateTax * share;
+    const healthShare = r.health * share;
+    const net = s.gross - s.pretax - s.fica - fedShare - stateShare - healthShare;
     return `Person ${i+1}: Gross $${fmt0(s.gross)} → Net ~$${fmt0(net)}`;
   }).join("<br>");
 
+  // Table
   const tb = $("tableBody");
   tb.innerHTML = `
     <tr><td><strong>Gross Household Income</strong></td>
@@ -139,7 +164,7 @@ function render(r, filing){
       <td>$${fmt0(per.biweekly(r.pretaxHH))}</td>
       <td>$${fmt0(per.weekly(r.pretaxHH))}</td></tr>
 
-    <tr><td>Health Premiums</td>
+    <tr><td>Health Premiums (annual)</td>
       <td>$${fmt0(r.health)}</td>
       <td>$${fmt0(per.monthly(r.health))}</td>
       <td>$${fmt0(per.biweekly(r.health))}</td>
@@ -149,13 +174,19 @@ function render(r, filing){
       <td>$${fmt0(r.std)}</td><td>—</td><td>—</td><td>—</td></tr>
 
     <tr><td>Federal Taxable Income (est.)</td>
-      <td>$${fmt0(r.taxable)}</td><td>—</td><td>—</td><td>—</td></tr>
+      <td>$${fmt0(r.fedTaxable)}</td><td>—</td><td>—</td><td>—</td></tr>
 
     <tr><td>Federal Income Tax (est.)</td>
       <td>$${fmt0(r.fedTax)}</td>
       <td>$${fmt0(per.monthly(r.fedTax))}</td>
       <td>$${fmt0(per.biweekly(r.fedTax))}</td>
       <td>$${fmt0(per.weekly(r.fedTax))}</td></tr>
+
+    <tr><td>State Income Tax (est., ${stateLabel})</td>
+      <td>$${fmt0(r.stateTax)}</td>
+      <td>$${fmt0(per.monthly(r.stateTax))}</td>
+      <td>$${fmt0(per.biweekly(r.stateTax))}</td>
+      <td>$${fmt0(per.weekly(r.stateTax))}</td></tr>
 
     <tr><td>FICA (SS + Medicare)</td>
       <td>$${fmt0(r.ficaHH)}</td>
@@ -176,8 +207,8 @@ function render(r, filing){
   chart = new Chart(ctx, {
     type: "doughnut",
     data: {
-      labels: ["Take-Home","Federal Tax","FICA","Health","Pre-Tax"],
-      datasets: [{ data: [r.takeHome, r.fedTax, r.ficaHH, r.health, r.pretaxHH] }]
+      labels: ["Take-Home","Federal Tax","State Tax","FICA","Health","Pre-Tax"],
+      datasets: [{ data: [r.takeHome, r.fedTax, r.stateTax, r.ficaHH, r.health, r.pretaxHH] }]
     },
     options: { plugins:{ legend:{ position:"bottom" } } }
   });
@@ -185,13 +216,25 @@ function render(r, filing){
   $("results").style.display = "block";
 }
 
-// Form orchestration
+// Read inputs & orchestrate
+function parseStateSelect(val){
+  // value like "CA:0.06"
+  if (!val) return { code:"NONE", rate:0, label:"No state tax" };
+  const [code, rateStr] = val.split(":");
+  const rate = Number(rateStr||"0") || 0;
+  let label = code;
+  if (code==="NONE") label = "No state tax";
+  return { code, rate, label };
+}
+
 function getInputs(){
   const filing = $("filing").value || "single";
   const health = +($("health").value||0);
+  const { rate: stateRate, code: stateCode, label: stateLabel } = parseStateSelect($("state").value);
   const streams = $$("#streamsWrap .income-card").map(readStreamCard);
-  return { filing, health, streams };
+  return { filing, health, streams, stateRate, stateCode, stateLabel };
 }
+
 function calculate(e){
   e?.preventDefault();
   const inputs = getInputs();
@@ -201,18 +244,21 @@ function calculate(e){
     return;
   }
   const r = compute(inputs);
-  render(r, inputs.filing);
+  render(r, inputs.filing, inputs.stateLabel);
 }
+
 function updateSnapshot(){
   const {streams} = getInputs();
   const gross = streams.reduce((a,s)=>a+s.gross,0);
   $("snapshot").innerHTML = `Household Gross (entered): $${fmt0(gross)}<br>Click Calculate to see take-home.`;
 }
+
 function resetAll(){
   $("streamsWrap").innerHTML = "";
   streamCounter = 0;
   addStream();
   $("filing").value = "single";
+  $("state").value = "NONE:0";
   $("health").value = 7200;
   $("snapshot").textContent = "Add incomes and click Calculate.";
   $("results").style.display = "none";
@@ -232,6 +278,7 @@ function init(){
   $("addIncome").addEventListener("click", () => { addStream(); updateSnapshot(); });
   $("streamsWrap").addEventListener("input", updateSnapshot);
   $("health").addEventListener("input", updateSnapshot);
+  $("state").addEventListener("change", updateSnapshot);
 
   $("thpForm").addEventListener("submit", calculate);
   $("resetBtn").addEventListener("click", resetAll);
