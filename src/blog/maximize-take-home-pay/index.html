@@ -1,56 +1,84 @@
+---
+permalink: /blog/maximize-take-home-pay/
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Maximize Your Take-Home Pay • FIREandLife</title>
-  <base href="/" />
-  <link rel="stylesheet" href="/styles.css?v=20250811c"/>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-KHKJVXPJQM');
-</script>
-<!-- End Google Analytics -->
+  <meta name="description" content="Practical strategies to increase your real income—optimize contributions, withholding, and benefits to maximize take-home pay.">
+  <link rel="stylesheet" href="/styles.css?v=20250826"/>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KHKJVXPJQM');
+  </script>
+  <!-- End Google Analytics -->
 </head>
 <body>
-<header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-    <div class="logo"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
-    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
-      <li><a href="/">Home</a></li>
-      <li><a href="/calculators/">Calculators</a></li>
-      <li><a href="/blog/" aria-current="page">Blog</a></li>
-      <li><a href="/about/">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-    </ul>
-  </nav>
-</header>
+  {% include header.html %}
 
-<main class="container" style="max-width:800px;margin:2rem auto;padding:0 1rem;">
-  <article>
-    <h1>Maximize Your Take-Home Pay</h1>
-    <p><em>Published: 2025 • Reading time: ~6 minutes</em></p>
+  <main class="container" style="max-width:800px;margin:2rem auto;padding:0 1rem;">
+    <article>
+      <p style="color:#777;margin:0 0 .25rem 0;">Published: 2025</p>
+      <h1>Maximize Your Take-Home Pay</h1>
+      <p style="color:#555;margin:.25rem 0 1rem 0;">Reading time: ~6 minutes</p>
 
-    <!-- Your article content goes here -->
-    <p>Intro paragraph…</p>
+      <p>
+        Increasing your income isn’t only about raises or side hustles—how you manage benefits, contributions, and 
+        withholdings can have a huge impact on what actually lands in your checking account. This article walks 
+        through simple, practical levers you can adjust today.
+      </p>
 
-    <hr style="margin:2rem 0;"/>
-    <section class="newsletter">
-      <h2>Want more FI insights?</h2>
-      <p>Join our newsletter for strategies, tools, and mindset tips.</p>
-      <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
-        <input type="email" name="EMAIL" placeholder="Your email address" required />
-        <button type="submit">Subscribe</button>
-      </form>
-    </section>
-  </article>
-</main>
+      <h2>1. Optimize Pre-Tax Contributions</h2>
+      <p>
+        Contributions to accounts like your 401(k), HSA, or FSA reduce taxable income. Even a small increase in 
+        contributions can lower your tax liability while building long-term wealth.
+      </p>
 
-<footer><p style="text-align:center;padding:1rem;">&copy; 2025 FIRE and Life.</p></footer>
+      <h2>2. Review Your Withholding</h2>
+      <p>
+        Many employees are withholding too much or too little. Use the IRS withholding calculator to see if you 
+        should adjust your W-4 so you’re not giving the IRS an interest-free loan or facing a surprise bill.
+      </p>
+
+      <h2>3. Leverage Employer Benefits</h2>
+      <p>
+        From commuter benefits to dependent care FSAs, your HR portal may have hidden gems. These can boost your 
+        effective take-home pay by covering expenses with pre-tax dollars.
+      </p>
+
+      <h2>4. Compare Health Plan Options</h2>
+      <p>
+        High-deductible health plans often come with HSA eligibility—combining lower premiums with tax-free savings 
+        for healthcare. Depending on your situation, this can free up monthly cash flow.
+      </p>
+
+      <h2>5. Track the Real Impact</h2>
+      <p>
+        Use our <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> to model different contribution 
+        levels, tax scenarios, and benefits. Seeing the numbers side by side makes it easier to choose the 
+        contribution mix that balances cash flow and long-term growth.
+      </p>
+
+      <hr style="margin:2rem 0;"/>
+      <section class="newsletter">
+        <h2>Want more FI insights?</h2>
+        <p>Join our newsletter for strategies, tools, and mindset tips.</p>
+        <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+          <input type="email" name="EMAIL" placeholder="Your email address" required />
+          <button type="submit">Subscribe</button>
+        </form>
+      </section>
+    </article>
+  </main>
+
+  {% include footer.html %}
 </body>
 </html>
-
