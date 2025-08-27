@@ -299,3 +299,80 @@ footer {
   position: static !important;
   top: auto !important;
 }
+
+/* === Mobile Nav (Hamburger) ===================================== */
+
+/* Nav container baseline */
+header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #ddd;
+}
+nav.site-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+/* Logo keeps current sizing */
+.site-nav .logo img {
+  height: 40px;
+}
+
+/* Links row (desktop default) */
+.site-nav .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+}
+
+/* Toggle button (hidden on desktop) */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: .5rem .6rem;
+  line-height: 0;
+  cursor: pointer;
+}
+.nav-toggle:focus { outline: 2px solid #FF6F61; outline-offset: 2px; }
+
+/* Icon sizing */
+.nav-toggle svg {
+  width: 22px; height: 22px;
+}
+
+/* ---------- Mobile layout ---------- */
+@media (max-width: 760px) {
+  /* Show the toggle; hide links by default */
+  .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
+  .site-nav {
+    align-items: center;
+  }
+
+  /* Turn links into a vertical panel that can expand/collapse */
+  .site-nav .nav-links {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin-top: .75rem;
+    padding-top: .25rem;
+    border-top: 1px solid #eee;
+
+    /* collapsed by default */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .25s ease;
+  }
+
+  /* Each link stacked */
+  .site-nav .nav-links li { margin: .5rem 0; }
+  .site-nav .nav-links a { display: inline-block; }
+
+  /* When nav is "open" */
+  .site-nav.open .nav-links {
+    max-height: 500px; /* enough to show all items */
+  }
+}
