@@ -1,111 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Our Financial Calculators | FIREandLife</title>
-  <link rel="stylesheet" href="../styles.css" />
-  <style>
-    .calculator-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .calculator-card {
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .calculator-card h3 {
-      margin-bottom: 0.75rem;
-      color: #333333; /* Charcoal for titles */
-    }
-    .calculator-card p {
-      flex-grow: 1;
-      margin-bottom: 1rem;
-      color: #555;
-    }
-    .calculator-card .btn {
-      display: inline-block;
-      background: #FF6F61; /* Ember Orange */
-      color: white;
-      padding: 0.75rem 1rem;
-      text-decoration: none;
-      border-radius: 4px;
-      font-weight: bold;
-      text-align: center;
-      transition: background 0.2s ease-in-out;
-    }
-    .calculator-card .btn:hover {
-      background: #E65A4F;
-    }
-  </style>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-KHKJVXPJQM');
-</script>
-<!-- End Google Analytics -->
-</head>
-<body>
-<header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-  <div class="logo">
-    <a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a>
-  </div>
-  <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
-    <li><a href="/">Home</a></li>
-    <li><a href="/calculators/">Calculators</a></li>
-    <li><a href="/blog/">Blog</a></li>
-    <li><a href="/flexfi/">FlexFI</a></li>
-    <li><a href="/about/">About</a></li>
-    <li><a href="/contact/">Contact</a></li>
-  </ul>
-</nav>
-</header>
+---
+layout: default
+title: Our Financial Calculators | FIREandLife
+permalink: /calculators/
+description: Use our calculators to better understand your finances and plan for Financial Independence.
+---
+
+<style>
+  .calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .calculator-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .calculator-card h3 {
+    margin-bottom: 0.75rem;
+    color: #333333; /* Charcoal for titles */
+  }
+  .calculator-card p {
+    flex-grow: 1;
+    margin-bottom: 1rem;
+    color: #555;
+  }
+  .calculator-card .btn {
+    display: inline-block;
+    background: #FF6F61; /* Ember Orange */
+    color: white;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    transition: background 0.2s ease-in-out;
+  }
+  .calculator-card .btn:hover {
+    background: #E65A4F;
+  }
+</style>
 
 <main class="container">
   <h1 class="page-title">Our Financial Calculators</h1>
-  <p style="text-align:center; max-width:700px; margin:0 auto;">Use our calculators to better understand your finances and plan for Financial Independence.</p>
+  <p style="text-align:center; max-width:700px; margin:0 auto;">
+    Use our calculators to better understand your finances and plan for Financial Independence.
+  </p>
 
   <div class="calculator-grid">
     <div class="calculator-card">
       <h3>Take-Home Pay Calculator</h3>
       <p>Estimate your after-tax income and see how contributions impact your paycheck.</p>
-      <a href="take-home-pay.html" class="btn">Open Calculator</a>
+      <a href="/calculators/take-home-pay/" class="btn">Open Calculator</a>
     </div>
     <div class="calculator-card">
       <h3>Net Worth Tracker</h3>
       <p>Track your total and FI net worth and visualize progress over time.</p>
-      <a href="net-worth-tracker.html" class="btn">Open Calculator</a>
+      <a href="/calculators/net-worth-tracker/" class="btn">Open Calculator</a>
     </div>
     <div class="calculator-card">
       <h3>Early Retirement Estimator</h3>
       <p>Estimate when you'll reach FI based on income, expenses, and savings growth.</p>
-      <a href="early-retirement-estimator.html" class="btn">Open Calculator</a>
+      <a href="/calculators/early-retirement-estimator/" class="btn">Open Calculator</a>
+    </div>
+    <div class="calculator-card">
+      <h3>CoastFI Calculator</h3>
+      <p>See if you can stop contributing and still reach FI, factoring in passive income and real returns.</p>
+      <a href="/calculators/coast-fi/" class="btn">Open Calculator</a>
     </div>
   </div>
-  <section class="newsletter" style="margin-top:2rem;">
-  <h2>Join Our Newsletter</h2>
-  <p>Get tools, calculators, and real-world scenarios for Financial Independence—without losing sight of life today.</p>
-  <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
-    <input type="email" name="EMAIL" placeholder="Your email address" required />
-    <button type="submit">Subscribe</button>
-  </form>
-</section>
-</main>
 
-<footer>
-  <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="FIREandLIFE" data-color="#FF5F5F" data-emoji=""  data-font="Lato" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
-  <p>&copy; 2025 FIRE and Life. Built with ❤️ for the FI community.</p>
-</footer>
-</body>
-</html>
+  <section class="newsletter" style="margin-top:2rem;">
+    <h2>Join Our Newsletter</h2>
+    <p>Get tools, calculators, and real-world scenarios for Financial Independence—without losing sight of life today.</p>
+    <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+      <input type="email" name="EMAIL" placeholder="Your email address" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+</main>
