@@ -1,17 +1,27 @@
-<header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.06);">
-    <div class="logo">
-      <a href="{{ '/' | relative_url }}">
-        <img src="{{ '/assets/logo-horizontal.png' | relative_url }}" alt="FIREandLife" style="height:40px;">
-      </a>
-    </div>
-    <ul class="nav-links" style="list-style:none;display:flex;gap:1.2rem;margin:0;">
-      <li><a href="{{ '/' | relative_url }}"            class="{% if page.url == '/' %}active{% endif %}">Home</a></li>
-      <li><a href="{{ '/calculators/' | relative_url }}" class="{% if page.url contains '/calculators/' %}active{% endif %}">Calculators</a></li>
-      <li><a href="{{ '/blog/' | relative_url }}"        class="{% if page.url contains '/blog/' %}active{% endif %}">Blog</a></li>
-      <li><a href="{{ '/flexfi/' | relative_url }}"      class="{% if page.url contains '/flexfi/' %}active{% endif %}">FlexFI</a></li>
-      <li><a href="{{ '/about/' | relative_url }}"       class="{% if page.url contains '/about/' %}active{% endif %}">About</a></li>
-      <li><a href="{{ '/contact/' | relative_url }}"     class="{% if page.url contains '/contact/' %}active{% endif %}">Contact</a></li>
+<header class="site-header">
+  <nav class="nav">
+    <a class="nav__brand" href="/" aria-label="FIREandLife home">
+      <img src="/assets/logo-horizontal.png" alt="FIREandLife" height="40">
+    </a>
+
+    <!-- Hamburger -->
+    <button class="nav__toggle" id="navToggle"
+            aria-controls="navMenu"
+            aria-expanded="false"
+            aria-label="Open menu">
+      <span class="nav__bar"></span>
+      <span class="nav__bar"></span>
+      <span class="nav__bar"></span>
+    </button>
+
+    <!-- Primary links -->
+    <ul id="navMenu" class="nav__links" data-collapsed="true">
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculators/">Calculators</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/flexfi/">FlexFI</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
     </ul>
   </nav>
 </header>
