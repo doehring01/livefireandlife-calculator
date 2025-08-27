@@ -28,34 +28,11 @@ header {
   border-bottom: 1px solid #ddd;
 }
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-}
 
-nav .logo img {
-  height: 40px;
-}
 
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-}
 
-.nav-links a {
-  text-decoration: none;
-  color: #333333;
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
 
-.nav-links a:hover,
-.nav-links a.active {
-  color: #FF6F61; /* Brand orange */
-}
+
 
 /* ------------------------------
    HERO SECTION
