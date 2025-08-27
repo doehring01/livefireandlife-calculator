@@ -1,5 +1,5 @@
 ---
-permalink: /calculators/take-home-pay/index.html
+permalink: /calculators/take-home-pay/
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +7,7 @@ permalink: /calculators/take-home-pay/index.html
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Take-Home Pay Calculator • FIREandLife</title>
-  <meta name="description" content="Estimate household take-home pay with multiple income streams, pre-tax contributions (401k, HSA), FICA, state tax, and health premiums."/>
+  <meta name="description" content="Estimate household take-home pay with multiple income streams, pre-tax contributions (401k, HSA), FICA, state tax (flat, simplified), and health premiums."/>
   <link rel="stylesheet" href="/styles.css?v=tax2"/>
 
   <style>
@@ -39,10 +39,15 @@ permalink: /calculators/take-home-pay/index.html
   </script>
 </head>
 <body>
-<header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-    <div class="logo"><a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a></div>
-    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
+
+<!-- Responsive header (same pattern as other pages) -->
+<header class="site-header">
+  <div class="nav">
+    <a class="nav__brand" href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife"></a>
+    <button id="navToggle" class="nav__toggle" aria-expanded="false" aria-label="Open menu">
+      <span class="nav__bar"></span><span class="nav__bar"></span><span class="nav__bar"></span>
+    </button>
+    <ul id="navMenu" class="nav__links" data-collapsed="true">
       <li><a href="/">Home</a></li>
       <li><a href="/calculators/" aria-current="page">Calculators</a></li>
       <li><a href="/blog/">Blog</a></li>
@@ -50,7 +55,7 @@ permalink: /calculators/take-home-pay/index.html
       <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>
     </ul>
-  </nav>
+  </div>
 </header>
 
 <main class="container">
@@ -111,13 +116,13 @@ permalink: /calculators/take-home-pay/index.html
             <option value="WA:0">Washington (0%)</option>
             <option value="WI:0.05">Wisconsin (~5%)</option>
           </select>
-          <div class="help">This is a simplified flat/effective rate just for planning (not exact tables).</div>
+          <div class="help">This is a simplified flat/effective rate for planning, not a full table.</div>
         </div>
 
         <div class="field">
           <label for="health">Annual Health Premiums ($)</label>
           <input id="health" type="number" min="0" step="50" value="7200"/>
-          <div class="help">Employer plan premiums you pay. Treated as annual amount.</div>
+          <div class="help">Employer plan premiums you pay. Annual total.</div>
         </div>
 
         <div class="field">
@@ -136,11 +141,11 @@ permalink: /calculators/take-home-pay/index.html
 
     <section class="card" id="quickCard">
       <h2>Household Snapshot</h2>
-      <div id="snapshot" class="mono" style="line-height:1.6;">Add incomes and click Calculate.</div>
+      <div id="snapshot" class="mono" style="line-height:1.6;" aria-live="polite">Add incomes and click Calculate.</div>
     </section>
   </section>
 
-  <section id="results" class="results-section" style="margin-top:1.25rem; display:none;">
+  <section id="results" class="results-section" style="margin-top:1.25rem; display:none;" aria-live="polite">
     <div class="cards">
       <div class="card">
         <h3>Annual Summary</h3>
@@ -156,7 +161,7 @@ permalink: /calculators/take-home-pay/index.html
     <canvas id="resultsChart"></canvas>
 
     <div class="table-wrap">
-      <table class="results-table">
+      <table class="results-table" aria-describedby="sumLine">
         <thead>
           <tr>
             <th>Item</th>
@@ -183,8 +188,28 @@ permalink: /calculators/take-home-pay/index.html
   </p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="./thp-multi.js?v=2"></script>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script src="./thp-multi.js?v=2" defer></script>
+
+<!-- Minimal hamburger toggle (page-local) -->
+<script>
+(function(){
+  const toggle=document.getElementById('navToggle');
+  const menu=document.getElementById('navMenu');
+  if(!toggle||!menu) return;
+  function setOpen(open){
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.dataset.collapsed=open?'false':'true';
+    menu.classList.toggle('is-open', open);
+    document.body.classList.toggle('nav-open', open);
+  }
+  toggle.addEventListener('click', ()=> setOpen(toggle.getAttribute('aria-expanded')!=='true'));
+  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') setOpen(false); });
+  document.addEventListener('click',(e)=>{ if(toggle.getAttribute('aria-expanded')==='true' && !menu.contains(e.target) && !toggle.contains(e.target)) setOpen(false); });
+  document.getElementById('year').textContent=new Date().getFullYear();
+})();
+</script>
 </body>
 </html>
