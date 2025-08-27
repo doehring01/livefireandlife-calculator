@@ -1,3 +1,6 @@
+---
+permalink: /calculators/net-worth-tracker/
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,13 +9,15 @@
   <title>Net Worth Tracker • FIREandLife</title>
   <link rel="stylesheet" href="/styles.css?v=20250811c" />
   <link rel="icon" href="/assets/favicon.png">
-  <!-- GA -->
+
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date()); gtag('config','G-KHKJVXPJQM');
   </script>
+
   <style>
     :root{ --bg:#ffffff; --soft:#f7fafc; --border:#e9edf2; --ink:#0f172a; --muted:#475569; }
 
@@ -37,52 +42,16 @@
     .table-wrap{overflow-x:auto}
     .table-min{min-width:540px}
 
-    /* --- BUTTON SYSTEM --- */
-    .btn {
-      background: #FF6F61; /* Brand orange */
-      color: white;
-      padding: 0.6rem 1.1rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 0.95rem;
-      transition: background 0.2s ease;
-    }
-    .btn:hover { background:#E65A4F; }
+    /* Buttons */
+    .btn{background:#FF6F61;color:#fff;padding:.6rem 1.1rem;border:none;border-radius:4px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-block;font-size:.95rem;transition:background .2s}
+    .btn:hover{background:#E65A4F}
+    .btn-secondary{background:#FFD166;color:#333;padding:.6rem 1.1rem;border:none;border-radius:4px;font-weight:600;font-size:.95rem;cursor:pointer;transition:background .2s}
+    .btn-secondary:hover{background:#FFB347}
 
-    .btn-secondary {
-      background:#FFD166;
-      color:#333;
-      padding:0.6rem 1.1rem;
-      border:none;
-      border-radius:4px;
-      font-weight:600;
-      font-size:0.95rem;
-      cursor:pointer;
-      transition: background 0.2s ease;
-    }
-    .btn-secondary:hover { background:#FFB347; }
+    .btn-tab{background:#fff;color:var(--ink);border:1px solid #cbd5e1;border-radius:999px;padding:.5rem 1rem;cursor:pointer;font-weight:600;font-size:.95rem}
+    .btn-tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
 
-    .btn-tab {
-      background:#fff;
-      color:var(--ink);
-      border:1px solid #cbd5e1;
-      border-radius:999px;
-      padding:.5rem 1rem;
-      cursor:pointer;
-      font-weight:600;
-      font-size:0.95rem;
-    }
-    .btn-tab.active {
-      background:var(--ink);
-      border-color:var(--ink);
-      color:#fff;
-    }
-
-    /* Summary no longer sticky on mobile */
+    /* Summary not sticky on mobile */
     .summary{background:var(--bg);padding:.5rem 0;margin:1rem 0}
 
     .accordion > summary{cursor:pointer;list-style:none;padding:.6rem .25rem;border-bottom:1px solid #eef2f7;font-weight:600}
@@ -98,47 +67,34 @@
 
     /* Compact charts */
     .chart-card{ padding:.75rem }
-    .chart-card canvas{
-      display:block;
-      width:100% !important;
-      height:200px !important;
-      max-height:200px !important;
-    }
+    .chart-card canvas{ display:block; width:100% !important; height:200px !important; max-height:200px !important; }
 
-    /* MOBILE FIRST */
+    /* Mobile */
     @media (max-width: 899px){
       .grid-12{grid-template-columns:repeat(6,1fr)}
       .span-6,.span-3,.span-12{grid-column:1 / -1}
 
-      /* Make sure nothing goes sticky or fixed on phones */
-      .summary,
-      .results-panel,
-      .sticky,
-      .is-sticky {
-        position: static !important;
-        top: auto !important;
-        max-height: none !important;
-        overflow: visible !important;
-      }
+      /* ensure no sticky/fixed on phones */
+      .summary, .results-panel, .sticky, .is-sticky { position:static !important; top:auto !important; max-height:none !important; overflow:visible !important; }
 
       .quick{grid-template-columns: 1fr 1fr; }
       .quick .full{grid-column:1 / -1}
       .chart-card canvas{ height:180px !important; max-height:180px !important; }
     }
-
-    /* OPTIONAL desktop-only sticky (disabled by default) */
-    /* Uncomment if you want the summary/charts to remain visible on desktop:
-    @media (min-width: 900px){
-      .results-panel { position: sticky; top: 1rem; max-height: calc(100svh - 2rem); overflow: auto; }
-    }
-    */
   </style>
 </head>
 <body>
-<header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.06);">
-    <div class="logo"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
-    <ul class="nav-links" style="list-style:none;display:flex;gap:1.2rem;margin:0;">
+
+<!-- Responsive header -->
+<header class="site-header">
+  <div class="nav">
+    <a class="nav__brand" href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife"></a>
+
+    <button id="navToggle" class="nav__toggle" aria-expanded="false" aria-label="Open menu">
+      <span class="nav__bar"></span><span class="nav__bar"></span><span class="nav__bar"></span>
+    </button>
+
+    <ul id="navMenu" class="nav__links" data-collapsed="true">
       <li><a href="/">Home</a></li>
       <li><a href="/calculators/" aria-current="page">Calculators</a></li>
       <li><a href="/blog/">Blog</a></li>
@@ -146,7 +102,7 @@
       <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>
     </ul>
-  </nav>
+  </div>
 </header>
 
 <main class="container">
@@ -244,7 +200,7 @@
     </div>
   </section>
 
-  <!-- Results (moved to bottom for mobile friendliness) -->
+  <!-- Results (at bottom for mobile friendliness) -->
   <section id="resultsBlock" class="results-panel">
     <!-- Summary -->
     <section class="summary grid grid-12">
@@ -340,7 +296,26 @@
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-<script src="/calculators/net-worth-tracker.inline.js" defer></script>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="/calculators/net-worth-tracker/net-worth-tracker.js?v=nw1" defer></script>
+
+<!-- Minimal hamburger toggle (page-local) -->
+<script>
+(function(){
+  const toggle=document.getElementById('navToggle');
+  const menu=document.getElementById('navMenu');
+  if(!toggle||!menu) return;
+  function setOpen(open){
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.dataset.collapsed=open?'false':'true';
+    menu.classList.toggle('is-open', open);
+    document.body.classList.toggle('nav-open', open);
+  }
+  toggle.addEventListener('click', ()=> setOpen(toggle.getAttribute('aria-expanded')!=='true'));
+  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') setOpen(false); });
+  document.addEventListener('click',(e)=>{ if(toggle.getAttribute('aria-expanded')==='true' && !menu.contains(e.target) && !toggle.contains(e.target)) setOpen(false); });
+  document.getElementById('year').textContent=new Date().getFullYear();
+})();
+</script>
 </body>
 </html>
