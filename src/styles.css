@@ -251,3 +251,51 @@ footer {
   margin-top: 3rem;
   background: #FFFFFF;
 }
+
+/* Net Worth Tracker responsive layout */
+.nw-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+/* Single column on phones: inputs first, results below */
+@media (max-width: 899px) {
+  #nwForm       { order: 1; }
+  #resultsPanel { order: 2; }
+
+  /* Ensure nothing locks the scroll on iOS */
+  .results-panel {
+    position: static !important;
+    top: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* If you have tables inside results, make them scroll horizontally */
+  .results-panel .table-wrap { overflow-x: auto; }
+}
+
+/* Two columns on wider screens */
+@media (min-width: 900px) {
+  .nw-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+  /* OPTIONAL: mild sticky only for desktops.
+     If you don't want *any* sticky, delete the block below. */
+  .results-panel {
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100svh - 2rem);
+    overflow: auto;       /* lets long results scroll independently on desktop */
+  }
+}
+
+/* Guardrails: if any legacy styles were forcing sticky/fixed, neutralize them */
+.results-panel.is-sticky,
+.results-panel.sticky,
+.results,
+.summary {
+  position: static !important;
+  top: auto !important;
+}
