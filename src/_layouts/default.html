@@ -24,34 +24,41 @@
       <script src="{{ src | relative_url }}" defer></script>
     {%- endfor -%}
   {%- endif -%}
+
+  <!-- Single, hardened mobile-nav toggle -->
   <script>
-  (function () {
+  (function(){
     const toggle = document.getElementById('navToggle');
     const menu   = document.getElementById('navMenu');
     if (!toggle || !menu) return;
 
+    function setOpen(open){
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menu.classList.toggle('is-open', open);
+      document.body.classList.toggle('nav-open', open);
+    }
+
     toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      toggle.setAttribute('aria-label', expanded ? 'Open menu' : 'Close menu');
-      menu.dataset.collapsed = expanded ? 'true' : 'false';
-      document.body.classList.toggle('nav-open', !expanded);
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      setOpen(!isOpen);
     });
 
-    // Close on ESC / click-away (mobile)
+    // Close on ESC
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-        toggle.click();
+        setOpen(false);
       }
     });
+
+    // Click-away close (mobile)
     document.addEventListener('click', (e) => {
-      if (!menu.contains(e.target) && !toggle.contains(e.target) && toggle.getAttribute('aria-expanded') === 'true') {
-        toggle.click();
+      if (toggle.getAttribute('aria-expanded') === 'true' &&
+          !menu.contains(e.target) && !toggle.contains(e.target)) {
+        setOpen(false);
       }
     });
   })();
-</script>
+  </script>
 </body>
 </html>
-
-
