@@ -1,65 +1,90 @@
+---
+permalink: /blog/your-post-slug/
+title: "[Post Title]"
+description: "[One-sentence SEO-friendly summary of your post]"
+date: 2025-08-26
+# Optional extras:
+# hero: "/assets/blog/your-image.png"
+# tags: [flexfi, taxes, planning]
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>[Post Title] • FIREandLife</title>
-  <meta name="description" content="[One-sentence SEO-friendly summary of your post]" />
-  <link rel="stylesheet" href="/styles.css" />
+  {% include head.html %}
+  <title>{{ page.title }} • FIREandLife</title>
+  <meta name="description" content="{{ page.description }}"/>
+
+  <!-- Canonical & Open Graph -->
+  <link rel="canonical" href="https://livefireandlife.com{{ page.permalink }}"/>
+  <meta property="og:title" content="{{ page.title }}"/>
+  <meta property="og:description" content="{{ page.description }}"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://livefireandlife.com{{ page.permalink }}"/>
+  {% if page.hero %}
+  <meta property="og:image" content="https://livefireandlife.com{{ page.hero }}"/>
+  {% endif %}
+
+  <link rel="stylesheet" href="/styles.css?v=20250826"/>
 </head>
 <body>
-<header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-    <div class="logo">
-      <a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a>
-    </div>
-    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
-      <li><a href="/">Home</a></li>
-      <li><a href="/calculators/">Calculators</a></li>
-      <li><a href="/blog/" aria-current="page">Blog</a></li>
-      <li><a href="/about/">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-    </ul>
-  </nav>
-</header>
+  {% include header.html %}
 
-<main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
-  <article>
-    <header>
-      <h1>[Post Title]</h1>
-      <p style="color:#777;font-size:.9rem;">Published <time datetime="2025-08-16">August 16, 2025</time></p>
-    </header>
+  <main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+    <article>
+      <header>
+        <p style="color:#777;font-size:.9rem;">
+          Published <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+        </p>
+        <h1>{{ page.title }}</h1>
+        {% if page.hero %}
+          <figure style="margin:1rem 0;">
+            <img src="{{ page.hero }}" alt="" style="max-width:100%;height:auto;border-radius:8px;">
+          </figure>
+        {% endif %}
+      </header>
 
-    <section style="margin-top:1.5rem;">
-      <p><strong>Intro paragraph:</strong> Hook the reader, mention the problem/scenario, and hint at what they’ll learn in this post.</p>
+      <!-- ───────── Post body starts here ───────── -->
+      <section style="margin-top:1.25rem;">
+        <p><strong>Intro:</strong> Hook the reader, state the problem, and preview what they’ll get from this post.</p>
 
-      <h2>Key Section One</h2>
-      <p>Details, explanations, maybe embed a calculator or chart here.</p>
+        <h2>Key Section One</h2>
+        <p>Explain your first big point. Link to tools when helpful (e.g., <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a>).</p>
 
-      <h2>Key Section Two</h2>
-      <p>Provide comparisons, examples, or case studies. You can include images like this:</p>
-      <figure style="margin:1rem 0;">
-        <img src="/assets/blog/example.png" alt="Example scenario" style="max-width:100%;height:auto;">
-        <figcaption style="text-align:center;color:#555;font-size:.85rem;">Caption for the image.</figcaption>
-      </figure>
+        <h2>Key Section Two</h2>
+        <p>Add examples or a short scenario. Use a figure when useful:</p>
+        <figure style="margin:1rem 0;">
+          <img src="/assets/blog/example.png" alt="Example scenario" style="max-width:100%;height:auto;">
+          <figcaption style="text-align:center;color:#555;font-size:.9rem;">Short caption explaining the visual.</figcaption>
+        </figure>
 
-      <h2>Conclusion / Call to Action</h2>
-      <p>Wrap up with takeaways and invite readers to try the calculators, comment, or share.</p>
+        <h2>Conclusion / Next Step</h2>
+        <p>Wrap up with 2–3 actionable takeaways and point to a relevant calculator, guide, or FlexFI page.</p>
+      </section>
+      <!-- ───────── Post body ends here ───────── -->
+
+      <hr style="margin:2rem 0;"/>
+      <section class="newsletter">
+        <h2>Get tools & new posts</h2>
+        <p>Short, practical emails on calculators, FlexFI strategies, and real-world tradeoffs.</p>
+        <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+          <input type="email" name="EMAIL" placeholder="Your email address" required />
+          <button type="submit">Subscribe</button>
+        </form>
+      </section>
+    </article>
+
+    <!-- Optional related links block -->
+    <section class="section" style="padding:1.5rem 0 0;">
+      <h2>Related reads</h2>
+      <ul>
+        <li><a href="/blog/why-fi-is-more-than-the-4-percent-rule/">Why FI Is More Than the 4% Rule</a></li>
+        <li><a href="/blog/tracking-net-worth-simple-way/">Tracking Your Net Worth (the Simple Way)</a></li>
+        <li><a href="/flexfi/">What is FlexFI?</a></li>
+      </ul>
     </section>
-  </article>
-</main>
+  </main>
 
-<footer>
-  <p style="text-align:center;padding:1rem;">
-    &copy; <span id="year"></span> FIRE and Life ·
-    <a href="/privacy/">Privacy Policy</a> ·
-    <a href="/terms/">Terms</a><br/>
-    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
-  </p>
-</footer>
-
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+  {% include footer.html %}
 </body>
 </html>
