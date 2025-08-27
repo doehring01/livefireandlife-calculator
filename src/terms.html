@@ -1,48 +1,18 @@
 ---
 permalink: /terms/index.html
+layout: default
+title: Terms of Use
+description: Terms of Use for FIRE and Life.
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Terms of Use | FIRE and Life</title>
-  <meta name="description" content="Terms of Use for FIRE and Life." />
-  <link rel="stylesheet" href="/styles.css?v=legal1" />
-  <style>
-    .legal { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-    .legal h1 { margin-bottom: .5rem; }
-    .legal h2 { margin: 1.5rem 0 .5rem; }
-    .legal p, .legal li { color: #444; }
-    .muted { opacity: .75; font-size: .95rem; }
-    .legal ul { margin-left: 1.2rem; }
-  </style>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-KHKJVXPJQM');
-</script>
-<!-- End Google Analytics -->
-</head>
-<body>
-<header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-  <div class="logo">
-    <a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a>
-  </div>
-  <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
-    <li><a href="/">Home</a></li>
-    <li><a href="/calculators/">Calculators</a></li>
-    <li><a href="/blog/">Blog</a></li>
-    <li><a href="/flexfi/">FlexFI</a></li>
-    <li><a href="/about/">About</a></li>
-    <li><a href="/contact/">Contact</a></li>
-  </ul>
-</nav>
-</header>
+
+<style>
+  .legal { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+  .legal h1 { margin-bottom: .5rem; }
+  .legal h2 { margin: 1.5rem 0 .5rem; }
+  .legal p, .legal li { color: #444; }
+  .legal .muted { opacity: .75; font-size: .95rem; }
+  .legal ul { margin-left: 1.2rem; }
+</style>
 
 <main class="legal">
   <h1>Terms of Use</h1>
@@ -81,14 +51,6 @@ permalink: /terms/index.html
   <p>Questions about these Terms: <a href="mailto:hello@livefireandlife.com">hello@livefireandlife.com</a></p>
 </main>
 
-<footer>
-  <p>&copy; <span id="year"></span> FIRE and Life.</p>
-  <p><a href="/terms/">Terms of Use</a> · <a href="/privacy/">Privacy Policy</a></p>
-</footer>
-
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
   document.getElementById('updated').textContent = new Date().toLocaleDateString();
 </script>
-</body>
-</html>
