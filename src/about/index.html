@@ -1,135 +1,92 @@
 ---
+layout: default
+title: About • FIREandLife
+description: FIREandLife helps you pursue Financial Independence without sacrificing a life well-lived. Learn about FlexFI and the team.
 permalink: /about/
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>About • FIREandLife</title>
-  <meta name="description" content="FIREandLife helps you pursue Financial Independence without sacrificing a life well-lived. Learn about FlexFI and the team."/>
-  <!-- Use the shared root stylesheet -->
-  <link rel="stylesheet" href="/styles.css"/>
-  <link rel="icon" href="/assets/favicon.png"/>
-
-  <!-- GA (optional, same as other pages) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-KHKJVXPJQM');
-  </script>
-</head>
-<body>
-<header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.06);">
-    <div class="logo">
-      <a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></a>
-    </div>
-    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
-      <li><a href="/">Home</a></li>
-      <li><a href="/calculators/">Calculators</a></li>
-      <li><a href="/blog/">Blog</a></li>
-      <li><a href="/flexfi/">FlexFI</a></li>
-      <li><a href="/about/" aria-current="page" class="active">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-    </ul>
-  </nav>
-</header>
-
-<main class="container">
-  <!-- Intro -->
-  <section class="section" style="padding-top:1.5rem">
-    <h1>About FIREandLife</h1>
-    <p style="max-width:780px;margin:.5rem 0 0;color:#555">
-      We help you pursue Financial Independence (<strong>FI</strong>) without sacrificing the seasons of life that matter most.
-      That’s <strong>FlexFI</strong>: an adaptive approach to saving, investing, and spending that changes as life changes—kids,
-      career shifts, recessions, caretaking, or a well-earned break.
-    </p>
-  </section>
-
-  <!-- What is FlexFI -->
-  <section class="section">
-    <h2>What is FlexFI?</h2>
-    <div class="grid">
-      <article class="card">
-        <h3>Adaptive Plan</h3>
-        <p>Dial savings up or down as life evolves—without losing the long-term trajectory.</p>
-      </article>
-      <article class="card">
-        <h3>Real-World Math</h3>
-        <p>Cash-flow-first calculators (taxes, healthcare, volatility) that reflect how money actually moves.</p>
-      </article>
-      <article class="card">
-        <h3>Purpose Over Percentages</h3>
-        <p>FI is more than a single withdrawal rate. Plan for the life you want, then fund it intentionally.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- What you'll find -->
-  <section class="section">
-    <h2>What You’ll Find Here</h2>
-    <div class="grid">
-      <article class="card">
-        <h3>Calculators & Tools</h3>
-        <p>From take-home pay to net worth history, everything runs in your browser—no logins, no data collection.</p>
-        <a class="btn" href="/calculators/">Explore Calculators</a>
-      </article>
-      <article class="card">
-        <h3>Scenarios & Playbooks</h3>
-        <p>How real families navigate raises, childcare costs, market dips, and sabbaticals—step by step.</p>
-        <a class="btn btn-secondary" href="/blog/">Read the Blog</a>
-      </article>
-      <article class="card">
-        <h3>FlexFI Framework</h3>
-        <p>Principles you can reuse: prioritize, model, decide, and review. Simple enough to repeat monthly.</p>
-        <a class="btn btn-secondary" href="/flexfi/">Learn FlexFI</a>
-      </article>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="section">
-    <h2>FAQ</h2>
-    <div class="card">
-      <details open class="accordion">
-        <summary>Do you store my data?</summary>
-        <p style="margin-top:.5rem;color:#555">No. The calculators run locally in your browser. Your entries are saved to your device (localStorage) only.</p>
-      </details>
-      <details class="accordion" style="margin-top:.5rem">
-        <summary>Is this financial advice?</summary>
-        <p style="margin-top:.5rem;color:#555">Educational only. We share frameworks and math to inform your choices. Not financial, tax, or legal advice.</p>
-      </details>
-      <details class="accordion" style="margin-top:.5rem">
-        <summary>How can I support FIREandLife?</summary>
-        <p style="margin-top:.5rem;color:#555">Share a post, subscribe to the newsletter, or <a href="/contact/">send feedback</a>. It all helps.</p>
-      </details>
-    </div>
-  </section>
-
-  <!-- Newsletter -->
-  <section class="newsletter">
-    <h2>Join the Newsletter</h2>
-    <p>Get new tools and practical scenarios—no spam, unsubscribe anytime.</p>
-    <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
-      <input type="email" name="EMAIL" placeholder="Your email address" required />
-      <button type="submit">Subscribe</button>
-    </form>
-  </section>
-</main>
-
-<footer>
-  <p style="text-align:center;padding:1rem;">
-    &copy; <span id="year"></span> FIRE and Life ·
-    <a href="/privacy/">Privacy Policy</a> ·
-    <a href="/terms/">Terms</a><br/>
-    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
+<!-- Intro -->
+<section class="section" style="padding-top:1.5rem">
+  <h1>About FIREandLife</h1>
+  <p style="max-width:780px;margin:.5rem 0 0;color:#555">
+    We help you pursue Financial Independence (<strong>FI</strong>) without sacrificing the seasons of life that matter most.
+    That’s <strong>FlexFI</strong>: an adaptive approach to saving, investing, and spending that changes as life changes—kids,
+    career shifts, recessions, caretaking, or a well-earned break.
   </p>
-</footer>
+</section>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
-</body>
-</html>
+<!-- What is FlexFI -->
+<section class="section">
+  <h2>What is FlexFI?</h2>
+  <div class="grid">
+    <article class="card">
+      <h3>Adaptive Plan</h3>
+      <p>Dial savings up or down as life evolves—without losing the long-term trajectory.</p>
+    </article>
+    <article class="card">
+      <h3>Real-World Math</h3>
+      <p>Cash-flow-first calculators (taxes, healthcare, volatility) that reflect how money actually moves.</p>
+    </article>
+    <article class="card">
+      <h3>Purpose Over Percentages</h3>
+      <p>FI is more than a single withdrawal rate. Plan for the life you want, then fund it intentionally.</p>
+    </article>
+  </div>
+</section>
+
+<!-- What you'll find -->
+<section class="section">
+  <h2>What You’ll Find Here</h2>
+  <div class="grid">
+    <article class="card">
+      <h3>Calculators & Tools</h3>
+      <p>From take-home pay to net worth history, everything runs in your browser—no logins, no data collection.</p>
+      <a class="btn" href="/calculators/">Explore Calculators</a>
+    </article>
+    <article class="card">
+      <h3>Scenarios & Playbooks</h3>
+      <p>How real families navigate raises, childcare costs, market dips, and sabbaticals—step by step.</p>
+      <a class="btn btn-secondary" href="/blog/">Read the Blog</a>
+    </article>
+    <article class="card">
+      <h3>FlexFI Framework</h3>
+      <p>Principles you can reuse: prioritize, model, decide, and review. Simple enough to repeat monthly.</p>
+      <a class="btn btn-secondary" href="/flexfi/">Learn FlexFI</a>
+    </article>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <h2>FAQ</h2>
+  <div class="card">
+    <details open class="accordion">
+      <summary>Do you store my data?</summary>
+      <p style="margin-top:.5rem;color:#555">
+        No. The calculators run locally in your browser. Your entries are saved to your device (localStorage) only.
+      </p>
+    </details>
+    <details class="accordion" style="margin-top:.5rem">
+      <summary>Is this financial advice?</summary>
+      <p style="margin-top:.5rem;color:#555">
+        Educational only. We share frameworks and math to inform your choices. Not financial, tax, or legal advice.
+      </p>
+    </details>
+    <details class="accordion" style="margin-top:.5rem">
+      <summary>How can I support FIREandLife?</summary>
+      <p style="margin-top:.5rem;color:#555">
+        Share a post, subscribe to the newsletter, or <a href="/contact/">send feedback</a>. It all helps.
+      </p>
+    </details>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+  <h2>Join the Newsletter</h2>
+  <p>Get new tools and practical scenarios—no spam, unsubscribe anytime.</p>
+  <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+    <input type="email" name="EMAIL" placeholder="Your email address" required />
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
