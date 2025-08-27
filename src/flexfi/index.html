@@ -1,38 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>FlexFI • Live FlexFI: Adaptable Paths to FI</title>
-  <meta name="description" content="FlexFI is a flexible approach to Financial Independence. Adjust contributions, spending, and goals through different stages of life."/>
-  <link rel="stylesheet" href="/styles.css"/>
+---
+layout: default
+title: FlexFI • Live FlexFI: Adaptable Paths to FI
+permalink: /flexfi/
+description: FlexFI is a flexible approach to Financial Independence. Adjust contributions, spending, and goals through different stages of life.
+---
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-KHKJVXPJQM');
-  </script>
-</head>
-<body>
-
-<header>
-  <nav>
-    <div class="logo">
-      <a href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px"></a>
-    </div>
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/calculators/">Calculators</a></li>
-      <li><a href="/blog/">Blog</a></li>
-      <li><a href="/flexfi/" class="active">FlexFI</a></li>
-      <li><a href="/about/">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-    </ul>
-  </nav>
-</header>
+<!-- Optional page-specific tweaks -->
+<style>
+  .hero { text-align:center; padding:3rem 1rem; background:#F7F7F7; color:#333; }
+  .hero h1 { font-size:2.2rem; margin-bottom:1rem; }
+  .hero p { max-width:760px; margin:0 auto; color:#555; }
+  .section ul { max-width:800px; margin:0.5rem auto 0; }
+  .section li { margin:.35rem 0; }
+</style>
 
 <main class="container">
 
@@ -46,8 +26,8 @@
   <section class="section">
     <h2>What Is FlexFI?</h2>
     <p>
-      Traditional FI can feel rigid—save as much as possible, retire as early as possible. But life isn’t static. 
-      Kids, career changes, health, or caregiving can shift priorities. <strong>FlexFI</strong> is about creating a 
+      Traditional FI can feel rigid—save as much as possible, retire as early as possible. But life isn’t static.
+      Kids, career changes, health, or caregiving can shift priorities. <strong>FlexFI</strong> is about creating a
       sustainable path to FI that bends without breaking.
     </p>
   </section>
@@ -67,18 +47,20 @@
   <section class="section">
     <h2>How FlexFI Fits with Other FI Stages</h2>
     <p>
-      FlexFI isn’t a replacement for CoastFI, LeanFI, or BaristaFI—it’s a complement. You might flex contributions 
-      up after reaching CoastFI, then dial down during intensive family seasons. It keeps you aligned with your 
+      FlexFI isn’t a replacement for CoastFI, LeanFI, or BaristaFI—it’s a complement. You might flex contributions
+      up after reaching CoastFI, then dial down during intensive family seasons. It keeps you aligned with your
       bigger FI vision while honoring what life needs from you right now.
     </p>
   </section>
 
   <!-- CTA -->
-  <section class="section" style="background:#f9fafb;padding:2rem 1rem;text-align:center;">
+  <section class="section" style="background:#f9fafb;padding:2rem 1rem;text-align:center;border:1px solid #eee;border-radius:8px;">
     <h2>Start Living FlexFI</h2>
     <p>Use the tools and articles below to balance today with tomorrow.</p>
-    <a class="btn" href="/calculators/">Explore Calculators</a>
-    <a class="btn btn-secondary" href="/blog/">Read the Blog</a>
+    <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:.5rem;">
+      <a class="btn" href="/calculators/">Explore Calculators</a>
+      <a class="btn btn-secondary" href="/blog/">Read the Blog</a>
+    </div>
   </section>
 
   <!-- RELATED POSTS -->
@@ -112,19 +94,3 @@
   </section>
 
 </main>
-
-<footer>
-  <p style="text-align:center;padding:1rem;">
-    &copy; <span id="year"></span> FIRE and Life ·
-    <a href="/privacy/">Privacy Policy</a> ·
-    <a href="/terms/">Terms</a><br/>
-    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
-  </p>
-</footer>
-
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-
-</body>
-</html>
