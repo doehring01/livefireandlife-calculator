@@ -7,8 +7,8 @@ permalink: /calculators/take-home-pay/index.html
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Take-Home Pay Calculator • FIREandLife</title>
-  <meta name="description" content="Estimate household take-home pay with multiple income streams, pre-tax contributions, FICA, and health premiums."/>
-  <link rel="stylesheet" href="/styles.css?v=tax1"/>
+  <meta name="description" content="Estimate household take-home pay with multiple income streams, pre-tax contributions (401k, HSA), FICA, state tax, and health premiums."/>
+  <link rel="stylesheet" href="/styles.css?v=tax2"/>
 
   <style>
     .grid-2 { display:grid; gap:1rem; }
@@ -55,7 +55,11 @@ permalink: /calculators/take-home-pay/index.html
 
 <main class="container">
   <h1>Take-Home Pay Calculator</h1>
-  <p>Estimate household after-tax income with <strong>multiple income streams</strong>. We apply federal tax (simplified), FICA per person, pre-tax contributions, and health premiums.</p>
+  <p>
+    Estimate household after-tax income with <strong>multiple income streams</strong>.
+    We apply federal tax (simplified), <strong>state income tax (flat, simplified)</strong>, FICA per person,
+    pre-tax contributions, and health premiums.
+  </p>
 
   <section class="grid-2" style="margin-top:1rem;">
     <form id="thpForm">
@@ -70,8 +74,50 @@ permalink: /calculators/take-home-pay/index.html
         </div>
 
         <div class="field">
-          <label for="health">Annual Health Premiums (employee portion, $)</label>
+          <label for="state">State (simplified flat rate)</label>
+          <select id="state">
+            <option value="NONE:0">No state tax</option>
+            <option value="AL:0.05">Alabama (~5%)</option>
+            <option value="AZ:0.0275">Arizona (~2.75%)</option>
+            <option value="AR:0.049">Arkansas (~4.9%)</option>
+            <option value="CA:0.06">California (~6% avg)</option>
+            <option value="CO:0.044">Colorado (4.4%)</option>
+            <option value="CT:0.05">Connecticut (~5%)</option>
+            <option value="GA:0.047">Georgia (~4.7%)</option>
+            <option value="IL:0.0495">Illinois (4.95%)</option>
+            <option value="IN:0.0323">Indiana (3.23%)</option>
+            <option value="KY:0.045">Kentucky (4.5%)</option>
+            <option value="LA:0.04">Louisiana (~4%)</option>
+            <option value="MA:0.05">Massachusetts (5%)</option>
+            <option value="MD:0.055">Maryland (~5.5%)</option>
+            <option value="MI:0.0425">Michigan (4.25%)</option>
+            <option value="MN:0.055">Minnesota (~5.5%)</option>
+            <option value="MO:0.04">Missouri (~4%)</option>
+            <option value="NC:0.0475">North Carolina (4.75%)</option>
+            <option value="NE:0.05">Nebraska (~5%)</option>
+            <option value="NJ:0.055">New Jersey (~5.5%)</option>
+            <option value="NM:0.049">New Mexico (~4.9%)</option>
+            <option value="NY:0.06">New York (~6% avg)</option>
+            <option value="OH:0.03">Ohio (~3%)</option>
+            <option value="OK:0.0475">Oklahoma (~4.75%)</option>
+            <option value="OR:0.07">Oregon (~7% avg)</option>
+            <option value="PA:0.0307">Pennsylvania (3.07%)</option>
+            <option value="SC:0.045">South Carolina (~4.5%)</option>
+            <option value="TN:0">Tennessee (0%)</option>
+            <option value="TX:0">Texas (0%)</option>
+            <option value="UT:0.0485">Utah (4.85%)</option>
+            <option value="VA:0.05">Virginia (5%)</option>
+            <option value="VT:0.055">Vermont (~5.5%)</option>
+            <option value="WA:0">Washington (0%)</option>
+            <option value="WI:0.05">Wisconsin (~5%)</option>
+          </select>
+          <div class="help">This is a simplified flat/effective rate just for planning (not exact tables).</div>
+        </div>
+
+        <div class="field">
+          <label for="health">Annual Health Premiums ($)</label>
           <input id="health" type="number" min="0" step="50" value="7200"/>
+          <div class="help">Employer plan premiums you pay. Treated as annual amount.</div>
         </div>
 
         <div class="field">
@@ -125,7 +171,7 @@ permalink: /calculators/take-home-pay/index.html
     </div>
 
     <p class="help" style="margin-top:.75rem">
-      Estimates only. Federal tax, FICA, and deductions are simplified and may not reflect your exact paycheck. Not financial, tax, or legal advice.
+      Estimates only. Federal & state tax, FICA, and deductions are simplified and may not reflect your exact paycheck. Not financial, tax, or legal advice.
     </p>
   </section>
 </main>
@@ -138,7 +184,7 @@ permalink: /calculators/take-home-pay/index.html
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="./thp-multi.js?v=1"></script>
+<script src="./thp-multi.js?v=2"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
