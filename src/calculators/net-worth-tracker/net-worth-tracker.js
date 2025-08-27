@@ -325,14 +325,8 @@
     URL.revokeObjectURL(url);
   }
 
-  function openNl(){
-    var el = $('nlBackdrop');
-    if (el){ el.style.display='flex'; }
-  }
-  function closeNl(){
-    var el = $('nlBackdrop');
-    if (el){ el.style.display='none'; }
-  }
+  function openNl(){ var el=$('nlBackdrop'); if (el){ el.style.display='flex'; } }
+  function closeNl(){ var el=$('nlBackdrop'); if (el){ el.style.display='none'; } }
 
   (function(){
     var form = $('nlForm');
@@ -344,11 +338,7 @@
         setTimeout(function(){ closeNl(); doExportCsv(); }, 150);
       });
     }
-    if (skip){
-      skip.addEventListener('click', function(){
-        closeNl(); doExportCsv();
-      });
-    }
+    if (skip){ skip.addEventListener('click', function(){ closeNl(); doExportCsv(); }); }
     if (already){
       already.addEventListener('change', function(){
         if (already.checked){
@@ -357,9 +347,7 @@
       });
     }
     var nlBackdrop = $('nlBackdrop');
-    if (nlBackdrop){
-      nlBackdrop.addEventListener('click', function(e){ if (e.target===nlBackdrop) closeNl(); });
-    }
+    if (nlBackdrop){ nlBackdrop.addEventListener('click', function(e){ if (e.target===nlBackdrop) closeNl(); }); }
   })();
 
   if (exportCsvBtn) exportCsvBtn.addEventListener('click', function(){
