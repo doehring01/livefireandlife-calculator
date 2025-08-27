@@ -1,56 +1,76 @@
+---
+permalink: /blog/fi-formula-explained/
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The FI Formula, Explained • FIREandLife</title>
-  <base href="/" />
-  <link rel="stylesheet" href="/styles.css?v=20250811c"/>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-KHKJVXPJQM');
-</script>
-<!-- End Google Analytics -->
+  <meta name="description" content="Learn the simple math behind Financial Independence: expenses, savings rate, withdrawal rate, and your FI number.">
+  <link rel="stylesheet" href="/styles.css?v=20250826"/>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KHKJVXPJQM');
+  </script>
+  <!-- End Google Analytics -->
 </head>
 <body>
-<header>
-  <nav style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-    <div class="logo"><img src="/assets/logo-horizontal.png" alt="FIREandLife" style="height:40px;"></div>
-    <ul class="nav-links" style="list-style:none;display:flex;gap:1.5rem;margin:0;">
-      <li><a href="/">Home</a></li>
-      <li><a href="/calculators/">Calculators</a></li>
-      <li><a href="/blog/" aria-current="page">Blog</a></li>
-      <li><a href="/about/">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-    </ul>
-  </nav>
-</header>
+  {% include header.html %}
 
-<main class="container" style="max-width:800px;margin:2rem auto;padding:0 1rem;">
-  <article>
-    <h1>The FI Formula, Explained</h1>
-    <p><em>Published: 2025 • Reading time: ~6 minutes</em></p>
+  <main class="container" style="max-width:800px;margin:2rem auto;padding:0 1rem;">
+    <article>
+      <h1>The FI Formula, Explained</h1>
+      <p><em>Published: 2025 • Reading time: ~6 minutes</em></p>
 
-    <!-- Your article content goes here -->
-    <p>Intro paragraph…</p>
+      <p>
+        Financial Independence (FI) boils down to one deceptively simple formula:
+        <strong>your annual expenses × 25 = your FI number</strong>. But there’s more nuance behind it—
+        from taxes, to investment returns, to flexibility in your plan. Let’s walk through it.
+      </p>
 
-    <hr style="margin:2rem 0;"/>
-    <section class="newsletter">
-      <h2>Want more FI insights?</h2>
-      <p>Join our newsletter for strategies, tools, and mindset tips.</p>
-      <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
-        <input type="email" name="EMAIL" placeholder="Your email address" required />
-        <button type="submit">Subscribe</button>
-      </form>
-    </section>
-  </article>
-</main>
+      <h2>Step 1: Know Your Annual Spending</h2>
+      <p>
+        Start with your actual lifestyle costs—housing, food, transportation, insurance, travel.
+        If you need $50,000/year, that’s your baseline.
+      </p>
 
-<footer><p style="text-align:center;padding:1rem;">&copy; 2025 FIRE and Life.</p></footer>
+      <h2>Step 2: Apply the 4% Rule (or 25× Rule)</h2>
+      <p>
+        Multiply your annual spending by 25. This assumes a safe withdrawal rate of ~4% from a diversified portfolio.
+        In our example: <code>$50,000 × 25 = $1.25M</code>.
+      </p>
+
+      <h2>Step 3: Adjust for Flexibility</h2>
+      <ul>
+        <li><strong>Taxes:</strong> withdrawals aren’t always tax-free.</li>
+        <li><strong>Healthcare:</strong> costs can vary dramatically.</li>
+        <li><strong>FlexFI:</strong> save more in some seasons, less in others.</li>
+      </ul>
+
+      <h2>Step 4: Revisit Often</h2>
+      <p>
+        FI isn’t one-and-done. Life changes, markets shift, kids grow. Re-run your numbers regularly.
+      </p>
+
+      <hr style="margin:2rem 0;"/>
+      <section class="newsletter">
+        <h2>Want more FI insights?</h2>
+        <p>Join our newsletter for strategies, tools, and mindset tips.</p>
+        <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+          <input type="email" name="EMAIL" placeholder="Your email address" required />
+          <button type="submit">Subscribe</button>
+        </form>
+      </section>
+    </article>
+  </main>
+
+  {% include footer.html %}
 </body>
 </html>
-
