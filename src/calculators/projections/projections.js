@@ -1,210 +1,234 @@
-/* projections.js — FIREandLife deterministic (real $) projection */
+/* projections.js — FI simulator with life events (real dollars) */
 (function () {
   "use strict";
 
   // ---------- helpers ----------
-  const $ = (id) => document.getElementById(id);
-  const fmt = (n, d = 0) =>
-    Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: d, maximumFractionDigits: d });
+  const $ = id => document.getElementById(id);
+  const fmt0 = n => Number(n||0).toLocaleString(undefined,{maximumFractionDigits:0});
   const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
 
-  // persist inputs
-  const STORAGE_KEY = "proj.inputs.v1";
-  const loadInputs = () => {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch { return {}; }
-  };
-  const saveInputs = (obj) => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); } catch {} };
+  // Event = { id, label, age, onetime, recurring, years }
+  let EVENTS = [];
 
-  // ---------- core math (real dollars) ----------
-  function runProjection(i) {
-    const startAge = +i.curAge;
-    const retAge   = +i.retAge;
-    const endAge   = +i.endAge;
+  function addEvent(preset) {
+    const id = cryptoRandom();
+    const row = document.createElement('div');
+    row.className = 'event-row';
+    row.dataset.id = id;
 
-    const preR  = (+i.preReturn || 0) / 100;
-    const postR = (+i.postReturn || 0) / 100;
+    const e = {
+      id,
+      label: preset?.label || 'Custom',
+      age: preset?.age || Number($('#age').value) + 2,
+      onetime: preset?.onetime || 0,
+      recurring: preset?.recurring || 0,
+      years: preset?.years || 0
+    };
+    EVENTS.push(e);
 
-    const annualSave = +i.annualSave || 0;
-    const spendReal  = Math.max(0, (+i.retSpend || 0) - (+i.passive || 0));
+    row.innerHTML = `
+      <div>
+        <label>Event</label>
+        <input type="text" value="${e.label}">
+        <small>e.g., Child, Car, Home</small>
+      </div>
+      <div>
+        <label>Age</label>
+        <input type="number" min="0" value="${e.age}">
+      </div>
+      <div>
+        <label>One-time ($)</label>
+        <input type="number" step="500" value="${e.onetime}">
+        <small>Down payment, car cash, etc.</small>
+      </div>
+      <div>
+        <label>Recurring Δ ($/yr)</label>
+        <input type="number" step="500" value="${e.recurring}">
+        <small>Change in annual spend</small>
+      </div>
+      <div>
+        <label>Years</label>
+        <input type="number" min="0" value="${e.years}">
+        <button type="button" class="btn btn-secondary" style="margin-top:.5rem">Remove</button>
+      </div>
+    `;
+    $('#events').appendChild(row);
 
-    let bal = +i.startBal || 0;
+    // wire inputs
+    const [labelI, ageI, oneI, recI, yrsI, rmBtn] = row.querySelectorAll('input,button');
+    labelI.addEventListener('input',  () => e.label = labelI.value);
+    ageI.addEventListener('input',    () => e.age = Number(ageI.value));
+    oneI.addEventListener('input',    () => e.onetime = Number(oneI.value));
+    recI.addEventListener('input',    () => e.recurring = Number(recI.value));
+    yrsI.addEventListener('input',    () => e.years = Number(yrsI.value));
+    rmBtn.addEventListener('click',   () => { EVENTS = EVENTS.filter(x=>x.id!==id); row.remove(); });
+  }
+
+  // Presets
+  function addChildPreset() {
+    addEvent({
+      label: 'Child',
+      age: Number($('#age').value) + 2,
+      onetime: 0,
+      recurring: 12000, // ballpark incremental/yr (childcare + misc)
+      years: 18
+    });
+  }
+  function addCarPreset() {
+    addEvent({
+      label: 'Car',
+      age: Number($('#age').value) + 3,
+      onetime: 30000, // cash purchase
+      recurring: 0,
+      years: 0
+    });
+  }
+  function addHomePreset() {
+    addEvent({
+      label: 'Home (mortgage – rent)',
+      age: Number($('#age').value) + 1,
+      onetime: 80000, // down payment/closing
+      recurring: 18000, // net change in annual housing cost (mortgage - prior rent)
+      years: 30
+    });
+  }
+
+  // ---------- core simulation ----------
+  function run() {
+    const cur = Number($('#age').value);
+    const retireAge = Number($('#retireAge').value);
+    const endAge = Number($('#planThrough').value);
+
+    let bal = Number($('#balance').value);
+    const contrib = Number($('#contrib').value);
+    const spendRet = Number($('#retSpend').value);
+    const passive = Number($('#passive').value);
+    const rPre = Number($('#rPre').value)/100;
+    const rPost = Number($('#rPost').value)/100;
+    const swr = Number($('#swr').value)/100;
+
     const rows = [];
-    let brokeAt = null;
+    let fiAge = null;
 
-    for (let age = startAge; age <= endAge; age++) {
-      const start = bal;
+    for (let age = cur; age <= endAge; age++) {
+      const isRet = age >= retireAge;
 
-      // growth
-      const r = age < retAge ? preR : postR;
-      const growth = start * r;
-
-      // flow (contribution before retirement; spending after)
-      const flow = age < retAge ? annualSave : -spendReal;
-
-      // end balance
-      bal = start + growth + flow;
-
-      rows.push({
-        age, start, growth, flow, end: bal
+      // event impacts
+      let oneTimeHit = 0;
+      let recurringDelta = 0;
+      EVENTS.forEach(ev => {
+        if (ev.age === age) oneTimeHit += ev.onetime;
+        if (ev.years > 0 && age >= ev.age && age < ev.age + ev.years) {
+          recurringDelta += ev.recurring;
+        }
       });
 
-      if (brokeAt === null && bal <= 0 && age >= retAge) brokeAt = age;
+      // flows (real)
+      let inflow = 0, outflow = 0, note = '';
+
+      if (!isRet) {
+        // contributions reduced by recurring event deltas (treat as extra spending)
+        const netContrib = Math.max(0, contrib - Math.max(0, recurringDelta));
+        inflow += netContrib;
+        if (recurringDelta > 0 && netContrib === 0) note = 'High event costs; contributions fully offset';
+      } else {
+        const need = Math.max(0, (spendRet + recurringDelta) - passive);
+        outflow += need; // spending from portfolio
+      }
+
+      if (oneTimeHit > 0) {
+        outflow += oneTimeHit;
+        note += (note ? ' · ' : '') + 'One-time event';
+      }
+
+      // growth
+      const r = isRet ? rPost : rPre;
+      bal = (bal + inflow - outflow) * (1 + r);
+
+      rows.push({ age, bal, net: inflow - outflow, note });
+
+      // detect FI age (first year your portfolio >= (spend - passive)/swr)
+      const req = Math.max(0, (spendRet - passive)) / Math.max(0.0001, swr);
+      if (fiAge === null && bal >= req) fiAge = age;
     }
 
-    const atRet = rows.find(r => r.age === retAge) || rows[0];
-    const last  = rows[rows.length - 1];
-    return { rows, atRet, last, brokeAt, spendReal };
+    return { rows, fiAge };
   }
 
-  // ---------- nominal transform (for the chart only) ----------
-  function toNominalSeries(rows, inflPct) {
-    const infl = (+inflPct || 0) / 100;
-    let mult = 1;
-    const nominal = [];
-    for (let idx = 0; idx < rows.length; idx++) {
-      if (idx > 0) mult *= (1 + infl);        // inflate by one year
-      nominal.push(rows[idx].end * mult);
-    }
-    return nominal;
-  }
-
-  // ---------- rendering ----------
+  // ---------- UI render ----------
   let chart;
-  function renderAll(i, result, showNominal) {
+  function render(res) {
     // quick summary
-    const q = $("quick");
-    const broke = result.brokeAt != null;
-    const msg = broke
-      ? `At age ${result.atRet.age}, projected portfolio is $${fmt(result.atRet.end)}. 
-         With spending of $${fmt(result.spendReal)}/yr, funds are projected to run out around age ${result.brokeAt}.`
-      : `At age ${result.atRet.age}, projected portfolio is $${fmt(result.atRet.end)}. 
-         With spending of $${fmt(result.spendReal)}/yr, your portfolio lasts through age ${result.last.age} (no depletion).`;
-    q.textContent = msg.replace(/\s+/g, " ");
+    const req = Math.max(0, (Number($('#retSpend').value) - Number($('#passive').value))) / Math.max(0.0001, Number($('#swr').value)/100);
+    const q = $('#quick');
+    if (res.fiAge) {
+      q.innerHTML = `Estimated FI at <strong>age ${res.fiAge}</strong> (needs ~$${fmt0(req)}). 
+        <br><span class="help">Life events are included in the timeline.</span>`;
+    } else {
+      q.innerHTML = `Not reaching FI by age ${$('#planThrough').value} with these inputs. 
+        <br><span class="help">Try raising savings, lowering spend, or delaying retirement.</span>`;
+    }
 
     // table
-    const tb = $("rows");
-    tb.innerHTML = result.rows.map(r => `
-      <tr>
-        <td>${r.age}</td>
-        <td>$${fmt(r.start)}</td>
-        <td>$${fmt(r.growth)}</td>
-        <td>${r.flow >= 0 ? "" : "("}$${fmt(Math.abs(r.flow))}${r.flow >= 0 ? "" : ")"}</td>
-        <td><strong>$${fmt(r.end)}</strong></td>
-      </tr>
-    `).join("");
+    const tb = $('#tbody');
+    tb.innerHTML = res.rows.map(r =>
+      `<tr>
+        <td style="text-align:left;padding:.5rem">${r.age}</td>
+        <td style="text-align:right;padding:.5rem">$${fmt0(r.bal)}</td>
+        <td style="text-align:right;padding:.5rem">${r.net>=0?'+':''}$${fmt0(r.net)}</td>
+        <td style="text-align:right;padding:.5rem;opacity:.75">${r.note||''}</td>
+      </tr>`).join('');
 
     // chart
-    const labels = result.rows.map(r => r.age);
-    const realSeries = result.rows.map(r => r.end);
-    const nominalSeries = toNominalSeries(result.rows, i.infl);
-
-    const ctx = $("projChart").getContext("2d");
+    const ctx = $('#projChart').getContext('2d');
+    const labels = res.rows.map(r => r.age);
+    const data = res.rows.map(r => r.bal);
     if (chart) chart.destroy();
     chart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels,
-        datasets: [
-          {
-            label: showNominal ? "End balance (nominal)" : "End balance (real $)",
-            data: showNominal ? nominalSeries : realSeries,
-            tension: 0.2,
-            borderWidth: 2,
-            pointRadius: 0
-          },
-          {
-            label: "Zero",
-            data: labels.map(() => 0),
-            borderDash: [6,6],
-            borderWidth: 1,
-            pointRadius: 0
-          }
-        ]
-      },
+      type: 'line',
+      data: { labels, datasets: [{ label: 'Portfolio (real $)', data, tension: .2 }] },
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { position: "bottom" } },
-        scales: {
-          y: { ticks: { callback: v => "$" + fmt(v) } },
-          x: { ticks: { callback: v => labels[v] } }
-        }
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'bottom' } },
+        scales:{ y:{ ticks:{ callback:v => '$'+fmt0(v) } } }
       }
     });
   }
 
   // ---------- CSV ----------
-  function toCsv(rows) {
-    const header = "Age,Start Balance,Growth,Contrib/(Spend),End Balance\n";
-    const body = rows.map(r =>
-      [r.age, r.start, r.growth, r.flow, r.end].join(",")
-    ).join("\n");
-    return header + body;
+  function toCSV(rows){
+    const header = ['Age','Balance_real_$','Net_Flow_$','Notes'];
+    const body = rows.map(r => [r.age, r.bal, r.net, (r.note||'').replace(/,/g,';')]);
+    return [header].concat(body).map(a => a.join(',')).join('\n');
   }
-  function download(filename, text) {
-    const blob = new Blob([text], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url; a.download = filename; document.body.appendChild(a);
-    a.click(); a.remove(); URL.revokeObjectURL(url);
-  }
-
-  // ---------- init ----------
-  function readInputs() {
-    return {
-      curAge:     +$("curAge").value,
-      retAge:     +$("retAge").value,
-      endAge:     +$("endAge").value,
-      startBal:   +$("startBal").value,
-      annualSave: +$("annualSave").value,
-      retSpend:   +$("retSpend").value,
-      passive:    +$("passive").value,
-      preReturn:  +$("preReturn").value,
-      postReturn: +$("postReturn").value,
-      infl:       +$("infl").value
-    };
-  }
-  function writeInputs(obj) {
-    for (const [k,v] of Object.entries(obj)) {
-      if ($(k) && v != null && $(k).type !== "checkbox") $(k).value = v;
-    }
+  function downloadCSV(rows){
+    const blob = new Blob([toCSV(rows)], {type:'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'projections.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
   }
 
-  function init() {
-    // restore saved inputs if present
-    const saved = loadInputs();
-    if (saved && Object.keys(saved).length) writeInputs(saved);
-
-    const form = $("projForm");
-    const nominalToggle = $("nominalToggle");
-
-    let lastInputs = null;
-    let lastResult = null;
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const i = readInputs();
-      // sanity
-      i.retAge = clamp(i.retAge, i.curAge + 1, 100);
-      i.endAge = Math.max(i.retAge, i.endAge);
-
-      saveInputs(i);
-      lastInputs = i;
-      lastResult = runProjection(i);
-      renderAll(i, lastResult, nominalToggle.checked);
-    });
-
-    nominalToggle.addEventListener("change", () => {
-      if (lastInputs && lastResult) renderAll(lastInputs, lastResult, nominalToggle.checked);
-    });
-
-    $("exportCsv").addEventListener("click", () => {
-      const i = lastInputs || readInputs();
-      const res = lastResult || runProjection(i);
-      download("projections.csv", toCsv(res.rows));
-    });
+  // ---------- boot ----------
+  function cryptoRandom(){
+    // short id that works in older browsers too
+    return Math.random().toString(36).slice(2,9);
   }
 
-  document.addEventListener("DOMContentLoaded", init);
+  function init(){
+    // starter presets to show the feature
+    addChildPreset();
+    addCarPreset();
+
+    $('#addChild').addEventListener('click', addChildPreset);
+    $('#addCar').addEventListener('click', addCarPreset);
+    $('#addHome').addEventListener('click', addHomePreset);
+
+    $('#projForm').addEventListener('submit', (e)=>{ e.preventDefault(); const res = run(); render(res); });
+    $('#runBtn').addEventListener('click', (e)=>{ e.preventDefault(); const res = run(); render(res); });
+    $('#csvBtn').addEventListener('click', ()=>{ const res = run(); downloadCSV(res.rows); });
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
 })();
