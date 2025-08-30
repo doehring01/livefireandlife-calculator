@@ -1,0 +1,123 @@
+---
+layout: page
+title: Projections • FIREandLife
+description: Model your path to Financial Independence—contributions before retirement, spending after, and how long your money lasts at your assumed real returns.
+permalink: /calculators/projections/
+---
+
+<section class="section" style="padding-top:0">
+  <h1 class="page-title">Projections</h1>
+  <p class="muted" style="max-width:760px;margin:0 auto 1rem">
+    This simple planner runs annual projections in <strong>today’s dollars</strong> (real returns, i.e., after inflation). 
+    Contribute before retirement, spend after—see balances by age and whether your portfolio lasts.
+  </p>
+</section>
+
+<div class="grid" style="margin-top:1rem;grid-template-columns:1fr;gap:1rem">
+  <form id="projForm" class="card" style="max-width:760px;margin:0 auto">
+    <h2>Inputs</h2>
+
+    <div class="field">
+      <label for="curAge">Current age</label>
+      <input id="curAge" type="number" min="16" step="1" value="35">
+    </div>
+
+    <div class="field">
+      <label for="retAge">Target retirement age</label>
+      <input id="retAge" type="number" min="30" step="1" value="60">
+    </div>
+
+    <div class="field">
+      <label for="endAge">Plan through age</label>
+      <input id="endAge" type="number" min="60" step="1" value="95">
+    </div>
+
+    <hr style="border:none;border-top:1px solid #eee;margin:.5rem 0 1rem"/>
+
+    <div class="field">
+      <label for="startBal">Current invested portfolio ($)</label>
+      <input id="startBal" type="number" min="0" step="1000" value="250000">
+    </div>
+
+    <div class="field">
+      <label for="annualSave">Annual contributions before retirement ($/yr)</label>
+      <input id="annualSave" type="number" min="0" step="1000" value="30000">
+      <div class="help">Sum of all accounts; we model a single blended portfolio for MVP.</div>
+    </div>
+
+    <div class="field">
+      <label for="retSpend">Annual retirement spending needed ($/yr, real)</label>
+      <input id="retSpend" type="number" min="0" step="1000" value="55000">
+    </div>
+
+    <div class="field">
+      <label for="passive">Passive income at/after retirement ($/yr, real)</label>
+      <input id="passive" type="number" min="0" step="500" value="5000">
+      <div class="help">Pension, rental net, annuity, etc. Subtracted from spending.</div>
+    </div>
+
+    <hr style="border:none;border-top:1px solid #eee;margin:.5rem 0 1rem"/>
+
+    <div class="field">
+      <label for="preReturn">Expected real return before retirement (%/yr)</label>
+      <input id="preReturn" type="number" min="0" max="12" step="0.1" value="5.0">
+    </div>
+
+    <div class="field">
+      <label for="postReturn">Expected real return in retirement (%/yr)</label>
+      <input id="postReturn" type="number" min="0" max="12" step="0.1" value="4.0">
+    </div>
+
+    <div class="field">
+      <label for="infl">(Optional) Show a nominal chart at inflation =</label>
+      <input id="infl" type="number" min="0" max="10" step="0.1" value="2.5">
+      <div class="help">Calculations are real; this only affects the “Nominal” display toggle.</div>
+    </div>
+
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem">
+      <button class="btn" type="submit">Run Projection</button>
+      <button class="btn btn-secondary" type="button" id="exportCsv">Export CSV</button>
+    </div>
+  </form>
+
+  <section class="card" style="max-width:1100px;margin:0 auto">
+    <h2>Quick Result</h2>
+    <div id="quick" class="mono" style="font-size:1.05rem;line-height:1.6">Enter inputs and click <em>Run Projection</em>.</div>
+  </section>
+
+  <section class="card" style="max-width:1100px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
+      <h2 style="margin:0">Balances Over Time</h2>
+      <div>
+        <label style="display:inline-flex;align-items:center;gap:.35rem;font-weight:600">
+          <input id="nominalToggle" type="checkbox"> Show nominal
+        </label>
+      </div>
+    </div>
+    <div style="position:relative;height:320px;margin-top:.75rem">
+      <canvas id="projChart"></canvas>
+    </div>
+  </section>
+
+  <section class="card" style="max-width:1100px;margin:0 auto">
+    <h2>Year-by-Year</h2>
+    <div class="table-wrap" style="overflow-x:auto;margin-top:.25rem">
+      <table class="results-table" style="min-width:760px">
+        <thead>
+          <tr>
+            <th>Age</th>
+            <th>Start Bal</th>
+            <th>Growth</th>
+            <th>Contrib / (Spend)</th>
+            <th>End Bal</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<!-- Scripts -->
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script defer src="/calculators/projections/projections.js?v=20250827a"></script>
