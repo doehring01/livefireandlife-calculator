@@ -2,67 +2,73 @@
 layout: default
 permalink: /blog/maximize-take-home-pay/
 title: "5 Ways to Maximize Your Take-Home Pay"
-description: "Practical levers to increase real income — benefits, withholding, and contribution strategy."
+description: "Practical levers to increase real income: benefits, withholding, and contribution strategy."
 date: 2025-07-28
 tags: [income, taxes, paycheck]
-hero: "/assets/maximize-take-home-pay.png"
+hero: "/assets/maximize-take-home-pay-hero.png"
 ---
 
-  <main class="container" style="max-width:800px;margin:2rem auto;padding:0 1rem;">
-    <article>
-      <p style="color:#777;margin:0 0 .25rem 0;">Published: 2025</p>
-      <h1>Maximize Your Take-Home Pay</h1>
-      <p style="color:#555;margin:.25rem 0 1rem 0;">Reading time: ~6 minutes</p>
+<article style="max-width:800px;margin:2rem auto;padding:0 1rem;">
+  <header>
+    <p style="color:#777;font-size:.9rem;">
+      Published <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+    </p>
+    <h1>{{ page.title }}</h1>
+    {% if page.hero %}
+      <figure style="margin:1rem 0;">
+        <img src="{{ page.hero }}" alt="Illustration of paycheck with tax, benefits, and contribution arrows" style="max-width:100%;height:auto;border-radius:8px;">
+      </figure>
+    {% endif %}
+    <p style="color:#555;margin:.25rem 0 1rem 0;">Reading time: ~6 minutes</p>
+  </header>
 
-      <p>
-        Increasing your income isn’t only about raises or side hustles—how you manage benefits, contributions, and 
-        withholdings can have a huge impact on what actually lands in your checking account. This article walks 
-        through simple, practical levers you can adjust today.
-      </p>
+  <p>
+    Increasing your income isn’t only about raises or side hustles. How you manage benefits, contributions, and
+    withholding can have a big impact on what actually lands in your checking account. Below are five practical levers
+    you can adjust today.
+  </p>
 
-      <h2>1. Optimize Pre-Tax Contributions</h2>
-      <p>
-        Contributions to accounts like your 401(k), HSA, or FSA reduce taxable income. Even a small increase in 
-        contributions can lower your tax liability while building long-term wealth.
-      </p>
+  <h2>1) Optimize pre-tax contributions</h2>
+  <p>
+    Contributions to accounts like a 401(k), HSA, or FSA reduce taxable income. Even a small increase in pre-tax
+    contributions can lower your tax bill while building long-term wealth. If cash flow is tight, try small bumps
+    (for example, +1% each quarter) instead of a large jump.
+  </p>
 
-      <h2>2. Review Your Withholding</h2>
-      <p>
-        Many employees are withholding too much or too little. Use the IRS withholding calculator to see if you 
-        should adjust your W-4 so you’re not giving the IRS an interest-free loan or facing a surprise bill.
-      </p>
+  <h2>2) Review your withholding</h2>
+  <p>
+    Many people withhold too much or too little. Use the IRS withholding estimator to check whether you should adjust
+    your W-4 so you’re not giving the government an interest-free loan or facing a surprise bill.
+  </p>
 
-      <h2>3. Leverage Employer Benefits</h2>
-      <p>
-        From commuter benefits to dependent care FSAs, your HR portal may have hidden gems. These can boost your 
-        effective take-home pay by covering expenses with pre-tax dollars.
-      </p>
+  <h2>3) Leverage employer benefits</h2>
+  <p>
+    Commuter benefits, dependent care FSAs, tuition assistance, and wellness stipends can stretch your dollars by
+    covering expenses with pre-tax money or direct subsidies. Spend a few minutes in your HR portal to make sure
+    you’re enrolled in what you actually use.
+  </p>
 
-      <h2>4. Compare Health Plan Options</h2>
-      <p>
-        High-deductible health plans often come with HSA eligibility—combining lower premiums with tax-free savings 
-        for healthcare. Depending on your situation, this can free up monthly cash flow.
-      </p>
+  <h2>4) Compare health plan options</h2>
+  <p>
+    High-deductible health plans often come with HSA eligibility, which pairs lower premiums with tax-free savings for
+    healthcare. Depending on your situation, switching plans can free up monthly cash flow even after accounting for a
+    higher deductible.
+  </p>
 
-      <h2>5. Track the Real Impact</h2>
-      <p>
-        Use our <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> to model different contribution 
-        levels, tax scenarios, and benefits. Seeing the numbers side by side makes it easier to choose the 
-        contribution mix that balances cash flow and long-term growth.
-      </p>
+  <h2>5) Track the real impact</h2>
+  <p>
+    Use the <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> to model contribution levels, withholding,
+    and benefits side by side. Seeing the numbers makes it easier to choose the mix that balances cash flow and
+    long-term growth.
+  </p>
 
-      <hr style="margin:2rem 0;"/>
-      <section class="newsletter">
-        <h2>Want more FI insights?</h2>
-        <p>Join our newsletter for strategies, tools, and mindset tips.</p>
-        <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
-          <input type="email" name="EMAIL" placeholder="Your email address" required />
-          <button type="submit">Subscribe</button>
-        </form>
-      </section>
-    </article>
-  </main>
-
-  {% include footer.html %}
-</body>
-</html>
+  <hr style="margin:2rem 0;"/>
+  <section class="newsletter">
+    <h2>Want more FI insights?</h2>
+    <p>Join our newsletter for strategies, tools, and mindset tips that help you build freedom without sacrificing today.</p>
+    <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+      <input type="email" name="EMAIL" placeholder="Your email address" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+</article>
