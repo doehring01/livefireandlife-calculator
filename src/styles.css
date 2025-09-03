@@ -21,18 +21,12 @@ body {
 }
 
 /* ------------------------------
-   HEADER & NAVIGATION
+   HEADER (generic container)
 --------------------------------*/
 header {
   background: #FFFFFF;
   border-bottom: 1px solid #ddd;
 }
-
-
-
-
-
-
 
 /* ------------------------------
    HERO SECTION
@@ -229,7 +223,9 @@ footer {
   background: #FFFFFF;
 }
 
-/* Net Worth Tracker responsive layout */
+/* ------------------------------
+   NET WORTH TRACKER LAYOUT
+--------------------------------*/
 .nw-grid {
   display: grid;
   gap: 1rem;
@@ -258,17 +254,16 @@ footer {
     grid-template-columns: 1fr 1fr;
     align-items: start;
   }
-  /* OPTIONAL: mild sticky only for desktops.
-     If you don't want *any* sticky, delete the block below. */
+  /* OPTIONAL sticky (desktop). Remove if undesired. */
   .results-panel {
     position: sticky;
     top: 1rem;
     max-height: calc(100svh - 2rem);
-    overflow: auto;       /* lets long results scroll independently on desktop */
+    overflow: auto;
   }
 }
 
-/* Guardrails: if any legacy styles were forcing sticky/fixed, neutralize them */
+/* Guardrails: neutralize any old sticky classes */
 .results-panel.is-sticky,
 .results-panel.sticky,
 .results,
@@ -277,236 +272,113 @@ footer {
   top: auto !important;
 }
 
-/* === Mobile Nav (Hamburger) ===================================== */
-
-/* Nav container baseline */
-header {
-  background: #FFFFFF;
+/* ============================================================
+   RESPONSIVE HEADER / MOBILE NAV (single source of truth)
+   Matches header.html structure:
+   .site-header > .nav > .nav__brand | .nav__toggle | .nav__links
+============================================================ */
+.site-header {
+  background: #fff;
   border-bottom: 1px solid #ddd;
 }
-nav.site-nav {
+
+.nav {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-/* Logo keeps current sizing */
-.site-nav .logo img {
+.nav__brand img {
+  display: block;
   height: 40px;
 }
 
-/* Links row (desktop default) */
-.site-nav .nav-links {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-  margin: 0;
-}
-
-/* Toggle button (hidden on desktop) */
-.nav-toggle {
-  display: none;
-  background: transparent;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: .5rem .6rem;
-  line-height: 0;
-  cursor: pointer;
-}
-.nav-toggle:focus { outline: 2px solid #FF6F61; outline-offset: 2px; }
-
-/* Icon sizing */
-.nav-toggle svg {
-  width: 22px; height: 22px;
-}
-
-/* ---------- Mobile layout ---------- */
-@media (max-width: 760px) {
-  /* Show the toggle; hide links by default */
-  .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
-  .site-nav {
-    align-items: center;
-  }
-
-  /* Turn links into a vertical panel that can expand/collapse */
-  .site-nav .nav-links {
-    position: relative;
-    display: block;
-    width: 100%;
-    margin-top: .75rem;
-    padding-top: .25rem;
-    border-top: 1px solid #eee;
-
-    /* collapsed by default */
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .25s ease;
-  }
-
-  /* Each link stacked */
-  .site-nav .nav-links li { margin: .5rem 0; }
-  .site-nav .nav-links a { display: inline-block; }
-
-  /* When nav is "open" */
-  .site-nav.open .nav-links {
-    max-height: 500px; /* enough to show all items */
-  }
-}
-
-/* ========== Responsive Header / Nav ========== */
-.site-header {
-  background:#fff;
-  border-bottom:1px solid #ddd;
-}
-.nav {
-  max-width:1100px;
-  margin:0 auto;
-  padding:0.75rem 1rem;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1rem;
-}
-.nav__brand img { display:block; height:40px; }
-
-/* Hamburger */
+/* Hamburger button */
 .nav__toggle {
-  display:inline-flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:4px;
-  width:40px; height:40px;
-  background:transparent;
-  border:0;
-  cursor:pointer;
-}
-.nav__bar {
-  display:block;
-  width:24px; height:2px;
-  background:#333;
-  border-radius:2px;
-}
-
-/* Links (mobile collapsed by default) */
-.nav__links {
-  list-style:none;
-  margin:0; padding:0;
-  position:absolute;
-  top:64px; /* sits below header */
-  left:0; right:0;
-  background:#fff;
-  border-top:1px solid #eee;
-  display:none;
-  flex-direction:column;
-  gap:0;
-  z-index:999;
-}
-.nav__links li a {
-  display:block;
-  padding:0.9rem 1rem;
-  color:#333;
-  text-decoration:none;
-  font-weight:600;
-  border-bottom:1px solid #f2f2f2;
-}
-.nav__links li a:hover { background:#fafafa; }
-
-/* When expanded */
-.nav__links[data-collapsed="false"] { display:flex; }
-
-/* Desktop */
-@media (min-width: 900px) {
-  .nav { padding:1rem 1rem; }
-  .nav__toggle { display:none; }
-  .nav__links {
-    position:static;
-    display:flex !important;
-    flex-direction:row;
-    gap:1.25rem;
-    border-top:0;
-  }
-  .nav__links li a {
-    border:0;
-    padding:0;
-  }
-  .nav__links li a:hover { background:transparent; color:#FF6F61; }
-}
-
-/* Responsive Header / Nav */
-.site-header{background:#fff;border-bottom:1px solid #ddd;}
-.nav{max-width:1100px;margin:0 auto;padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
-.nav__brand img{display:block;height:40px}
-
-/* Hamburger */
-.nav__toggle{display:inline-flex;flex-direction:column;justify-content:center;gap:4px;width:40px;height:40px;background:transparent;border:0;cursor:pointer}
-.nav__bar{display:block;width:24px;height:2px;background:#333;border-radius:2px}
-
-/* Mobile menu (hidden by default) */
-.nav__links{list-style:none;margin:0;padding:0;position:absolute;top:64px;left:0;right:0;background:#fff;border-top:1px solid #eee;display:none;flex-direction:column;z-index:999}
-.nav__links li a{display:block;padding:.9rem 1rem;color:#333;text-decoration:none;font-weight:600;border-bottom:1px solid #f2f2f2}
-.nav__links li a:hover{background:#fafafa}
-
-/* When open */
-.nav__links.is-open{display:flex}
-
-/* Desktop */
-@media (min-width:900px){
-  .nav{padding:1rem 1rem}
-  .nav__toggle{display:none}
-  .nav__links{position:static;display:flex !important;flex-direction:row;gap:1.25rem;border-top:0}
-  .nav__links li a{border:0;padding:0}
-  .nav__links li a:hover{background:transparent;color:#FF6F61}
-}
-/* Mobile defaults */
-.nav__links {
-  display: none;
-  flex-direction: column;
-  gap: 1rem;
-  background: #fff;
-  position: absolute;
-  top: 60px; /* adjust to header height */
-  right: 1rem;
-  padding: 1rem;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.nav__links.show {
-  display: flex;
-}
-
-.nav__toggle {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   justify-content: center;
   gap: 4px;
-  background: none;
-  border: none;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 0;
   cursor: pointer;
 }
 
 .nav__bar {
+  display: block;
   width: 24px;
-  height: 3px;
+  height: 2px;
   background: #333;
   border-radius: 2px;
 }
 
-/* Desktop breakpoint */
+/* Mobile menu (collapsed by default) */
+.nav__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 64px; /* sits below header */
+  background: #fff;
+  border-top: 1px solid #eee;
+
+  display: none;            /* hidden by default on mobile */
+  flex-direction: column;
+  z-index: 999;
+}
+
+.nav__links li a {
+  display: block;
+  padding: 0.9rem 1rem;
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.nav__links li a:hover {
+  background: #fafafa;
+}
+
+/* When JS toggles open */
+.nav__links.is-open {
+  display: flex;
+}
+
+/* Desktop layout */
 @media (min-width: 900px) {
-  .nav__links {
-    display: flex !important;
-    position: static;
-    flex-direction: row;
-    border: none;
-    box-shadow: none;
-    padding: 0;
+  .nav {
+    padding: 1rem 1rem;
   }
 
   .nav__toggle {
     display: none;
   }
-}
 
+  .nav__links {
+    position: static;
+    display: flex !important;   /* always visible on desktop */
+    flex-direction: row;
+    gap: 1.25rem;
+    border-top: 0;
+  }
+
+  .nav__links li a {
+    border: 0;
+    padding: 0;
+  }
+
+  .nav__links li a:hover {
+    background: transparent;
+    color: #FF6F61;
+  }
+}
