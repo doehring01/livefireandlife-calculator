@@ -390,3 +390,20 @@ footer {
   width: 100%;        /* still responsive for smaller screens */
   height: auto;
 }
+
+/* Generic post image sizing (non-hero) */
+article img:not(.hero-img) {
+  display:block;
+  margin:1.25rem auto;
+  width:100%;
+  height:auto;
+  max-width:680px; /* global cap */
+}
+
+/* Keep hero full-bleed within content column */
+.hero-img {
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:8px;
+}
