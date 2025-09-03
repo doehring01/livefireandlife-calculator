@@ -382,3 +382,11 @@ footer {
     color: #FF6F61;
   }
 }
+/* Blog post charts/images */
+.blog-chart {
+  max-width: 600px;   /* reasonable cap on desktop */
+  margin: 1.5rem auto;
+  display: block;
+  width: 100%;        /* still responsive for smaller screens */
+  height: auto;
+}
