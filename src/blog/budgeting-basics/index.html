@@ -2,43 +2,145 @@
 layout: default
 permalink: /blog/budgeting-basics/
 title: "Basics of Budgeting & Budgeting Types"
-description: "Learn the most effective budgeting methods for financial independence — and how to pick the one that fits your life."
+description: "Learn the most effective budgeting methods for financial independence and how to pick the one that fits your life."
 date: 2025-09-10
 hero: "/assets/budgeting-basics-hero.png"
 tags: [budgeting, planning, flexfi]
 ---
 
-<main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
-  <article>
-    <p style="color:#777;font-size:.9rem;">Published: September 10, 2025</p>
-    <h1>Basics of Budgeting & Budgeting Types</h1>
+<article style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+  <p style="color:#777;font-size:.9rem;">Published:
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+  </p>
 
-    <p>Budgeting isn’t about spreadsheets for the sake of spreadsheets — it’s about clarity. The right budget helps you
-    see where your money actually goes, adjust in real time, and make progress toward financial independence (FI)
-    without sacrificing the present.</p>
+  <h1>Basics of Budgeting & Budgeting Types</h1>
 
-    <h2>Why budgeting matters for FI</h2>
-    <p>Every FI journey comes down to two numbers: how much you save and how much you spend. Budgeting is the bridge
-    between intention and action, showing you where the gap is and what you can realistically change.</p>
+  {% if page.hero %}
+  <figure style="margin:1rem 0;">
+    <img src="{{ page.hero }}" alt="Budgeting methods for FI with simple icons and a chart" style="width:100%;height:auto;border-radius:8px;">
+  </figure>
+  {% endif %}
 
-    <h2>Four popular budgeting methods</h2>
-    <ol>
-      <li><strong>50/30/20 Rule:</strong> 50% needs, 30% wants, 20% savings. Easy to start, but not precise enough for FI-focused plans.</li>
-      <li><strong>Zero-Based Budget:</strong> Every dollar gets assigned a job. Great for detail-oriented people, but high effort.</li>
-      <li><strong>Pay Yourself First:</strong> Automate savings, then live on what’s left. Simple and effective for FI, though it requires discipline.</li>
-      <li><strong>Values-Based Budget:</strong> Focus spending on what matters most (travel, family, hobbies) and cut the rest. Helps avoid burnout on the FI path.</li>
-    </ol>
+  <p>
+    Budgeting is not about spreadsheets for their own sake. It is a way to make your money do what you want,
+    with fewer surprises. The right approach gives you clarity, helps you adjust in real time, and keeps
+    your path to Financial Independence (FI) aligned with the life you want to live now.
+  </p>
 
-    <h2>Which method fits your FI journey?</h2>
-    <p>If you’re just getting started, the 50/30/20 rule is a useful baseline. But once you aim for higher savings
-    rates, zero-based or pay-yourself-first methods give you more control. Values-based budgeting is particularly
-    powerful for FlexFI because it ensures your lifestyle today isn’t sacrificed in the name of a distant goal.</p>
+  <h2>Why budgeting matters for FI</h2>
+  <ul>
+    <li><strong>Visibility:</strong> See where cash actually goes so you can redirect it with intent.</li>
+    <li><strong>Faster progress:</strong> Every percent you free up shortens your FI timeline.</li>
+    <li><strong>Less stress:</strong> Knowing what is funded reduces money anxiety.</li>
+    <li><strong>Flexibility:</strong> When life shifts, the budget becomes your tool for tradeoffs, not a rulebook.</li>
+  </ul>
 
-    <h2>Next steps</h2>
-    <p>Try setting up two parallel budgets: one that captures your “baseline” lifestyle and another that models a
-    higher-savings lifestyle. Switching between them as life evolves is budgeting in FlexFI action.</p>
+  <h2>Four proven budgeting methods</h2>
+  <div class="table-wrap" style="overflow-x:auto;margin:.75rem 0 1rem;">
+    <table class="results-table" style="width:100%;border-collapse:collapse;background:#fff;border:1px solid #eee;border-radius:8px;overflow:hidden;">
+      <thead style="background:#fafafa;">
+        <tr>
+          <th style="text-align:left;padding:.7rem .9rem;">Method</th>
+          <th style="text-align:left;padding:.7rem .9rem;">How it works</th>
+          <th style="text-align:left;padding:.7rem .9rem;">Best for</th>
+          <th style="text-align:left;padding:.7rem .9rem;">Watch outs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:.7rem .9rem;"><strong>50/30/20 Rule</strong></td>
+          <td style="padding:.7rem .9rem;">Split take-home into 50% needs, 30% wants, 20% savings.</td>
+          <td style="padding:.7rem .9rem;">Quick start. Early awareness.</td>
+          <td style="padding:.7rem .9rem;">Not precise enough for higher FI savings rates.</td>
+        </tr>
+        <tr>
+          <td style="padding:.7rem .9rem;"><strong>Zero-Based Budget</strong></td>
+          <td style="padding:.7rem .9rem;">Give every dollar a job before the month starts.</td>
+          <td style="padding:.7rem .9rem;">People who like detail and control.</td>
+          <td style="padding:.7rem .9rem;">Takes time. Needs weekly check-ins.</td>
+        </tr>
+        <tr>
+          <td style="padding:.7rem .9rem;"><strong>Pay Yourself First</strong></td>
+          <td style="padding:.7rem .9rem;">Automate savings at the top, live on what remains.</td>
+          <td style="padding:.7rem .9rem;">FI focus. Busy schedules.</td>
+          <td style="padding:.7rem .9rem;">Can mask overspending unless you still review.</td>
+        </tr>
+        <tr>
+          <td style="padding:.7rem .9rem;"><strong>Values-Based Budget</strong></td>
+          <td style="padding:.7rem .9rem;">Fund what matters most. Trim the rest hard.</td>
+          <td style="padding:.7rem .9rem;">Avoiding burnout. FlexFI approach.</td>
+          <td style="padding:.7rem .9rem;">Requires honest prioritization and boundaries.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    <p>Test the numbers with our <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> to see how
-    different contribution levels impact cash flow.</p>
-  </article>
-</main>
+  <h2>How to choose the right method</h2>
+  <ul>
+    <li><strong>New to budgeting?</strong> Start with 50/30/20 for one month to learn your baseline.</li>
+    <li><strong>Targeting higher savings rates?</strong> Move to Pay Yourself First or Zero-Based for tighter control.</li>
+    <li><strong>Worried about quality of life?</strong> Layer Values-Based on top of either method so spending aligns with what you actually care about.</li>
+  </ul>
+
+  <h2>FI-friendly category targets</h2>
+  <p>These are healthy ranges to aim for over time. Adjust for your location and family situation.</p>
+  <ul>
+    <li>Housing: 20–30% of take-home</li>
+    <li>Transportation: 8–15%</li>
+    <li>Food (groceries + dining): 8–15%</li>
+    <li>Insurance and healthcare: 5–12%</li>
+    <li>Childcare or family support: varies widely, budget explicitly</li>
+    <li>Discretionary (fun, travel, hobbies): 5–15%</li>
+    <li><strong>Savings and investments:</strong> 15–35%+ depending on your FI pace</li>
+  </ul>
+
+  <h2>Set up your first budget in 30 minutes</h2>
+  <ol>
+    <li>Open last month’s statements and list fixed bills: rent, mortgage, insurance, subscriptions.</li>
+    <li>Add average for variables: groceries, gas, dining, kids, personal.</li>
+    <li>Pick a method. If unsure, start Pay Yourself First with a realistic savings target.</li>
+    <li>Automate transfers on payday:
+      <ul>
+        <li>401(k) or workplace plan contributions</li>
+        <li>HSA if eligible</li>
+        <li>Brokerage or IRA auto-invest</li>
+      </ul>
+    </li>
+    <li>Create three guardrail alerts in your bank or app: dining, shopping, and “misc.”</li>
+    <li>Review weekly for 5 minutes. Adjust only what is clearly off.</li>
+  </ol>
+
+  <h2>Use two budgets the FlexFI way</h2>
+  <p>Create both of these and switch as seasons change:</p>
+  <ul>
+    <li><strong>Baseline Budget:</strong> Normal month with sustainable savings.</li>
+    <li><strong>High-Savings Budget:</strong> Temporary push when life is stable or income spikes.</li>
+  </ul>
+  <p>Run both through the <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> to see cash flow after taxes, health premiums, and contributions.  
+     Track progress in the <a href="/calculators/net-worth-tracker/">Net Worth Tracker</a> to watch your plan compound.</p>
+
+  <h2>Troubleshooting common issues</h2>
+  <ul>
+    <li><strong>My budget keeps breaking.</strong> You are underestimating a category. Increase it and cut a lower-value area.</li>
+    <li><strong>Unexpected healthcare or family costs.</strong> Add a dedicated sinking fund. Treat it like a bill.</li>
+    <li><strong>Income is variable.</strong> Base bills on your low month. Save surplus in a buffer to smooth paychecks.</li>
+    <li><strong>Partner alignment is hard.</strong> Agree on three priorities and three “no-guilt” lines for each person.</li>
+  </ul>
+
+  <h2>Next steps</h2>
+  <ol>
+    <li>Pick a method and build your first pass today.</li>
+    <li>Automate savings on payday. Even 1–2% increases matter.</li>
+    <li>Book a 20-minute review on your calendar each week.</li>
+  </ol>
+
+  <hr style="margin:2rem 0;">
+  <section class="newsletter">
+    <h2>Get tools and new posts</h2>
+    <p>Short, practical emails on calculators, FlexFI strategies, and real-world tradeoffs.</p>
+    <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+      <input type="email" name="EMAIL" placeholder="Your email address" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+</article>
