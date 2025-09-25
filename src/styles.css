@@ -407,3 +407,32 @@ article img:not(.hero-img) {
   height:auto;
   border-radius:8px;
 }
+
+:root{
+  --brand-orange:#FF6F61;
+  --brand-orange-dark:#E65A4F;
+  --brand-cream:#FFF8F5;
+  --ink:#333333;
+  --ink-muted:#555;
+  --line:#ddd;
+}
+
+/* ensure components use tokens */
+.btn, .btn-primary, button {
+  background: var(--brand-orange);
+}
+.btn:hover, .btn-primary:hover, button:hover {
+  background: var(--brand-orange-dark);
+}
+
+/* headings rhythm similar to /about */
+.section h2 {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* optional: soft brandy hero background */
+.hero {
+  background: var(--brand-cream);
+  color: var(--ink);
+}
