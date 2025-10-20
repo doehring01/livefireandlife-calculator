@@ -9,22 +9,50 @@ tags: [investing, taxes, flexibility, planning]
 keywords: "max out 401k or brokerage, 401k vs brokerage, FI investing order, Roth vs traditional, early retirement liquidity, taxable account strategy, withdrawal flexibility"
 ---
 
+<style>
+  /* Scope to this article only */
+  main.container article.post { max-width: 760px; margin: 0 auto; }
+  .post-meta { color:#64748b; font-size:.9rem; margin-bottom:.5rem; }
+  .lede { font-size:1.125rem; line-height:1.7; color:#374151; }
+  .post-hero { margin:1rem 0 1.25rem; }
+  .post-hero img { width:100%; height:auto; border-radius:12px; display:block; }
+  .post-hero figcaption { color:#6b7280; font-size:.9rem; margin-top:.35rem; text-align:center; }
+
+  /* Lists and spacing */
+  article.post h2 { margin-top:1.6rem; }
+  article.post ul, article.post ol { padding-left:1.2rem; margin:.5rem 0 1rem; }
+  article.post li { margin:.35rem 0; }
+
+  /* Responsive table */
+  .table-wrap { overflow-x:auto; border:1px solid #eef2f7; border-radius:8px; }
+  .table-wrap table { min-width:640px; width:100%; border-collapse:collapse; }
+  .table-wrap th, .table-wrap td { padding:.6rem; border-bottom:1px solid #f3f4f6; text-align:left; }
+
+  /* Callouts */
+  .callout { background:#f8fafc; border:1px solid #e5e7eb; padding:1rem; border-radius:.75rem; }
+
+  /* Bottom nav */
+  .post-nav { display:flex; gap:1rem; justify-content:space-between; flex-wrap:wrap; margin-top:2rem; }
+  .post-nav a { text-decoration:none; }
+</style>
+
 <main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
-  <article>
-    <p style="color:#777;font-size:.9rem;">Published: November 5, 2025</p>
+  <article class="post">
+    <p class="post-meta">Published: November 5, 2025 • 7–9 min read</p>
     <h1>Should You Max Out Your 401(k) or Invest in a Brokerage?</h1>
 
     {% if page.hero %}
-      <figure class="post-hero" style="margin:1rem 0;">
-        <img src="{{ page.hero }}?v=20251105" alt="401(k) vs brokerage investing decision" style="max-width:100%;height:auto;border-radius:8px;">
+      <figure class="post-hero">
+        <img src="{{ page.hero }}?v=20251105" alt="Balancing 401(k) tax savings with brokerage flexibility">
+        <figcaption>Balancing 401(k) tax savings with brokerage flexibility</figcaption>
       </figure>
     {% endif %}
 
     <p class="lede">It is one of the most common FI questions. Should you max out your 401(k) or put extra money into a taxable brokerage account? The answer is not always straightforward, and it can decide how flexible and tax efficient your plan feels once you start living off it.</p>
 
-    <p style="background:#f8fafc;border:1px solid #e5e7eb;padding:1rem;border-radius:.5rem;">
+    <p class="callout">
       New to account order and where each dollar should go first? Start with the
-      <a href="/guides/investing-order-for-fi/">Investing Order for FI</a> guide for a simple step-by-step roadmap.
+      <a href="/guides/investing-order-for-fi/">Investing Order for FI</a> guide for a simple step by step roadmap.
     </p>
 
     <h2>Understanding what you are really choosing</h2>
@@ -62,30 +90,30 @@ keywords: "max out 401k or brokerage, 401k vs brokerage, FI investing order, Rot
 
     <p>Each account is a different time machine for your money. It sets when you benefit and how much control you have over future withdrawals.</p>
 
-    <div class="table-wrap" style="overflow-x:auto;margin:1rem 0;">
-      <table style="width:100%;border-collapse:collapse;">
+    <div class="table-wrap" aria-label="Account comparison table" style="margin:1rem 0;">
+      <table>
         <thead>
           <tr>
-            <th style="text-align:left;border-bottom:1px solid #e5e7eb;padding:.5rem;">Account Type</th>
-            <th style="text-align:left;border-bottom:1px solid #e5e7eb;padding:.5rem;">Primary Benefit</th>
-            <th style="text-align:left;border-bottom:1px solid #e5e7eb;padding:.5rem;">Access Before 59½</th>
+            <th>Account Type</th>
+            <th>Primary Benefit</th>
+            <th>Access Before 59½</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">401(k) / Traditional IRA</td>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">Current tax deduction and long compounding</td>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">Limited, with specific exceptions</td>
+            <td>401(k) / Traditional IRA</td>
+            <td>Current tax deduction and long compounding</td>
+            <td>Limited, with specific exceptions</td>
           </tr>
           <tr>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">Roth IRA / Roth 401(k)</td>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">Tax free withdrawals later</td>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">Roth contributions generally accessible</td>
+            <td>Roth IRA / Roth 401(k)</td>
+            <td>Tax free withdrawals later</td>
+            <td>Roth contributions generally accessible</td>
           </tr>
           <tr>
-            <td style="padding:.5rem;">Taxable Brokerage</td>
-            <td style="padding:.5rem;">Total flexibility and tax planning options</td>
-            <td style="padding:.5rem;">Fully accessible anytime</td>
+            <td>Taxable Brokerage</td>
+            <td>Total flexibility and tax planning options</td>
+            <td>Fully accessible anytime</td>
           </tr>
         </tbody>
       </table>
@@ -107,7 +135,30 @@ keywords: "max out 401k or brokerage, 401k vs brokerage, FI investing order, Rot
       <a href="/guides/investing-order-for-fi/">Investing Order for FI</a>. Small contribution shifts can make your plan more flexible.
     </p>
 
-    <hr/>
-    <p><strong>Next up in this series:</strong> <a href="/blog/the-fi-tradeoffs-nobody-talks-about/">The FI Tradeoffs Nobody Talks About</a></p>
+    <hr>
+    <div class="post-nav">
+      <a class="btn btn-secondary" href="/guides/investing-order-for-fi/">See the FI Investing Order →</a>
+      <a class="btn" href="/blog/the-fi-tradeoffs-nobody-talks-about/">Next: The FI Tradeoffs Nobody Talks About →</a>
+    </div>
   </article>
 </main>
+
+<!-- SEO: Article schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Should You Max Out Your 401(k) or Invest in a Brokerage?",
+  "description": "How to choose between maxing your 401(k) and building flexibility in a brokerage account, with a simple framework for taxes, access, and stage of life.",
+  "author": { "@type": "Organization", "name": "FIREandLIFE" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FIREandLIFE",
+    "logo": { "@type": "ImageObject", "url": "https://livefireandlife.com/assets/logo-512.png" }
+  },
+  "image": "https://livefireandlife.com/assets/401k-vs-brokerage-hero.png",
+  "datePublished": "2025-11-05",
+  "dateModified": "2025-11-05",
+  "mainEntityOfPage": "https://livefireandlife.com/blog/max-out-401k-or-brokerage/"
+}
+</script>
