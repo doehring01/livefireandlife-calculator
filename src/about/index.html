@@ -5,32 +5,72 @@ description: FIREandLife helps you pursue Financial Independence without sacrifi
 permalink: /about/
 ---
 
-<!-- Intro -->
-<section class="section" style="padding-top:1.5rem;text-align: center;">
-  <h1>About FIREandLife</h1>
-  <p style="max-width:780px;margin:.5rem 0 0;text-align: center;color:#555";>
-    We help you pursue Financial Independence (<strong>FI</strong>) without sacrificing the seasons of life that matter most.
-    That’s <strong>FlexFI</strong>: an adaptive approach to saving, investing, and spending that changes as life changes—kids,
-    career shifts, recessions, caretaking, or a well-earned break.
-  </p>
-  <p>
-  We created the <a href="/guides/investing-order-for-fi/">Investing Order for FI</a> 
-  to help people build a simple, step-by-step foundation before jumping into complex strategies.
-  </p>
+<!-- Page-scoped polish (safe: affects this page only) -->
+<style>
+  .about-hero {
+    background:#f7f7f7;
+    padding:3rem 1rem;
+    text-align:center;
+    border-top:1px solid #eee;
+    border-bottom:1px solid #eee;
+  }
+  .about-hero h1 {
+    font-size:2.2rem;
+    line-height:1.2;
+    margin:0 0 1rem;
+    color:#222;
+  }
+  .about-hero .lede {
+    max-width:900px;
+    margin:.5rem auto 0;
+    font-size:1.2rem;
+    line-height:1.75;
+    color:#444;
+  }
+  .about-hero a {
+    color:#FF6F61;                 /* brand link color */
+    text-decoration:underline;
+    text-decoration-thickness:2px;
+    text-underline-offset:2px;
+  }
+  .about-hero a:hover { color:#E65A4F; }
+  .about-hero .cta {
+    display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap;
+    margin-top:1rem;
+  }
 
+  /* Minor alignment tweaks for sections below */
+  .about-section h2 { margin-bottom:.75rem; }
+  .accordion summary { cursor:pointer; font-weight:600; }
+</style>
+
+<!-- Intro / Hero -->
+<section class="about-hero">
+  <h1>About FIREandLife</h1>
+  <p class="lede">
+    We help you pursue Financial Independence (FI) without sacrificing the seasons of life that matter most.
+    That’s FlexFI: an adaptive approach to saving, investing, and spending that changes as life changes,
+    like kids, career shifts, recessions, caretaking, or a well earned break.
+    We created the <a href="/guides/investing-order-for-fi/">Investing Order for FI</a>
+    to help people build a simple, step by step foundation before jumping into complex strategies.
+  </p>
+  <div class="cta">
+    <a class="btn" href="/guides/investing-order-for-fi/">See the FI Investing Order</a>
+    <a class="btn btn-secondary" href="/calculators/">Explore Calculators</a>
+  </div>
 </section>
 
 <!-- What is FlexFI -->
-<section class="section">
+<section class="section about-section">
   <h2>What is FlexFI?</h2>
   <div class="grid">
     <article class="card">
       <h3>Adaptive Plan</h3>
-      <p>Dial savings up or down as life evolves—without losing the long-term trajectory.</p>
+      <p>Dial savings up or down as life evolves, without losing the long term trajectory.</p>
     </article>
     <article class="card">
-      <h3>Real-World Math</h3>
-      <p>Cash-flow-first calculators (taxes, healthcare, volatility) that reflect how money actually moves.</p>
+      <h3>Real World Math</h3>
+      <p>Cash flow first calculators for taxes, healthcare, and volatility that reflect how money actually moves.</p>
     </article>
     <article class="card">
       <h3>Purpose Over Percentages</h3>
@@ -40,17 +80,17 @@ permalink: /about/
 </section>
 
 <!-- What you'll find -->
-<section class="section">
+<section class="section about-section">
   <h2>What You’ll Find Here</h2>
   <div class="grid">
     <article class="card">
       <h3>Calculators & Tools</h3>
-      <p>From take-home pay to net worth history, everything runs in your browser—no logins, no data collection.</p>
+      <p>From take home pay to net worth history, everything runs in your browser. No logins and no data collection.</p>
       <a class="btn" href="/calculators/">Explore Calculators</a>
     </article>
     <article class="card">
       <h3>Scenarios & Playbooks</h3>
-      <p>How real families navigate raises, childcare costs, market dips, and sabbaticals—step by step.</p>
+      <p>How real families navigate raises, childcare costs, market dips, and sabbaticals, step by step.</p>
       <a class="btn btn-secondary" href="/blog/">Read the Blog</a>
     </article>
     <article class="card">
@@ -62,7 +102,7 @@ permalink: /about/
 </section>
 
 <!-- FAQ -->
-<section class="section">
+<section class="section about-section">
   <h2>FAQ</h2>
   <div class="card">
     <details open class="accordion">
@@ -89,9 +129,10 @@ permalink: /about/
 <!-- Newsletter -->
 <section class="newsletter">
   <h2>Join the Newsletter</h2>
-  <p>Get new tools and practical scenarios—no spam, unsubscribe anytime.</p>
+  <p>Get new tools and practical scenarios. No spam, unsubscribe anytime.</p>
   <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
     <input type="email" name="EMAIL" placeholder="Your email address" required />
     <button type="submit">Subscribe</button>
   </form>
 </section>
+
