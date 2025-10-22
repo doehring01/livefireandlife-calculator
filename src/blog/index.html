@@ -13,12 +13,16 @@ permalink: /blog/
   .grid-cards {display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem;}
   .featured .card h3 {margin-bottom:.25rem;}
 
+  .badge {display:inline-block; font-size:.75rem; padding:.15rem .5rem; border-radius:.4rem; background:#dcfce7; color:#166534; border:1px solid #bbf7d0; }
+
   /* thumbnail cards */
   .thumb-card { display:flex; gap:.9rem; align-items:flex-start; text-decoration:none; }
-  .thumb-card img { width:96px; height:64px; object-fit:cover; border-radius:6px; flex:0 0 auto; }
+  .thumb-card img { width:120px; height:76px; object-fit:cover; border-radius:6px; flex:0 0 auto; }
   .thumb-card .meta { flex:1 1 auto; }
   .thumb-card h3 { margin:0 0 .25rem; font-size:1.05rem; line-height:1.35; }
   .thumb-card p { margin:0 0 .5rem; color:#555; font-size:.95rem; }
+  .thumb-card .subtle { color:#6b7280; font-size:.85rem; margin-top:.15rem; display:block; }
+
   @media (max-width: 520px) {
     .thumb-card { flex-direction:column; }
     .thumb-card img { width:100%; height:auto; }
@@ -28,19 +32,26 @@ permalink: /blog/
 <section class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
   <h1>FIREandLife Blog</h1>
   <p style="color:#555;margin-top:.5rem;">
-    Real scenarios, practical math, and tools for Financial Independence without losing sight of a life well-lived.
+    Real scenarios, practical math, and tools for Financial Independence—without losing sight of a life well-lived.
   </p>
 
-  <!-- Featured / newest post -->
+  <!-- Featured: THIS WEEK'S POST -->
   <section class="section featured" style="padding:1.25rem 0 0;">
-    <article class="card">
-      <h3>
-        <a href="/blog/psychology-of-fi-avoiding-burnout/">The Psychology of FI: Avoiding Burnout on the Path</a>
-      </h3>
-      <p style="color:#555;">
-        FI should feel sustainable. Use season-aware pacing, guardrails, and review rhythms so you keep momentum without flaming out before you reach freedom.
-      </p>
-      <a class="btn btn-secondary" href="/blog/psychology-of-fi-avoiding-burnout/">Read →</a>
+    <article class="card" style="display:grid;grid-template-columns:160px 1fr;gap:1rem;align-items:start;">
+      <img src="/assets/psychology-fi-hero.png?v=20251022" alt="Psychology of FI – avoiding burnout" style="width:160px;height:106px;object-fit:cover;border-radius:8px;">
+      <div>
+        <span class="badge">This week’s post</span>
+        <h3 style="margin:.35rem 0 .25rem;">
+          <a href="/blog/psychology-of-fi-avoiding-burnout/">The Psychology of FI: Avoiding Burnout on the Path</a>
+        </h3>
+        <p style="color:#555;margin:.25rem 0 .6rem;">
+          Sustainable FI isn’t about grinding forever. Use season-aware pacing, guardrails, and review rhythms to keep momentum without flaming out.
+        </p>
+        <div style="display:flex;gap:.75rem;align-items:center;">
+          <a class="btn btn-secondary" href="/blog/psychology-of-fi-avoiding-burnout/">Read →</a>
+          <span class="subtle" style="color:#6b7280;">Published <time datetime="2025-10-22">October 22, 2025</time></span>
+        </div>
+      </div>
     </article>
   </section>
 
@@ -49,62 +60,50 @@ permalink: /blog/
     <h2 style="margin-bottom:.5rem;">Recent posts</h2>
 
     <div class="grid-cards">
-      <!-- Post 1 -->
+      <!-- 401k vs Brokerage -->
       <article class="card">
         <a class="thumb-card" href="/blog/max-out-401k-or-brokerage/">
-          {% assign hero1 = "/assets/401k-vs-brokerage-hero.png" %}
-          {% if hero1 %}
-            <img src="{{ hero1 }}?v=20251105" alt="401(k) vs Brokerage hero">
-          {% endif %}
+          <img src="/assets/401k-vs-brokerage-hero.png?v=20251105" alt="401(k) vs Brokerage hero">
           <div class="meta">
             <h3>Should You Max Out Your 401(k) or Invest in a Brokerage?</h3>
-            <p>A practical way to choose between tax savings and flexibility, plus where brokerage fits in your FI plan.</p>
-            <span class="btn btn-secondary">Read →</span>
+            <p>A practical way to choose between tax savings and flexibility—plus how brokerage fits in your FI plan.</p>
+            <span class="subtle">Nov 5, 2025</span>
           </div>
         </a>
       </article>
 
-      <!-- Post 2 -->
+      <!-- Asset Allocation Through FI Stages -->
       <article class="card">
         <a class="thumb-card" href="/blog/asset-allocation-through-fi-stages/">
-          {% assign hero2 = "/assets/asset-allocation-hero.png" %}
-          {% if hero2 %}
-            <img src="{{ hero2 }}?v=202510" alt="Asset allocation through FI stages">
-          {% endif %}
+          <img src="/assets/asset-allocation-hero.png?v=202510" alt="Asset allocation through FI stages">
           <div class="meta">
             <h3>Asset Allocation Through Different FI Stages</h3>
             <p>Shift risk and glide your portfolio from early accumulation to CoastFI and beyond.</p>
-            <span class="btn btn-secondary">Read →</span>
+            <span class="subtle">Oct 15, 2025</span>
           </div>
         </a>
       </article>
 
-      <!-- Post 3 -->
+      <!-- Save More or Earn More -->
       <article class="card">
         <a class="thumb-card" href="/blog/save-more-or-earn-more/">
-          {% assign hero3 = "/assets/save-more-or-earn-more-hero.PNG" %}
-          {% if hero3 %}
-            <img src="{{ hero3 }}?v=20250924" alt="Save more or earn more">
-          {% endif %}
+          <img src="/assets/save-more-or-earn-more-hero.PNG?v=20250924" alt="Save more or earn more">
           <div class="meta">
             <h3>Save More or Earn More on the Path to FI?</h3>
             <p>When cutting spending wins, when growing income wins, and how CoastFI gives you a third option.</p>
-            <span class="btn btn-secondary">Read →</span>
+            <span class="subtle">Sep 24, 2025</span>
           </div>
         </a>
       </article>
 
-      <!-- Post 4 -->
+      <!-- Hidden Costs of FI -->
       <article class="card">
         <a class="thumb-card" href="/blog/hidden-costs-of-fi/">
-          {% assign hero4 = "/assets/hidden-costs-of-fi-hero.png" %}
-          {% if hero4 %}
-            <img src="{{ hero4 }}?v=20250917" alt="Hidden costs of FI">
-          {% endif %}
+          <img src="/assets/hidden-costs-of-fi-hero.png?v=20250917" alt="Hidden costs of FI">
           <div class="meta">
             <h3>The Hidden Costs of FI People Forget to Plan For</h3>
             <p>Healthcare, taxes, kids, and aging parents. Avoid the expenses that derail rigid plans.</p>
-            <span class="btn btn-secondary">Read →</span>
+            <span class="subtle">Sep 17, 2025</span>
           </div>
         </a>
       </article>
@@ -116,28 +115,47 @@ permalink: /blog/
     <h2 style="margin-bottom:.5rem;">Older posts</h2>
     <ul class="post-list">
       <li>
-        <a href="/blog/introducing-flexfi/">Introducing FlexFI: A More Realistic Path to FI</a>
-        <span class="post-date">2025</span>
+        <a href="/blog/why-fi-is-more-than-the-4-percent-rule/">Why FI Is More Than the 4% Rule</a>
+        <span class="post-date">Aug 5, 2025</span>
+      </li>
+      <li>
+        <a href="/blog/tracking-net-worth-simple-way/">Tracking Your Net Worth (the Simple Way)</a>
+        <span class="post-date">Aug 19, 2025</span>
+      </li>
+      <li>
+        <a href="/blog/maximize-take-home-pay/">5 Ways to Maximize Your Take-Home Pay</a>
+        <span class="post-date">Jul 28, 2025</span>
       </li>
       <li>
         <a href="/blog/balancing-fi-family/">Balancing FI with Family Life: When More Savings Means Less Time</a>
-        <span class="post-date">2025</span>
+        <span class="post-date">Jul 10, 2025</span>
       </li>
       <li>
         <a href="/blog/fi-formula-explained/">The FI Formula: Explained</a>
-        <span class="post-date">2025</span>
+        <span class="post-date">Jun 22, 2025</span>
       </li>
       <li>
         <a href="/blog/finding-purpose-on-fi/">Finding Purpose on the Path to FI</a>
-        <span class="post-date">2025</span>
+        <span class="post-date">May 18, 2025</span>
       </li>
-      <!-- Add more past posts here as your archive grows -->
+      <li>
+        <a href="/blog/retire-early-math-big-3-levers/">Retire Early Math: The Big 3 Levers</a>
+        <span class="post-date">Oct 1, 2025</span>
+      </li>
+      <li>
+        <a href="/blog/how-taxes-can-make-or-break-your-fi-plan/">How Taxes Can Make or Break Your FI Plan</a>
+        <span class="post-date">Oct 8, 2025</span>
+      </li>
+      <li>
+        <a href="/blog/introducing-flexfi/">Introducing FlexFI: A More Realistic Path to FI</a>
+        <span class="post-date">Apr 3, 2025</span>
+      </li>
     </ul>
   </section>
 
   <section class="newsletter" style="margin-top:2rem;">
     <h2>Join Our Newsletter</h2>
-    <p>Get tools, calculators, and real-world scenarios for Financial Independence without losing sight of life today.</p>
+    <p>Get tools, calculators, and real-world scenarios for Financial Independence—without losing sight of life today.</p>
     <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
       <input type="email" name="EMAIL" placeholder="Your email address" required />
       <button type="submit">Subscribe</button>
