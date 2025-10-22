@@ -25,15 +25,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          # remove "cache: 'npm'" since we have no lockfile
 
       - name: Install deps
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       - name: Build Eleventy
         env:
           NODE_ENV: production
-          # Optional: used by our absolute_url shim (safe to leave blank)
           SITE_URL: https://livefireandlife.com
         run: npx @11ty/eleventy
 
