@@ -17,14 +17,13 @@
   <main class="container">
     {{ content }}
 
-    {# ---- Support callout appears only on blog posts, not the blog index ---- #}
-    {% if page.url contains '/blog/' and page.url != '/blog/' %}
+    <!-- Support callout appears only on individual blog posts (URLs under /blog/ but not /blog/ itself) -->
+    {% if page.url and (page.url | replace:'/blog/','' ) != page.url and page.url != '/blog/' %}
       {% include "support.html" %}
     {% endif %}
   </main>
 
   {% include "footer.html" %}
-
   <script>
   (function(){
     const toggle = document.getElementById('navToggle');
