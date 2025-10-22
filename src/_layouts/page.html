@@ -6,7 +6,7 @@
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
   {% if page.description %}<meta name="description" content="{{ page.description }}"/>{% endif %}
 
-  {% seo %}
+  {% include "seo.njk" %}
 
   {%- assign bust = site.time | date: '%Y%m%d%H%M%S' -%}
   <link rel="stylesheet" href="{{ '/styles.css?v=' | append: bust | relative_url }}">
