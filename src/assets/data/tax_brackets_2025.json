@@ -1,0 +1,32 @@
+{
+  "Single": {
+    "ordinary": [
+      { "bottom": 0, "top": 11600, "rate": 0.10 },
+      { "bottom": 11600, "top": 47150, "rate": 0.12 },
+      { "bottom": 47150, "top": 100525, "rate": 0.22 },
+      { "bottom": 100525, "top": 191950, "rate": 0.24 },
+      { "bottom": 191950, "top": 243725, "rate": 0.32 },
+      { "bottom": 243725, "top": 609350, "rate": 0.35 },
+      { "bottom": 609350, "top": 1000000000000, "rate": 0.37 }
+    ],
+    "capgains": {
+      "zero_top": 47025,
+      "fifteen_top": 518900
+    }
+  },
+  "MFJ": {
+    "ordinary": [
+      { "bottom": 0, "top": 23200, "rate": 0.10 },
+      { "bottom": 23200, "top": 94300, "rate": 0.12 },
+      { "bottom": 94300, "top": 201050, "rate": 0.22 },
+      { "bottom": 201050, "top": 383900, "rate": 0.24 },
+      { "bottom": 383900, "top": 487450, "rate": 0.32 },
+      { "bottom": 487450, "top": 731200, "rate": 0.35 },
+      { "bottom": 731200, "top": 1000000000000, "rate": 0.37 }
+    ],
+    "capgains": {
+      "zero_top": 94050,
+      "fifteen_top": 583750
+    }
+  }
+}
