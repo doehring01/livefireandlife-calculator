@@ -1,75 +1,92 @@
 ---
-layout: default
+layout: page
 permalink: /blog/tracking-net-worth-simple-way/
 title: "Tracking Your Net Worth (the Simple Way)"
 description: "A lightweight method to track assets, debts, and FI-eligible dollars—plus a free tracker."
 date: 2025-08-19
-tags: [tracking, net worth]
 hero: "/assets/tracking-net-worth-hero.png"
+tags: [tracking, net worth]
 ---
 
-  <main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
-    <article>
-      <p style="color:#777;margin:0 0 .25rem 0;">Published: 2025</p>
-      <h1>Why Tracking Net Worth Is the Foundation of Financial Independence</h1>
-      <p style="color:#555;margin:.25rem 0 1rem 0;">Reading time: 3–5 minutes</p>
+<article style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+  <p style="color:#777;font-size:.9rem;">
+    Published:
+    <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%B %d, %Y" }}</time>
+  </p>
 
-      <p>If you spend time in the FIRE world, you’ll hear it often: <em>what gets measured, gets managed</em>. On the path to financial independence, the clearest metric to track is your <strong>net worth</strong>. It shows where you stand today—and whether you’re moving toward the life you want.</p>
+  <h1>Why Tracking Net Worth Is the Foundation of Financial Independence</h1>
+  {% if page.hero %}
+  <figure class="post-hero" style="margin:1rem 0;">
+    <img src="{{ page.hero }}" alt="Tracking net worth progress over time" style="max-width:100%;height:auto;border-radius:8px;">
+  </figure>
+  {% endif %}
 
-      <div class="callout">
-        <strong>Net Worth = Assets – Liabilities</strong>
-        <ul class="mini-list">
-          <li><strong>Assets:</strong> cash, brokerage, retirement accounts, HSA, property equity, etc.</li>
-          <li><strong>Liabilities:</strong> mortgage, student loans, auto loans, credit cards, etc.</li>
-        </ul>
-      </div>
+  <p style="color:#555;margin:.25rem 0 1rem 0;">Reading time: 3–5 minutes</p>
 
-      <h2>Income Isn’t the Whole Story</h2>
-      <p>A high salary can still lead to stagnation if it all disappears into lifestyle creep or debt. Net worth focuses you on what you <em>keep</em> and grow, not just what you earn.</p>
+  <p>
+    If you spend time in the FIRE world, you’ll hear it often: <em>what gets measured, gets managed</em>.
+    On the path to financial independence, the clearest metric to track is your <strong>net worth</strong>.
+    It shows where you stand today—and whether you’re moving toward the life you want.
+  </p>
 
-      <h2>How Often Should You Track?</h2>
-      <ul class="mini-list">
-        <li><strong>Monthly</strong> — great for momentum and quick course-corrections.</li>
-        <li><strong>Quarterly</strong> — smooths out market noise if month-to-month swings stress you out.</li>
-      </ul>
-      <p>The best cadence is the one you’ll actually stick with.</p>
+  <div class="callout" style="background:#f8fafc;border:1px solid #e2e8f0;padding:1rem;border-radius:.5rem;margin:1rem 0;">
+    <strong>Net Worth = Assets – Liabilities</strong>
+    <ul style="margin-top:.5rem;">
+      <li><strong>Assets:</strong> cash, brokerage, retirement accounts, HSA, property equity, etc.</li>
+      <li><strong>Liabilities:</strong> mortgage, student loans, auto loans, credit cards, etc.</li>
+    </ul>
+  </div>
 
-      <h2>Common Mistakes to Avoid</h2>
-      <ul class="mini-list">
-        <li><strong>Ignoring liabilities:</strong> a $500K house with a $450K mortgage isn’t $500K of net worth.</li>
-        <li><strong>Forgetting “lost” assets:</strong> old 401(k)s/HSAs or small accounts still count.</li>
-        <li><strong>Obsessing over one month:</strong> the long-term trend matters most.</li>
-      </ul>
+  <h2>Income Isn’t the Whole Story</h2>
+  <p>
+    A high salary can still lead to stagnation if it all disappears into lifestyle creep or debt.
+    Net worth focuses you on what you <em>keep</em> and grow, not just what you earn.
+  </p>
 
-      <h2>Start Simple (and free)</h2>
-      <p>You don’t need fancy software. A basic sheet or a lightweight tool gets you 95% of the value. We built a clean, no-frills calculator to help you begin today:</p>
-      <p>👉 <a href="/calculators/net-worth-tracker/">Use the FIREandLife Net Worth Tracker</a></p>
+  <h2>How Often Should You Track?</h2>
+  <ul>
+    <li><strong>Monthly</strong> — great for momentum and quick course-corrections.</li>
+    <li><strong>Quarterly</strong> — smooths out market noise if month-to-month swings stress you out.</li>
+  </ul>
+  <p>The best cadence is the one you’ll actually stick with.</p>
 
-      <h2>The LIFE Side of FIRE</h2>
-      <p>Tracking net worth isn’t about obsessing over a number—it’s about clarity.
-        When you know where you stand, you can make better choices about your time, work, and family.
-        FI isn’t only about retiring early; it’s about <strong>living better now</strong>.
-      </p>
+  <h2>Common Mistakes to Avoid</h2>
+  <ul>
+    <li><strong>Ignoring liabilities:</strong> a $500K house with a $450K mortgage isn’t $500K of net worth.</li>
+    <li><strong>Forgetting “lost” assets:</strong> old 401(k)s/HSAs or small accounts still count.</li>
+    <li><strong>Obsessing over one month:</strong> the long-term trend matters most.</li>
+  </ul>
 
-      <h2>Next Steps</h2>
-      <ol class="mini-list">
-        <li>Create two simple lists: <em>Assets</em> and <em>Liabilities</em>.</li>
-        <li>Pick a recurring date to update (the 1st of the month works well).</li>
-        <li>Track the trend—aim up and to the right, not perfection.</li>
-      </ol>
+  <h2>Start Simple (and free)</h2>
+  <p>
+    You don’t need fancy software. A basic sheet or a lightweight tool gets you 95% of the value.
+    We built a clean, no-frills calculator to help you begin today:
+  </p>
+  <p>👉 <a href="/calculators/net-worth-tracker/">Use the FIREandLife Net Worth Tracker</a></p>
 
-      <section class="newsletter" style="margin-top:2rem;">
-        <h2>Get tools that make this easier</h2>
-        <p>We share calculators, templates, and mindset tips to help you balance FIRE and LIFE.</p>
-        <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
-          <input type="email" name="EMAIL" placeholder="Your email address" required />
-          <button type="submit">Subscribe</button>
-        </form>
-        <p style="font-size:.85rem;color:#666;margin-top:.5rem;">For educational purposes only. Not financial, tax, or legal advice.</p>
-      </section>
-    </article>
-  </main>
+  <h2>The LIFE Side of FIRE</h2>
+  <p>
+    Tracking net worth isn’t about obsessing over a number—it’s about clarity.
+    When you know where you stand, you can make better choices about your time, work, and family.
+    FI isn’t only about retiring early; it’s about <strong>living better now</strong>.
+  </p>
 
-  {% include 'footer.html' %}
-</body>
-</html>
+  <h2>Next Steps</h2>
+  <ol>
+    <li>Create two simple lists: <em>Assets</em> and <em>Liabilities</em>.</li>
+    <li>Pick a recurring date to update (the 1st of the month works well).</li>
+    <li>Track the trend—aim up and to the right, not perfection.</li>
+  </ol>
+
+  <section class="newsletter" style="margin-top:2rem;">
+    <h2>Get tools that make this easier</h2>
+    <p>We share calculators, templates, and mindset tips to help you balance FIRE and LIFE.</p>
+    <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+      <input type="email" name="EMAIL" placeholder="Your email address" required />
+      <button type="submit">Subscribe</button>
+    </form>
+    <p style="font-size:.85rem;color:#666;margin-top:.5rem;">
+      For educational purposes only. Not financial, tax, or legal advice.
+    </p>
+  </section>
+</article>
