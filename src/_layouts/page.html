@@ -12,13 +12,13 @@
   <link rel="stylesheet" href="{{ '/styles.css?v=' | append: bust | relative_url }}">
 </head>
 <body>
-  {% include header.html %}
+  {% include "header.html" %}
 
   <main class="container">
     {{ content }}
   </main>
 
-  {% include footer.html %}
+  {% include "footer.html" %}
   <script>
 (function(){
   const toggle = document.getElementById('navToggle');
