@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 permalink: /blog/how-taxes-can-make-or-break-your-fi-plan/
 title: "How Taxes Can Make or Break Your FI Plan"
 description: "Optimize the tax triangle before and after FI—Roth ladders, 0% capital gains harvesting, bracket management, and avoiding stealth taxes."
@@ -8,69 +8,71 @@ hero: "/assets/fi-taxes-hero.png"
 tags: [taxes, strategy, withdrawal, planning]
 ---
 
-<main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
-  <article>
-    <p style="color:#777;font-size:.9rem;">Published: October 8, 2025</p>
-    <h1>How Taxes Can Make or Break Your FI Plan</h1>
+<article style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+  <p style="color:#777;font-size:.9rem;">
+    Published:
+    <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%B %d, %Y" }}</time>
+  </p>
 
-    {% if page.hero %}
-      <figure class="post-hero" style="margin:1rem 0;">
-        <img src="{{ page.hero }}?v=20251008" alt="Taxes and FI planning" style="max-width:100%;height:auto;border-radius:8px;">
-      </figure>
-    {% endif %}
+  <h1>How Taxes Can Make or Break Your FI Plan</h1>
 
-    <p class="lede">Two investors can retire with the same nest egg and live very different lives after taxes. Here’s how to plan across accounts and decades.</p>
+  {% if page.hero %}
+  <figure class="post-hero" style="margin:1rem 0;">
+    <img src="{{ page.hero }}?v=20251008" alt="Taxes and FI planning" style="max-width:100%;height:auto;border-radius:8px;">
+  </figure>
+  {% endif %}
 
-    <hr/>
+  <p class="lede">Two investors can retire with the same nest egg and live very different lives after taxes. Here’s how to plan across accounts and decades.</p>
 
-    <h2>The Tax Triangle</h2>
-    <ul>
-      <li><strong>Tax-deferred:</strong> 401(k)/403(b)/Traditional IRA/TSP — pre-tax now, taxable later.</li>
-      <li><strong>Roth:</strong> Roth IRA/401(k) — after-tax now, tax-free later.</li>
-      <li><strong>Taxable/Brokerage:</strong> Flexible access; dividends/cap gains taxed as you go.</li>
-    </ul>
+  <hr/>
 
-    <div style="background:#fff7ed;border:1px solid #fed7aa;padding:1rem;border-radius:8px;margin:1rem 0;">
-      <strong>Goal:</strong> Diversify <em>by tax treatment</em>, not just by asset class. Options = lower lifetime tax.
-    </div>
+  <h2>The Tax Triangle</h2>
+  <ul>
+    <li><strong>Tax-deferred:</strong> 401(k)/403(b)/Traditional IRA/TSP — pre-tax now, taxable later.</li>
+    <li><strong>Roth:</strong> Roth IRA/401(k) — after-tax now, tax-free later.</li>
+    <li><strong>Taxable/Brokerage:</strong> Flexible access; dividends/cap gains taxed as you go.</li>
+  </ul>
 
-    <h2>Tax “Breakers” to avoid</h2>
-    <ul>
-      <li><strong>Early withdrawal penalties</strong> for tapping pre-tax accounts before 59½ without a plan.</li>
-      <li><strong>RMD squeezes:</strong> Large pre-tax balances cause high Required Minimum Distributions later.</li>
-      <li><strong>Stealth cliffs:</strong> ACA premium loss, child credit phaseouts, Social Security taxation, NIIT, Medicare IRMAA.</li>
-    </ul>
+  <div style="background:#fff7ed;border:1px solid #fed7aa;padding:1rem;border-radius:8px;margin:1rem 0;">
+    <strong>Goal:</strong> Diversify <em>by tax treatment</em>, not just by asset class. Options = lower lifetime tax.
+  </div>
 
-    <h2>Tax “Makers” to use</h2>
-    <h3>Roth Conversion Ladder</h3>
-    <p>Convert pieces of pre-tax money to Roth in low-income years <em>before</em> RMD age. After five years, converted amounts are accessible tax- and penalty-free.</p>
+  <h2>Tax “Breakers” to avoid</h2>
+  <ul>
+    <li><strong>Early withdrawal penalties</strong> for tapping pre-tax accounts before 59½ without a plan.</li>
+    <li><strong>RMD squeezes:</strong> Large pre-tax balances cause high Required Minimum Distributions later.</li>
+    <li><strong>Stealth cliffs:</strong> ACA premium loss, child credit phaseouts, Social Security taxation, NIIT, Medicare IRMAA.</li>
+  </ul>
 
-    <h3>0% Long-Term Capital Gains Harvesting</h3>
-    <p>In low-income years, realize long-term gains up to the top of the 0% bracket, then immediately rebuy to step up basis—without changing your position.</p>
+  <h2>Tax “Makers” to use</h2>
+  <h3>Roth Conversion Ladder</h3>
+  <p>Convert pieces of pre-tax money to Roth in low-income years <em>before</em> RMD age. After five years, converted amounts are accessible tax- and penalty-free.</p>
 
-    <h3>Bracket Management</h3>
-    <ul>
-      <li>“Fill” the 12% or 22% bracket strategically with conversions.</li>
-      <li>Coordinate withdrawals across <em>all three</em> account types to keep MAGI in target ranges (e.g., to retain ACA subsidies).</li>
-      <li>Use HSAs as a stealth Roth for qualified expenses (invest, reimburse later).</li>
-    </ul>
+  <h3>0% Long-Term Capital Gains Harvesting</h3>
+  <p>In low-income years, realize long-term gains up to the top of the 0% bracket, then immediately rebuy to step up basis—without changing your position.</p>
 
-    <h2>Case study: same nest egg, different net spend</h2>
-    <p><strong>Assumptions:</strong> $1.2M total; Scenario A is 90% pre-tax, 10% taxable. Scenario B is balanced across the triangle.</p>
-    <ul>
-      <li><strong>Scenario A:</strong> High RMDs, limited flexibility; loses ACA subsidy pre-65; higher lifetime tax.</li>
-      <li><strong>Scenario B:</strong> Uses taxable + conversions to manage brackets; preserves subsidies; lower lifetime tax.</li>
-    </ul>
+  <h3>Bracket Management</h3>
+  <ul>
+    <li>“Fill” the 12% or 22% bracket strategically with conversions.</li>
+    <li>Coordinate withdrawals across <em>all three</em> account types to keep MAGI in target ranges (e.g., to retain ACA subsidies).</li>
+    <li>Use HSAs as a stealth Roth for qualified expenses (invest, reimburse later).</li>
+  </ul>
 
-    <h2>Action steps (annual rhythm)</h2>
-    <ol>
-      <li>Project next year’s income (salary, dividends, interest, realized gains).</li>
-      <li>Choose a <strong>target bracket</strong> and plan conversions/withdrawals to “fill” it.</li>
-      <li>Harvest losses to offset gains/ordinary income when appropriate.</li>
-      <li>Re-check during open enrollment (ACA/Medicare) for subsidy/IRMAA thresholds.</li>
-    </ol>
+  <h2>Case study: same nest egg, different net spend</h2>
+  <p><strong>Assumptions:</strong> $1.2M total; Scenario A is 90% pre-tax, 10% taxable. Scenario B is balanced across the triangle.</p>
+  <ul>
+    <li><strong>Scenario A:</strong> High RMDs, limited flexibility; loses ACA subsidy pre-65; higher lifetime tax.</li>
+    <li><strong>Scenario B:</strong> Uses taxable + conversions to manage brackets; preserves subsidies; lower lifetime tax.</li>
+  </ul>
 
-    <hr/>
-    <p><strong>Next in the series:</strong> <a href="/blog/asset-allocation-through-fi-stages/">Asset Allocation Through Different FI Stages</a></p>
-  </article>
-</main>
+  <h2>Action steps (annual rhythm)</h2>
+  <ol>
+    <li>Project next year’s income (salary, dividends, interest, realized gains).</li>
+    <li>Choose a <strong>target bracket</strong> and plan conversions/withdrawals to “fill” it.</li>
+    <li>Harvest losses to offset gains/ordinary income when appropriate.</li>
+    <li>Re-check during open enrollment (ACA/Medicare) for subsidy/IRMAA thresholds.</li>
+  </ol>
+
+  <hr/>
+  <p><strong>Next in the series:</strong> <a href="/blog/asset-allocation-through-fi-stages/">Asset Allocation Through Different FI Stages</a></p>
+</article>
