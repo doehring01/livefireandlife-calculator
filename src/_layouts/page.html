@@ -16,35 +16,41 @@
 
   <main class="container">
     {{ content }}
+
+    {# ---- Support callout appears only on blog posts, not the blog index ---- #}
+    {% if page.url contains '/blog/' and page.url != '/blog/' %}
+      {% include "support.html" %}
+    {% endif %}
   </main>
 
   {% include "footer.html" %}
+
   <script>
-(function(){
-  const toggle = document.getElementById('navToggle');
-  const menu   = document.getElementById('navMenu');
-  if(!toggle || !menu) return;
+  (function(){
+    const toggle = document.getElementById('navToggle');
+    const menu   = document.getElementById('navMenu');
+    if(!toggle || !menu) return;
 
-  function setOpen(open){
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    menu.classList.toggle('is-open', open);
-    document.body.classList.toggle('nav-open', open);
-  }
+    function setOpen(open){
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menu.classList.toggle('is-open', open);
+      document.body.classList.toggle('nav-open', open);
+    }
 
-  toggle.addEventListener('click', () => {
-    const open = toggle.getAttribute('aria-expanded') === 'true';
-    setOpen(!open);
-  });
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      setOpen(!open);
+    });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
-  });
-  document.addEventListener('click', (e) => {
-    if (toggle.getAttribute('aria-expanded') === 'true' &&
-        !menu.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
-  });
-})();
-</script>
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
+    });
+    document.addEventListener('click', (e) => {
+      if (toggle.getAttribute('aria-expanded') === 'true' &&
+          !menu.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
+    });
+  })();
+  </script>
 </body>
 </html>
