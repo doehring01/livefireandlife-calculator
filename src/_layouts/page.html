@@ -17,10 +17,13 @@
   <main class="container">
     {{ content }}
 
-    <!-- Support callout appears only on individual blog posts (URLs under /blog/ but not /blog/ itself) -->
-    {% if page.url and (page.url | replace:'/blog/','' ) != page.url and page.url != '/blog/' %}
-      {% include "support.html" %}
-    {% endif %}
+    <!-- Show support box on blog posts under /blog/, but not on /blog/ index -->
+    {%- if page.url -%}
+      {%- assign url_prefix = page.url | slice: 0, 6 -%} {# '/blog/' is 6 chars #}
+      {%- if url_prefix == '/blog/' and page.url != '/blog/' -%}
+        {% include "support.html" %}
+      {%- endif -%}
+    {%- endif -%}
   </main>
 
   {% include "footer.html" %}
