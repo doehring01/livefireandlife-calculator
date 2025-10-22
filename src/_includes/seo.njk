@@ -1,0 +1,18 @@
+{# Simple SEO meta tags for Eleventy/Nunjucks #}
+{% set siteUrl = (site and site.url) or "" %}
+{% set pageUrl = (page and page.url) or "" %}
+{% set pageTitle = title or (site and site.title) or "Live FIRE and LIFE" %}
+{% set pageDesc = description or "Smarter, flexible financial independence planning." %}
+
+<title>{{ pageTitle }}</title>
+<meta name="description" content="{{ pageDesc }}">
+<link rel="canonical" href="{{ siteUrl }}{{ pageUrl }}">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ pageTitle }}">
+<meta property="og:description" content="{{ pageDesc }}">
+<meta property="og:url" content="{{ siteUrl }}{{ pageUrl }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ pageTitle }}">
+<meta name="twitter:description" content="{{ pageDesc }}">
