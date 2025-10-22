@@ -3,7 +3,7 @@ module.exports = function(eleventyConfig) {
   // --- Static assets
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
-  // --- Jekyll compatibility shims
+  // --- Jekyll compatibility shims (so old templates with |relative_url / |absolute_url keep working)
   eleventyConfig.addFilter("relative_url", (value) => {
     if (!value) return value;
     // collapse accidental double slashes but keep protocol slashes
@@ -25,9 +25,9 @@ module.exports = function(eleventyConfig) {
       layouts: "_layouts",
       output: "dist"
     },
-    // Enable BOTH Liquid and Nunjucks so includes like seo.njk work
-    htmlTemplateEngine: ["liquid", "njk"],
-    markdownTemplateEngine: ["liquid", "njk"],
+    // Keep Liquid as the engine; njk files won’t be included from Liquid anyway.
+    htmlTemplateEngine: "liquid",
+    markdownTemplateEngine: "liquid",
     dataTemplateEngine: false
   };
 };
