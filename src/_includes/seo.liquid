@@ -1,0 +1,33 @@
+{%- assign page_title = page.title | default: site.title -%}
+<title>{{ page_title }}</title>
+
+{%- if page.description -%}
+<meta name="description" content="{{ page.description | escape }}">
+{%- endif -%}
+
+{%- comment -%}
+  Build canonical from site.url + page.url if site.url is set (optional in your config)
+{%- endcomment -%}
+{%- if site.url and page.url -%}
+  {%- assign canonical = site.url | append: page.url -%}
+  <link rel="canonical" href="{{ canonical }}">
+  <meta property="og:url" content="{{ canonical }}">
+{%- endif -%}
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{ page_title }}">
+{%- if page.description -%}
+<meta property="og:description" content="{{ page.description | escape }}">
+{%- endif -%}
+{%- if site.url and page.hero -%}
+<meta property="og:image" content="{{ site.url }}{{ page.hero }}">
+{%- endif -%}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page_title }}">
+{%- if page.description -%}
+<meta name="twitter:description" content="{{ page.description | escape }}">
+{%- endif -%}
+{%- if site.url and page.hero -%}
+<meta name="twitter:image" content="{{ site.url }}{{ page.hero }}">
+{%- endif -%}
