@@ -4,6 +4,7 @@ url: https://livefireandlife.com
 baseurl: ""                # at domain root
 permalink: /:categories/:title/
 markdown: kramdown
+buymeacoffee: "https://buymeacoffee.com/FIREandLIFE"
 
 # --- Tell Jekyll where your site actually lives
 source: src                # look inside /src for pages
