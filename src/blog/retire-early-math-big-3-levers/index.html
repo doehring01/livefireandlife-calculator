@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 permalink: /blog/retire-early-math-big-3-levers/
 title: "Retire Early Math: The Big 3 Levers"
 description: "The three variables that drive time to FI—savings rate, returns, and spending—and how to choose the lever that fits your life."
@@ -8,99 +8,104 @@ hero: "/assets/retire-early-math-hero.png"
 tags: [math, savings, investing, planning]
 ---
 
-<main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
-  <article>
-    <p style="color:#777;font-size:.9rem;">Published: October 1, 2025</p>
-    <h1>Retire Early Math: The Big 3 Levers</h1>
+<article style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+  <p style="color:#777;font-size:.9rem;">
+    Published:
+    <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%B %d, %Y" }}</time>
+  </p>
 
-    {% if page.hero %}
-      <figure class="post-hero" style="margin:1rem 0;">
-        <img src="{{ page.hero }}?v=20251001" alt="The big 3 levers of FI math" style="max-width:100%;height:auto;border-radius:8px;">
-      </figure>
-    {% endif %}
+  <h1>Retire Early Math: The Big 3 Levers</h1>
 
-    <p class="lede">FI math can look complex, but nearly everything boils down to three variables you can actually control (or at least influence). Learn how to use them without turning your life into an optimization contest.</p>
+  {% if page.hero %}
+  <figure class="post-hero" style="margin:1rem 0;">
+    <img src="{{ page.hero }}?v=20251001" alt="The big 3 levers of FI math" style="max-width:100%;height:auto;border-radius:8px;">
+  </figure>
+  {% endif %}
 
-    <hr/>
+  <p class="lede">
+    FI math can look complex, but nearly everything boils down to three variables you can actually control (or at least influence).
+    Learn how to use them without turning your life into an optimization contest.
+  </p>
 
-    <h2>The 3 Levers (and what they really mean)</h2>
-    <ol>
-      <li><strong>Savings Rate:</strong> The percent of take-home pay you keep. It determines <em>how much</em> you invest and how fast your nest egg compounds.</li>
-      <li><strong>Investment Returns:</strong> The growth rate of your investments after fees and taxes.</li>
-      <li><strong>Spending Level:</strong> Your annual expenses now and in retirement; the “denominator” of your FI number.</li>
-    </ol>
+  <hr/>
 
-    <div style="background:#f8fafc;padding:1rem;border:1px solid #e5e7eb;border-radius:.5rem;margin:1rem 0;">
-      <strong>Rule of thumb:</strong> Every permanent $1 cut from annual spending reduces your FI target by about $25 (assuming a 4% initial withdrawal rate).
-    </div>
+  <h2>The 3 Levers (and what they really mean)</h2>
+  <ol>
+    <li><strong>Savings Rate:</strong> The percent of take-home pay you keep. It determines <em>how much</em> you invest and how fast your nest egg compounds.</li>
+    <li><strong>Investment Returns:</strong> The growth rate of your investments after fees and taxes.</li>
+    <li><strong>Spending Level:</strong> Your annual expenses now and in retirement; the “denominator” of your FI number.</li>
+  </ol>
 
-    <h2>Lever 1 — Savings Rate (the speed lever)</h2>
-    <p>Early on, your <em>contributions</em> matter more than returns. Jumping from a 15% to 40% savings rate often cuts your timeline by years—without needing heroic returns.</p>
+  <div style="background:#f8fafc;padding:1rem;border:1px solid #e5e7eb;border-radius:.5rem;margin:1rem 0;">
+    <strong>Rule of thumb:</strong> Every permanent $1 cut from annual spending reduces your FI target by about $25 (assuming a 4% initial withdrawal rate).
+  </div>
 
-    <h3>Illustrative timelines (assuming 5% real returns)</h3>
-    <div class="table-wrap" style="overflow-x:auto;">
-      <table style="width:100%;border-collapse:collapse;">
-        <thead>
-          <tr>
-            <th style="text-align:left;border-bottom:1px solid #e5e7eb;padding:.5rem;">Savings Rate</th>
-            <th style="text-align:left;border-bottom:1px solid #e5e7eb;padding:.5rem;">Years to FI</th>
-            <th style="text-align:left;border-bottom:1px solid #e5e7eb;padding:.5rem;">What it feels like</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">15%</td>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">~30–32 yrs</td>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">Slow and steady; lifestyle mostly unchanged</td>
-          </tr>
-          <tr>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">40%</td>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">~16–18 yrs</td>
-            <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">Intentional tradeoffs and automation</td>
-          </tr>
-          <tr>
-            <td style="padding:.5rem;">60%</td>
-            <td style="padding:.5rem;">~10–12 yrs</td>
-            <td style="padding:.5rem;">Lean but purposeful; often dual-income advantage</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <h2>Lever 1 — Savings Rate (the speed lever)</h2>
+  <p>Early on, your <em>contributions</em> matter more than returns. Jumping from a 15% to 40% savings rate often cuts your timeline by years—without needing heroic returns.</p>
 
-    <p><em>Tip:</em> Automate contributions on payday; treat raises as fuel (increase savings % before lifestyle).</p>
+  <h3>Illustrative timelines (assuming 5% real returns)</h3>
+  <div class="table-wrap" style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th style="text-align:left;border-bottom:1px solid #e5e7eb;padding:.5rem;">Savings Rate</th>
+          <th style="text-align:left;border-bottom:1px solid #e5e7eb;padding:.5rem;">Years to FI</th>
+          <th style="text-align:left;border-bottom:1px solid #e5e7eb;padding:.5rem;">What it feels like</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">15%</td>
+          <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">~30–32 yrs</td>
+          <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">Slow and steady; lifestyle mostly unchanged</td>
+        </tr>
+        <tr>
+          <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">40%</td>
+          <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">~16–18 yrs</td>
+          <td style="padding:.5rem;border-bottom:1px solid #f1f5f9;">Intentional tradeoffs and automation</td>
+        </tr>
+        <tr>
+          <td style="padding:.5rem;">60%</td>
+          <td style="padding:.5rem;">~10–12 yrs</td>
+          <td style="padding:.5rem;">Lean but purposeful; often dual-income advantage</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    <h2>Lever 2 — Investment Returns (the patience lever)</h2>
-    <p>Chasing returns can backfire. For most households, broad, low-cost index funds + enough time beats hot-hand hunting. Focus on <strong>costs, taxes, and staying invested</strong>.</p>
-    <ul>
-      <li>Use tax-advantaged accounts first (401(k)/403(b)/TSP, IRA, HSA).</li>
-      <li>Prefer diversified index funds/ETFs with low fees and high tax efficiency.</li>
-      <li>Match risk to stage (see our Asset Allocation post in this series).</li>
-    </ul>
+  <p><em>Tip:</em> Automate contributions on payday; treat raises as fuel (increase savings % before lifestyle).</p>
 
-    <h2>Lever 3 — Spending (the denominator lever)</h2>
-    <p>Your target is roughly <code>Annual Spending × ~25</code> (for a 4% starting withdrawal). Cutting spending by $10,000/year reduces your FI target by ~$250,000—<em>instantly</em>.</p>
-    <ul>
-      <li>Audit recurring costs (insurance, subscriptions, telecom, utilities).</li>
-      <li>Right-size housing and vehicles; these dominate most budgets.</li>
-      <li>Design for joy: cut low-value spend, protect high-value life.</li>
-    </ul>
+  <h2>Lever 2 — Investment Returns (the patience lever)</h2>
+  <p>Chasing returns can backfire. For most households, broad, low-cost index funds + enough time beats hot-hand hunting. Focus on <strong>costs, taxes, and staying invested</strong>.</p>
+  <ul>
+    <li>Use tax-advantaged accounts first (401(k)/403(b)/TSP, IRA, HSA).</li>
+    <li>Prefer diversified index funds/ETFs with low fees and high tax efficiency.</li>
+    <li>Match risk to stage (see our Asset Allocation post in this series).</li>
+  </ul>
 
-    <h2>Putting it together — sample scenarios</h2>
-    <h3>Two families, same income ($140k take-home), different levers</h3>
-    <ul>
-      <li><strong>Family A — Savings-first:</strong> 50% savings ($70k/yr), moderate lifestyle. Time to FI ≈ 14–16 yrs.</li>
-      <li><strong>Family B — Spending reset:</strong> Drop spend from $90k → $60k; FI target falls by ~$750k; time to FI shrinks even with 35% savings.</li>
-    </ul>
+  <h2>Lever 3 — Spending (the denominator lever)</h2>
+  <p>Your target is roughly <code>Annual Spending × ~25</code> (for a 4% starting withdrawal). Cutting spending by $10,000/year reduces your FI target by ~$250,000—<em>instantly</em>.</p>
+  <ul>
+    <li>Audit recurring costs (insurance, subscriptions, telecom, utilities).</li>
+    <li>Right-size housing and vehicles; these dominate most budgets.</li>
+    <li>Design for joy: cut low-value spend, protect high-value life.</li>
+  </ul>
 
-    <h2>Action checklist</h2>
-    <ul>
-      <li>Pick <strong>one primary lever</strong> to lean on this year (savings, returns, or spending).</li>
-      <li>Set an automation: raise contributions by +1–2% each quarter.</li>
-      <li>Commit to a once-per-year allocation review (not weekly tinkering).</li>
-      <li>Define “enough” for your life—then align spend around that.</li>
-    </ul>
+  <h2>Putting it together — sample scenarios</h2>
+  <h3>Two families, same income ($140k take-home), different levers</h3>
+  <ul>
+    <li><strong>Family A — Savings-first:</strong> 50% savings ($70k/yr), moderate lifestyle. Time to FI ≈ 14–16 yrs.</li>
+    <li><strong>Family B — Spending reset:</strong> Drop spend from $90k → $60k; FI target falls by ~$750k; time to FI shrinks even with 35% savings.</li>
+  </ul>
 
-    <hr/>
-    <p><strong>Next in the series:</strong> <a href="/blog/how-taxes-can-make-or-break-your-fi-plan/">How Taxes Can Make or Break Your FI Plan</a></p>
-  </article>
-</main>
+  <h2>Action checklist</h2>
+  <ul>
+    <li>Pick <strong>one primary lever</strong> to lean on this year (savings, returns, or spending).</li>
+    <li>Set an automation: raise contributions by +1–2% each quarter.</li>
+    <li>Commit to a once-per-year allocation review (not weekly tinkering).</li>
+    <li>Define “enough” for your life—then align spend around that.</li>
+  </ul>
+
+  <hr/>
+  <p><strong>Next in the series:</strong> <a href="/blog/how-taxes-can-make-or-break-your-fi-plan/">How Taxes Can Make or Break Your FI Plan</a></p>
+</article>
