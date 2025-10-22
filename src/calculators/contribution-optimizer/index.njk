@@ -1,0 +1,87 @@
+---
+layout: page
+title: FI Contribution Optimizer (Brokerage vs 401k)
+description: Find the best split between Traditional 401k, Roth 401k, and Brokerage to maximize after-tax wealth.
+permalink: /calculators/contribution-optimizer/
+---
+
+<section class="container" style="max-width:980px;margin:2rem auto;padding:0 1rem;">
+  <h1>FI Contribution Optimization Calculator</h1>
+  <p>Allocate your annual savings between Traditional 401k, Roth 401k, and Brokerage to reduce taxes now and grow more after-tax wealth for retirement.</p>
+
+  <form id="calc-form" class="grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+    <div>
+      <label>Filing Status</label>
+      <select id="filingStatus"><option>Single</option><option>MFJ</option></select>
+    </div>
+    <div>
+      <label>Age</label>
+      <input id="age" type="number" min="18" value="35">
+    </div>
+    <div>
+      <label>W2 Wages ($)</label>
+      <input id="wages" type="number" value="150000">
+    </div>
+    <div>
+      <label>Other Ordinary Income ($)</label>
+      <input id="otherOrd" type="number" value="0">
+    </div>
+    <div>
+      <label>Qualified Dividends ($)</label>
+      <input id="qdiv" type="number" value="0">
+    </div>
+    <div>
+      <label>LT Capital Gains ($)</label>
+      <input id="ltcg" type="number" value="0">
+    </div>
+
+    <div style="grid-column:1/-1">
+      <label>Employer Match Policy (simple)</label>
+      <input id="matchPolicy" type="text" value="100% up to 3%; 50% of next 2%">
+      <small>We’ll approximate: match dollars follow pre-tax rules.</small>
+    </div>
+    <div>
+      <label>Annual Savings Budget ($)</label>
+      <input id="savings" type="number" value="36000">
+    </div>
+    <div>
+      <label>401k Available</label>
+      <select id="planTypes"><option>Traditional & Roth</option></select>
+    </div>
+
+    <div>
+      <label>Return (nominal) %</label>
+      <input id="rNom" type="number" step="0.1" value="6.0">
+    </div>
+    <div>
+      <label>Brokerage Dividend Yield %</label>
+      <input id="divYield" type="number" step="0.1" value="1.8">
+    </div>
+
+    <div>
+      <label>Years to Retirement</label>
+      <input id="yearsToRet" type="number" value="25">
+    </div>
+    <div>
+      <label>Retirement Marginal Rate (Trad w/d) %</label>
+      <input id="retOrdRate" type="number" step="0.1" value="15">
+    </div>
+    <div>
+      <label>Retirement LTCG Rate (Brokerage) %</label>
+      <input id="retCGRate" type="number" step="0.1" value="15">
+    </div>
+
+    <div style="grid-column:1/-1;margin-top:1rem;">
+      <button class="btn btn-primary" type="button" id="runBtn">Find Optimal Split</button>
+    </div>
+  </form>
+
+  <hr style="margin:2rem 0;">
+
+  <div id="callouts"></div>
+  <canvas id="chartOut" style="margin:1.5rem 0;"></canvas>
+  <div id="resultsTable" style="overflow:auto;margin-top:1rem;"></div>
+</section>
+
+<script src="/assets/js/chart.umd.min.js"></script>
+<script type="module" src="/calculators/contribution-optimizer/app.js"></script>
