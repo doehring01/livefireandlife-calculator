@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 permalink: /blog/introducing-flexfi/
 title: "Introducing FlexFI: A More Realistic Path to FI"
 description: "Multiple routes that split and rejoin—FlexFI adapts to career, family, and rest."
@@ -8,53 +8,57 @@ tags: [flexfi, planning]
 hero: "/assets/introducing-flexfi-hero.png"
 ---
 
-  <main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
-    <article>
-      <header>
-        <h1>Introducing FlexFI: A More Realistic Path to Financial Independence</h1>
-        <p style="color:#777;font-size:.9rem;">Published <time datetime="2025-08-16">August 16, 2025</time></p>
-      </header>
+<article style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+  <header>
+    <h1>Introducing FlexFI: A More Realistic Path to Financial Independence</h1>
+    <p style="color:#777;font-size:.9rem;">
+      Published
+      <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%B %d, %Y" }}</time>
+    </p>
+  </header>
 
-      <p>Traditional FI advice often assumes a straight line: set a high savings rate, invest consistently, then wait for compounding to carry you across the finish line. But real life isn’t linear. Costs rise, kids arrive, parents age, health changes, and careers zig-zag.</p>
+  {% if page.hero %}
+  <figure class="post-hero" style="margin:1rem 0;">
+    <img src="{{ page.hero }}" alt="Introducing FlexFI concept illustration" style="max-width:100%;height:auto;border-radius:8px;">
+  </figure>
+  {% endif %}
 
-      <p><strong>FlexFI</strong> is a simple idea: keep your long-term FI goal, but adjust the plan to fit the stage of life you’re in. It’s FI with seasons—strategic when you can be, flexible when you need to be.</p>
+  <p>Traditional FI advice often assumes a straight line: set a high savings rate, invest consistently, then wait for compounding to carry you across the finish line. But real life isn’t linear. Costs rise, kids arrive, parents age, health changes, and careers zig-zag.</p>
 
-      <h2>FlexFI in practice</h2>
-      <ul>
-        <li><strong>Early career:</strong> push savings rates higher while expenses are lighter.</li>
-        <li><strong>Raising kids / HCOL:</strong> tune contributions down if cash flow is tight; keep the employer match and high-ROI pre-tax accounts (401k/HSA) if possible.</li>
-        <li><strong>Caregiving / transitions:</strong> maintain liquidity and reduce volatility; revisit annually.</li>
-        <li><strong>Empty nest / higher earning years:</strong> dial contributions up again to accelerate the FI date.</li>
-      </ul>
+  <p><strong>FlexFI</strong> is a simple idea: keep your long-term FI goal, but adjust the plan to fit the stage of life you’re in. It’s FI with seasons—strategic when you can be, flexible when you need to be.</p>
 
-      <h2>There’s no single “right” number</h2>
-      <p>Every extra % into a 401(k) lowers taxable income—great. But it can also squeeze your monthly budget when housing, childcare, or eldercare costs surge. The right answer today may be different from the right answer next year.</p>
+  <h2>FlexFI in practice</h2>
+  <ul>
+    <li><strong>Early career:</strong> push savings rates higher while expenses are lighter.</li>
+    <li><strong>Raising kids / HCOL:</strong> tune contributions down if cash flow is tight; keep the employer match and high-ROI pre-tax accounts (401k/HSA) if possible.</li>
+    <li><strong>Caregiving / transitions:</strong> maintain liquidity and reduce volatility; revisit annually.</li>
+    <li><strong>Empty nest / higher earning years:</strong> dial contributions up again to accelerate the FI date.</li>
+  </ul>
 
-      <div class="card">
-        <h3>Run your own numbers</h3>
-        <p>Use the <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> to compare different contribution levels and see the impact on your cash flow. Then revisit quarterly as life evolves.</p>
-        <p>Want the big picture? Read the evergreen explainer: <a href="/flexfi/">What is FlexFI?</a></p>
-      </div>
+  <h2>There’s no single “right” number</h2>
+  <p>Every extra % into a 401(k) lowers taxable income—great. But it can also squeeze your monthly budget when housing, childcare, or eldercare costs surge. The right answer today may be different from the right answer next year.</p>
 
-      <h2>How FlexFI fits with other FI “flavors”</h2>
-      <p>Lean FI, Coast FI, and Barista FI describe endpoints or modes. FlexFI describes the <em>path</em>: adjusting your plan between these modes as your priorities shift.</p>
+  <div class="card" style="margin:1rem 0;">
+    <h3>Run your own numbers</h3>
+    <p>Use the <a href="/calculators/take-home-pay/">Take-Home Pay Calculator</a> to compare different contribution levels and see the impact on your cash flow. Then revisit quarterly as life evolves.</p>
+    <p>Want the big picture? Read the evergreen explainer: <a href="/flexfi/">What is FlexFI?</a></p>
+  </div>
 
-      <h2>Final thought</h2>
-      <p>FlexFI is permission to adapt without feeling like you’ve failed at FI. It’s not about doing less—it’s about doing the right thing for the season you’re in while still moving toward independence.</p>
+  <h2>How FlexFI fits with other FI “flavors”</h2>
+  <p>Lean FI, Coast FI, and Barista FI describe endpoints or modes. FlexFI describes the <em>path</em>: adjusting your plan between these modes as your priorities shift.</p>
 
-      <p><em>Next up: we’ll share real scenarios from readers (anonymized) and show how FlexFI decisions changed their timelines and day-to-day life.</em></p>
-    </article>
+  <h2>Final thought</h2>
+  <p>FlexFI is permission to adapt without feeling like you’ve failed at FI. It’s not about doing less—it’s about doing the right thing for the season you’re in while still moving toward independence.</p>
 
-    <section class="section" style="padding:1.5rem 0 0;">
-      <h2>Related reads</h2>
-      <ul>
-        <li><a href="/blog/balancing-fi-family/">Balancing FI with Family Life: When More Savings Means Less Time</a></li>
-        <li><a href="/blog/fi-formula-explained/">The FI Formula: Explained</a></li>
-        <li><a href="/blog/maximize-take-home-pay/">5 Ways to Maximize Your Take-Home Pay</a></li>
-      </ul>
-    </section>
-  </main>
+  <p><em>Next up: we’ll share real scenarios from readers (anonymized) and show how FlexFI decisions changed their timelines and day-to-day life.</em></p>
 
-  {% include 'footer.html' %}
-</body>
-</html>
+  <!-- Related links -->
+  <section class="section" style="padding:1.5rem 0 0;">
+    <h2>Related reads</h2>
+    <ul>
+      <li><a href="/blog/balancing-fi-family/">Balancing FI with Family Life: When More Savings Means Less Time</a></li>
+      <li><a href="/blog/fi-formula-explained/">The FI Formula: Explained</a></li>
+      <li><a href="/blog/maximize-take-home-pay/">5 Ways to Maximize Your Take-Home Pay</a></li>
+    </ul>
+  </section>
+</article>
