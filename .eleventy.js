@@ -6,7 +6,8 @@ module.exports = function(eleventyConfig) {
   // --- Jekyll compatibility shims
   eleventyConfig.addFilter("relative_url", (value) => {
     if (!value) return value;
-    return value.replace(/([^:]\/)\/+/g, "$1"); // collapse accidental double slashes
+    // collapse accidental double slashes but keep protocol slashes
+    return value.replace(/([^:]\/)\/+/g, "$1");
   });
 
   const SITE_URL = process.env.SITE_URL || ""; // e.g. https://livefireandlife.com
@@ -24,8 +25,9 @@ module.exports = function(eleventyConfig) {
       layouts: "_layouts",
       output: "dist"
     },
-    htmlTemplateEngine: "liquid",
-    markdownTemplateEngine: "liquid",
+    // Enable BOTH Liquid and Nunjucks so includes like seo.njk work
+    htmlTemplateEngine: ["liquid", "njk"],
+    markdownTemplateEngine: ["liquid", "njk"],
     dataTemplateEngine: false
   };
 };
