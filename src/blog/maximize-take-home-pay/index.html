@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 permalink: /blog/maximize-take-home-pay/
 title: "5 Ways to Maximize Your Take-Home Pay"
 description: "Practical levers to increase real income: benefits, withholding, and contribution strategy."
@@ -11,7 +11,8 @@ hero: "/assets/maximize-take-home-pay-hero.png"
 <article style="max-width:800px;margin:2rem auto;padding:0 1rem;">
   <header>
     <p style="color:#777;font-size:.9rem;">
-      Published <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+      Published
+      <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%B %d, %Y" }}</time>
     </p>
     <h1>{{ page.title }}</h1>
     {% if page.hero %}
