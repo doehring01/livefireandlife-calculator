@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {% include head.html %}
+  {% include "head.html" %}
   <title>{% if page.title %}{{ page.title }} • {% endif %}FIREandLife</title>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
@@ -19,13 +19,13 @@
   {%- endif -%}
 </head>
 <body>
-  {% include header.html %}
+  {% include "header.html" %}
 
   <main class="container">
     {{ content }}
   </main>
 
-  {% include footer.html %}
+  {% include "footer.html" %}
 
   {%- if page.extra_js -%}
     {%- for src in page.extra_js -%}
