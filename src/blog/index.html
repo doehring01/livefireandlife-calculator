@@ -6,12 +6,23 @@ permalink: /blog/
 ---
 
 <style>
-  /* tiny helpers for the list archive */
-  .post-list {margin: 0; padding: 0; list-style: none;}
+  /* Page-scoped helpers */
+  .post-list {margin:0; padding:0; list-style:none;}
   .post-list li {display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0; border-bottom:1px solid #eef2f7;}
-  .post-list a {text-decoration:none;}
   .post-date {color:#64748b; white-space:nowrap;}
   .grid-cards {display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem;}
+  .featured .card h3 {margin-bottom:.25rem;}
+
+  /* thumbnail cards */
+  .thumb-card { display:flex; gap:.9rem; align-items:flex-start; }
+  .thumb-card img { width:96px; height:64px; object-fit:cover; border-radius:6px; flex:0 0 auto; }
+  .thumb-card .meta { flex:1 1 auto; }
+  .thumb-card h3 { margin:0 0 .25rem; font-size:1.05rem; line-height:1.35; }
+  .thumb-card p { margin:0 0 .5rem; color:#555; font-size:.95rem; }
+  @media (max-width: 520px) {
+    .thumb-card { flex-direction:column; }
+    .thumb-card img { width:100%; height:auto; }
+  }
 </style>
 
 <section class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
@@ -21,58 +32,86 @@ permalink: /blog/
   </p>
 
   <!-- Featured / newest post -->
-  <section class="section" style="padding:1.25rem 0 0;">
+  <section class="section featured" style="padding:1.25rem 0 0;">
     <article class="card">
-      <h3 style="margin-bottom:.25rem;">
-        <a href="/blog/asset-allocation-through-fi-stages/">Asset Allocation Through Different FI Stages</a>
+      <h3>
+        <a href="/blog/psychology-of-fi-avoiding-burnout/">The Psychology of FI: Avoiding Burnout on the Path</a>
       </h3>
       <p style="color:#555;">
-        A pragmatic glide path from early accumulation to retirement withdrawals—buckets, buffers, and rebalancing rules that actually hold up in real life.
+        FI should feel sustainable. Use season-aware pacing, guardrails, and review rhythms so you keep momentum without flaming out before you reach freedom.
       </p>
-      <a class="btn btn-secondary" href="/blog/asset-allocation-through-fi-stages/">Read →</a>
+      <a class="btn btn-secondary" href="/blog/psychology-of-fi-avoiding-burnout/">Read →</a>
     </article>
   </section>
 
-  <!-- Recent posts -->
+  <!-- Recent posts with thumbnails -->
   <section class="section" style="padding:1.25rem 0;">
     <h2 style="margin-bottom:.5rem;">Recent posts</h2>
 
     <div class="grid-cards">
+      <!-- Post 1 -->
       <article class="card">
-        <h3 style="margin-bottom:.25rem;">
-          <a href="/blog/how-taxes-can-make-or-break-your-fi-plan/">How Taxes Can Make or Break Your FI Plan</a>
-        </h3>
-        <p style="color:#555;">Optimize the tax triangle before and after FI—Roth ladders, 0% capital gains harvesting, and smart bracket management.</p>
-        <a class="btn btn-secondary" href="/blog/how-taxes-can-make-or-break-your-fi-plan/">Read →</a>
+        <a class="thumb-card" href="/blog/max-out-401k-or-brokerage/">
+          {% assign hero1 = "/assets/401k-vs-brokerage-hero.png" %}
+          {% if hero1 %}
+            <img src="{{ hero1 }}?v=20251105" alt="401(k) vs Brokerage hero">
+          {% endif %}
+          <div class="meta">
+            <h3>Should You Max Out Your 401(k) or Invest in a Brokerage?</h3>
+            <p>A practical way to choose between tax savings and flexibility, plus where brokerage fits in your FI plan.</p>
+            <span class="btn btn-secondary">Read →</span>
+          </div>
+        </a>
       </article>
 
+      <!-- Post 2 -->
       <article class="card">
-        <h3 style="margin-bottom:.25rem;">
-          <a href="/blog/retire-early-math-big-3-levers/">Retire Early Math: The Big 3 Levers</a>
-        </h3>
-        <p style="color:#555;">The three core variables—savings rate, investment returns, and spending—that truly control your FI timeline.</p>
-        <a class="btn btn-secondary" href="/blog/retire-early-math-big-3-levers/">Read →</a>
+        <a class="thumb-card" href="/blog/asset-allocation-through-fi-stages/">
+          {% assign hero2 = "/assets/asset-allocation-fi-stages-hero.png" %}
+          {% if hero2 %}
+            <img src="{{ hero2 }}?v=202510" alt="Asset allocation through FI stages">
+          {% endif %}
+          <div class="meta">
+            <h3>Asset Allocation Through Different FI Stages</h3>
+            <p>Shift risk and glide your portfolio from early accumulation to CoastFI and beyond.</p>
+            <span class="btn btn-secondary">Read →</span>
+          </div>
+        </a>
       </article>
 
+      <!-- Post 3 -->
       <article class="card">
-        <h3 style="margin-bottom:.25rem;">
-          <a href="/blog/save-more-or-earn-more/">Save More or Earn More on the Path to FI?</a>
-        </h3>
-        <p style="color:#555;">Which lever really moves the needle—and how Coast FI creates a flexible third path.</p>
-        <a class="btn btn-secondary" href="/blog/save-more-or-earn-more/">Read →</a>
+        <a class="thumb-card" href="/blog/save-more-or-earn-more/">
+          {% assign hero3 = "/assets/save-more-or-earn-more-hero.PNG" %}
+          {% if hero3 %}
+            <img src="{{ hero3 }}?v=20250924" alt="Save more or earn more">
+          {% endif %}
+          <div class="meta">
+            <h3>Save More or Earn More on the Path to FI?</h3>
+            <p>When cutting spending wins, when growing income wins, and how CoastFI gives you a third option.</p>
+            <span class="btn btn-secondary">Read →</span>
+          </div>
+        </a>
       </article>
 
+      <!-- Post 4 -->
       <article class="card">
-        <h3 style="margin-bottom:.25rem;">
-          <a href="/blog/hidden-costs-of-fi/">The Hidden Costs of FI People Forget to Plan For</a>
-        </h3>
-        <p style="color:#555;">Healthcare, taxes, kids, and aging parents — discover the overlooked costs that can derail your FI plan if ignored.</p>
-        <a class="btn btn-secondary" href="/blog/hidden-costs-of-fi/">Read →</a>
+        <a class="thumb-card" href="/blog/hidden-costs-of-fi/">
+          {% assign hero4 = "/assets/hidden-costs—fi-hero.PNG" %}
+          {% if hero4 %}
+            <img src="{{ hero4 }}?v=20250917" alt="Hidden costs of FI">
+          {% endif %}
+          <div class="meta">
+            <h3>The Hidden Costs of FI People Forget to Plan For</h3>
+            <p>Healthcare, taxes, kids, and aging parents. Avoid the expenses that derail rigid plans.</p>
+            <span class="btn btn-secondary">Read →</span>
+          </div>
+        </a>
       </article>
     </div>
   </section>
 
-  <!-- Older posts -->
+  <!-- Older posts: compact list (archive) -->
   <section class="section" style="padding:1.25rem 0;">
     <h2 style="margin-bottom:.5rem;">Older posts</h2>
     <ul class="post-list">
@@ -92,10 +131,10 @@ permalink: /blog/
         <a href="/blog/finding-purpose-on-fi/">Finding Purpose on the Path to FI</a>
         <span class="post-date">2025</span>
       </li>
+      <!-- Add more past posts here as your archive grows -->
     </ul>
   </section>
 
-  <!-- Newsletter -->
   <section class="newsletter" style="margin-top:2rem;">
     <h2>Join Our Newsletter</h2>
     <p>Get tools, calculators, and real-world scenarios for Financial Independence without losing sight of life today.</p>
