@@ -1,7 +1,21 @@
 // .eleventy.js
 module.exports = function(eleventyConfig) {
-  // Copy assets (incl. your JSON) to /assets
+  // --- Static assets
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+
+  // --- Jekyll compatibility shims
+  eleventyConfig.addFilter("relative_url", (value) => {
+    if (!value) return value;
+    return value.replace(/([^:]\/)\/+/g, "$1"); // collapse accidental double slashes
+  });
+
+  const SITE_URL = process.env.SITE_URL || ""; // e.g. https://livefireandlife.com
+  eleventyConfig.addFilter("absolute_url", (value) => {
+    if (!value) return value;
+    const joined = (SITE_URL.replace(/\/+$/, "") + "/" + value.replace(/^\/+/, ""))
+      .replace(/([^:]\/)\/+/g, "$1");
+    return joined;
+  });
 
   return {
     dir: {
@@ -10,12 +24,8 @@ module.exports = function(eleventyConfig) {
       layouts: "_layouts",
       output: "dist"
     },
-
-    // Use Liquid for .html and .md (matches your existing site)
     htmlTemplateEngine: "liquid",
     markdownTemplateEngine: "liquid",
-
-    // Data files can be plain JSON; no need for a template engine
     dataTemplateEngine: false
   };
 };
