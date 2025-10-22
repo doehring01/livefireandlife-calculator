@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 permalink: /blog/fi-formula-explained/
 title: "The FI Formula: Explained"
 description: "Income minus expenses plus consistent contributions toward an FI target—here’s the math."
@@ -8,53 +8,57 @@ tags: [flexfi, math, planning]
 hero: "/assets/fi-formula-explained-hero.png"
 ---
 
-  <main class="container" style="max-width:800px;margin:2rem auto;padding:0 1rem;">
-    <article>
-      <h1>The FI Formula, Explained</h1>
-      <p><em>Published: 2025 • Reading time: ~6 minutes</em></p>
+<article style="max-width:800px;margin:2rem auto;padding:0 1rem;">
+  <h1>The FI Formula, Explained</h1>
+  <p style="color:#777;font-size:.9rem;">
+    Published:
+    <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%B %d, %Y" }}</time>
+    • Reading time: ~6 minutes
+  </p>
 
-      <p>
-        Financial Independence (FI) boils down to one deceptively simple formula:
-        <strong>your annual expenses × 25 = your FI number</strong>. But there’s more nuance behind it—
-        from taxes, to investment returns, to flexibility in your plan. Let’s walk through it.
-      </p>
+  {% if page.hero %}
+  <figure class="post-hero" style="margin:1rem 0;">
+    <img src="{{ page.hero }}" alt="Illustration of the FI formula concept" style="max-width:100%;height:auto;border-radius:8px;">
+  </figure>
+  {% endif %}
 
-      <h2>Step 1: Know Your Annual Spending</h2>
-      <p>
-        Start with your actual lifestyle costs—housing, food, transportation, insurance, travel.
-        If you need $50,000/year, that’s your baseline.
-      </p>
+  <p>
+    Financial Independence (FI) boils down to one deceptively simple formula:
+    <strong>your annual expenses × 25 = your FI number</strong>. But there’s more nuance behind it—
+    from taxes, to investment returns, to flexibility in your plan. Let’s walk through it.
+  </p>
 
-      <h2>Step 2: Apply the 4% Rule (or 25× Rule)</h2>
-      <p>
-        Multiply your annual spending by 25. This assumes a safe withdrawal rate of ~4% from a diversified portfolio.
-        In our example: <code>$50,000 × 25 = $1.25M</code>.
-      </p>
+  <h2>Step 1: Know Your Annual Spending</h2>
+  <p>
+    Start with your actual lifestyle costs—housing, food, transportation, insurance, travel.
+    If you need $50,000/year, that’s your baseline.
+  </p>
 
-      <h2>Step 3: Adjust for Flexibility</h2>
-      <ul>
-        <li><strong>Taxes:</strong> withdrawals aren’t always tax-free.</li>
-        <li><strong>Healthcare:</strong> costs can vary dramatically.</li>
-        <li><strong>FlexFI:</strong> save more in some seasons, less in others.</li>
-      </ul>
+  <h2>Step 2: Apply the 4% Rule (or 25× Rule)</h2>
+  <p>
+    Multiply your annual spending by 25. This assumes a safe withdrawal rate of ~4% from a diversified portfolio.
+    In our example: <code>$50,000 × 25 = $1.25M</code>.
+  </p>
 
-      <h2>Step 4: Revisit Often</h2>
-      <p>
-        FI isn’t one-and-done. Life changes, markets shift, kids grow. Re-run your numbers regularly.
-      </p>
+  <h2>Step 3: Adjust for Flexibility</h2>
+  <ul>
+    <li><strong>Taxes:</strong> withdrawals aren’t always tax-free.</li>
+    <li><strong>Healthcare:</strong> costs can vary dramatically.</li>
+    <li><strong>FlexFI:</strong> save more in some seasons, less in others.</li>
+  </ul>
 
-      <hr style="margin:2rem 0;"/>
-      <section class="newsletter">
-        <h2>Want more FI insights?</h2>
-        <p>Join our newsletter for strategies, tools, and mindset tips.</p>
-        <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
-          <input type="email" name="EMAIL" placeholder="Your email address" required />
-          <button type="submit">Subscribe</button>
-        </form>
-      </section>
-    </article>
-  </main>
+  <h2>Step 4: Revisit Often</h2>
+  <p>
+    FI isn’t one-and-done. Life changes, markets shift, kids grow. Re-run your numbers regularly.
+  </p>
 
-  {% include 'footer.html' %}
-</body>
-</html>
+  <hr style="margin:2rem 0;"/>
+  <section class="newsletter">
+    <h2>Want more FI insights?</h2>
+    <p>Join our newsletter for strategies, tools, and mindset tips.</p>
+    <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
+      <input type="email" name="EMAIL" placeholder="Your email address" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+</article>
