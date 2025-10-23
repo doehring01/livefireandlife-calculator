@@ -1,44 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {% include "head.html" %}
-  <title>{% if page.title %}{{ page.title }} • {% endif %}FIREandLife</title>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', 'G-KHKJVXPJQM');
-</script>
-<!-- End Google Analytics -->
-  {%- if page.extra_css -%}
-    {%- for href in page.extra_css -%}
-      <link rel="stylesheet" href="{{ href | relative_url }}">
-    {%- endfor -%}
-  {%- endif -%}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    {% if page.title %}{{ page.title }}{% else %}{{ site.title | default: "FIREandLife" }}{% endif %}
+  </title>
+  {% if page.description %}
+    <meta name="description" content="{{ page.description }}"/>
+  {% endif %}
+
+  {% include "seo.liquid" %}
+
+  {%- assign bust = site.time | date: '%Y%m%d%H%M%S' -%}
+  <link rel="stylesheet" href="{{ '/styles.css?v=' | append: bust | relative_url }}">
 </head>
+
 <body>
   {% include "header.html" %}
 
   <main class="container">
     {{ content }}
+
+    <!-- Show support box on individual blog posts, not on blog index -->
+    {%- if page.url and page.url contains '/blog/' and page.url != '/blog/' and page.url != '/blog/index.html' -%}
+      {% include "support.html" %}
+    {%- endif -%}
   </main>
 
   {% include "footer.html" %}
 
-  {%- if page.extra_js -%}
-    {%- for src in page.extra_js -%}
-      <script src="{{ src | relative_url }}" defer></script>
-    {%- endfor -%}
-  {%- endif -%}
-
-  <!-- Single, hardened mobile-nav toggle -->
   <script>
   (function(){
     const toggle = document.getElementById('navToggle');
     const menu   = document.getElementById('navMenu');
-    if (!toggle || !menu) return;
+    if(!toggle || !menu) return;
 
     function setOpen(open){
       toggle.setAttribute('aria-expanded', String(open));
@@ -48,23 +44,16 @@
     }
 
     toggle.addEventListener('click', () => {
-      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-      setOpen(!isOpen);
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      setOpen(!open);
     });
 
-    // Close on ESC
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-        setOpen(false);
-      }
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
     });
-
-    // Click-away close (mobile)
     document.addEventListener('click', (e) => {
       if (toggle.getAttribute('aria-expanded') === 'true' &&
-          !menu.contains(e.target) && !toggle.contains(e.target)) {
-        setOpen(false);
-      }
+          !menu.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
     });
   })();
   </script>
