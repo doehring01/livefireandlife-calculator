@@ -3,30 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
-  {% if page.description %}<meta name="description" content="{{ page.description }}"/>{% endif %}
+  <title>
+    {% if page.title %}{{ page.title }}{% else %}{{ site.title | default: "FIREandLife" }}{% endif %}
+  </title>
+  {% if page.description %}
+    <meta name="description" content="{{ page.description }}"/>
+  {% endif %}
 
   {% include "seo.liquid" %}
 
   {%- assign bust = site.time | date: '%Y%m%d%H%M%S' -%}
   <link rel="stylesheet" href="{{ '/styles.css?v=' | append: bust | relative_url }}">
 </head>
+
 <body>
-  {% include 'header.html' %}
+  {% include "header.html" %}
 
   <main class="container">
     {{ content }}
 
-    <!-- Show support box on blog posts under /blog/, but not on /blog/ index -->
-    {%- if page.url -%}
-      {%- assign url_prefix = page.url | slice: 0, 6 -%} {# '/blog/' is 6 chars #}
-      {%- if url_prefix == '/blog/' and page.url != '/blog/' -%}
-        {% include "support.html" %}
-      {%- endif -%}
+    <!-- Show support box on individual blog posts, not on blog index -->
+    {%- if page.url and page.url contains '/blog/' and page.url != '/blog/' and page.url != '/blog/index.html' -%}
+      {% include "support.html" %}
     {%- endif -%}
   </main>
 
-  {% include 'footer.html' %}
+  {% include "footer.html" %}
+
   <script>
   (function(){
     const toggle = document.getElementById('navToggle');
