@@ -3,6 +3,9 @@ module.exports = function(eleventyConfig) {
   // --- Static assets
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
+  // --- Netlify headers passthrough (so _headers gets deployed)
+  eleventyConfig.addPassthroughCopy({ "src/_headers": "_headers" });
+
   // --- Jekyll compatibility shims (so old templates with |relative_url / |absolute_url keep working)
   eleventyConfig.addFilter("relative_url", (value) => {
     if (!value) return value;
