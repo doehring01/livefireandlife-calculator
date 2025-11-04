@@ -1,11 +1,6 @@
 [build]
-  command = "bundle exec jekyll build"
-  publish = "_site"
+  command = "npm run build"
+  publish = "dist"
 
 [build.environment]
-  JEKYLL_ENV = "production"
-  RUBY_VERSION = "3.2.2"
-
-# Optional: cache gems
-[context.production]
-  environment = { BUNDLE_WITHOUT = "development:test" }
+  NODE_VERSION = "20"
