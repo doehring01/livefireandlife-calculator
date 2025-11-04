@@ -5,27 +5,7 @@ description: Stories, scenarios, and tools to help you pursue Financial Independ
 permalink: /blog/
 ---
 
-<style>
-  /* Page-scoped helpers */
-  .post-list {margin:0; padding:0; list-style:none;}
-  .post-list li {display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0; border-bottom:1px solid #eef2f7;}
-  .post-date {color:#64748b; white-space:nowrap;}
-  .grid-cards {display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem;}
-  .featured .card h3 {margin-bottom:.25rem;}
-
-  /* thumbnail cards */
-  .thumb-card { display:flex; gap:.9rem; align-items:flex-start; }
-  .thumb-card img { width:96px; height:64px; object-fit:cover; border-radius:6px; flex:0 0 auto; }
-  .thumb-card .meta { flex:1 1 auto; }
-  .thumb-card h3 { margin:0 0 .25rem; font-size:1.05rem; line-height:1.35; }
-  .thumb-card p { margin:0 0 .5rem; color:#555; font-size:.95rem; }
-  @media (max-width: 520px) {
-    .thumb-card { flex-direction:column; }
-    .thumb-card img { width:100%; height:auto; }
-  }
-</style>
-
-<section class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+<section class="container">
   <h1>FIREandLife Blog</h1>
   <p style="color:#555;margin-top:.5rem;">
     Real scenarios, practical math, and tools for Financial Independence without losing sight of a life well-lived.
@@ -49,16 +29,49 @@ permalink: /blog/
     <h2 style="margin-bottom:.5rem;">Recent posts</h2>
 
     <div class="grid-cards">
-      <!-- Post 1 (moved down from featured) -->
+      <!-- Post A: Psychology (moved down from featured) -->
       <article class="card">
         <a class="thumb-card" href="/blog/psychology-of-fi-avoiding-burnout/">
-          {% assign hero0 = "/assets/psychology-of-fi-avoiding-burnout-hero.png" %}
-          {% if hero0 %}
-            <img src="{{ hero0 }}?v=20251105" alt="Psychology of FI: Avoiding Burnout">
-          {% endif %}
+          {% assign heroA = "/assets/psychology-of-fi-avoiding-burnout-hero.png" %}
+          {% assign titleA = "The Psychology of FI: Avoiding Burnout on the Path" %}
+          <div class="thumb">
+            {%- assign thumb = heroA | default: page.image | default: post.image | default: "" -%}
+            {%- if thumb and thumb != "" -%}
+              <img
+                src="{{ thumb | relative_url }}?v=20251105"
+                alt="{{ titleA }}"
+                onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
+            {%- else -%}
+              <div class="thumb placeholder">F&amp;L</div>
+            {%- endif -%}
+          </div>
           <div class="meta">
-            <h3>The Psychology of FI: Avoiding Burnout on the Path</h3>
+            <h3>{{ titleA }}</h3>
             <p>Season-aware pacing, guardrails, and review rhythms to keep momentum without flaming out.</p>
+            <span class="btn btn-secondary">Read →</span>
+          </div>
+        </a>
+      </article>
+
+      <!-- Post 1 -->
+      <article class="card">
+        <a class="thumb-card" href="/blog/max-out-401k-or-brokerage/">
+          {% assign hero1 = "/assets/401k-vs-brokerage-hero.png" %}
+          {% assign title1 = "Should You Max Out Your 401(k) or Invest in a Brokerage?" %}
+          <div class="thumb">
+            {%- assign thumb = hero1 | default: page.image | default: post.image | default: "" -%}
+            {%- if thumb and thumb != "" -%}
+              <img
+                src="{{ thumb | relative_url }}?v=20251105"
+                alt="{{ title1 }}"
+                onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
+            {%- else -%}
+              <div class="thumb placeholder">F&amp;L</div>
+            {%- endif -%}
+          </div>
+          <div class="meta">
+            <h3>{{ title1 }}</h3>
+            <p>A practical way to choose between tax savings and flexibility, plus where brokerage fits in your FI plan.</p>
             <span class="btn btn-secondary">Read →</span>
           </div>
         </a>
@@ -66,14 +79,23 @@ permalink: /blog/
 
       <!-- Post 2 -->
       <article class="card">
-        <a class="thumb-card" href="/blog/max-out-401k-or-brokerage/">
-          {% assign hero1 = "/assets/401k-vs-brokerage-hero.png" %}
-          {% if hero1 %}
-            <img src="{{ hero1 }}?v=20251105" alt="401(k) vs Brokerage hero">
-          {% endif %}
+        <a class="thumb-card" href="/blog/asset-allocation-through-fi-stages/">
+          {% assign hero2 = "/assets/asset-allocation-fi-stages-hero.png" %}
+          {% assign title2 = "Asset Allocation Through Different FI Stages" %}
+          <div class="thumb">
+            {%- assign thumb = hero2 | default: page.image | default: post.image | default: "" -%}
+            {%- if thumb and thumb != "" -%}
+              <img
+                src="{{ thumb | relative_url }}?v=202510"
+                alt="{{ title2 }}"
+                onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
+            {%- else -%}
+              <div class="thumb placeholder">F&amp;L</div>
+            {%- endif -%}
+          </div>
           <div class="meta">
-            <h3>Should You Max Out Your 401(k) or Invest in a Brokerage?</h3>
-            <p>A practical way to choose between tax savings and flexibility, plus where brokerage fits in your FI plan.</p>
+            <h3>{{ title2 }}</h3>
+            <p>Shift risk and glide your portfolio from early accumulation to CoastFI and beyond.</p>
             <span class="btn btn-secondary">Read →</span>
           </div>
         </a>
@@ -81,14 +103,23 @@ permalink: /blog/
 
       <!-- Post 3 -->
       <article class="card">
-        <a class="thumb-card" href="/blog/asset-allocation-through-fi-stages/">
-          {% assign hero2 = "/assets/asset-allocation-fi-stages-hero.png" %}
-          {% if hero2 %}
-            <img src="{{ hero2 }}?v=202510" alt="Asset allocation through FI stages">
-          {% endif %}
+        <a class="thumb-card" href="/blog/save-more-or-earn-more/">
+          {% assign hero3 = "/assets/save-more-or-earn-more-hero.PNG" %}
+          {% assign title3 = "Save More or Earn More on the Path to FI?" %}
+          <div class="thumb">
+            {%- assign thumb = hero3 | default: page.image | default: post.image | default: "" -%}
+            {%- if thumb and thumb != "" -%}
+              <img
+                src="{{ thumb | relative_url }}?v=20250924"
+                alt="{{ title3 }}"
+                onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
+            {%- else -%}
+              <div class="thumb placeholder">F&amp;L</div>
+            {%- endif -%}
+          </div>
           <div class="meta">
-            <h3>Asset Allocation Through Different FI Stages</h3>
-            <p>Shift risk and glide your portfolio from early accumulation to CoastFI and beyond.</p>
+            <h3>{{ title3 }}</h3>
+            <p>When cutting spending wins, when growing income wins, and how CoastFI gives you a third option.</p>
             <span class="btn btn-secondary">Read →</span>
           </div>
         </a>
@@ -96,28 +127,22 @@ permalink: /blog/
 
       <!-- Post 4 -->
       <article class="card">
-        <a class="thumb-card" href="/blog/save-more-or-earn-more/">
-          {% assign hero3 = "/assets/save-more-or-earn-more-hero.PNG" %}
-          {% if hero3 %}
-            <img src="{{ hero3 }}?v=20250924" alt="Save more or earn more">
-          {% endif %}
-          <div class="meta">
-            <h3>Save More or Earn More on the Path to FI?</h3>
-            <p>When cutting spending wins, when growing income wins, and how CoastFI gives you a third option.</p>
-            <span class="btn btn-secondary">Read →</span>
-          </div>
-        </a>
-      </article>
-
-      <!-- Post 5 -->
-      <article class="card">
         <a class="thumb-card" href="/blog/hidden-costs-of-fi/">
           {% assign hero4 = "/assets/hidden-costs—fi-hero.PNG" %}
-          {% if hero4 %}
-            <img src="{{ hero4 }}?v=20250917" alt="Hidden costs of FI">
-          {% endif %}
+          {% assign title4 = "The Hidden Costs of FI People Forget to Plan For" %}
+          <div class="thumb">
+            {%- assign thumb = hero4 | default: page.image | default: post.image | default: "" -%}
+            {%- if thumb and thumb != "" -%}
+              <img
+                src="{{ thumb | relative_url }}?v=20250917"
+                alt="{{ title4 }}"
+                onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
+            {%- else -%}
+              <div class="thumb placeholder">F&amp;L</div>
+            {%- endif -%}
+          </div>
           <div class="meta">
-            <h3>The Hidden Costs of FI People Forget to Plan For</h3>
+            <h3>{{ title4 }}</h3>
             <p>Healthcare, taxes, kids, and aging parents. Avoid the expenses that derail rigid plans.</p>
             <span class="btn btn-secondary">Read →</span>
           </div>
