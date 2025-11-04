@@ -535,3 +535,17 @@ article img:not(.hero-img) {
 
 /* Reduce weird long-word wrapping in titles/excerpts */
 .card h3, .thumb-card h3, .thumb-card p { word-break: break-word; overflow-wrap: anywhere; }
+
+
+/* --- Blog card: image + placeholder --- */
+.thumb-card .thumb {
+  width: 112px; height: 72px; flex: 0 0 auto;
+  border-radius: 8px; background: #f1f5f9;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
+}
+.thumb-card .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb-card .thumb.placeholder { color: #94a3b8; font-size: .85rem; font-weight: 600; letter-spacing: .02em; }
+.thumb-card .thumb.is-broken::after {
+  content: "No image"; color: #94a3b8; font-size: .8rem; font-weight: 600;
+}
