@@ -438,3 +438,100 @@ article img:not(.hero-img) {
   line-height: 1.5;
   color: #334155;
 }
+/* ===========================
+   Blog landing polish
+   =========================== */
+
+/* Layout containers */
+.container { max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
+
+/* Featured card */
+.section.featured .card {
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(16,24,40,.04);
+}
+.section.featured .card h3 {
+  margin: 0 0 .35rem;
+  font-size: clamp(1.2rem, 1.1rem + 0.8vw, 1.5rem);
+  line-height: 1.25;
+}
+.section.featured .card p {
+  color: #475569; /* slate-600 */
+  margin: 0 0 .75rem;
+}
+
+/* Recent posts grid */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* Generic card */
+.card {
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, .08);
+  border-color: #e2e8f0;
+}
+
+/* Thumbnail card composition */
+.thumb-card {
+  display: flex; gap: .9rem; align-items: flex-start;
+  padding: .9rem; text-decoration: none;
+}
+.thumb-card img {
+  width: 112px; height: 72px; object-fit: cover;
+  border-radius: 8px; flex: 0 0 auto; background: #f1f5f9;
+}
+.thumb-card .meta { flex: 1 1 auto; min-width: 0; }
+.thumb-card h3 {
+  margin: 0 0 .25rem;
+  font-size: 1.06rem; line-height: 1.35; color: #0f172a;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.thumb-card p {
+  margin: 0 0 .5rem; color: #475569; font-size: .95rem; line-height: 1.45;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.thumb-card .btn { margin-top: .25rem; }
+
+/* Buttons */
+.btn.btn-secondary {
+  display: inline-block; font-weight: 600; text-decoration: none;
+  padding: .4rem .65rem; border-radius: 8px; border: 1px solid #e2e8f0;
+  color: #0f172a; background: #f8fafc;
+}
+.btn.btn-secondary:hover { background: #f1f5f9; }
+
+/* Older posts list */
+.post-list { margin: 0; padding: 0; list-style: none; }
+.post-list li {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 1rem; padding: .6rem 0; border-bottom: 1px solid #eef2f7;
+}
+.post-list a { color: #0f172a; text-decoration: none; }
+.post-list a:hover { text-decoration: underline; }
+.post-date { color: #64748b; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* Section titles */
+.section h2 { margin: 0 0 .5rem; font-size: 1.25rem; }
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .thumb-card { flex-direction: column; }
+  .thumb-card img { width: 100%; height: auto; }
+  .section.featured .card { padding: .9rem 1rem; }
+}
+
+/* Reduce weird long-word wrapping in titles/excerpts */
+.card h3, .thumb-card h3, .thumb-card p { word-break: break-word; overflow-wrap: anywhere; }
