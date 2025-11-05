@@ -12,22 +12,26 @@ permalink: /blog/
   </p>
 
   {%- comment -%}
-    Choose featured:
-    1) Pin today’s post by URL.
-    2) If not found, fall back to newest live post.
+    Pick the featured post:
+    1) Pin a specific slug
+    2) Otherwise fall back to newest live post
   {%- endcomment -%}
   {%- assign featuredSlug = "/blog/max-out-401k-or-brokerage/" -%}
-  {%- assign pinned = collections.livePosts | where: "url", featuredSlug -%}
-  {%- assign featured = pinned | first | default: collections.livePosts | first -%}
+  {%- assign pinned = collections.livePosts | where: "url", featuredSlug | first -%}
+  {%- if pinned -%}
+    {%- assign featured = pinned -%}
+  {%- else -%}
+    {%- assign featured = collections.livePosts | first -%}
+  {%- endif -%}
 
-  {#-- TEMP DEBUG (remove after verifying) --#}
+  {%- comment -%} TEMP DEBUG — remove after verifying {%- endcomment -%}
   <p style="color:#888;font-size:.9rem;margin:.25rem 0 1rem;">
     Debug → livePosts: {{ collections.livePosts | size }},
     featuredSlug: {{ featuredSlug }},
     featured.url: {%- if featured -%}{{ featured.url }}{%- else -%}(none){%- endif -%}
   </p>
 
-  <!-- Featured / newest post -->
+  <!-- Featured -->
   <section class="section featured">
     {%- if featured -%}
     <article class="card">
@@ -41,53 +45,58 @@ permalink: /blog/
     {%- endif -%}
   </section>
 
-  <!-- Recent posts with thumbnails (next 3 after featured) -->
+  <!-- Recent posts (next 3 after featured) -->
   <section class="section">
     <h2 style="margin-bottom:.5rem;">Recent posts</h2>
 
-    {%- assign nonFeatured = collections.livePosts | reject: "url", featured.url -%}
-    {%- assign gridItems = nonFeatured | slice: 0, 3 -%}
-
     <div class="grid-cards">
-      {%- for post in gridItems -%}
-      <article class="card">
-        <a class="thumb-card" href="{{ post.url | relative_url }}">
-          {%- assign title = post.data.title -%}
-          {%- assign thumb = post.data.image | default: post.data.hero | default: "" -%}
-          <div class="thumb">
-            {%- if thumb and thumb != "" -%}
-              <img
-                src="{{ thumb | relative_url }}"
-                alt="{{ title | escape }}"
-                onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
-            {%- else -%}
-              <div class="thumb placeholder">F&amp;L</div>
-            {%- endif -%}
-          </div>
-          <div class="meta">
-            <h3>{{ title }}</h3>
-            {%- assign excerpt = post.data.excerpt | default: post.data.description | default: "" -%}
-            {%- if excerpt != "" -%}
-              <p>{{ excerpt }}</p>
-            {%- endif -%}
-            <span class="btn btn-secondary">Read →</span>
-          </div>
-        </a>
-      </article>
+      {%- assign shown = 0 -%}
+      {%- for post in collections.livePosts -%}
+        {%- if post.url != featured.url and shown < 3 -%}
+          <article class="card">
+            <a class="thumb-card" href="{{ post.url | relative_url }}">
+              {%- assign title = post.data.title -%}
+              {%- assign thumb = post.data.image | default: post.data.hero | default: "" -%}
+              <div class="thumb">
+                {%- if thumb and thumb != "" -%}
+                  <img
+                    src="{{ thumb | relative_url }}"
+                    alt="{{ title | escape }}"
+                    onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
+                {%- else -%}
+                  <div class="thumb placeholder">F&amp;L</div>
+                {%- endif -%}
+              </div>
+              <div class="meta">
+                <h3>{{ title }}</h3>
+                {%- assign excerpt = post.data.excerpt | default: post.data.description | default: "" -%}
+                {%- if excerpt != "" -%}<p>{{ excerpt }}</p>{%- endif -%}
+                <span class="btn btn-secondary">Read →</span>
+              </div>
+            </a>
+          </article>
+          {%- assign shown = shown | plus: 1 -%}
+        {%- endif -%}
       {%- endfor -%}
     </div>
   </section>
 
-  <!-- Older posts: compact list (everything after featured + 3) -->
+  <!-- Older posts (everything after featured + the 3 shown) -->
   <section class="section">
     <h2 style="margin-bottom:.5rem;">Older posts</h2>
     <ul class="post-list">
-      {%- assign older = nonFeatured | slice: 3, 200 -%}
-      {%- for post in older -%}
-      <li>
-        <a href="{{ post.url | relative_url }}">{{ post.data.title }}</a>
-        <span class="post-date">{{ post.date | date: "%Y" }}</span>
-      </li>
+      {%- assign remaining = 0 -%}
+      {%- for post in collections.livePosts -%}
+        {%- if post.url != featured.url -%}
+          {%- if remaining >= 3 -%}
+            <li>
+              <a href="{{ post.url | relative_url }}">{{ post.data.title }}</a>
+              <span class="post-date">{{ post.date | date: "%Y" }}</span>
+            </li>
+          {%- else -%}
+            {%- assign remaining = remaining | plus: 1 -%}
+          {%- endif -%}
+        {%- endif -%}
       {%- endfor -%}
     </ul>
   </section>
