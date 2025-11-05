@@ -24,13 +24,7 @@ permalink: /blog/
     {%- assign featured = collections.livePosts | first -%}
   {%- endif -%}
 
-  {%- comment -%} TEMP DEBUG — remove after verifying {%- endcomment -%}
-  <p style="color:#888;font-size:.9rem;margin:.25rem 0 1rem;">
-    Debug → livePosts: {{ collections.livePosts | size }},
-    featuredSlug: {{ featuredSlug }},
-    featured.url: {%- if featured -%}{{ featured.url }}{%- else -%}(none){%- endif -%}
-  </p>
-
+ 
   <!-- Featured -->
   <section class="section featured">
     {%- if featured -%}
