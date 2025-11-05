@@ -7,46 +7,44 @@ permalink: /blog/
 
 <section class="container">
   <h1>FIREandLife Blog</h1>
-  <p style="color:#888;font-size:.9rem;margin:.25rem 0 1rem;">
-  Debug: livePosts count = {{ collections.livePosts | size }},
-  featuredSlug = {{ featuredSlug }},
-  first url = {%- if collections.livePosts and collections.livePosts.size > 0 -%}{{ collections.livePosts[0].url }}{%- else -%}(none){%- endif -%}
-</p>
   <p style="color:#555;margin-top:.5rem;">
     Real scenarios, practical math, and tools for Financial Independence without losing sight of a life well-lived.
   </p>
 
   {%- comment -%}
     Choose featured:
-    1) Try to find the requested post by URL (pin it today).
-    2) If not found, fall back to newest post in the livePosts collection.
+    1) Pin today’s post by URL.
+    2) If not found, fall back to newest live post.
   {%- endcomment -%}
   {%- assign featuredSlug = "/blog/max-out-401k-or-brokerage/" -%}
   {%- assign pinned = collections.livePosts | where: "url", featuredSlug -%}
   {%- assign featured = pinned | first | default: collections.livePosts | first -%}
 
+  {#-- TEMP DEBUG (remove after verifying) --#}
+  <p style="color:#888;font-size:.9rem;margin:.25rem 0 1rem;">
+    Debug → livePosts: {{ collections.livePosts | size }},
+    featuredSlug: {{ featuredSlug }},
+    featured.url: {%- if featured -%}{{ featured.url }}{%- else -%}(none){%- endif -%}
+  </p>
+
   <!-- Featured / newest post -->
-  <section class="section featured" style="padding:1.25rem 0 0;">
+  <section class="section featured">
     {%- if featured -%}
     <article class="card">
-      <h3>
-        <a href="{{ featured.url | relative_url }}">{{ featured.data.title }}</a>
-      </h3>
-      <p style="color:#555;">
-        {{ featured.data.excerpt | default: featured.data.description | default: "" }}
-      </p>
+      <h3><a href="{{ featured.url | relative_url }}">{{ featured.data.title }}</a></h3>
+      {%- assign fExcerpt = featured.data.excerpt | default: featured.data.description | default: "" -%}
+      {%- if fExcerpt != "" -%}
+        <p style="color:#555;">{{ fExcerpt }}</p>
+      {%- endif -%}
       <a class="btn btn-secondary" href="{{ featured.url | relative_url }}">Read →</a>
     </article>
     {%- endif -%}
   </section>
 
-  <!-- Recent posts with thumbnails (next 3 after the featured one) -->
-  <section class="section" style="padding:1.25rem 0;">
+  <!-- Recent posts with thumbnails (next 3 after featured) -->
+  <section class="section">
     <h2 style="margin-bottom:.5rem;">Recent posts</h2>
 
-    {%- comment -%}
-      Build a list of posts excluding the featured, then take first 3.
-    {%- endcomment -%}
     {%- assign nonFeatured = collections.livePosts | reject: "url", featured.url -%}
     {%- assign gridItems = nonFeatured | slice: 0, 3 -%}
 
@@ -68,7 +66,10 @@ permalink: /blog/
           </div>
           <div class="meta">
             <h3>{{ title }}</h3>
-            <p>{{ post.data.excerpt | default: post.data.description | default: "" }}</p>
+            {%- assign excerpt = post.data.excerpt | default: post.data.description | default: "" -%}
+            {%- if excerpt != "" -%}
+              <p>{{ excerpt }}</p>
+            {%- endif -%}
             <span class="btn btn-secondary">Read →</span>
           </div>
         </a>
@@ -78,7 +79,7 @@ permalink: /blog/
   </section>
 
   <!-- Older posts: compact list (everything after featured + 3) -->
-  <section class="section" style="padding:1.25rem 0;">
+  <section class="section">
     <h2 style="margin-bottom:.5rem;">Older posts</h2>
     <ul class="post-list">
       {%- assign older = nonFeatured | slice: 3, 200 -%}
