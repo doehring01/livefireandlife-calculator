@@ -1,0 +1,25 @@
+{%- comment -%}
+  Post hero (Eleventy + Liquid)
+  - Uses hero/image/cover from front matter
+  - Normalizes /src/assets/ → /assets/
+  - Uses Eleventy’s | url filter
+  - Cache-busts on page.date
+{%- endcomment -%}
+{%- assign hero_raw = hero | default: image | default: cover -%}
+{%- if hero_raw and hero_raw != "" -%}
+  {%- assign hero_norm = hero_raw
+      | replace: "/src/assets/", "/assets/"
+      | replace: "/SRC/assets/", "/assets/" -%}
+  {%- assign hero_url = hero_norm | url -%}
+  <figure class="post-hero" style="margin:1rem 0 1.25rem;">
+    <img class="hero-img"
+         src="{{ hero_url }}?v={{ page.date | date: '%Y%m%d' }}"
+         alt="{{ title | escape }}"
+         style="width:100%;height:auto;border-radius:12px;display:block;">
+    {%- if hero_caption -%}
+      <figcaption style="color:#6b7280;font-size:.9rem;margin-top:.35rem;text-align:center;">
+        {{ hero_caption }}
+      </figcaption>
+    {%- endif -%}
+  </figure>
+{%- endif -%}
