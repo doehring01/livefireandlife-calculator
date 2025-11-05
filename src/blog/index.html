@@ -7,6 +7,11 @@ permalink: /blog/
 
 <section class="container">
   <h1>FIREandLife Blog</h1>
+  <p style="color:#888;font-size:.9rem;margin:.25rem 0 1rem;">
+  Debug: livePosts count = {{ collections.livePosts | size }},
+  featuredSlug = {{ featuredSlug }},
+  first url = {%- if collections.livePosts and collections.livePosts.size > 0 -%}{{ collections.livePosts[0].url }}{%- else -%}(none){%- endif -%}
+</p>
   <p style="color:#555;margin-top:.5rem;">
     Real scenarios, practical math, and tools for Financial Independence without losing sight of a life well-lived.
   </p>
