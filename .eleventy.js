@@ -24,22 +24,28 @@ module.exports = function(eleventyConfig) {
     return joined;
   });
 
-  /* ---------------------------
-     Collections
-  ---------------------------- */
-  // All blog posts: exclude landing page, drafts, and future-dated; newest first
-  eleventyConfig.addCollection("livePosts", (collectionApi) => {
-    const now = new Date();
-    return collectionApi
-      .getFilteredByGlob([
-        "src/blog/*.{md,html}",
-        "src/blog/**/index.{md,html}"
-      ])
-      .filter(item => item.url !== "/blog/")          // exclude the landing page itself
-      .filter(item => !item.data.draft)               // optional: honor `draft: true`
-      .filter(item => item.date && item.date <= now)  // skip future-dated posts
-      .sort((a, b) => b.date - a.date);               // newest first
-  });
+  // --- Collection: all blog posts (exclude landing page, drafts; hide future-dated only)
+eleventyConfig.addCollection("livePosts", (collectionApi) => {
+  const now = new Date();
+
+  return collectionApi
+    .getFilteredByGlob([
+      "src/blog/*.{md,html,liquid,njk}",
+      "src/blog/**/index.{md,html,liquid,njk}"
+    ])
+    // exclude landing page
+    .filter(item => item.url !== "/blog/")
+    // honor drafts
+    .filter(item => !item.data.draft)
+    // hide future-dated posts only; if no date, keep it
+    .filter(item => !(item.date && item.date > now))
+    // newest first (fallback if date missing)
+    .sort((a, b) => {
+      const ad = a.date ? a.date.getTime() : 0;
+      const bd = b.date ? b.date.getTime() : 0;
+      return bd - ad;
+    });
+});
 
   /* ---------------------------
      Dir & templating engines
