@@ -17,13 +17,10 @@ keywords: "FI tradeoffs, financial independence mindset, FlexFI, time vs money, 
   .post-hero { margin:1rem 0 1.25rem; }
   .post-hero img { width:100%; height:auto; border-radius:12px; display:block; }
   .post-hero figcaption { color:#6b7280; font-size:.9rem; margin-top:.35rem; text-align:center; }
-
   .callout { background:#f8fafc; border:1px solid #e5e7eb; padding:1rem; border-radius:.75rem; margin:1rem 0; }
   .flexfi-tip { background:#f0fdf4; border:1px solid #bbf7d0; padding:1rem; border-radius:.75rem; margin:1rem 0; }
-
   article.post h2 { margin-top:1.6rem; }
   article.post h3 { margin-top:1.2rem; }
-
   .post-nav { display:flex; gap:1rem; justify-content:space-between; flex-wrap:wrap; margin-top:2rem; }
 </style>
 
@@ -32,23 +29,23 @@ keywords: "FI tradeoffs, financial independence mindset, FlexFI, time vs money, 
     <p class="post-meta">Published: November 12, 2025 • 7–8 min read</p>
     <h1>The FI Tradeoffs Nobody Talks About</h1>
 
-    {% comment %}
-      Robust hero resolver:
-      - Accepts hero / image / cover
-      - Normalizes any stray /src/assets/... to /assets/...
-      - Uses relative_url with a date-based cache buster
-    {% endcomment %}
-    {% assign hero_raw = page.hero | default: page.image | default: page.cover %}
-    {% if hero_raw and hero_raw != "" %}
-      {% assign hero_norm = hero_raw
+    {%- comment -%}
+      Eleventy hero resolver:
+      - Uses hero/image/cover from front matter (no page.*)
+      - Normalizes /src/assets/ → /assets/
+      - Uses Eleventy’s | url filter (not relative_url)
+    {%- endcomment -%}
+    {%- assign hero_raw = hero | default: image | default: cover -%}
+    {%- if hero_raw and hero_raw != "" -%}
+      {%- assign hero_norm = hero_raw
           | replace: "/src/assets/", "/assets/"
-          | replace: "/SRC/assets/", "/assets/" %}
-      {% assign hero_url = hero_norm | relative_url %}
+          | replace: "/SRC/assets/", "/assets/" -%}
+      {%- assign hero_url = hero_norm | url -%}
       <figure class="post-hero">
-        <img class="hero-img" src="{{ hero_url }}?v={{ page.date | date: '%Y%m%d' }}" alt="{{ page.title | escape }}">
+        <img class="hero-img" src="{{ hero_url }}?v={{ page.date | date: '%Y%m%d' }}" alt="{{ title | escape }}">
         <figcaption>Balancing time, money, and meaning on the path to Financial Independence</figcaption>
       </figure>
-    {% endif %}
+    {%- endif -%}
 
     <p class="lede">
       When you first discover Financial Independence, it feels like freedom in a spreadsheet.
