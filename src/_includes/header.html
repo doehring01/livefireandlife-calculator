@@ -1,21 +1,23 @@
 <header class="site-header">
   <nav class="nav">
+    <!-- Brand / Logo -->
     <a class="nav__brand" href="/" aria-label="FIREandLife home">
       <img src="/assets/logo-horizontal.png" alt="FIREandLife" height="40">
     </a>
 
     <!-- Hamburger -->
-    <button class="nav__toggle" id="navToggle"
+    <button class="nav__toggle"
+            id="navToggle"
             type="button"
             aria-controls="navMenu"
             aria-expanded="false"
-            aria-label="Open menu">
+            aria-label="Toggle menu">
       <span class="nav__bar"></span>
       <span class="nav__bar"></span>
       <span class="nav__bar"></span>
     </button>
 
-    <!-- Primary links -->
+    <!-- Primary navigation links -->
     <ul id="navMenu" class="nav__links">
       <li><a href="/">Home</a></li>
       <li><a href="/calculators/">Calculators</a></li>
@@ -26,9 +28,47 @@
       <li><a href="/contact/">Contact</a></li>
     </ul>
 
-    <!-- Buy Me a Coffee Button -->
-    <a class="btn-coffee" href="https://buymeacoffee.com/FIREandLIFE" target="_blank" rel="noopener">
+    <!-- Support / Buy Me a Coffee -->
+    <a class="btn-coffee"
+       href="https://buymeacoffee.com/FIREandLIFE"
+       target="_blank"
+       rel="noopener"
+       aria-label="Buy Me a Coffee — Support FIREandLife">
       ☕ Support
     </a>
   </nav>
+
+  <!-- Mobile menu toggle script -->
+  <script>
+    (function () {
+      var toggle = document.getElementById('navToggle');
+      var menu   = document.getElementById('navMenu');
+
+      if (!toggle || !menu) return;
+
+      toggle.addEventListener('click', function () {
+        var isOpen = menu.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        document.body.classList.toggle('nav-open', isOpen);
+      });
+
+      // Close menu when a link is clicked
+      menu.addEventListener('click', function (e) {
+        if (e.target && e.target.tagName === 'A') {
+          menu.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.classList.remove('nav-open');
+        }
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          menu.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.classList.remove('nav-open');
+        }
+      });
+    })();
+  </script>
 </header>
