@@ -11,167 +11,78 @@ permalink: /blog/
     Real scenarios, practical math, and tools for Financial Independence without losing sight of a life well-lived.
   </p>
 
+  {%- comment -%}
+    Choose featured:
+    1) Try to find the requested post by URL (pin it today).
+    2) If not found, fall back to newest post in the livePosts collection.
+  {%- endcomment -%}
+  {%- assign featuredSlug = "/blog/max-out-401k-or-brokerage/" -%}
+  {%- assign pinned = collections.livePosts | where: "url", featuredSlug -%}
+  {%- assign featured = pinned | first | default: collections.livePosts | first -%}
+
   <!-- Featured / newest post -->
   <section class="section featured" style="padding:1.25rem 0 0;">
+    {%- if featured -%}
     <article class="card">
       <h3>
-        <a href="/blog/health-care-wild-card/">The Health Care Wild Card in Your FI Plan</a>
+        <a href="{{ featured.url | relative_url }}">{{ featured.data.title }}</a>
       </h3>
       <p style="color:#555;">
-        Premiums, deductibles, subsidies, and life changes can swing your cash flow by thousands. Learn the guardrails—from ACA planning and COBRA to HSAs and international options—so healthcare doesn’t derail your FI timeline.
+        {{ featured.data.excerpt | default: featured.data.description | default: "" }}
       </p>
-      <a class="btn btn-secondary" href="/blog/health-care-wild-card/">Read →</a>
+      <a class="btn btn-secondary" href="{{ featured.url | relative_url }}">Read →</a>
     </article>
+    {%- endif -%}
   </section>
 
-  <!-- Recent posts with thumbnails -->
+  <!-- Recent posts with thumbnails (next 3 after the featured one) -->
   <section class="section" style="padding:1.25rem 0;">
     <h2 style="margin-bottom:.5rem;">Recent posts</h2>
 
+    {%- comment -%}
+      Build a list of posts excluding the featured, then take first 3.
+    {%- endcomment -%}
+    {%- assign nonFeatured = collections.livePosts | reject: "url", featured.url -%}
+    {%- assign gridItems = nonFeatured | slice: 0, 3 -%}
+
     <div class="grid-cards">
-      <!-- Post A: Psychology (moved down from featured) -->
+      {%- for post in gridItems -%}
       <article class="card">
-        <a class="thumb-card" href="/blog/psychology-of-fi-avoiding-burnout/">
-          {% assign heroA = "/assets/psychology-of-fi-avoiding-burnout-hero.png" %}
-          {% assign titleA = "The Psychology of FI: Avoiding Burnout on the Path" %}
+        <a class="thumb-card" href="{{ post.url | relative_url }}">
+          {%- assign title = post.data.title -%}
+          {%- assign thumb = post.data.image | default: post.data.hero | default: "" -%}
           <div class="thumb">
-            {%- assign thumb = heroA | default: page.image | default: post.image | default: "" -%}
             {%- if thumb and thumb != "" -%}
               <img
-                src="{{ thumb | relative_url }}?v=20251105"
-                alt="{{ titleA }}"
+                src="{{ thumb | relative_url }}"
+                alt="{{ title | escape }}"
                 onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
             {%- else -%}
               <div class="thumb placeholder">F&amp;L</div>
             {%- endif -%}
           </div>
           <div class="meta">
-            <h3>{{ titleA }}</h3>
-            <p>Season-aware pacing, guardrails, and review rhythms to keep momentum without flaming out.</p>
+            <h3>{{ title }}</h3>
+            <p>{{ post.data.excerpt | default: post.data.description | default: "" }}</p>
             <span class="btn btn-secondary">Read →</span>
           </div>
         </a>
       </article>
-
-      <!-- Post 1 -->
-      <article class="card">
-        <a class="thumb-card" href="/blog/max-out-401k-or-brokerage/">
-          {% assign hero1 = "/assets/401k-vs-brokerage-hero.png" %}
-          {% assign title1 = "Should You Max Out Your 401(k) or Invest in a Brokerage?" %}
-          <div class="thumb">
-            {%- assign thumb = hero1 | default: page.image | default: post.image | default: "" -%}
-            {%- if thumb and thumb != "" -%}
-              <img
-                src="{{ thumb | relative_url }}?v=20251105"
-                alt="{{ title1 }}"
-                onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
-            {%- else -%}
-              <div class="thumb placeholder">F&amp;L</div>
-            {%- endif -%}
-          </div>
-          <div class="meta">
-            <h3>{{ title1 }}</h3>
-            <p>A practical way to choose between tax savings and flexibility, plus where brokerage fits in your FI plan.</p>
-            <span class="btn btn-secondary">Read →</span>
-          </div>
-        </a>
-      </article>
-
-      <!-- Post 2 -->
-      <article class="card">
-        <a class="thumb-card" href="/blog/asset-allocation-through-fi-stages/">
-          {% assign hero2 = "/assets/asset-allocation-fi-stages-hero.png" %}
-          {% assign title2 = "Asset Allocation Through Different FI Stages" %}
-          <div class="thumb">
-            {%- assign thumb = hero2 | default: page.image | default: post.image | default: "" -%}
-            {%- if thumb and thumb != "" -%}
-              <img
-                src="{{ thumb | relative_url }}?v=202510"
-                alt="{{ title2 }}"
-                onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
-            {%- else -%}
-              <div class="thumb placeholder">F&amp;L</div>
-            {%- endif -%}
-          </div>
-          <div class="meta">
-            <h3>{{ title2 }}</h3>
-            <p>Shift risk and glide your portfolio from early accumulation to CoastFI and beyond.</p>
-            <span class="btn btn-secondary">Read →</span>
-          </div>
-        </a>
-      </article>
-
-      <!-- Post 3 -->
-      <article class="card">
-        <a class="thumb-card" href="/blog/save-more-or-earn-more/">
-          {% assign hero3 = "/assets/save-more-or-earn-more-hero.PNG" %}
-          {% assign title3 = "Save More or Earn More on the Path to FI?" %}
-          <div class="thumb">
-            {%- assign thumb = hero3 | default: page.image | default: post.image | default: "" -%}
-            {%- if thumb and thumb != "" -%}
-              <img
-                src="{{ thumb | relative_url }}?v=20250924"
-                alt="{{ title3 }}"
-                onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
-            {%- else -%}
-              <div class="thumb placeholder">F&amp;L</div>
-            {%- endif -%}
-          </div>
-          <div class="meta">
-            <h3>{{ title3 }}</h3>
-            <p>When cutting spending wins, when growing income wins, and how CoastFI gives you a third option.</p>
-            <span class="btn btn-secondary">Read →</span>
-          </div>
-        </a>
-      </article>
-
-      <!-- Post 4 -->
-      <article class="card">
-        <a class="thumb-card" href="/blog/hidden-costs-of-fi/">
-          {% assign hero4 = "/assets/hidden-costs—fi-hero.PNG" %}
-          {% assign title4 = "The Hidden Costs of FI People Forget to Plan For" %}
-          <div class="thumb">
-            {%- assign thumb = hero4 | default: page.image | default: post.image | default: "" -%}
-            {%- if thumb and thumb != "" -%}
-              <img
-                src="{{ thumb | relative_url }}?v=20250917"
-                alt="{{ title4 }}"
-                onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
-            {%- else -%}
-              <div class="thumb placeholder">F&amp;L</div>
-            {%- endif -%}
-          </div>
-          <div class="meta">
-            <h3>{{ title4 }}</h3>
-            <p>Healthcare, taxes, kids, and aging parents. Avoid the expenses that derail rigid plans.</p>
-            <span class="btn btn-secondary">Read →</span>
-          </div>
-        </a>
-      </article>
+      {%- endfor -%}
     </div>
   </section>
 
-  <!-- Older posts: compact list (archive) -->
+  <!-- Older posts: compact list (everything after featured + 3) -->
   <section class="section" style="padding:1.25rem 0;">
     <h2 style="margin-bottom:.5rem;">Older posts</h2>
     <ul class="post-list">
+      {%- assign older = nonFeatured | slice: 3, 200 -%}
+      {%- for post in older -%}
       <li>
-        <a href="/blog/introducing-flexfi.html">Introducing FlexFI: A More Realistic Path to FI</a>
-        <span class="post-date">2025</span>
+        <a href="{{ post.url | relative_url }}">{{ post.data.title }}</a>
+        <span class="post-date">{{ post.date | date: "%Y" }}</span>
       </li>
-      <li>
-        <a href="/blog/balancing-fi-family.html">Balancing FI with Family Life: When More Savings Means Less Time</a>
-        <span class="post-date">2025</span>
-      </li>
-      <li>
-        <a href="/blog/fi-formula-explained.html">The FI Formula: Explained</a>
-        <span class="post-date">2025</span>
-      </li>
-      <li>
-        <a href="/blog/finding-purpose-on-fi/">Finding Purpose on the Path to FI</a>
-        <span class="post-date">2025</span>
-      </li>
-      <!-- Add more past posts here as your archive grows -->
+      {%- endfor -%}
     </ul>
   </section>
 
