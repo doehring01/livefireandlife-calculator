@@ -1,11 +1,7 @@
 /* ------------------------------
    GLOBAL RESET & BASE STYLES
 --------------------------------*/
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -34,15 +30,10 @@ header {
 .hero {
   text-align: center;
   padding: 3rem 1rem;
-  background: #F7F7F7; /* Light gray */
+  background: #F7F7F7;
   color: #333;
 }
-
-.hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
+.hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
 .hero p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
@@ -68,44 +59,25 @@ button {
   display: inline-block;
   transition: background 0.2s ease;
 }
-
 .btn:hover,
 .btn-primary:hover,
-button:hover {
-  background: #E65A4F; /* Darker orange */
-}
+button:hover { background: #E65A4F; }
 
 .btn-secondary {
   background: #FFD166;
   color: #333333;
 }
-
-.btn-secondary:hover {
-  background: #FFB347;
-}
+.btn-secondary:hover { background: #FFB347; }
 
 /* ------------------------------
    SECTIONS
 --------------------------------*/
-.section {
-  padding: 2rem 1rem;
-}
-
-.section h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.section p {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto;
-  color: #555;
-}
+.section { padding: 2rem 1rem; }
+.section h2 { text-align: center; margin-bottom: 1rem; color: #333; }
+.section p  { text-align: center; max-width: 700px; margin: 0 auto; color: #555; }
 
 /* ------------------------------
-   GRID & CARDS
+   GENERIC GRID & CARDS
 --------------------------------*/
 .grid {
   display: grid;
@@ -123,41 +95,22 @@ button:hover {
   flex-direction: column;
   justify-content: space-between;
 }
-
-.card h3 {
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-
-.card p {
-  margin-bottom: 1rem;
-  color: #555;
-}
+.card h3 { color: #333; margin-bottom: 0.5rem; }
+.card p  { margin-bottom: 1rem; color: #555; }
 
 /* ------------------------------
    FORMS & INPUTS
 --------------------------------*/
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+form { display: flex; flex-direction: column; gap: 1rem; }
 
-input,
-select,
-textarea {
+input, select, textarea {
   padding: 0.75rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
   background: #FFFFFF;
 }
-
-input:focus,
-textarea:focus {
-  border-color: #FF6F61;
-  outline: none;
-}
+input:focus, textarea:focus { border-color: #FF6F61; outline: none; }
 
 /* ------------------------------
    NEWSLETTER SECTION
@@ -171,16 +124,8 @@ textarea:focus {
   text-align: center;
   padding: 2rem;
 }
-
-.newsletter h2 {
-  margin-bottom: 0.5rem;
-  color: #333;
-}
-
-.newsletter p {
-  margin-bottom: 1rem;
-  color: #555;
-}
+.newsletter h2 { margin-bottom: 0.5rem; color: #333; }
+.newsletter p  { margin-bottom: 1rem; color: #555; }
 
 .newsletter form {
   display: flex;
@@ -188,28 +133,15 @@ textarea:focus {
   flex-wrap: wrap;
   gap: 0.5rem;
 }
-
 .newsletter input[type="email"] {
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  flex: 1;
-  max-width: 250px;
+  padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;
+  flex: 1; max-width: 250px;
 }
-
 .newsletter button {
-  background: #FF6F61;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
+  background: #FF6F61; color: white; border: none;
+  padding: 0.75rem 1.5rem; border-radius: 4px; font-weight: bold; cursor: pointer;
 }
-
-.newsletter button:hover {
-  background: #E65A4F;
-}
+.newsletter button:hover { background: #E65A4F; }
 
 /* ------------------------------
    FOOTER
@@ -226,35 +158,19 @@ footer {
 /* ------------------------------
    NET WORTH TRACKER LAYOUT
 --------------------------------*/
-.nw-grid {
-  display: grid;
-  gap: 1rem;
-}
+.nw-grid { display: grid; gap: 1rem; }
 
-/* Single column on phones: inputs first, results below */
+/* Phones: single column */
 @media (max-width: 899px) {
   #nwForm       { order: 1; }
   #resultsPanel { order: 2; }
-
-  /* Ensure nothing locks the scroll on iOS */
-  .results-panel {
-    position: static !important;
-    top: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-  }
-
-  /* If you have tables inside results, make them scroll horizontally */
+  .results-panel { position: static !important; top: auto !important; max-height: none !important; overflow: visible !important; }
   .results-panel .table-wrap { overflow-x: auto; }
 }
 
-/* Two columns on wider screens */
+/* Desktop: two columns */
 @media (min-width: 900px) {
-  .nw-grid {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-  }
-  /* OPTIONAL sticky (desktop). Remove if undesired. */
+  .nw-grid { grid-template-columns: 1fr 1fr; align-items: start; }
   .results-panel {
     position: sticky;
     top: 1rem;
@@ -263,163 +179,72 @@ footer {
   }
 }
 
-/* Guardrails: neutralize any old sticky classes */
+/* Guardrails */
 .results-panel.is-sticky,
 .results-panel.sticky,
 .results,
-.summary {
-  position: static !important;
-  top: auto !important;
-}
+.summary { position: static !important; top: auto !important; }
 
 /* ============================================================
-   RESPONSIVE HEADER / MOBILE NAV (single source of truth)
-   Matches header.html structure:
-   .site-header > .nav > .nav__brand | .nav__toggle | .nav__links
+   RESPONSIVE HEADER / MOBILE NAV (matches header.html)
 ============================================================ */
-.site-header {
-  background: #fff;
-  border-bottom: 1px solid #ddd;
-}
+.site-header { background: #fff; border-bottom: 1px solid #ddd; }
 
 .nav {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0.75rem 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  max-width: 1100px; margin: 0 auto; padding: 0.75rem 1rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
 }
+.nav__brand img { display: block; height: 40px; }
 
-.nav__brand img {
-  display: block;
-  height: 40px;
-}
-
-/* Hamburger button */
+/* Hamburger */
 .nav__toggle {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
+  display: inline-flex; flex-direction: column; justify-content: center;
+  gap: 4px; width: 40px; height: 40px; background: transparent; border: 0; cursor: pointer;
 }
+.nav__bar { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; }
 
-.nav__bar {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: #333;
-  border-radius: 2px;
-}
-
-/* Mobile menu (collapsed by default) */
+/* Mobile menu (collapsed) */
 .nav__links {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 64px; /* sits below header */
-  background: #fff;
-  border-top: 1px solid #eee;
-
-  display: none;            /* hidden by default on mobile */
-  flex-direction: column;
-  z-index: 999;
+  list-style: none; margin: 0; padding: 0;
+  position: absolute; left: 0; right: 0; top: 64px;
+  background: #fff; border-top: 1px solid #eee;
+  display: none; flex-direction: column; z-index: 999;
 }
-
 .nav__links li a {
-  display: block;
-  padding: 0.9rem 1rem;
-  color: #333;
-  text-decoration: none;
-  font-weight: 600;
+  display: block; padding: 0.9rem 1rem; color: #333; text-decoration: none; font-weight: 600;
   border-bottom: 1px solid #f2f2f2;
 }
+.nav__links li a:hover { background: #fafafa; }
+.nav__links.is-open { display: flex; }
 
-.nav__links li a:hover {
-  background: #fafafa;
-}
-
-/* When JS toggles open */
-.nav__links.is-open {
-  display: flex;
-}
-
-/* Desktop layout */
+/* Desktop nav */
 @media (min-width: 900px) {
-  .nav {
-    padding: 1rem 1rem;
-  }
-
-  .nav__toggle {
-    display: none;
-  }
-
+  .nav { padding: 1rem 1rem; }
+  .nav__toggle { display: none; }
   .nav__links {
-    position: static;
-    display: flex !important;   /* always visible on desktop */
-    flex-direction: row;
-    gap: 1.25rem;
-    border-top: 0;
+    position: static; display: flex !important; flex-direction: row;
+    gap: 1.25rem; border-top: 0;
   }
-
-  .nav__links li a {
-    border: 0;
-    padding: 0;
-  }
-
-  .nav__links li a:hover {
-    background: transparent;
-    color: #FF6F61;
-  }
+  .nav__links li a { border: 0; padding: 0; }
+  .nav__links li a:hover { background: transparent; color: #FF6F61; }
 }
-/* Blog post charts/images */
+
+/* ------------------------------
+   BLOG POST MEDIA
+--------------------------------*/
 .blog-chart {
-  max-width: 600px;   /* reasonable cap on desktop */
-  margin: 1.5rem auto;
-  display: block;
-  width: 100%;        /* still responsive for smaller screens */
-  height: auto;
+  max-width: 600px; margin: 1.5rem auto; display: block; width: 100%; height: auto;
 }
-
-/* Generic post image sizing (non-hero) */
 article img:not(.hero-img) {
-  display:block;
-  margin:1.25rem auto;
-  width:100%;
-  height:auto;
-  max-width:680px; /* global cap */
+  display: block; margin: 1.25rem auto; width: 100%; height: auto; max-width: 680px;
 }
-
-/* Keep hero full-bleed within content column */
-.hero-img {
-  display:block;
-  width:100%;
-  height:auto;
-  border-radius:8px;
-}
+.hero-img { display: block; width: 100%; height: auto; border-radius: 8px; }
 
 /* --- Support / Buy Me a Coffee --- */
 .btn-coffee {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .55rem .9rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  border: 1px solid #e2e8f0;
-  background: #ffdd00;           /* BuyMeACoffee yellow; tweak to match your palette */
-  color: #111827;                /* near-black for contrast */
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .55rem .9rem; border-radius: 8px; text-decoration: none; font-weight: 600;
+  border: 1px solid #e2e8f0; background: #ffdd00; color: #111827;
   box-shadow: 0 1px 2px rgba(0,0,0,.06);
   transition: transform .05s ease, box-shadow .15s ease, background .15s ease;
 }
@@ -433,24 +258,15 @@ article img:not(.hero-img) {
   border-radius: 12px;
   background: #fffdf5;
 }
-.support-callout p {
-  margin: 0 0 .75rem 0;
-  line-height: 1.5;
-  color: #334155;
-}
-/* ===========================
-   Blog landing polish
-   =========================== */
+.support-callout p { margin: 0 0 .75rem 0; line-height: 1.5; color: #334155; }
 
-/* Layout containers */
-.container { max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
+/* ===========================
+   BLOG LANDING (DESKTOP FIRST)
+   =========================== */
 
 /* Featured card */
 .section.featured .card {
-  border: 1px solid #eef2f7;
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
-  background: #fff;
+  border: 1px solid #eef2f7; border-radius: 12px; padding: 1rem 1.25rem; background: #fff;
   box-shadow: 0 1px 2px rgba(16,24,40,.04);
 }
 .section.featured .card h3 {
@@ -458,24 +274,18 @@ article img:not(.hero-img) {
   font-size: clamp(1.2rem, 1.1rem + 0.8vw, 1.5rem);
   line-height: 1.25;
 }
-.section.featured .card p {
-  color: #475569; /* slate-600 */
-  margin: 0 0 .75rem;
-}
+.section.featured .card p { color: #475569; margin: 0 0 .75rem; }
 
-/* Recent posts grid */
+/* Recent posts grid (desktop default: multi-column) */
 .grid-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
 }
 
-/* Generic card */
+/* Card hover (shared) */
 .card {
-  border: 1px solid #eef2f7;
-  border-radius: 12px;
-  background: #fff;
-  overflow: hidden;
+  border: 1px solid #eef2f7; border-radius: 12px; background: #fff; overflow: hidden;
   transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
 }
 .card:hover {
@@ -484,31 +294,47 @@ article img:not(.hero-img) {
   border-color: #e2e8f0;
 }
 
-/* Thumbnail card composition */
+/* Thumb-card row layout (desktop) */
 .thumb-card {
-  display: flex; gap: .9rem; align-items: flex-start;
-  padding: .9rem; text-decoration: none;
+  display: flex; flex-direction: row; gap: 1.1rem; align-items: flex-start;
+  padding: 1rem; text-decoration: none; min-height: 180px;
 }
-.thumb-card img {
-  width: 112px; height: 72px; object-fit: cover;
-  border-radius: 8px; flex: 0 0 auto; background: #f1f5f9;
+
+/* Thumbnail wrapper (desktop size) */
+.thumb-card .thumb {
+  width: 136px; height: 88px; flex: 0 0 auto;
+  border-radius: 10px; background: #f8fafc;
+  display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
 }
+.thumb-card .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Placeholder / broken image */
+.thumb-card .thumb.placeholder,
+.thumb-card .thumb.is-broken::after {
+  color: #94a3b8; font-size: .9rem; font-weight: 600; letter-spacing: .02em;
+}
+.thumb-card .thumb.is-broken::after { content: "No image"; }
+
+/* Meta area */
 .thumb-card .meta { flex: 1 1 auto; min-width: 0; }
+
+/* Title & excerpt (desktop clamp) */
 .thumb-card h3 {
-  margin: 0 0 .25rem;
-  font-size: 1.06rem; line-height: 1.35; color: #0f172a;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  margin: 0 0 .4rem; font-size: 1.1rem; line-height: 1.35; font-weight: 700; color: #0f172a;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden; text-overflow: ellipsis; white-space: normal;
 }
 .thumb-card p {
-  margin: 0 0 .5rem; color: #475569; font-size: .95rem; line-height: 1.45;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  margin: 0 0 .75rem; color: #475569; font-size: .97rem; line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden; text-overflow: ellipsis; white-space: normal;
 }
-.thumb-card .btn { margin-top: .25rem; }
+.card h3, .thumb-card h3, .thumb-card p { word-break: break-word; overflow-wrap: anywhere; }
 
-/* Buttons */
+/* Buttons inside cards */
 .btn.btn-secondary {
   display: inline-block; font-weight: 600; text-decoration: none;
-  padding: .4rem .65rem; border-radius: 8px; border: 1px solid #e2e8f0;
+  padding: .55rem .8rem; border-radius: 10px; border: 1px solid #e2e8f0;
   color: #0f172a; background: #f8fafc;
 }
 .btn.btn-secondary:hover { background: #f1f5f9; }
@@ -523,114 +349,32 @@ article img:not(.hero-img) {
 .post-list a:hover { text-decoration: underline; }
 .post-date { color: #64748b; white-space: nowrap; font-variant-numeric: tabular-nums; }
 
-/* Section titles */
-.section h2 { margin: 0 0 .5rem; font-size: 1.25rem; }
-
-/* Responsive tweaks */
+/* ===========================
+   MOBILE OVERRIDES (<=640px)
+   =========================== */
 @media (max-width: 640px) {
-  .thumb-card { flex-direction: column; }
-  .thumb-card img { width: 100%; height: auto; }
+  .container { padding: 0 .75rem; }
+  .grid-cards { grid-template-columns: 1fr; gap: .75rem; }
+
+  .thumb-card {
+    flex-direction: column; align-items: stretch;
+    padding: .85rem; min-height: unset; gap: .85rem;
+  }
+
+  .thumb-card .thumb {
+    width: 100%; aspect-ratio: 16 / 9; height: auto; border-radius: 10px;
+  }
+  .thumb-card .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  .thumb-card h3 { font-size: 1.05rem; line-height: 1.35; -webkit-line-clamp: 4; }
+  .thumb-card p  { font-size: .96rem; line-height: 1.5;  -webkit-line-clamp: 4; margin-bottom: .65rem; }
+
+  .btn.btn-secondary { display: block; width: 100%; text-align: center; padding: .6rem .8rem; font-weight: 700; }
+
   .section.featured .card { padding: .9rem 1rem; }
-}
+  .section.featured .card h3 { font-size: 1.1rem; line-height: 1.3; }
+  .section h2 { font-size: 1.15rem; }
 
-/* Reduce weird long-word wrapping in titles/excerpts */
-.card h3, .thumb-card h3, .thumb-card p { word-break: break-word; overflow-wrap: anywhere; }
-
-
-/* --- Blog card: image + placeholder --- */
-.thumb-card .thumb {
-  width: 112px; height: 72px; flex: 0 0 auto;
-  border-radius: 8px; background: #f1f5f9;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden; position: relative;
+  .thumb-card .thumb.placeholder,
+  .thumb-card .thumb.is-broken::after { font-size: .85rem; }
 }
-.thumb-card .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.thumb-card .thumb.placeholder { color: #94a3b8; font-size: .85rem; font-weight: 600; letter-spacing: .02em; }
-.thumb-card .thumb.is-broken::after {
-  content: "No image"; color: #94a3b8; font-size: .8rem; font-weight: 600;
-}
-
-/* --- Blog cards: readability + spacing refinements --- */
-
-/* Title and excerpt: allow 3 visible lines before truncation */
-.thumb-card h3 {
-  margin: 0 0 .4rem;
-  font-size: 1.1rem;
-  line-height: 1.35;
-  font-weight: 700;
-  color: #0f172a;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;   /* up from 2 */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
-}
-
-.thumb-card p {
-  margin: 0 0 .75rem;
-  color: #475569;
-  font-size: .97rem;
-  line-height: 1.55;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;   /* up from 2 */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
-}
-
-/* Thumbnail area: bigger and more balanced */
-.thumb-card .thumb {
-  width: 136px;
-  height: 88px;
-  flex: 0 0 auto;
-  border-radius: 10px;
-  background: #f8fafc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-.thumb-card .thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Placeholder label refinement */
-.thumb-card .thumb.placeholder,
-.thumb-card .thumb.is-broken::after {
-  color: #94a3b8;
-  font-size: .9rem;
-  font-weight: 600;
-  letter-spacing: .02em;
-}
-
-/* Card spacing & typography tweaks */
-.card {
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  background: #fff;
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(15,23,42,.08);
-}
-
-.thumb-card {
-  display: flex;
-  gap: 1.1rem;
-  align-items: flex-start;
-  padding: 1rem;
-  text-decoration: none;
-  min-height: 170px;
-}
-
-/* Stack image/text on small screens */
-@media (max-width: 640px) {
-  .thumb-card { flex-direction: column; }
-  .thumb-card .thumb { width: 100%; height: auto; }
-}
-
