@@ -1,61 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>
-    {% if page.title %}{{ page.title }}{% else %}{{ site.title | default: "FIREandLife" }}{% endif %}
-  </title>
-  {% if page.description %}
-    <meta name="description" content="{{ page.description }}"/>
-  {% endif %}
-
-  {% include "seo.liquid" %}
-
-  {%- assign bust = site.time | date: '%Y%m%d%H%M%S' -%}
-  <link rel="stylesheet" href="{{ '/styles.css?v=' | append: bust | relative_url }}">
+  {%- include "head.html" -%}
+  {%- comment -%} Ensure SEO meta uses Liquid version {%- endcomment -%}
+  {%- include "seo.liquid" -%}
 </head>
-
 <body>
-  {% include "header.html" %}
+  {%- include "header.html" -%}
 
-  <main class="container">
-    {{ content }}
-
-    <!-- Show support box on individual blog posts, not on blog index -->
-    {%- if page.url and page.url contains '/blog/' and page.url != '/blog/' and page.url != '/blog/index.html' -%}
-      {% include "support.html" %}
+  <main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
+    {%- comment -%}
+      Auto-inject hero on blog pages that define a hero/image/cover.
+      Works even if a post accidentally references /src/assets/…
+    {%- endcomment -%}
+    {%- if page.url and page.url contains "/blog/" -%}
+      {%- include "post-hero.liquid" -%}
     {%- endif -%}
+
+    {{ content | safe }}
   </main>
 
-  {% include "footer.html" %}
-
-  <script>
-  (function(){
-    const toggle = document.getElementById('navToggle');
-    const menu   = document.getElementById('navMenu');
-    if(!toggle || !menu) return;
-
-    function setOpen(open){
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      menu.classList.toggle('is-open', open);
-      document.body.classList.toggle('nav-open', open);
-    }
-
-    toggle.addEventListener('click', () => {
-      const open = toggle.getAttribute('aria-expanded') === 'true';
-      setOpen(!open);
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
-    });
-    document.addEventListener('click', (e) => {
-      if (toggle.getAttribute('aria-expanded') === 'true' &&
-          !menu.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
-    });
-  })();
-  </script>
+  {%- include "footer.html" -%}
 </body>
 </html>
