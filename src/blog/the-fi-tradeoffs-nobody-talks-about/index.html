@@ -2,7 +2,7 @@
 layout: default
 permalink: /blog/the-fi-tradeoffs-nobody-talks-about/
 title: "The FI Tradeoffs Nobody Talks About"
-description: "The math of Financial Independence is simple. The tradeoffs — between time, security, flexibility, and fulfillment — are what make it hard. Here’s how to navigate them with FlexFI."
+description: "The math of Financial Independence is simple. The tradeoffs between time, security, flexibility, and fulfillment are what make it hard. Here is how to navigate them with FlexFI."
 date: 2025-11-12
 hero: "/assets/the-fi-tradeoffs-hero.png"
 tags: [mindset, balance, flexibility, planning]
@@ -10,7 +10,7 @@ keywords: "FI tradeoffs, financial independence mindset, FlexFI, time vs money, 
 ---
 
 <style>
-  /* Scoped styles for this post */
+  /* Scoped styles for this post only */
   main.container article.post { max-width: 760px; margin: 0 auto; }
   .post-meta { color:#64748b; font-size:.9rem; margin-bottom:.5rem; }
   .lede { font-size:1.125rem; line-height:1.7; color:#374151; }
@@ -32,99 +32,110 @@ keywords: "FI tradeoffs, financial independence mindset, FlexFI, time vs money, 
     <p class="post-meta">Published: November 12, 2025 • 7–8 min read</p>
     <h1>The FI Tradeoffs Nobody Talks About</h1>
 
-    {% if page.hero %}
+    {% comment %}
+      Robust hero resolver:
+      - Accepts hero / image / cover
+      - Normalizes any stray /src/assets/... to /assets/...
+      - Uses relative_url with a date-based cache buster
+    {% endcomment %}
+    {% assign hero_raw = page.hero | default: page.image | default: page.cover %}
+    {% if hero_raw and hero_raw != "" %}
+      {% assign hero_norm = hero_raw
+          | replace: "/src/assets/", "/assets/"
+          | replace: "/SRC/assets/", "/assets/" %}
+      {% assign hero_url = hero_norm | relative_url %}
       <figure class="post-hero">
-        <img src="{{ page.hero }}?v=20251112" alt="Balancing FI tradeoffs: time, flexibility, and fulfillment">
+        <img class="hero-img" src="{{ hero_url }}?v={{ page.date | date: '%Y%m%d' }}" alt="{{ page.title | escape }}">
         <figcaption>Balancing time, money, and meaning on the path to Financial Independence</figcaption>
       </figure>
     {% endif %}
 
     <p class="lede">
-      When you first discover Financial Independence, it feels like freedom in a spreadsheet. 
-      For those of us who love structure and optimization, it’s everything you could have hoped for. 
-      You start tracking expenses, fine tuning investments, maybe even daydreaming about the day you’ll hand in your notice and walk away for good.
+      When you first discover Financial Independence, it feels like freedom in a spreadsheet.
+      For those of us who love structure and optimization, it is everything you could have hoped for.
+      You start tracking expenses, fine tuning investments, maybe even daydreaming about the day you will hand in your notice and walk away for good.
     </p>
 
     <p>
-      But after a few years in the FI world, something subtle happens. 
-      You realize the math is simple — it’s the tradeoffs that are hard. 
-      These tradeoffs are often the same ones that pull people toward FI in the first place: time over money, flexibility, fulfillment, and simplicity. 
-      They’re also the challenges that reappear, again and again, along the journey.
+      After a few years in the FI world, something subtle happens.
+      You realize the math is simple, and the tradeoffs are hard.
+      These tradeoffs are often the same ones that pull people toward FI in the first place: time over money, flexibility, fulfillment, and simplicity.
+      They are also the challenges that reappear again and again along the journey.
     </p>
 
     <h2>Tradeoff #1: Time vs Money</h2>
     <p>
-      Many in the FI community live by the saying, “You can always make more money. You can never make more time.” 
-      The classic FI mindset is about maximizing savings — and for good reason. Every dollar you don’t spend accelerates your timeline. 
-      But what about the weekends you gave up for side hustles? Or the evenings you spent buried in spreadsheets instead of with family?
+      Many in the FI community live by the saying, “You can always make more money. You can never make more time.”
+      The classic FI mindset is about maximizing savings, and for good reason. Every dollar you do not spend accelerates your timeline.
+      But what about the weekends you gave up for side hustles, or the evenings you spent buried in spreadsheets instead of with family?
     </p>
 
     <p>
-      Time and money are constantly in tension. Every “yes” to overtime or freelance work is a “no” to something else — rest, health, or presence. 
-      Some people push relentlessly toward FIRE, only to realize when they get there that they missed years of core experiences. 
-      The key question: when is the sacrifice worth the cost? Once you’ve decided how much time you want now versus later, your FI path becomes much clearer.
+      Time and money are in constant tension. Every “yes” to overtime or freelance work is a “no” to something else: rest, health, or presence.
+      Some people push relentlessly toward FIRE, only to realize when they get there that they missed years of core experiences.
+      The key question is when the sacrifice is worth the cost. Once you decide how much time you want now versus later, your FI path becomes much clearer.
     </p>
 
     <div class="flexfi-tip">
-      <strong>FlexFI mindset:</strong> Design seasons for earning and seasons for living. 
-      Neither one has to win forever. 
-      Building flexibility into your journey makes FI more fulfilling — both along the way and once you get there.
+      <strong>FlexFI mindset:</strong> Design seasons for earning and seasons for living.
+      Neither one has to win forever.
+      Building flexibility into your journey makes FI more fulfilling along the way and once you get there.
     </div>
 
     <h2>Tradeoff #2: Security vs Flexibility</h2>
     <p>
-      At some point, the fear of “not enough” can take over. 
-      You’ve been saving and optimizing so long that the idea of spending feels unsafe. 
-      But over-optimizing for security can make you rigid. 
-      You hoard cash, avoid risk, and miss opportunities to enjoy what you’ve built. 
-      Ironically, that rigidity can make early retirement more anxious, not less.
+      At some point, the fear of not enough can take over.
+      You have been saving and optimizing so long that the idea of spending feels unsafe.
+      Over optimizing for security can make you rigid.
+      You hoard cash, avoid risk, and miss opportunities to enjoy what you have built.
+      Ironically, that rigidity can make early retirement feel more anxious, not less.
     </p>
     <p>
-      Security matters — but flexibility is what lets you pivot when life changes. 
-      The healthiest FI portfolios (and mindsets) hold a little of both.
+      Security matters, but flexibility is what lets you pivot when life changes.
+      The healthiest FI portfolios and mindsets hold a little of both.
     </p>
 
     <h2>Tradeoff #3: Frugality vs Fulfillment</h2>
     <p>
-      There’s a big difference between intentional simplicity and chronic deprivation. 
-      Frugality gets you started. It builds discipline, awareness, and momentum. 
-      But if every expense feels like a moral failure, you’ve crossed from discipline into guilt — and that’s not sustainable.
+      There is a big difference between intentional simplicity and chronic deprivation.
+      Frugality gets you started. It builds discipline, awareness, and momentum.
+      If every expense feels like a moral failure, you have crossed from discipline into guilt, and that is not sustainable.
     </p>
     <p>
-      Spending on joy, relationships, or experiences that create meaning isn’t “bad.” 
-      It’s part of a fulfilling FI plan. 
-      The goal isn’t to stop spending; it’s to spend better.
+      Spending on joy, relationships, or experiences that create meaning is not bad.
+      It is part of a fulfilling FI plan.
+      The goal is not to stop spending, it is to spend better.
     </p>
 
     <h2>Tradeoff #4: Growth vs Simplicity</h2>
     <p>
-      As your wealth builds, complexity creeps in — multiple accounts, spreadsheets, and optimization rabbit holes. 
-      But simplicity is a hidden luxury. The further you go, the more it matters. 
+      As your wealth builds, complexity creeps in: multiple accounts, spreadsheets, and optimization rabbit holes.
+      Simplicity is a hidden luxury. The further you go, the more it matters.
       Automate what you can. Focus on the levers that truly move the needle: savings rate, income, and time.
     </p>
 
     <div class="flexfi-tip">
-      <strong>FlexFI takeaway:</strong> A simpler plan is one you’ll actually stick to when life gets chaotic.
+      <strong>FlexFI takeaway:</strong> A simpler plan is one you will actually stick to when life gets chaotic.
     </div>
 
     <h2>Reframing FI Through FlexFI</h2>
     <p>
-      FlexFI exists because life changes. 
-      It’s a framework that honors different seasons — when you’re building, raising kids, coasting, or living off your plan. 
-      The right balance of saving, investing, and enjoying will change over time. 
-      That’s not failure — it’s progress.
+      FlexFI exists because life changes.
+      It is a framework that honors different seasons: when you are building, raising kids, coasting, or living off your plan.
+      The right balance of saving, investing, and enjoying will change over time.
+      That is not failure, it is progress.
     </p>
 
     <h2>Bottom Line</h2>
     <p>
-      The real pursuit of FI isn’t freedom from work — it’s freedom from worry. 
-      And that freedom comes when you stop chasing perfection and start designing a plan that fits the life you actually want.
+      The real pursuit of FI is not freedom from work, it is freedom from worry.
+      That freedom comes when you stop chasing perfection and start designing a plan that fits the life you actually want.
     </p>
 
     <p>
-      <strong>Next up:</strong> 
-      <a href="/blog/cost-of-raising-a-child-budgeting-and-fi-impacts/">The Cost of Raising a Child – Budgeting and FI Impacts</a>. 
-      Because some of the biggest tradeoffs show up when family, finances, and time collide.
+      <strong>Next up:</strong>
+      <a href="/blog/cost-of-raising-a-child-budgeting-and-fi-impacts/">The Cost of Raising a Child – Budgeting and FI Impacts</a>.
+      Some of the biggest tradeoffs show up when family, finances, and time collide.
     </p>
 
     <hr>
