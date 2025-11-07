@@ -9,3 +9,38 @@
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </footer>
+
+<!-- Shared: mobile nav toggle (runs on every page that includes footer.html) -->
+<script>
+(function () {
+  var btn  = document.getElementById('navToggle');
+  var menu = document.getElementById('navMenu');
+  if (!btn || !menu) return;
+
+  function setOpen(open){
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.classList.toggle('is-open', open);
+    document.body.classList.toggle('nav-open', open);
+  }
+
+  btn.addEventListener('click', function () {
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    setOpen(!open);
+  });
+
+  // Close with ESC
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') setOpen(false);
+  });
+
+  // Close when clicking outside or on a link
+  document.addEventListener('click', function (e) {
+    if (btn.getAttribute('aria-expanded') !== 'true') return;
+    if (!menu.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+  menu.addEventListener('click', function (e) {
+    if (e.target.matches('a')) setOpen(false);
+  });
+})();
+</script>
