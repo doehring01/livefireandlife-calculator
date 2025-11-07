@@ -1,25 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  {%- include "head.html" -%}
-  {%- comment -%} Ensure SEO meta uses Liquid version {%- endcomment -%}
-  {%- include "seo.liquid" -%}
-</head>
-<body>
-  {%- include "header.html" -%}
+  {% include 'head.html' %}
+  <body>
+    {% include 'header.html' %}
 
-  <main class="container" style="max-width:960px;margin:2rem auto;padding:0 1rem;">
-    {%- comment -%}
-      Auto-inject hero on blog pages that define a hero/image/cover.
-      Works even if a post accidentally references /src/assets/…
-    {%- endcomment -%}
-    {%- if page.url and page.url contains "/blog/" -%}
-      {%- include "post-hero.liquid" -%}
-    {%- endif -%}
+    <main class="container">
+      {{ content }}
 
-    {{ content }}
-  </main>
+      {%- if page.url and page.url contains '/blog/' and page.url != '/blog/' and page.url != '/blog/index.html' -%}
+        {% include 'support.html' %}
+      {%- endif -%}
+    </main>
 
-  {%- include "footer.html" -%}
-</body>
+    {% include 'footer.html' %}
+  </body>
 </html>
