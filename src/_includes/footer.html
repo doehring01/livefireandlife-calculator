@@ -10,37 +10,50 @@
   </script>
 </footer>
 
-<!-- Shared: mobile nav toggle (runs on every page that includes footer.html) -->
+<!-- Shared nav toggle: runs once, works on all pages -->
 <script>
 (function () {
-  var btn  = document.getElementById('navToggle');
-  var menu = document.getElementById('navMenu');
-  if (!btn || !menu) return;
-
-  function setOpen(open){
-    btn.setAttribute('aria-expanded', String(open));
-    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    menu.classList.toggle('is-open', open);
-    document.body.classList.toggle('nav-open', open);
+  // Wait for DOM just to be safe in all layouts
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNav);
+  } else {
+    initNav();
   }
 
-  btn.addEventListener('click', function () {
-    var open = btn.getAttribute('aria-expanded') === 'true';
-    setOpen(!open);
-  });
+  function initNav() {
+    var btn  = document.getElementById('navToggle');
+    var menu = document.getElementById('navMenu');
+    if (!btn || !menu) return;
 
-  // Close with ESC
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') setOpen(false);
-  });
+    function setOpen(open){
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menu.classList.toggle('is-open', open);
+      document.body.classList.toggle('nav-open', open);
+    }
 
-  // Close when clicking outside or on a link
-  document.addEventListener('click', function (e) {
-    if (btn.getAttribute('aria-expanded') !== 'true') return;
-    if (!menu.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  menu.addEventListener('click', function (e) {
-    if (e.target.matches('a')) setOpen(false);
-  });
+    // Ensure a known initial state
+    setOpen(false);
+
+    // Toggle by click
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      setOpen(!open);
+    });
+
+    // Close with ESC
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') setOpen(false);
+    });
+
+    // Close when clicking outside or on any menu link
+    document.addEventListener('click', function (e) {
+      if (btn.getAttribute('aria-expanded') !== 'true') return;
+      if (!menu.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+    });
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setOpen(false);
+    });
+  }
 })();
 </script>
