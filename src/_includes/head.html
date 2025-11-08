@@ -5,6 +5,9 @@
   <!-- Favicon -->
   <link rel="icon" href="{{ '/assets/favicon.png' | relative_url }}">
 
+  <!-- SEO -->
+  {% include 'seo.liquid' %}
+
   <!-- Main stylesheet (cache-busted with timestamp) -->
   <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}?v={{ 'now' | date: '%Y%m%d%H%M' }}" />
 
@@ -29,5 +32,3 @@
       "https://chimpstatic.com/mcjs-connected/js/users/72d54d5d34e330e9be28f8b0b/76cbee2dfa420e118252735bb.js");
   </script>
 </head>
-
-{% include 'seo.liquid' %}
