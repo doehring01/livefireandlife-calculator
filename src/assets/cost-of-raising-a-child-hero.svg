@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">FIREandLife — Cost of Raising a Child</title>
+  <desc id="desc">Flat illustration with stroller, piggy bank, calendar, receipt, daycare building, and charts in FIREandLife brand colors.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F9FAFB"/>
+      <stop offset="100%" stop-color="#F3F4F6"/>
+    </linearGradient>
+    <style>
+      .card { fill: #ffffff; stroke: #e5e7eb; stroke-width: 2; }
+      .muted { fill: #64748b; }
+      .muted2 { fill: #94a3b8; }
+      .accent { fill: #FF6F61; }   /* brand orange */
+      .accent2 { fill: #FFD166; }  /* brand yellow */
+      .accent3 { fill: #1f2937; }  /* dark text */
+      .shadow { filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08)); }
+      .label { font: 500 28px 'Segoe UI', Tahoma, sans-serif; fill: #1f2937; }
+      .small { font: 400 22px 'Segoe UI', Tahoma, sans-serif; fill: #475569; }
+      .tiny  { font: 500 18px 'Segoe UI', Tahoma, sans-serif; fill: #64748b; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- Title block -->
+  <g transform="translate(120,110)">
+    <rect class="shadow" x="0" y="0" rx="16" ry="16" width="1360" height="160" fill="#ffffff" stroke="#e5e7eb" />
+    <text class="label" x="40" y="68">The Cost of Raising a Child</text>
+    <text class="small" x="40" y="112">Daycare, healthcare, and real life — how to stay on track for FI with kids</text>
+    <!-- subtle brand bar -->
+    <rect x="0" y="152" width="1360" height="8" class="accent"/>
+  </g>
+
+  <!-- Left cluster: stroller + receipt -->
+  <g transform="translate(120,320)">
+    <!-- stroller -->
+    <g class="shadow" transform="translate(0,0)">
+      <circle cx="120" cy="210" r="40" fill="#1f2937"/>
+      <circle cx="280" cy="210" r="40" fill="#1f2937"/>
+      <rect x="110" y="120" width="200" height="50" rx="8" class="accent"/>
+      <path d="M110,120 L60,70 A40,40 0 0 1 110,20 L270,20 A40,40 0 0 1 310,60 L310,120 Z" fill="#FFD166"/>
+      <rect x="160" y="70" width="20" height="60" class="muted2"/>
+      <rect x="210" y="70" width="20" height="60" class="muted2"/>
+    </g>
+
+    <!-- receipt card -->
+    <g transform="translate(380,0)">
+      <rect class="card shadow" x="0" y="0" rx="12" ry="12" width="360" height="240"/>
+      <text class="tiny" x="24" y="44">Monthly Totals</text>
+      <rect x="24" y="64" width="312" height="12" class="muted2"/>
+      <rect x="24" y="96" width="260" height="12" class="muted2"/>
+      <rect x="24" y="128" width="200" height="12" class="muted2"/>
+      <rect x="24" y="160" width="290" height="12" class="muted2"/>
+      <rect x="24" y="192" width="180" height="12" class="accent"/>
+    </g>
+  </g>
+
+  <!-- Right cluster: piggy bank + calendar + daycare -->
+  <g transform="translate(900,320)">
+    <!-- piggy bank -->
+    <g class="shadow">
+      <ellipse cx="140" cy="140" rx="120" ry="90" fill="#FF6F61"/>
+      <circle cx="240" cy="110" r="28" fill="#FF6F61"/>
+      <circle cx="206" cy="130" r="8" fill="#1f2937"/>
+      <rect x="80" y="90" width="120" height="20" rx="6" fill="#1f2937"/>
+      <!-- coin -->
+      <circle cx="140" cy="64" r="26" fill="#FFD166" stroke="#eab308"/>
+      <text x="140" y="72" text-anchor="middle" class="tiny" fill="#1f2937">$</text>
+    </g>
+
+    <!-- calendar -->
+    <g transform="translate(320,0)">
+      <rect class="card shadow" x="0" y="0" rx="12" ry="12" width="320" height="220"/>
+      <rect x="0" y="0" width="320" height="52" fill="#FF6F61"/>
+      <text x="20" y="36" class="small" fill="#ffffff">Childcare Schedule</text>
+      <!-- grid -->
+      <g transform="translate(20,72)" fill="#e5e7eb">
+        <rect x="0" y="0" width="40" height="32"/><rect x="46" y="0" width="40" height="32"/><rect x="92" y="0" width="40" height="32"/><rect x="138" y="0" width="40" height="32"/><rect x="184" y="0" width="40" height="32"/><rect x="230" y="0" width="40" height="32"/>
+        <rect x="0" y="38" width="40" height="32"/><rect x="46" y="38" width="40" height="32"/><rect x="92" y="38" width="40" height="32" class="accent2"/><rect x="138" y="38" width="40" height="32"/><rect x="184" y="38" width="40" height="32" class="accent2"/><rect x="230" y="38" width="40" height="32"/>
+        <rect x="0" y="76" width="40" height="32"/><rect x="46" y="76" width="40" height="32"/><rect x="92" y="76" width="40" height="32"/><rect x="138" y="76" width="40" height="32" class="accent2"/><rect x="184" y="76" width="40" height="32"/><rect x="230" y="76" width="40" height="32"/>
+      </g>
+    </g>
+
+    <!-- daycare building -->
+    <g transform="translate(80,240)">
+      <rect x="0" y="0" width="560" height="200" rx="12" class="card shadow"/>
+      <rect x="0" y="0" width="560" height="14" class="accent"/>
+      <text class="small" x="24" y="48">Daycare and Early Years</text>
+      <rect x="24" y="72" width="160" height="14" class="muted2"/>
+      <rect x="24" y="96" width="220" height="14" class="muted2"/>
+      <rect x="24" y="120" width="280" height="14" class="muted2"/>
+      <rect x="24" y="144" width="200" height="14" class="accent2"/>
+    </g>
+  </g>
+
+  <!-- Footer tag -->
+  <g transform="translate(120,820)">
+    <text class="tiny">FIREandLife • FlexFI — adapt your plan to each season</text>
+  </g>
+</svg>
