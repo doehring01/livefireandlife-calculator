@@ -378,3 +378,7 @@ article img:not(.hero-img) {
   .thumb-card .thumb.placeholder,
   .thumb-card .thumb.is-broken::after { font-size: .85rem; }
 }
+/* src/assets/css/calculators.css */
+.card { border:1px solid #eef2f7; padding:1rem; border-radius:.5rem; }
+.table th, .table td { padding:.5rem; border-bottom:1px solid #eee; }
+.btn { cursor:pointer; }
