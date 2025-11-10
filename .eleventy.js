@@ -3,21 +3,22 @@ module.exports = function(eleventyConfig) {
   /* ---------------------------
      Passthrough copies
   ---------------------------- */
-  // Copies everything under src/assets (incl. css + data) to /assets
-  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
-  // Calculator JS (outside assets)
+  // Data files → /assets/data
+  eleventyConfig.addPassthroughCopy({ "src/assets/data": "assets/data" });
+  // Calculator JS → /calculators/contribution-optimizer/app.js
   eleventyConfig.addPassthroughCopy({
     "src/calculators/contribution-optimizer/app.js":
       "calculators/contribution-optimizer/app.js"
   });
-  // Optional Netlify _headers file if present
+  // Optional Netlify headers file
   eleventyConfig.addPassthroughCopy({ "src/_headers": "_headers" });
-  // Optional root stylesheet
+  // Root stylesheet → /styles.css
   eleventyConfig.addPassthroughCopy({ "src/styles.css": "styles.css" });
 
-  // Helpful during dev: watch these so the server reloads
-  eleventyConfig.addWatchTarget("src/assets");
+  // Helpful during dev; harmless on Netlify
+  eleventyConfig.addWatchTarget("src/assets/data");
   eleventyConfig.addWatchTarget("src/calculators/contribution-optimizer/app.js");
+  eleventyConfig.addWatchTarget("src/styles.css");
 
   /* ---------------------------
      Jekyll compatibility filters
@@ -28,9 +29,11 @@ module.exports = function(eleventyConfig) {
     return String(value).replace(/([^:]\/)\/+/g, "$1");
   });
 
-  const SITE_URL = process.env.SITE_URL || ""; // e.g. https://livefireandlife.com
+  // Prefer SITE_URL from environment (set in Netlify UI)
+  const SITE_URL = (process.env.SITE_URL || "").trim(); // e.g. https://livefireandlife.com
   eleventyConfig.addFilter("absolute_url", (value) => {
     if (!value) return value;
+    if (!SITE_URL) return value; // if not set, fall back to the given path
     const joined = (SITE_URL.replace(/\/+$/, "") + "/" + String(value).replace(/^\/+/, ""))
       .replace(/([^:]\/)\/+/g, "$1");
     return joined;
@@ -73,7 +76,7 @@ module.exports = function(eleventyConfig) {
       input: "src",
       includes: "_includes",
       layouts: "_layouts",
-      output: "dist" // change to "_site" if that's your deploy target
+      output: "dist" // <-- set Netlify “Publish directory” to dist
     },
     htmlTemplateEngine: "liquid",
     markdownTemplateEngine: "liquid",
