@@ -2,7 +2,12 @@
 
 // ---------- utilities ----------
 const $ = (s) => document.querySelector(s);
-const toNum = (el) => Number($(el).value || 0);
+const toNum = (el) => {
+  const v = $(el) ? $(el).value : 0;
+  const n = Number.parseFloat(v);
+  return Number.isFinite(n) ? n : 0;
+};
+const clamp = (n, lo, hi) => Math.min(Math.max(n, lo), hi);
 
 // ---------- data loader (no bundler needed) ----------
 async function loadData() {
@@ -40,14 +45,14 @@ let DATA = null;
 
 // ---------- inputs ----------
 function readInputs(){
-  return {
-    filing: $("#filingStatus").value,                // "Single" | "MFJ"
+  const i = {
+    filing: ($("#filingStatus")?.value || "Single"), // "Single" | "MFJ"
     age: toNum("#age"),
     wages: toNum("#wages"),
     otherOrd: toNum("#otherOrd"),
     qdiv: toNum("#qdiv"),
     ltcg: toNum("#ltcg"),
-    matchPolicy: $("#matchPolicy").value,
+    matchPolicy: ($("#matchPolicy")?.value || "").trim(),
     savings: toNum("#savings"),
     rNom: toNum("#rNom") / 100,
     divYield: toNum("#divYield") / 100,
@@ -56,24 +61,46 @@ function readInputs(){
     retCGRate: toNum("#retCGRate") / 100,
 
     // from JSON data
-    kLimit: DATA.limits.employee_deferral,           // e.g. 23000
-    stdDeduction: DATA.stdDeduction,                 // { Single: 14600, MFJ: 29200 }
-    brackets: DATA.brackets                          // full bracket tables
+    kLimit: 0,                 // set below after DATA loads
+    stdDeduction: {},          // set below
+    brackets: {}               // set below
   };
+
+  // Clamp and guard inputs
+  i.age = clamp(i.age || 35, 18, 100);
+  i.wages = Math.max(i.wages || 0, 0);
+  i.otherOrd = Math.max(i.otherOrd || 0, 0);
+  i.qdiv = Math.max(i.qdiv || 0, 0);
+  i.ltcg = Math.max(i.ltcg || 0, 0);
+  i.savings = Math.max(i.savings || 0, 0);
+  i.rNom = clamp(isFinite(i.rNom) ? i.rNom : 0.06, -0.5, 1.0);
+  i.divYield = clamp(isFinite(i.divYield) ? i.divYield : 0.018, 0, 1.0);
+  i.yearsToRet = clamp(i.yearsToRet || 25, 0, 70);
+  i.retOrdRate = clamp(isFinite(i.retOrdRate) ? i.retOrdRate : 0.15, 0, 1.0);
+  i.retCGRate = clamp(isFinite(i.retCGRate) ? i.retCGRate : 0.15, 0, 1.0);
+
+  if (DATA) {
+    i.kLimit = Number(DATA.limits?.employee_deferral || 0);
+    i.stdDeduction = DATA.stdDeduction || {};
+    i.brackets = DATA.brackets || {};
+  }
+
+  return i;
 }
 
 // ---------- employer match (simple 2-tier parser) ----------
 function calcEmployerMatch(salary, employeecntrb, policyStr){
   // Supports "100% up to 3%; 50% of next 2%" style
   let match = 0;
-  const nums = (policyStr.toLowerCase().match(/(\d+(\.\d+)?)/g) || []).map(Number);
+  const nums = (String(policyStr).toLowerCase().match(/(\d+(\.\d+)?)/g) || []).map(Number);
 
   const t1rate = (nums[0] ?? 100) / 100;
   const t1cap  = (nums[1] ?? 3)   / 100;
   const t2rate = (nums[2] ?? 50)  / 100;
   const t2cap  = (nums[3] ?? 2)   / 100;
 
-  const cntrbPct = Math.min(employeecntrb / Math.max(salary, 1), 1);
+  const denom = Math.max(salary, 1);
+  const cntrbPct = Math.min(employeecntrb / denom, 1);
   const tier1 = Math.min(cntrbPct, t1cap) * salary * t1rate;
   const tier2Base = Math.max(Math.min(cntrbPct - t1cap, t2cap), 0);
   const tier2 = tier2Base * salary * t2rate;
@@ -84,7 +111,7 @@ function calcEmployerMatch(salary, employeecntrb, policyStr){
 }
 
 // ---------- tax helpers ----------
-function currentYearTax(i, employeecntrbPreTax, rothCntrb, brokerageCntrb, salary){
+function currentYearTax(i, employeecntrbPreTax, _rothCntrb, _brokerageCntrb, salary){
   // Traditional 401k reduces wages (ordinary)
   const agiOrd = Math.max(salary - employeecntrbPreTax, 0) + i.otherOrd;
   const agi = agiOrd + i.qdiv + i.ltcg;
@@ -172,16 +199,23 @@ function growToRetirement(i, employeecntrbPreTax, rothCntrb, brokerageCntrb, emp
 
 // ---------- optimizer ----------
 function optimize(i){
-  const salary = i.wages;
-  const maxEmployee = i.kLimit;
-  const stepPct = 5; // sweep in 5% increments
-  const results = [];
+  const salary = Math.max(i.wages, 0);
 
-  const budget = i.savings; // total dollars available to save this year
+  // Guard: employee deferral cannot exceed wages OR the IRS limit
+  const maxEmployee = Math.min(i.kLimit, salary);
+
+  const results = [];
+  const budget = Math.max(i.savings, 0); // total dollars available to save this year
 
   // Sweep employee deferral from 0..min(budget, 401k limit)
+  const empMax = Math.min(budget, maxEmployee);
+  // Step is 5% of budget but no less than $500 and no more than empMax
   const empStep = Math.max(500, Math.round(budget * 0.05));
-  for (let emp = 0; emp <= Math.min(budget, maxEmployee); emp += empStep) {
+  const empStepFinal = Math.min(empStep, Math.max(empMax, 0) || empStep);
+
+  const stepPct = 5; // sweep Roth/Brokerage split in 5% increments
+
+  for (let emp = 0; emp <= empMax; emp += empStepFinal) {
     const match = calcEmployerMatch(salary, emp, i.matchPolicy);
     const remainder = Math.max(budget - emp, 0);
 
@@ -205,20 +239,30 @@ function optimize(i){
     }
   }
 
+  // Ensure we include the "all in" edges even if empMax = 0 or the steps miss exact endpoints
+  if (!results.length) {
+    const match = calcEmployerMatch(salary, 0, i.matchPolicy);
+    const sim = growToRetirement(i, 0, 0, budget, match, salary);
+    results.push({
+      empTotal: 0, empTrad: 0, empRoth: 0, brok: budget, match,
+      afterTaxFV: sim.totalAfterTaxFV, taxNow: sim.tax.totalTax
+    });
+  }
+
   results.sort((a,b) => b.afterTaxFV - a.afterTaxFV);
   const best = results[0];
 
   // Quick comparisons
-  const allBrokerage = growToRetirement(i, 0, 0, i.savings, 0, salary);
+  const allBrokerage = growToRetirement(i, 0, 0, budget, 0, salary);
   const allTrad = (() => {
-    const emp = Math.min(i.savings, maxEmployee);
+    const emp = Math.min(budget, maxEmployee);
     const match = calcEmployerMatch(salary, emp, i.matchPolicy);
-    return growToRetirement(i, emp, 0, Math.max(i.savings - emp, 0), match, salary);
+    return growToRetirement(i, emp, 0, Math.max(budget - emp, 0), match, salary);
   })();
   const allRoth = (() => {
-    const emp = Math.min(i.savings, maxEmployee);
+    const emp = Math.min(budget, maxEmployee);
     const match = calcEmployerMatch(salary, emp, i.matchPolicy);
-    return growToRetirement(i, 0, emp, Math.max(i.savings - emp, 0), match, salary);
+    return growToRetirement(i, 0, emp, Math.max(budget - emp, 0), match, salary);
   })();
 
   return { best, allBrokerage, allTrad, allRoth, results };
@@ -228,24 +272,27 @@ function optimize(i){
 function render(out){
   const fmt = (x) => (isFinite(x) ? x.toLocaleString(undefined,{maximumFractionDigits:0}) : "—");
 
-  $("#callouts").innerHTML = `
-    <div class="card" style="border:1px solid #eef2f7;padding:1rem;border-radius:.5rem;">
-      <h3>Recommended split (MVP)</h3>
-      <p><strong>Employee 401k:</strong> $${fmt(out.best.empTotal)}
-         → Trad $${fmt(out.best.empTrad)}, Roth $${fmt(out.best.empRoth)}
-         &nbsp;|&nbsp; <strong>Brokerage:</strong> $${fmt(out.best.brok)}
-         &nbsp;|&nbsp; <strong>Employer Match (est):</strong> $${fmt(out.best.match)}</p>
-      <p><strong>Projected after-tax value at retirement:</strong> $${fmt(out.best.afterTaxFV)}</p>
-      <p><small>Assumptions are simplified for MVP (dividend drag = 15%, retirement tax rates user-provided).</small></p>
-    </div>
-  `;
+  const callouts = $("#callouts");
+  if (callouts) {
+    callouts.innerHTML = `
+      <div class="card" style="border:1px solid #eef2f7;padding:1rem;border-radius:.5rem;">
+        <h3>Recommended split (MVP)</h3>
+        <p><strong>Employee 401k:</strong> $${fmt(out.best.empTotal)}
+           → Trad $${fmt(out.best.empTrad)}, Roth $${fmt(out.best.empRoth)}
+           &nbsp;|&nbsp; <strong>Brokerage:</strong> $${fmt(out.best.brok)}
+           &nbsp;|&nbsp; <strong>Employer Match (est):</strong> $${fmt(out.best.match)}</p>
+        <p><strong>Projected after-tax value at retirement:</strong> $${fmt(out.best.afterTaxFV)}</p>
+        <p><small>Assumptions are simplified for MVP (dividend drag = 15%, retirement tax rates user-provided).</small></p>
+      </div>
+    `;
+  }
 
   // Chart: top 10 allocations by after-tax FV
   const top = out.results.slice(0, 10);
   const labels = top.map((r,i)=>`#${i+1}`);
   const data = top.map(r=>r.afterTaxFV);
   const canvas = document.getElementById("chartOut");
-  if (canvas) {
+  if (canvas && window.Chart) {
     const ctx = canvas.getContext("2d");
     if (window._optChart) window._optChart.destroy();
     window._optChart = new Chart(ctx, {
@@ -256,39 +303,53 @@ function render(out){
   }
 
   // Comparison table + CSV export button
-  $("#resultsTable").innerHTML = `
-    <table class="table" style="width:100%;border-collapse:collapse;">
-      <thead><tr>
-        <th style="text-align:left;padding:.5rem;border-bottom:1px solid #eee;">Strategy</th>
-        <th style="text-align:right;padding:.5rem;border-bottom:1px solid #eee;">After-tax FV</th>
-      </tr></thead>
-      <tbody>
-        <tr><td style="padding:.5rem;">All Brokerage</td><td style="padding:.5rem;text-align:right;">$${fmt(out.allBrokerage.totalAfterTaxFV)}</td></tr>
-        <tr><td style="padding:.5rem;">All Traditional 401k to limit</td><td style="padding:.5rem;text-align:right;">$${fmt(out.allTrad.totalAfterTaxFV)}</td></tr>
-        <tr><td style="padding:.5rem;">All Roth 401k to limit</td><td style="padding:.5rem;text-align:right;">$${fmt(out.allRoth.totalAfterTaxFV)}</td></tr>
-        <tr><td style="padding:.5rem;"><strong>Optimal (MVP)</strong></td><td style="padding:.5rem;text-align:right;"><strong>$${fmt(out.best.afterTaxFV)}</strong></td></tr>
-      </tbody>
-    </table>
-  `;
+  const tbl = $("#resultsTable");
+  if (tbl) {
+    tbl.innerHTML = `
+      <table class="table" style="width:100%;border-collapse:collapse;">
+        <thead><tr>
+          <th style="text-align:left;padding:.5rem;border-bottom:1px solid #eee;">Strategy</th>
+          <th style="text-align:right;padding:.5rem;border-bottom:1px solid #eee;">After-tax FV</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="padding:.5rem;">All Brokerage</td><td style="padding:.5rem;text-align:right;">$${fmt(out.allBrokerage.totalAfterTaxFV)}</td></tr>
+          <tr><td style="padding:.5rem;">All Traditional 401k to limit</td><td style="padding:.5rem;text-align:right;">$${fmt(out.allTrad.totalAfterTaxFV)}</td></tr>
+          <tr><td style="padding:.5rem;">All Roth 401k to limit</td><td style="padding:.5rem;text-align:right;">$${fmt(out.allRoth.totalAfterTaxFV)}</td></tr>
+          <tr><td style="padding:.5rem;"><strong>Optimal (MVP)</strong></td><td style="padding:.5rem;text-align:right;"><strong>$${fmt(out.best.afterTaxFV)}</strong></td></tr>
+        </tbody>
+      </table>
+    `;
 
-  // CSV export
-  const existing = document.getElementById("csvBtn");
-  if (existing) existing.remove();
-  const csvBtn = document.createElement("button");
-  csvBtn.id = "csvBtn";
-  csvBtn.textContent = "Download CSV";
-  csvBtn.className = "btn btn-secondary";
-  csvBtn.style.marginTop = "1rem";
-  csvBtn.onclick = () => {
-    const header = "Emp Total,Trad,Roth,Brokerage,Match,After-Tax FV,Tax Now\n";
-    const rows = out.results.map(r =>
-      [r.empTotal, r.empTrad, r.empRoth, r.brok, r.match, r.afterTaxFV, r.taxNow].join(",")
-    ).join("\n");
-    const blob = new Blob([header + rows], { type: "text/csv" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "contribution-optimizer.csv";
-    a.click();
-  };
-  $("#resultsTable").after(csvBtn);
+    // CSV export
+    const existing = document.getElementById("csvBtn");
+    if (existing) existing.remove();
+    const csvBtn = document.createElement("button");
+    csvBtn.id = "csvBtn";
+    csvBtn.textContent = "Download CSV";
+    csvBtn.className = "btn btn-secondary";
+    csvBtn.style.marginTop = "1rem";
+    csvBtn.addEventListener("click", () => {
+      const header = "Emp Total,Trad,Roth,Brokerage,Match,After-Tax FV,Tax Now\n";
+      const rows = out.results.map(r =>
+        [r.empTotal, r.empTrad, r.empRoth, r.brok, r.match, r.afterTaxFV, r.taxNow].join(",")
+      ).join("\n");
+      const blob = new Blob([header + rows], { type: "text/csv" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "contribution-optimizer.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(a.href);
+      if (window.dataLayer) {
+        window.dataLayer.push({ event: "calc_csv_download", calc: "contribution-optimizer" });
+      }
+    });
+    tbl.after(csvBtn);
+  }
+
+  // Optional analytics hook for "run"
+  if (window.dataLayer) {
+    window.dataLayer.push({ event: "calc_optimize_run", calc: "contribution-optimizer" });
+  }
 }
