@@ -9,117 +9,119 @@ permalink: /calculators/contribution-optimizer/
 <section class="container" style="max-width:980px;margin:2rem auto;padding:0 1rem;">
   <h1>FI Contribution Optimization Calculator</h1>
   <p style="margin-bottom:1rem;">
-    This calculator helps you allocate your annual savings across <strong>Traditional 401k</strong>, <strong>Roth 401k</strong>, and <strong>Brokerage</strong> to maximize estimated <em>after-tax</em> wealth at retirement.
-    It models: current-year tax savings from pre-tax 401k deferrals, employer match (approximate), long-term growth, and a simple dividend tax drag in taxable accounts. Assumptions are simplified and user-editable below; this is educational, not tax advice.
+    This calculator helps you allocate your annual savings across <strong>Traditional 401k</strong>, <strong>Roth 401k</strong>, and <strong>Brokerage</strong> to maximize estimated <em>after-tax</em> wealth at retirement. It models current-year tax savings from pre-tax 401k deferrals, employer match (approximate), long-term growth, and a simple dividend tax drag in taxable accounts. Assumptions are simplified and user-editable below; this is educational, not tax advice.
   </p>
 
-  <p style="font-size:.95rem;color:#555;margin:.75rem 0;">
-    <strong>Required fields are marked with <span style="color:#c00">*</span></strong>
-  </p>
+  <div class="calc-card">
+    <p style="font-size:.95rem;color:var(--muted);margin:.25rem 0 1rem;">
+      <strong>Required fields are marked with <span style="color:#c00">*</span></strong>
+    </p>
 
-  <form id="calc-form" class="grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-    <div>
-      <label for="filingStatus">Filing Status <span aria-hidden="true" style="color:#c00">*</span></label>
-      <select id="filingStatus" aria-label="Filing Status" required>
-        <option>Single</option><option>MFJ</option>
-      </select>
-      <small>Used to look up brackets and the standard deduction.</small>
-    </div>
+    <form id="calc-form" class="calc-grid">
+      <!-- add classes to inputs/selects/labels -->
+      <div>
+        <label class="calc-label" for="filingStatus">Filing Status <span aria-hidden="true" style="color:#c00">*</span></label>
+        <select id="filingStatus" class="calc-select" required>
+          <option>Single</option><option>MFJ</option>
+        </select>
+        <small class="calc-help">Used to look up brackets and the standard deduction.</small>
+      </div>
 
-    <div>
-      <label for="age">Age</label>
-      <input id="age" type="number" min="18" value="35" inputmode="numeric">
-      <small>Optional. For context only (no age-based rules modeled yet).</small>
-    </div>
+      <div>
+        <label class="calc-label" for="age">Age</label>
+        <input id="age" type="number" min="18" value="35" inputmode="numeric" class="calc-input">
+        <small class="calc-help">Optional. For context only (no age-based rules modeled yet).</small>
+      </div>
 
-    <div>
-      <label for="wages">W2 Wages ($) <span aria-hidden="true" style="color:#c00">*</span></label>
-      <input id="wages" type="number" value="150000" inputmode="numeric" required>
-      <small>Employment income that 401k deferrals reduce.</small>
-    </div>
+      <div>
+        <label class="calc-label" for="wages">W2 Wages ($) <span aria-hidden="true" style="color:#c00">*</span></label>
+        <input id="wages" type="number" value="150000" inputmode="numeric" required class="calc-input">
+        <small class="calc-help">Employment income that 401k deferrals reduce.</small>
+      </div>
 
-    <div>
-      <label for="otherOrd">Other Ordinary Income ($)</label>
-      <input id="otherOrd" type="number" value="0" inputmode="numeric">
-      <small>Interest, side income, etc. (taxed as ordinary income).</small>
-    </div>
+      <div>
+        <label class="calc-label" for="otherOrd">Other Ordinary Income ($)</label>
+        <input id="otherOrd" type="number" value="0" inputmode="numeric" class="calc-input">
+        <small class="calc-help">Interest, side income, etc. (taxed as ordinary income).</small>
+      </div>
 
-    <div>
-      <label for="qdiv">Qualified Dividends ($)</label>
-      <input id="qdiv" type="number" value="0" inputmode="numeric">
-      <small>Qualified dividends taxed at long-term capital gains rates.</small>
-    </div>
+      <div>
+        <label class="calc-label" for="qdiv">Qualified Dividends ($)</label>
+        <input id="qdiv" type="number" value="0" inputmode="numeric" class="calc-input">
+        <small class="calc-help">Qualified dividends taxed at long-term capital gains rates.</small>
+      </div>
 
-    <div>
-      <label for="ltcg">LT Capital Gains ($)</label>
-      <input id="ltcg" type="number" value="0" inputmode="numeric">
-      <small>Long-term realized gains this year.</small>
-    </div>
+      <div>
+        <label class="calc-label" for="ltcg">LT Capital Gains ($)</label>
+        <input id="ltcg" type="number" value="0" inputmode="numeric" class="calc-input">
+        <small class="calc-help">Long-term realized gains this year.</small>
+      </div>
 
-    <div style="grid-column:1/-1">
-      <label for="matchPolicy">Employer Match Policy</label>
-      <input id="matchPolicy" type="text" value="100% up to 3%; 50% of next 2%">
-      <small>Format like “100% up to 3%; 50% of next 2%”. We treat match dollars as pre-tax.</small>
-    </div>
+      <div style="grid-column:1/-1">
+        <label class="calc-label" for="matchPolicy">Employer Match Policy</label>
+        <input id="matchPolicy" type="text" value="100% up to 3%; 50% of next 2%" class="calc-input">
+        <small class="calc-help">Format like “100% up to 3%; 50% of next 2%”. We treat match dollars as pre-tax.</small>
+      </div>
 
-    <div>
-      <label for="savings">Annual Savings Budget ($) <span aria-hidden="true" style="color:#c00">*</span></label>
-      <input id="savings" type="number" value="36000" inputmode="numeric" required>
-      <small>Total dollars you can save this year (across all accounts).</small>
-    </div>
+      <div>
+        <label class="calc-label" for="savings">Annual Savings Budget ($) <span aria-hidden="true" style="color:#c00">*</span></label>
+        <input id="savings" type="number" value="36000" inputmode="numeric" required class="calc-input">
+        <small class="calc-help">Total dollars you can save this year (across all accounts).</small>
+      </div>
 
-    <div>
-      <label for="planTypes">401k Available</label>
-      <select id="planTypes" aria-label="401k Available">
-        <option>Traditional & Roth</option>
-      </select>
-      <small>Informational—for future expansion (Roth-only/Trad-only scenarios).</small>
-    </div>
+      <div>
+        <label class="calc-label" for="planTypes">401k Available</label>
+        <select id="planTypes" class="calc-select">
+          <option>Traditional & Roth</option>
+        </select>
+        <small class="calc-help">Informational—for future expansion (Roth-only/Trad-only scenarios).</small>
+      </div>
 
-    <div>
-      <label for="rNom">Return (nominal) % <span aria-hidden="true" style="color:#c00">*</span></label>
-      <input id="rNom" type="number" step="0.1" value="6.0" inputmode="decimal" required>
-      <small>Annualized long-run portfolio return assumption (before taxes).</small>
-    </div>
+      <div>
+        <label class="calc-label" for="rNom">Return (nominal) % <span aria-hidden="true" style="color:#c00">*</span></label>
+        <input id="rNom" type="number" step="0.1" value="6.0" inputmode="decimal" required class="calc-input">
+        <small class="calc-help">Annualized long-run portfolio return assumption (before taxes).</small>
+      </div>
 
-    <div>
-      <label for="divYield">Brokerage Dividend Yield %</label>
-      <input id="divYield" type="number" step="0.1" value="1.8" inputmode="decimal">
-      <small>Used to approximate yearly dividend tax drag in taxable (defaults to 1.8%).</small>
-    </div>
+      <div>
+        <label class="calc-label" for="divYield">Brokerage Dividend Yield %</label>
+        <input id="divYield" type="number" step="0.1" value="1.8" inputmode="decimal" class="calc-input">
+        <small class="calc-help">Used to approximate yearly dividend tax drag in taxable (defaults to 1.8%).</small>
+      </div>
 
-    <div>
-      <label for="yearsToRet">Years to Retirement <span aria-hidden="true" style="color:#c00">*</span></label>
-      <input id="yearsToRet" type="number" value="25" inputmode="numeric" required>
-      <small>How long your contributions can compound.</small>
-    </div>
+      <div>
+        <label class="calc-label" for="yearsToRet">Years to Retirement <span aria-hidden="true" style="color:#c00">*</span></label>
+        <input id="yearsToRet" type="number" value="25" inputmode="numeric" required class="calc-input">
+        <small class="calc-help">How long your contributions can compound.</small>
+      </div>
 
-    <div>
-      <label for="retOrdRate">Retirement Marginal Rate (Trad w/d) % <span aria-hidden="true" style="color:#c00">*</span></label>
-      <input id="retOrdRate" type="number" step="0.1" value="15" inputmode="decimal" required>
-      <small>Estimated tax rate on future Traditional 401k withdrawals.</small>
-    </div>
+      <div>
+        <label class="calc-label" for="retOrdRate">Retirement Marginal Rate (Trad w/d) % <span aria-hidden="true" style="color:#c00">*</span></label>
+        <input id="retOrdRate" type="number" step="0.1" value="15" inputmode="decimal" required class="calc-input">
+        <small class="calc-help">Estimated tax rate on future Traditional 401k withdrawals.</small>
+      </div>
 
-    <div>
-      <label for="retCGRate">Retirement LTCG Rate (Brokerage) % <span aria-hidden="true" style="color:#c00">*</span></label>
-      <input id="retCGRate" type="number" step="0.1" value="15" inputmode="decimal" required>
-      <small>Estimated long-term capital gains/dividend rate in retirement.</small>
-    </div>
+      <div>
+        <label class="calc-label" for="retCGRate">Retirement LTCG Rate (Brokerage) % <span aria-hidden="true" style="color:#c00">*</span></label>
+        <input id="retCGRate" type="number" step="0.1" value="15" inputmode="decimal" required class="calc-input">
+        <small class="calc-help">Estimated long-term capital gains/dividend rate in retirement.</small>
+      </div>
 
-    <div style="grid-column:1/-1;margin-top:1rem;">
-      <button class="btn btn-primary" type="button" id="runBtn">Find Optimal Split</button>
-      <small style="display:block;color:#555;margin-top:.5rem;">
-        Clicking will validate required fields, load tax data, and evaluate hundreds of allocation mixes.
-      </small>
-    </div>
-  </form>
+      <div style="grid-column:1/-1;margin-top:.25rem;">
+        <button class="btn-primary" type="button" id="runBtn">Find Optimal Split</button>
+        <small class="calc-help">We’ll validate required fields, load tax data, and evaluate multiple allocation mixes.</small>
+      </div>
+    </form>
+  </div>
 
   <hr style="margin:2rem 0;">
 
   <div id="callouts" role="region" aria-live="polite"></div>
+  <div id="kpis"></div>
   <canvas id="chartOut" style="margin:1.5rem 0;" aria-label="Top allocations chart" role="img"></canvas>
   <div id="resultsTable" style="overflow:auto;margin-top:1rem;"></div>
 </section>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
 <script type="module" src="/calculators/contribution-optimizer/app.js" defer></script>
