@@ -382,3 +382,94 @@ article img:not(.hero-img) {
 .card { border:1px solid #eef2f7; padding:1rem; border-radius:.5rem; }
 .table th, .table td { padding:.5rem; border-bottom:1px solid #eee; }
 .btn { cursor:pointer; }
+/* === Calculator polish === */
+:root{
+  --bg: #fff;
+  --text: #0f172a;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --card-border: #e5e7eb;
+  --primary: #0ea5e9;
+  --primary-600: #0284c7;
+  --good: #16a34a;
+  --warn: #f59e0b;
+  --bad: #ef4444;
+  --table-stripe: #f8fafc;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: #0b1220;
+    --text: #e5e7eb;
+    --muted: #9aa4b2;
+    --card: #0f172a;
+    --card-border: #1f2937;
+    --primary: #38bdf8;
+    --primary-600: #0ea5e9;
+    --table-stripe: #0c1a2b;
+  }
+}
+
+body{ background:var(--bg); color:var(--text); }
+
+.container .calc-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:1rem;
+}
+@media (max-width: 768px){
+  .container .calc-grid{ grid-template-columns: 1fr; }
+}
+
+.calc-card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:.75rem;
+  padding:1rem;
+}
+
+.calc-label{ display:block; font-weight:600; margin-bottom:.25rem; }
+.calc-help{ display:block; color:var(--muted); font-size:.85rem; margin-top:.25rem; }
+
+.calc-input, .calc-select{
+  width:100%; padding:.6rem .7rem; border-radius:.5rem;
+  border:1px solid var(--card-border); background:var(--bg); color:var(--text);
+}
+
+.btn-primary{
+  background:var(--primary); color:#fff; border:none; border-radius:.6rem;
+  padding:.7rem 1rem; font-weight:600; cursor:pointer;
+}
+.btn-primary:hover{ background:var(--primary-600); }
+.btn-secondary{
+  background:transparent; border:1px solid var(--card-border);
+  border-radius:.6rem; padding:.6rem .9rem; color:var(--text); cursor:pointer;
+}
+.btn[disabled]{ opacity:.7; cursor:not-allowed; }
+
+.kpi-row{
+  display:grid; grid-template-columns: repeat(3,1fr); gap:1rem; margin-top:1rem;
+}
+@media (max-width: 768px){ .kpi-row{ grid-template-columns:1fr; } }
+.kpi{
+  background:var(--card); border:1px solid var(--card-border); border-radius:.75rem; padding:.9rem;
+}
+.kpi .k{ font-size:.85rem; color:var(--muted); }
+.kpi .v{ font-size:1.25rem; font-weight:700; margin-top:.25rem; }
+
+.table{
+  width:100%; border-collapse: collapse; overflow:hidden; border-radius:.5rem;
+}
+.table thead th{
+  text-align:left; padding:.6rem .5rem; border-bottom:1px solid var(--card-border);
+  font-size:.9rem; color:var(--muted);
+}
+.table tbody td{
+  padding:.6rem .5rem; border-bottom:1px solid var(--card-border);
+}
+.table tbody tr:nth-child(even){ background:var(--table-stripe); }
+
+.badge{
+  display:inline-block; padding:.25rem .5rem; border-radius:999px;
+  font-size:.75rem; background:rgba(14,165,233,.15); color:var(--primary);
+}
