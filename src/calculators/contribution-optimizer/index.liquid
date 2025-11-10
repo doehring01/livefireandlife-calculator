@@ -1,0 +1,91 @@
+---
+layout: layouts/default
+title: FI Contribution Optimizer (Brokerage vs 401k)
+description: Find the best split between Traditional 401k, Roth 401k, and Brokerage to maximize after-tax wealth.
+permalink: /calculators/contribution-optimizer/
+---
+
+<section class="container" style="max-width:980px;margin:2rem auto;padding:0 1rem;">
+  <h1>FI Contribution Optimization Calculator</h1>
+  <p>Allocate your annual savings between Traditional 401k, Roth 401k, and Brokerage to reduce taxes now and grow more after-tax wealth for retirement.</p>
+
+  <form id="calc-form" class="grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+    <div>
+      <label for="filingStatus">Filing Status</label>
+      <select id="filingStatus" aria-label="Filing Status">
+        <option>Single</option><option>MFJ</option>
+      </select>
+    </div>
+    <div>
+      <label for="age">Age</label>
+      <input id="age" type="number" min="18" value="35" inputmode="numeric">
+    </div>
+    <div>
+      <label for="wages">W2 Wages ($)</label>
+      <input id="wages" type="number" value="150000" inputmode="numeric">
+    </div>
+    <div>
+      <label for="otherOrd">Other Ordinary Income ($)</label>
+      <input id="otherOrd" type="number" value="0" inputmode="numeric">
+    </div>
+    <div>
+      <label for="qdiv">Qualified Dividends ($)</label>
+      <input id="qdiv" type="number" value="0" inputmode="numeric">
+    </div>
+    <div>
+      <label for="ltcg">LT Capital Gains ($)</label>
+      <input id="ltcg" type="number" value="0" inputmode="numeric">
+    </div>
+
+    <div style="grid-column:1/-1">
+      <label for="matchPolicy">Employer Match Policy (simple)</label>
+      <input id="matchPolicy" type="text" value="100% up to 3%; 50% of next 2%">
+      <small>We’ll approximate: match dollars follow pre-tax rules.</small>
+    </div>
+    <div>
+      <label for="savings">Annual Savings Budget ($)</label>
+      <input id="savings" type="number" value="36000" inputmode="numeric">
+    </div>
+    <div>
+      <label for="planTypes">401k Available</label>
+      <select id="planTypes" aria-label="401k Available">
+        <option>Traditional & Roth</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="rNom">Return (nominal) %</label>
+      <input id="rNom" type="number" step="0.1" value="6.0" inputmode="decimal">
+    </div>
+    <div>
+      <label for="divYield">Brokerage Dividend Yield %</label>
+      <input id="divYield" type="number" step="0.1" value="1.8" inputmode="decimal">
+    </div>
+
+    <div>
+      <label for="yearsToRet">Years to Retirement</label>
+      <input id="yearsToRet" type="number" value="25" inputmode="numeric">
+    </div>
+    <div>
+      <label for="retOrdRate">Retirement Marginal Rate (Trad w/d) %</label>
+      <input id="retOrdRate" type="number" step="0.1" value="15" inputmode="decimal">
+    </div>
+    <div>
+      <label for="retCGRate">Retirement LTCG Rate (Brokerage) %</label>
+      <input id="retCGRate" type="number" step="0.1" value="15" inputmode="decimal">
+    </div>
+
+    <div style="grid-column:1/-1;margin-top:1rem;">
+      <button class="btn btn-primary" type="button" id="runBtn">Find Optimal Split</button>
+    </div>
+  </form>
+
+  <hr style="margin:2rem 0;">
+
+  <div id="callouts" role="region" aria-live="polite"></div>
+  <canvas id="chartOut" style="margin:1.5rem 0;" aria-label="Top allocations chart" role="img"></canvas>
+  <div id="resultsTable" style="overflow:auto;margin-top:1rem;"></div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+<script type="module" src="/calculators/contribution-optimizer/app.js" defer></script>
