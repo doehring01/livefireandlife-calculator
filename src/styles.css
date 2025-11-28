@@ -497,5 +497,31 @@ body  { color-scheme: light dark; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
+/* Header styling for light + dark mode */
 
+.site-header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--card-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* Ensure navigation links are readable in dark mode */
+.nav__links a {
+  color: var(--text);
+}
+.nav__links a:hover {
+  color: var(--primary);
+}
+
+/* Make hamburger visible in dark mode */
+.nav__bar {
+  background-color: var(--text);
+}
+
+/* Logo should never invert — preserve brand colors */
+.site-logo {
+  display: block;
+}
 
