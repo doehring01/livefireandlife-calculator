@@ -3,20 +3,24 @@ module.exports = function(eleventyConfig) {
   /* ---------------------------
      Passthrough copies
   ---------------------------- */
-  // Data files → /assets/data
-  eleventyConfig.addPassthroughCopy({ "src/assets/data": "assets/data" });
+  // Copy everything under src/assets → /assets
+  // (images, data, any other static files)
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+
   // Calculator JS → /calculators/contribution-optimizer/app.js
   eleventyConfig.addPassthroughCopy({
     "src/calculators/contribution-optimizer/app.js":
       "calculators/contribution-optimizer/app.js"
   });
+
   // Optional Netlify headers file
   eleventyConfig.addPassthroughCopy({ "src/_headers": "_headers" });
+
   // Root stylesheet → /styles.css
   eleventyConfig.addPassthroughCopy({ "src/styles.css": "styles.css" });
 
   // Helpful during dev; harmless on Netlify
-  eleventyConfig.addWatchTarget("src/assets/data");
+  eleventyConfig.addWatchTarget("src/assets");
   eleventyConfig.addWatchTarget("src/calculators/contribution-optimizer/app.js");
   eleventyConfig.addWatchTarget("src/styles.css");
 
@@ -76,7 +80,7 @@ module.exports = function(eleventyConfig) {
       input: "src",
       includes: "_includes",
       layouts: "_layouts",
-      output: "dist" // <-- set Netlify “Publish directory” to dist
+      output: "dist" // Netlify publish dir = dist
     },
     htmlTemplateEngine: "liquid",
     markdownTemplateEngine: "liquid",
