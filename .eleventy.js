@@ -4,13 +4,18 @@ module.exports = function(eleventyConfig) {
      Passthrough copies
   ---------------------------- */
   // Copy everything under src/assets → /assets
-  // (images, data, any other static files)
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
   // Calculator JS → /calculators/contribution-optimizer/app.js
   eleventyConfig.addPassthroughCopy({
     "src/calculators/contribution-optimizer/app.js":
       "calculators/contribution-optimizer/app.js"
+  });
+
+  // ✅ Early Retirement Estimator JS → /calculators/early-retirement-estimator/early-retirement-estimator.js
+  eleventyConfig.addPassthroughCopy({
+    "src/calculators/early-retirement-estimator/early-retirement-estimator.js":
+      "calculators/early-retirement-estimator/early-retirement-estimator.js"
   });
 
   // Optional Netlify headers file
@@ -22,6 +27,7 @@ module.exports = function(eleventyConfig) {
   // Helpful during dev; harmless on Netlify
   eleventyConfig.addWatchTarget("src/assets");
   eleventyConfig.addWatchTarget("src/calculators/contribution-optimizer/app.js");
+  eleventyConfig.addWatchTarget("src/calculators/early-retirement-estimator/early-retirement-estimator.js");
   eleventyConfig.addWatchTarget("src/styles.css");
 
   /* ---------------------------
@@ -29,15 +35,13 @@ module.exports = function(eleventyConfig) {
   ---------------------------- */
   eleventyConfig.addFilter("relative_url", (value) => {
     if (!value) return value;
-    // collapse accidental double slashes but keep protocol slashes
     return String(value).replace(/([^:]\/)\/+/g, "$1");
   });
 
-  // Prefer SITE_URL from environment (set in Netlify UI)
-  const SITE_URL = (process.env.SITE_URL || "").trim(); // e.g. https://livefireandlife.com
+  const SITE_URL = (process.env.SITE_URL || "").trim();
   eleventyConfig.addFilter("absolute_url", (value) => {
     if (!value) return value;
-    if (!SITE_URL) return value; // if not set, fall back to the given path
+    if (!SITE_URL) return value;
     const joined = (SITE_URL.replace(/\/+$/, "") + "/" + String(value).replace(/^\/+/, ""))
       .replace(/([^:]\/)\/+/g, "$1");
     return joined;
@@ -47,10 +51,9 @@ module.exports = function(eleventyConfig) {
      Collections
   ---------------------------- */
   eleventyConfig.addCollection("livePosts", (collectionApi) => {
-    // Approximate Mountain Time "start of today"
     const now = new Date();
     const msPerHour = 3600 * 1000;
-    const mtOffsetGuess = 7; // simple guard against clearly future-dated posts
+    const mtOffsetGuess = 7;
     const mtNow = new Date(now.getTime() - mtOffsetGuess * msPerHour);
     const mtTodayStart = new Date(mtNow.getFullYear(), mtNow.getMonth(), mtNow.getDate());
 
@@ -59,9 +62,9 @@ module.exports = function(eleventyConfig) {
         "src/blog/*.{md,html,liquid,njk}",
         "src/blog/**/index.{md,html,liquid,njk}"
       ])
-      .filter(item => item.url !== "/blog/")               // exclude landing page
-      .filter(item => !item.data.draft)                    // honor draft: true
-      .filter(item => {                                    // skip clearly future-dated
+      .filter(item => item.url !== "/blog/")
+      .filter(item => !item.data.draft)
+      .filter(item => {
         const pub = item.data.date || item.date;
         return !pub || (pub <= mtTodayStart);
       })
@@ -80,15 +83,10 @@ module.exports = function(eleventyConfig) {
       input: "src",
       includes: "_includes",
       layouts: "_layouts",
-      output: "dist" // Netlify publish dir = dist
+      output: "dist"
     },
     htmlTemplateEngine: "liquid",
     markdownTemplateEngine: "liquid",
     dataTemplateEngine: false
   };
-};
-
-
-module.exports = function (eleventyConfig) {
-  eleventyConfig.addPassthroughCopy("src/calculators/early-retirement-estimator/early-retirement-estimator.js");
 };
