@@ -87,3 +87,8 @@ module.exports = function(eleventyConfig) {
     dataTemplateEngine: false
   };
 };
+
+
+module.exports = function (eleventyConfig) {
+  eleventyConfig.addPassthroughCopy("src/calculators/early-retirement-estimator/early-retirement-estimator.js");
+};
