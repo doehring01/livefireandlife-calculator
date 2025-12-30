@@ -12,30 +12,42 @@ permalink: /blog/
   </p>
 
   {%- comment -%}
-    Pick the featured post:
-    1) Pin a specific slug
-    2) Otherwise fall back to newest live post
+    Build blogPosts from collections.all to ensure every /blog/* page is included,
+    even if a custom collection/tag is missing.
+    Excludes the /blog/ index page itself and drafts.
+  {%- endcomment -%}
+
+  {%- assign blogPosts = collections.all
+    | where_exp: "p", "p.url and p.url != '/blog/' and p.url contains '/blog/'"
+    | where_exp: "p", "p.data and p.data.title"
+    | where_exp: "p", "p.data.draft != true"
+    | reverse
+  -%}
+
+  {%- comment -%}
+    Featured post:
+    1) Pin a specific slug if present
+    2) Otherwise fall back to newest post
   {%- endcomment -%}
   {%- assign featuredSlug = "/blog/max-out-401k-or-brokerage/" -%}
-  {%- assign pinned = collections.livePosts | where: "url", featuredSlug | first -%}
+  {%- assign pinned = blogPosts | where: "url", featuredSlug | first -%}
   {%- if pinned -%}
     {%- assign featured = pinned -%}
   {%- else -%}
-    {%- assign featured = collections.livePosts | first -%}
+    {%- assign featured = blogPosts | first -%}
   {%- endif -%}
 
- 
   <!-- Featured -->
   <section class="section featured">
     {%- if featured -%}
-    <article class="card">
-      <h3><a href="{{ featured.url | relative_url }}">{{ featured.data.title }}</a></h3>
-      {%- assign fExcerpt = featured.data.excerpt | default: featured.data.description | default: "" -%}
-      {%- if fExcerpt != "" -%}
-        <p style="color:#555;">{{ fExcerpt }}</p>
-      {%- endif -%}
-      <a class="btn btn-secondary" href="{{ featured.url | relative_url }}">Read →</a>
-    </article>
+      <article class="card">
+        <h3><a href="{{ featured.url }}">{{ featured.data.title }}</a></h3>
+        {%- assign fExcerpt = featured.data.excerpt | default: featured.data.description | default: "" -%}
+        {%- if fExcerpt != "" -%}
+          <p style="color:#555;">{{ fExcerpt }}</p>
+        {%- endif -%}
+        <a class="btn btn-secondary" href="{{ featured.url }}">Read →</a>
+      </article>
     {%- endif -%}
   </section>
 
@@ -45,16 +57,17 @@ permalink: /blog/
 
     <div class="grid-cards">
       {%- assign shown = 0 -%}
-      {%- for post in collections.livePosts -%}
-        {%- if post.url != featured.url and shown < 3 -%}
+      {%- for post in blogPosts -%}
+        {%- if featured and post.url == featured.url -%}{% continue %}{%- endif -%}
+        {%- if shown < 3 -%}
           <article class="card">
-            <a class="thumb-card" href="{{ post.url | relative_url }}">
+            <a class="thumb-card" href="{{ post.url }}">
               {%- assign title = post.data.title -%}
               {%- assign thumb = post.data.image | default: post.data.hero | default: "" -%}
               <div class="thumb">
                 {%- if thumb and thumb != "" -%}
                   <img
-                    src="{{ thumb | relative_url }}"
+                    src="{{ thumb }}"
                     alt="{{ title | escape }}"
                     onerror="this.closest('.thumb').classList.add('is-broken'); this.remove();">
                 {%- else -%}
@@ -79,17 +92,16 @@ permalink: /blog/
   <section class="section">
     <h2 style="margin-bottom:.5rem;">Older posts</h2>
     <ul class="post-list">
-      {%- assign remaining = 0 -%}
-      {%- for post in collections.livePosts -%}
-        {%- if post.url != featured.url -%}
-          {%- if remaining >= 3 -%}
-            <li>
-              <a href="{{ post.url | relative_url }}">{{ post.data.title }}</a>
-              <span class="post-date">{{ post.date | date: "%Y" }}</span>
-            </li>
-          {%- else -%}
-            {%- assign remaining = remaining | plus: 1 -%}
-          {%- endif -%}
+      {%- assign skipped = 0 -%}
+      {%- for post in blogPosts -%}
+        {%- if featured and post.url == featured.url -%}{% continue %}{%- endif -%}
+        {%- if skipped < 3 -%}
+          {%- assign skipped = skipped | plus: 1 -%}
+        {%- else -%}
+          <li>
+            <a href="{{ post.url }}">{{ post.data.title }}</a>
+            <span class="post-date">{{ post.date | date: "%Y" }}</span>
+          </li>
         {%- endif -%}
       {%- endfor -%}
     </ul>
