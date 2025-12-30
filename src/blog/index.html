@@ -12,17 +12,12 @@ permalink: /blog/
   </p>
 
   {%- comment -%}
-    Build blogPosts from collections.all to ensure every /blog/* page is included,
-    even if a custom collection/tag is missing.
-    Excludes the /blog/ index page itself and drafts.
+    Use the Eleventy collection "livePosts" (defined in .eleventy.js) so:
+    - drafts (draft: true) are hidden
+    - future-dated posts are hidden until their publish date
+    - posts are already sorted newest → oldest
   {%- endcomment -%}
-
-  {%- assign blogPosts = collections.all
-    | where_exp: "p", "p.url and p.url != '/blog/' and p.url contains '/blog/'"
-    | where_exp: "p", "p.data and p.data.title"
-    | where_exp: "p", "p.data.draft != true"
-    | reverse
-  -%}
+  {%- assign blogPosts = collections.livePosts -%}
 
   {%- comment -%}
     Featured post:
@@ -47,6 +42,11 @@ permalink: /blog/
           <p style="color:#555;">{{ fExcerpt }}</p>
         {%- endif -%}
         <a class="btn btn-secondary" href="{{ featured.url }}">Read →</a>
+      </article>
+    {%- else -%}
+      <article class="card">
+        <h3>No posts yet</h3>
+        <p style="color:#555;">Once you publish posts under <code>src/blog/</code>, they’ll appear here automatically.</p>
       </article>
     {%- endif -%}
   </section>
@@ -98,9 +98,10 @@ permalink: /blog/
         {%- if skipped < 3 -%}
           {%- assign skipped = skipped | plus: 1 -%}
         {%- else -%}
+          {%- assign pub = post.data.date | default: post.date -%}
           <li>
             <a href="{{ post.url }}">{{ post.data.title }}</a>
-            <span class="post-date">{{ post.date | date: "%Y" }}</span>
+            <span class="post-date">{{ pub | date: "%Y" }}</span>
           </li>
         {%- endif -%}
       {%- endfor -%}
