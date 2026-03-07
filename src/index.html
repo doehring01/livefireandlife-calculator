@@ -4,6 +4,7 @@ title: FIREandLife — Live FlexFI
 description: "Tools, calculators, and real-world scenarios to pursue Financial Independence without sacrificing a life well-lived. Live FlexFI: adapt your plan to each season of life."
 permalink: /
 ---
+
 <!-- Hero -->
 <section class="hero">
   <h1>Live FlexFI: Adaptable Paths to FI</h1>
@@ -14,15 +15,15 @@ permalink: /
   </div>
 </section>
 
-<!-- About Ashley -->
+<!-- Meet Ashley -->
 <section class="section">
   <h2>Meet Ashley</h2>
   <p class="large-space">
     I'm Ashley — working toward Financial Independence while navigating the same trade-offs many of you are: family, career, and a life worth living today. LiveFIREandLife isn't about perfection. It's about building a flexible, realistic plan that moves forward even when life doesn't cooperate. Everything here — the calculators, the blog, the newsletter — is something I actually use. FI doesn't have to mean sacrificing today for a someday that never comes.
   </p>
   <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-top:1rem;">
-    <span style="font-size:.95rem;color:var(--muted, #666);">📅 Tracking progress since 2020</span>
-    <span style="font-size:.95rem;color:var(--muted, #666);">🎯 CoastFI target: 2030</span>
+    <span style="font-size:.95rem;color:var(--muted,#666);">📅 Tracking progress since 2020</span>
+    <span style="font-size:.95rem;color:var(--muted,#666);">🎯 CoastFI target: 2030</span>
   </div>
 </section>
 
@@ -93,9 +94,128 @@ permalink: /
 <section class="newsletter">
   <h2>One Practical FI Idea, Every Week</h2>
   <p>Written for busy people. No jargon, no fluff — just tools, real scenarios, and honest perspective on the path to Financial Independence.</p>
-  <p style="font-size:.9rem;margin-top:.5rem;opacity:.85;">Join readers tracking their path to FI with FlexFI.</p>
-  <form action="https://eepurl.com/jkcf3o" method="post" target="_blank" novalidate>
-    <input type="email" name="EMAIL" placeholder="Your email address" required />
-    <button type="submit">Subscribe — It's Free</button>
-  </form>
+  <p style="font-size:.9rem;margin-top:.25rem;opacity:.85;">Join readers tracking their path to FI with FlexFI.</p>
+
+  <!-- Mailchimp embedded form (styled to match site) -->
+  <div id="mc_embed_signup">
+    <form action="https://livefireandlife.us6.list-manage.com/subscribe/post?u=72d54d5d34e330e9be28f8b0b&amp;id=aa67750f57&amp;f_id=00a3c2e1f0"
+          method="post"
+          id="mc-embedded-subscribe-form"
+          name="mc-embedded-subscribe-form"
+          class="validate"
+          target="_blank"
+          novalidate>
+
+      <div id="mc_embed_signup_scroll">
+
+        <!-- Email field -->
+        <div class="mc-field-group">
+          <label for="mce-EMAIL" class="sr-only">Email Address</label>
+          <input type="email"
+                 name="EMAIL"
+                 id="mce-EMAIL"
+                 class="required email"
+                 placeholder="Your email address"
+                 required
+                 value="" />
+        </div>
+
+        <!-- Honeypot anti-bot field — do not remove -->
+        <div aria-hidden="true" style="position:absolute;left:-5000px;">
+          <input type="text" name="b_72d54d5d34e330e9be28f8b0b_aa67750f57" tabindex="-1" value="" />
+        </div>
+
+        <!-- Response messages -->
+        <div id="mce-responses">
+          <div id="mce-error-response"   style="display:none;"></div>
+          <div id="mce-success-response" style="display:none;"></div>
+        </div>
+
+        <!-- Submit -->
+        <div class="mc-submit">
+          <input type="submit"
+                 name="subscribe"
+                 id="mc-embedded-subscribe"
+                 value="Subscribe — It's Free" />
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <!-- Mailchimp validation script -->
+  <script src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
+  <script>
+    (function($){
+      window.fnames = ['EMAIL','FNAME','LNAME'];
+      window.ftypes = ['email','text','text'];
+    }(jQuery));
+    var $mcj = jQuery.noConflict(true);
+  </script>
+
+  <!-- Form styles scoped to newsletter section only -->
+  <style>
+    /* Override Mailchimp default chrome — styled to match site */
+    #mc_embed_signup { background: transparent; width: 100%; }
+
+    #mc_embed_signup_scroll {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1.25rem;
+    }
+
+    /* Email input */
+    #mc_embed_signup .mc-field-group { margin: 0; }
+    #mce-EMAIL {
+      padding: .65rem 1rem;
+      border: 2px solid rgba(255,255,255,.5);
+      border-radius: 6px;
+      background: rgba(255,255,255,.15);
+      color: inherit;
+      font-size: 1rem;
+      width: 260px;
+      max-width: 100%;
+      outline: none;
+      transition: border-color .2s;
+    }
+    #mce-EMAIL::placeholder { opacity: .75; }
+    #mce-EMAIL:focus { border-color: rgba(255,255,255,.9); }
+
+    /* Submit button */
+    .mc-submit { margin: 0; }
+    #mc-embedded-subscribe {
+      cursor: pointer;
+      padding: .65rem 1.4rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      background: var(--btn-bg, #fff);
+      color: var(--btn-color, #1b4f72);
+      transition: opacity .2s;
+    }
+    #mc-embedded-subscribe:hover { opacity: .88; }
+
+    /* Response messages */
+    #mce-responses { width: 100%; text-align: center; font-size: .9rem; }
+    #mce-error-response   { color: #f8d7da; margin-top: .5rem; }
+    #mce-success-response { color: #d4edda; margin-top: .5rem; }
+
+    /* Screen-reader only label */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* Stack vertically on small screens */
+    @media (max-width: 480px) {
+      #mce-EMAIL { width: 100%; }
+      #mc_embed_signup_scroll { flex-direction: column; }
+    }
+  </style>
+
 </section>
