@@ -5,6 +5,156 @@ description: "Tools, calculators, and real-world scenarios to pursue Financial I
 permalink: /
 ---
 
+<!-- ── PAGE-LEVEL ENHANCEMENTS (scoped — won't affect other pages) ── -->
+<style>
+  /* ── Meet Ashley stat pills ── */
+  .ashley-stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1.25rem;
+  }
+  .ashley-stats span {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: #fff7f6;
+    border: 1px solid #ffd0cb;
+    border-radius: 999px;
+    padding: .35rem .9rem;
+    font-size: .9rem;
+    font-weight: 600;
+    color: #c0392b;
+  }
+
+  /* ── Section divider ── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 0 1rem;
+  }
+
+  /* ── Calculator cards — icon accent ── */
+  .card-icon {
+    font-size: 1.75rem;
+    margin-bottom: .5rem;
+    display: block;
+  }
+
+  /* ── Newsletter section overhaul ── */
+  .newsletter {
+    background: linear-gradient(135deg, #FF6F61 0%, #e8533f 100%);
+    border: none;
+    border-radius: 12px;
+    max-width: 700px;
+    margin: 3rem auto;
+    text-align: center;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 6px 24px rgba(255, 111, 97, .25);
+  }
+  .newsletter h2 { color: #fff; margin-bottom: .5rem; }
+  .newsletter p  { color: rgba(255,255,255,.9); margin-bottom: .5rem; }
+  .newsletter .newsletter-sub {
+    font-size: .85rem;
+    opacity: .8;
+    margin-bottom: 0;
+  }
+
+  /* Mailchimp overrides — scoped inside .newsletter */
+  .newsletter #mc_embed_signup { background: transparent; width: 100%; }
+
+  .newsletter #mc_embed_signup_scroll {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.4rem;
+  }
+
+  /* Hide Mailchimp's visible label — sr-only */
+  .newsletter #mc_embed_signup .mc-field-group label {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .newsletter #mc_embed_signup .mc-field-group { margin: 0; }
+
+  /* Email input */
+  .newsletter #mce-EMAIL {
+    padding: .7rem 1rem;
+    border: 2px solid #000;          /* black outline as requested */
+    border-radius: 6px;
+    background: #fff;
+    color: #333;
+    font-size: 1rem;
+    width: 260px;
+    max-width: 100%;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .newsletter #mce-EMAIL::placeholder { color: #999; }
+  .newsletter #mce-EMAIL:focus {
+    border-color: #333;
+    box-shadow: 0 0 0 3px rgba(0,0,0,.15);
+  }
+
+  /* Submit button */
+  .newsletter .mc-submit { margin: 0; }
+  .newsletter #mc-embedded-subscribe {
+    cursor: pointer;
+    padding: .7rem 1.5rem;
+    border: 2px solid #000;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 700;
+    background: #fff;
+    color: #FF6F61;
+    transition: background .2s, color .2s;
+    white-space: nowrap;
+  }
+  .newsletter #mc-embedded-subscribe:hover {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+  }
+
+  /* Honeypot */
+  .newsletter #mc_embed_signup .mc-honeypot { display: none !important; }
+
+  /* Response messages */
+  .newsletter #mce-responses { width: 100%; text-align: center; margin-top: .5rem; }
+  .newsletter #mce-error-response   { color: #ffe0de; font-size: .9rem; }
+  .newsletter #mce-success-response { color: #d4edda; font-size: .9rem; }
+
+  /* Mobile stack */
+  @media (max-width: 480px) {
+    .newsletter #mce-EMAIL { width: 100%; }
+    .newsletter #mc_embed_signup_scroll { flex-direction: column; }
+    .newsletter #mc-embedded-subscribe  { width: 100%; }
+  }
+
+  /* ── "Why FIREandLife" subtle background ── */
+  .section-tinted {
+    background: #fffaf9;
+    border-radius: 10px;
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+  }
+
+  /* ── Blog card hover already in CSS; add read-time style ── */
+  .card-meta {
+    font-size: .82rem;
+    color: #888;
+    margin-bottom: .5rem;
+  }
+</style>
+
 <!-- Hero -->
 <section class="hero">
   <h1>Live FlexFI: Adaptable Paths to FI</h1>
@@ -15,52 +165,64 @@ permalink: /
   </div>
 </section>
 
+<hr class="section-divider" />
+
 <!-- Meet Ashley -->
 <section class="section">
   <h2>Meet Ashley</h2>
-  <p class="large-space">
+  <p class="large-space" style="text-align:center;max-width:700px;margin:0 auto;">
     I'm Ashley — working toward Financial Independence while navigating the same trade-offs many of you are: family, career, and a life worth living today. LiveFIREandLife isn't about perfection. It's about building a flexible, realistic plan that moves forward even when life doesn't cooperate. Everything here — the calculators, the blog, the newsletter — is something I actually use. FI doesn't have to mean sacrificing today for a someday that never comes.
   </p>
-  <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-top:1rem;">
-    <span style="font-size:.95rem;color:var(--muted,#666);">📅 Tracking progress since 2020</span>
-    <span style="font-size:.95rem;color:var(--muted,#666);">🎯 CoastFI target: 2030</span>
+  <div class="ashley-stats">
+    <span>📅 Tracking progress since 2020</span>
+    <span>🎯 CoastFI target: 2030</span>
   </div>
 </section>
 
+<hr class="section-divider" />
+
 <!-- Why FIREandLife -->
 <section class="section">
-  <h2>Why FIREandLife?</h2>
-  <p class="large-space">
-    We believe FI is about freedom and purpose—not just a number. Life changes, priorities shift, and your plan should flex with them.
-    That's the heart of <a href="/flexfi/">FlexFI</a>: adapt your savings, investing, and lifestyle to different stages of life while still moving forward.
-  </p>
-  <p>
-    New to Financial Independence? Start with our
-    <a href="/guides/investing-order-for-fi/">Investing Order for FI Guide</a>
-    to learn which steps to take first.
-  </p>
+  <div class="section-tinted">
+    <h2>Why FIREandLife?</h2>
+    <p class="large-space">
+      We believe FI is about freedom and purpose—not just a number. Life changes, priorities shift, and your plan should flex with them.
+      That's the heart of <a href="/flexfi/">FlexFI</a>: adapt your savings, investing, and lifestyle to different stages of life while still moving forward.
+    </p>
+    <p style="margin-top:.75rem;">
+      New to Financial Independence? Start with our
+      <a href="/guides/investing-order-for-fi/">Investing Order for FI Guide</a>
+      to learn which steps to take first.
+    </p>
+  </div>
 </section>
+
+<hr class="section-divider" />
 
 <!-- Featured Calculators -->
 <section class="section">
   <h2>Featured Calculators</h2>
   <div class="grid">
     <article class="card">
+      <span class="card-icon">💵</span>
       <h3>Take-Home Pay Calculator</h3>
       <p>See your real income after taxes, health premiums, and contributions.</p>
       <a class="btn" href="/calculators/take-home-pay/">Try It</a>
     </article>
     <article class="card">
+      <span class="card-icon">📊</span>
       <h3>Net Worth Tracker</h3>
       <p>Track your total net worth and FI net worth in one place.</p>
       <a class="btn" href="/calculators/net-worth-tracker/">Track Now</a>
     </article>
     <article class="card">
+      <span class="card-icon">🏄</span>
       <h3>CoastFI Calculator</h3>
       <p>Check if you can stop contributing and still hit FI by your target age.</p>
       <a class="btn" href="/calculators/coast-fi/">Run It</a>
     </article>
     <article class="card">
+      <span class="card-icon">🗓️</span>
       <h3>Early Retirement Estimator</h3>
       <p>Estimate how long until you reach Financial Independence.</p>
       <a class="btn" href="/calculators/early-retirement-estimator/">Plan Ahead</a>
@@ -68,22 +230,27 @@ permalink: /
   </div>
 </section>
 
+<hr class="section-divider" />
+
 <!-- From the Blog -->
 <section class="section">
   <h2>From the Blog</h2>
   <div class="grid">
     <article class="card">
-      <h3><a href="/blog/balancing-fi-family/">Balancing FI with Family Life</a></h3>
+      <p class="card-meta">✏️ Latest post</p>
+      <h3><a href="/blog/balancing-fi-family/" style="color:inherit;text-decoration:none;">Balancing FI with Family Life</a></h3>
       <p>When higher savings shrink your monthly margin—find the right trade-off.</p>
       <a class="btn btn-secondary" href="/blog/balancing-fi-family/">Read More</a>
     </article>
     <article class="card">
-      <h3><a href="/blog/introducing-flexfi/">Introducing FlexFI</a></h3>
+      <p class="card-meta">💡 Start here</p>
+      <h3><a href="/blog/introducing-flexfi/" style="color:inherit;text-decoration:none;">Introducing FlexFI</a></h3>
       <p>A more realistic path to FI that adjusts with life's seasons.</p>
       <a class="btn btn-secondary" href="/blog/introducing-flexfi/">Read More</a>
     </article>
     <article class="card">
-      <h3><a href="/blog/fi-formula-explained/">The FI Formula: Explained</a></h3>
+      <p class="card-meta">🔢 Core concept</p>
+      <h3><a href="/blog/fi-formula-explained/" style="color:inherit;text-decoration:none;">The FI Formula: Explained</a></h3>
       <p>Understand your FI number and how small changes move the timeline.</p>
       <a class="btn btn-secondary" href="/blog/fi-formula-explained/">Read More</a>
     </article>
@@ -94,9 +261,8 @@ permalink: /
 <section class="newsletter">
   <h2>One Practical FI Idea, Every Week</h2>
   <p>Written for busy people. No jargon, no fluff — just tools, real scenarios, and honest perspective on the path to Financial Independence.</p>
-  <p style="font-size:.9rem;margin-top:.25rem;opacity:.85;">Join readers tracking their path to FI with FlexFI.</p>
+  <p class="newsletter-sub">Join readers tracking their path to FI with FlexFI.</p>
 
-  <!-- Mailchimp embedded form (styled to match site) -->
   <div id="mc_embed_signup">
     <form action="https://livefireandlife.us6.list-manage.com/subscribe/post?u=72d54d5d34e330e9be28f8b0b&amp;id=aa67750f57&amp;f_id=00a3c2e1f0"
           method="post"
@@ -108,9 +274,8 @@ permalink: /
 
       <div id="mc_embed_signup_scroll">
 
-        <!-- Email field -->
         <div class="mc-field-group">
-          <label for="mce-EMAIL" class="sr-only">Email Address</label>
+          <label for="mce-EMAIL">Email Address</label>
           <input type="email"
                  name="EMAIL"
                  id="mce-EMAIL"
@@ -120,18 +285,16 @@ permalink: /
                  value="" />
         </div>
 
-        <!-- Honeypot anti-bot field — do not remove -->
+        <!-- Honeypot — do not remove -->
         <div aria-hidden="true" style="position:absolute;left:-5000px;">
           <input type="text" name="b_72d54d5d34e330e9be28f8b0b_aa67750f57" tabindex="-1" value="" />
         </div>
 
-        <!-- Response messages -->
         <div id="mce-responses">
           <div id="mce-error-response"   style="display:none;"></div>
           <div id="mce-success-response" style="display:none;"></div>
         </div>
 
-        <!-- Submit -->
         <div class="mc-submit">
           <input type="submit"
                  name="subscribe"
@@ -143,7 +306,6 @@ permalink: /
     </form>
   </div>
 
-  <!-- Mailchimp validation script -->
   <script src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
   <script>
     (function($){
@@ -152,70 +314,5 @@ permalink: /
     }(jQuery));
     var $mcj = jQuery.noConflict(true);
   </script>
-
-  <!-- Form styles scoped to newsletter section only -->
-  <style>
-    /* Override Mailchimp default chrome — styled to match site */
-    #mc_embed_signup { background: transparent; width: 100%; }
-
-    #mc_embed_signup_scroll {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .75rem;
-      justify-content: center;
-      align-items: center;
-      margin-top: 1.25rem;
-    }
-
-    /* Email input */
-    #mc_embed_signup .mc-field-group { margin: 0; }
-    #mce-EMAIL {
-      padding: .65rem 1rem;
-      border: 2px solid rgba(255,255,255,.5);
-      border-radius: 6px;
-      background: rgba(255,255,255,.15);
-      color: inherit;
-      font-size: 1rem;
-      width: 260px;
-      max-width: 100%;
-      outline: none;
-      transition: border-color .2s;
-    }
-    #mce-EMAIL::placeholder { opacity: .75; }
-    #mce-EMAIL:focus { border-color: rgba(255,255,255,.9); }
-
-    /* Submit button */
-    .mc-submit { margin: 0; }
-    #mc-embedded-subscribe {
-      cursor: pointer;
-      padding: .65rem 1.4rem;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: 600;
-      background: var(--btn-bg, #fff);
-      color: var(--btn-color, #1b4f72);
-      transition: opacity .2s;
-    }
-    #mc-embedded-subscribe:hover { opacity: .88; }
-
-    /* Response messages */
-    #mce-responses { width: 100%; text-align: center; font-size: .9rem; }
-    #mce-error-response   { color: #f8d7da; margin-top: .5rem; }
-    #mce-success-response { color: #d4edda; margin-top: .5rem; }
-
-    /* Screen-reader only label */
-    .sr-only {
-      position: absolute; width: 1px; height: 1px;
-      padding: 0; margin: -1px; overflow: hidden;
-      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-    }
-
-    /* Stack vertically on small screens */
-    @media (max-width: 480px) {
-      #mce-EMAIL { width: 100%; }
-      #mc_embed_signup_scroll { flex-direction: column; }
-    }
-  </style>
 
 </section>
