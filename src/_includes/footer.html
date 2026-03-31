@@ -8,13 +8,14 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
-    <div style="margin-top:1rem; text-align:center;">
-    <a class="btn-coffee"
-       href="https://buymeacoffee.com/FIREandLIFE"
+
+  <!-- Affiliate link — replace YOUR_AFFILIATE_LINK with your Empower referral URL once approved -->
+  <div style="margin-top:1rem; text-align:center;">
+    <a href="YOUR_AFFILIATE_LINK"
        target="_blank"
-       rel="noopener"
-       aria-label="Buy Me a Coffee — Support FIREandLife">
-      ☕ Buy Me a Coffee
+       rel="noopener sponsored"
+       style="font-size:.85rem; color:#555; text-decoration:none;">
+      📊 Track your net worth free with <strong>Empower</strong> — the tool I use
     </a>
   </div>
 
@@ -23,40 +24,29 @@
 <!-- Shared nav toggle: runs once, works on all pages -->
 <script>
 (function () {
-  // Wait for DOM just to be safe in all layouts
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initNav);
   } else {
     initNav();
   }
-
   function initNav() {
     var btn  = document.getElementById('navToggle');
     var menu = document.getElementById('navMenu');
     if (!btn || !menu) return;
-
     function setOpen(open){
       btn.setAttribute('aria-expanded', String(open));
       btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       menu.classList.toggle('is-open', open);
       document.body.classList.toggle('nav-open', open);
     }
-
-    // Ensure a known initial state
     setOpen(false);
-
-    // Toggle by click
     btn.addEventListener('click', function () {
       var open = btn.getAttribute('aria-expanded') === 'true';
       setOpen(!open);
     });
-
-    // Close with ESC
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') setOpen(false);
     });
-
-    // Close when clicking outside or on any menu link
     document.addEventListener('click', function (e) {
       if (btn.getAttribute('aria-expanded') !== 'true') return;
       if (!menu.contains(e.target) && !btn.contains(e.target)) setOpen(false);
@@ -67,4 +57,3 @@
   }
 })();
 </script>
-
