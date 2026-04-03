@@ -8,31 +8,26 @@ description: See if you can stop contributing and still reach FI. CoastFI math w
 <link rel="stylesheet" href="/styles.css" />
 
 <style>
-  .calc-grid { display:grid; gap:1rem; }
-  @media (min-width:900px){ .calc-grid { grid-template-columns: 1fr 1fr; } }
-  .field { margin-bottom:.75rem; }
-  .help { font-size:.9rem; opacity:.75; }
-  .cards { display:grid; gap:1rem; }
-  @media (min-width:700px){ .cards { grid-template-columns: repeat(2,minmax(240px,1fr)); } }
-  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-
-  /* Chart sizing */
-  .chart-wrap { position:relative; max-width:760px; height:300px; margin:1rem auto; }
-  #coastChart { width:100% !important; height:100% !important; display:block; }
-
-  /* Soft-gate modal */
-  .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:9999; }
-  .modal { background:#fff; border-radius:10px; max-width:560px; width:92%; box-shadow:0 10px 30px rgba(0,0,0,.25); }
-  .modal header { padding:1rem 1.25rem; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
-  .modal .body { padding:1rem 1.25rem; }
-  .modal .close { background:none; border:0; font-size:1.4rem; cursor:pointer; }
-  .hidden { display:none !important; }
-
-  .table-wrap { overflow-x:auto; margin-top:1rem; }
-  .results-table { width:100%; border-collapse:collapse; background:#fff; border:1px solid #eee; border-radius:8px; overflow:hidden; }
-  .results-table th, .results-table td { padding:.75rem .9rem; text-align:right; border-bottom:1px solid #f2f2f2; white-space:nowrap; }
-  .results-table th:first-child, .results-table td:first-child { text-align:left; }
-  .results-table thead th { background:#fafafa; font-weight:600; }
+  .calc-grid{display:grid;gap:1rem;}
+  @media(min-width:900px){.calc-grid{grid-template-columns:1fr 1fr;}}
+  .field{margin-bottom:.75rem;}
+  .help{font-size:.9rem;opacity:.75;}
+  .cards{display:grid;gap:1rem;}
+  @media(min-width:700px){.cards{grid-template-columns:repeat(2,minmax(240px,1fr));}}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+  .chart-wrap{position:relative;max-width:760px;height:300px;margin:1rem auto;}
+  #coastChart{width:100%!important;height:100%!important;display:block;}
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:9999;}
+  .modal{background:#fff;border-radius:10px;max-width:560px;width:92%;box-shadow:0 10px 30px rgba(0,0,0,.25);}
+  .modal header{padding:1rem 1.25rem;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;}
+  .modal .body{padding:1rem 1.25rem;}
+  .modal .close{background:none;border:0;font-size:1.4rem;cursor:pointer;}
+  .hidden{display:none!important;}
+  .table-wrap{overflow-x:auto;margin-top:1rem;}
+  .results-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #eee;border-radius:8px;overflow:hidden;}
+  .results-table th,.results-table td{padding:.75rem .9rem;text-align:right;border-bottom:1px solid #f2f2f2;white-space:nowrap;}
+  .results-table th:first-child,.results-table td:first-child{text-align:left;}
+  .results-table thead th{background:#fafafa;font-weight:600;}
 </style>
 
 <main class="container" style="max-width:1100px;margin:2rem auto;padding:0 1rem;">
@@ -45,46 +40,38 @@ description: See if you can stop contributing and still reach FI. CoastFI math w
   <div class="calc-grid" style="margin-top:1rem;">
     <form id="coastForm" class="card">
       <h2>Inputs</h2>
-
       <div class="field">
         <label for="currentAge">Current Age</label>
-        <input type="number" id="currentAge" min="0" value="30" />
+        <input type="number" id="currentAge" min="0" value="30"/>
       </div>
-
       <div class="field">
         <label for="retireAge">Target Retirement Age</label>
-        <input type="number" id="retireAge" min="1" value="60" />
+        <input type="number" id="retireAge" min="1" value="60"/>
       </div>
-
       <div class="field">
         <label for="currentPortfolio">Current Invested Portfolio ($)</label>
-        <input type="number" id="currentPortfolio" min="0" step="1000" value="150000" />
+        <input type="number" id="currentPortfolio" min="0" step="1000" value="150000"/>
       </div>
-
       <div class="field">
-        <label for="retireSpend">Annual Spending Needed in Retirement ($, today’s dollars)</label>
-        <input type="number" id="retireSpend" min="0" step="500" value="40000" />
-        <div class="help">Exclude anything covered by passive income; we’ll subtract that just below.</div>
+        <label for="retireSpend">Annual Spending Needed in Retirement ($, today's dollars)</label>
+        <input type="number" id="retireSpend" min="0" step="500" value="40000"/>
+        <div class="help">Exclude anything covered by passive income; we'll subtract that just below.</div>
       </div>
-
       <div class="field">
         <label for="passiveIncome">Annual Passive Income in Retirement ($)</label>
-        <input type="number" id="passiveIncome" min="0" step="500" value="5000" />
+        <input type="number" id="passiveIncome" min="0" step="500" value="5000"/>
         <div class="help">Pension, rental net, annuity income, part-time work you plan to keep, etc.</div>
       </div>
-
       <div class="field">
         <label for="realReturn">Expected Real Investment Return (%/yr)</label>
-        <input type="number" id="realReturn" min="0" max="12" step="0.1" value="5.0" />
+        <input type="number" id="realReturn" min="0" max="12" step="0.1" value="5.0"/>
         <div class="help">After inflation. 4–6% is a common range for planning.</div>
       </div>
-
       <div class="field">
         <label for="swr">Safe Withdrawal Rate (%/yr)</label>
-        <input type="number" id="swr" min="2.5" max="5.0" step="0.1" value="4.0" />
+        <input type="number" id="swr" min="2.5" max="5.0" step="0.1" value="4.0"/>
         <div class="help">4% is typical. Lower SWR → larger required portfolio.</div>
       </div>
-
       <button type="submit" class="btn">Calculate</button>
     </form>
 
@@ -93,7 +80,6 @@ description: See if you can stop contributing and still reach FI. CoastFI math w
       <div id="quickSummary" class="mono" style="font-size:1.05rem;line-height:1.6;">
         Enter your numbers and hit Calculate.
       </div>
-
       <div id="unlockBlock" class="hidden" style="margin-top:1rem;">
         <p>Want the full breakdown (chart + table + personalized CoastFI number)?</p>
         <button class="btn" id="unlockBtn">See Full Results</button>
@@ -115,43 +101,39 @@ description: See if you can stop contributing and still reach FI. CoastFI math w
         <div class="mono" id="atRetirement" style="font-size:1.05rem;line-height:1.6;">—</div>
       </div>
     </div>
-
     <div class="chart-wrap">
       <canvas id="coastChart"></canvas>
     </div>
-
     <div class="table-wrap">
       <table class="results-table">
-        <thead>
-          <tr><th>Item</th><th>Amount ($)</th></tr>
-        </thead>
-        <tbody id="resultsTableBody"><!-- filled by JS --></tbody>
+        <thead><tr><th>Item</th><th>Amount ($)</th></tr></thead>
+        <tbody id="resultsTableBody"></tbody>
       </table>
     </div>
   </section>
 </main>
 
-<!-- Newsletter soft-gate modal (CoastFI) -->
+<!-- Newsletter soft-gate modal -->
 <div class="modal-backdrop" id="nlBackdropCF" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:1rem;z-index:60">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitleCF" style="max-width:460px;width:100%;background:#fff;border:1px solid #e9edf2;border-radius:.7rem;">
     <header style="padding:1rem 1.25rem;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center">
       <h3 id="nlTitleCF" style="margin:0">See your full CoastFI results</h3>
-      <button type="button" class="close" aria-label="Close" onclick="document.getElementById('nlBackdropCF').style.display='none'">✕</button>
+      <button type="button" class="close" aria-label="Close" id="nlCloseCF">✕</button>
     </header>
     <div class="body" style="padding:1rem 1.25rem">
       <p class="muted" style="margin:.25rem 0 1rem">
-        Pop in your email to receive FIREandLife updates (tools & scenarios). If you’re already subscribed, just check the box and continue.
+        Pop in your email to receive FIREandLife updates (tools &amp; scenarios). If you're already subscribed, just check the box and continue.
       </p>
       <form id="nlFormCF" action="https://eepurl.com/jkcf3o" method="post" target="_blank" class="grid" style="grid-template-columns:1fr;gap:.75rem">
         <div>
           <label for="nlEmailCF">Email</label>
-          <input id="nlEmailCF" name="EMAIL" type="email" required placeholder="you@example.com" />
+          <input id="nlEmailCF" name="EMAIL" type="email" required placeholder="you@example.com"/>
         </div>
         <label style="display:flex;align-items:center;gap:.5rem">
-          <input type="checkbox" id="nlAlreadyCF" /> I’m already subscribed
+          <input type="checkbox" id="nlAlreadyCF"/> I'm already subscribed
         </label>
         <div style="display:flex;gap:.5rem;flex-wrap:wrap">
-          <button type="submit" class="btn">Continue & unlock</button>
+          <button type="submit" class="btn">Continue &amp; unlock</button>
           <button type="button" id="nlSkipCF" class="btn btn-secondary">Skip this time</button>
         </div>
       </form>
@@ -159,6 +141,190 @@ description: See if you can stop contributing and still reach FI. CoastFI math w
   </div>
 </div>
 
-<!-- Scripts -->
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script defer src="/calculators/coast-fi/coastfi.js?v=20250825b"></script>
+<script>
+(function(){
+  "use strict";
+
+  var $ = function(id){ return document.getElementById(id); };
+  var fmt0 = function(n){ return Number(n||0).toLocaleString(undefined,{maximumFractionDigits:0}); };
+  var clamp = function(n,lo,hi){ return Math.max(lo,Math.min(hi,n)); };
+  var yearsUntil = function(cur,target){ return Math.max(0,(Number(target)||0)-(Number(cur)||0)); };
+
+  // Gate state
+  var NEWS_KEY = "coastfiUnlocked";
+  var isUnlocked = function(){ try{ return localStorage.getItem(NEWS_KEY)==="1"; }catch(e){ return false; } };
+  var unlock = function(){ try{ localStorage.setItem(NEWS_KEY,"1"); }catch(e){} };
+  var show = function(el,yes){ if(el) el.classList.toggle("hidden",!yes); };
+
+  // Math
+  function computeCoast(inputs){
+    var nYears=yearsUntil(inputs.currentAge,inputs.retireAge);
+    var r=(Number(inputs.realReturnPct)||0)/100;
+    var swr=(Number(inputs.swrPct)||0)/100;
+    var needFromPortfolio=Math.max(0,(Number(inputs.retireSpend)||0)-(Number(inputs.passiveIncome)||0));
+    var requiredAtRetirement=swr>0?(needFromPortfolio/swr):Infinity;
+    var denom=Math.pow(1+r,nYears);
+    var requiredToday=denom>0?(requiredAtRetirement/denom):requiredAtRetirement;
+    var current=Number(inputs.currentPortfolio)||0;
+    var progressPct=requiredToday<=0?100:clamp((current/requiredToday)*100,0,999);
+    var portfolioAtRetirement=current*Math.pow(1+r,nYears);
+    return{nYears:nYears,r:r,swr:swr,needFromPortfolio:needFromPortfolio,
+           requiredAtRetirement:requiredAtRetirement,requiredToday:requiredToday,
+           progressPct:progressPct,portfolioAtRetirement:portfolioAtRetirement};
+  }
+
+  function renderQuickSummary(inputs,calc){
+    var q=$("quickSummary"), u=$("unlockBlock");
+    if(!q) return;
+    if(calc.requiredToday<=0){
+      q.innerHTML='<div>With passive income covering your spending, your required portfolio is $0.</div><div class="help">You\'re effectively "beyond CoastFI." Unlock to see full details.</div>';
+    } else {
+      var status=(Number(inputs.currentPortfolio)||0)>=calc.requiredToday
+        ?"✅ You're at or beyond CoastFI."
+        :"⏳ You're not at CoastFI yet.";
+      q.innerHTML='<div>'+status+'</div>'+
+        '<div>CoastFI number today: <strong>$'+fmt0(calc.requiredToday)+'</strong></div>'+
+        '<div>Progress: <strong>'+fmt0(calc.progressPct)+'%</strong></div>'+
+        '<div class="help">At your expected '+(Number(inputs.realReturnPct)||0)+'% real return for '+calc.nYears+' years.</div>';
+    }
+    if(u) show(u,!isUnlocked());
+  }
+
+  var coastChart=null;
+  function renderFullResults(inputs,calc){
+    show($("fullResults"),true);
+    var headline=$("summaryHeadline"), detail=$("summaryDetail");
+    if(headline&&detail){
+      var status=(Number(inputs.currentPortfolio)||0)>=calc.requiredToday
+        ?"You're at or beyond CoastFI."
+        :"You haven't reached CoastFI yet.";
+      headline.textContent=status;
+      detail.textContent="CoastFI today: $"+fmt0(calc.requiredToday)+" · Progress: "+fmt0(calc.progressPct)+"% · Years to target: "+calc.nYears;
+    }
+    var atRet=$("atRetirement");
+    if(atRet){
+      atRet.innerHTML='Required portfolio: <strong>$'+fmt0(calc.requiredAtRetirement)+'</strong><br/>'+
+        'Projected portfolio (no more contributions): <strong>$'+fmt0(calc.portfolioAtRetirement)+'</strong>';
+    }
+    var tbody=$("resultsTableBody");
+    if(tbody){
+      tbody.innerHTML=
+        '<tr><td>Current age</td><td>'+inputs.currentAge+'</td></tr>'+
+        '<tr><td>Target retirement age</td><td>'+inputs.retireAge+'</td></tr>'+
+        '<tr><td>Current portfolio</td><td>$'+fmt0(inputs.currentPortfolio)+'</td></tr>'+
+        '<tr><td>Retirement spending (annual)</td><td>$'+fmt0(inputs.retireSpend)+'</td></tr>'+
+        '<tr><td>Passive income at retirement (annual)</td><td>$'+fmt0(inputs.passiveIncome)+'</td></tr>'+
+        '<tr><td>Needed from portfolio (annual)</td><td>$'+fmt0(calc.needFromPortfolio)+'</td></tr>'+
+        '<tr><td>Safe withdrawal rate</td><td>'+inputs.swrPct+'%</td></tr>'+
+        '<tr><td>Required portfolio at retirement</td><td>$'+fmt0(calc.requiredAtRetirement)+'</td></tr>'+
+        '<tr><td>Expected real return</td><td>'+inputs.realReturnPct+'%</td></tr>'+
+        '<tr><td>Years until retirement</td><td>'+calc.nYears+'</td></tr>'+
+        '<tr><td><strong>CoastFI "number today"</strong></td><td><strong>$'+fmt0(calc.requiredToday)+'</strong></td></tr>'+
+        '<tr><td>Progress</td><td>'+fmt0(calc.progressPct)+'%</td></tr>';
+    }
+    var canvas=$("coastChart");
+    if(!canvas||!window.Chart) return;
+    var ctx=canvas.getContext("2d");
+    if(coastChart&&coastChart.destroy) coastChart.destroy();
+    var n=calc.nYears, r=calc.r, years=[];
+    for(var i=0;i<=n;i++) years.push(i);
+    var growth=years.map(function(i){ return (Number(inputs.currentPortfolio)||0)*Math.pow(1+r,i); });
+    var reqLine=years.map(function(){ return calc.requiredAtRetirement; });
+    coastChart=new Chart(ctx,{
+      type:"line",
+      data:{labels:years.map(function(y){ return "+"+y+"y"; }),
+        datasets:[
+          {label:"Portfolio (no new contributions)",data:growth,tension:.2,borderWidth:2,pointRadius:2},
+          {label:"Required at retirement",data:reqLine,borderDash:[6,6],tension:0,borderWidth:2,pointRadius:0}
+        ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{position:"bottom"}},
+        scales:{y:{ticks:{callback:function(v){ return "$"+fmt0(v); }}}}}
+    });
+  }
+
+  // Form state
+  var lastInputs=null, lastCalc=null;
+  function readInputs(){
+    return{
+      currentAge:   ($("currentAge")||{}).value,
+      retireAge:    ($("retireAge")||{}).value,
+      currentPortfolio:($("currentPortfolio")||{}).value,
+      retireSpend:  ($("retireSpend")||{}).value,
+      passiveIncome:($("passiveIncome")||{}).value,
+      realReturnPct:($("realReturn")||{}).value,
+      swrPct:       ($("swr")||{}).value
+    };
+  }
+  function handleCalculate(e){
+    if(e&&e.preventDefault) e.preventDefault();
+    lastInputs=readInputs(); lastCalc=computeCoast(lastInputs);
+    renderQuickSummary(lastInputs,lastCalc);
+    if(isUnlocked()) renderFullResults(lastInputs,lastCalc);
+  }
+
+  // Gate modal
+  function openGate(){ var g=$("nlBackdropCF"); if(g) g.style.display="flex"; }
+  function closeGate(){ var g=$("nlBackdropCF"); if(g) g.style.display="none"; }
+
+  function handleUnlockClick(e){
+    if(e&&e.preventDefault) e.preventDefault();
+    if(isUnlocked()){
+      if(!lastInputs){ lastInputs=readInputs(); lastCalc=computeCoast(lastInputs); }
+      renderFullResults(lastInputs,lastCalc);
+      show($("unlockBlock"),false); return;
+    }
+    openGate();
+  }
+
+  // Init
+  document.addEventListener("DOMContentLoaded",function(){
+    // Handle ?unlocked=1 redirect flow
+    try{
+      var params=new URLSearchParams(window.location.search);
+      if(params.get("unlocked")==="1"){ unlock(); history.replaceState({},"",window.location.pathname); }
+    }catch(e){}
+
+    var form=$("coastForm");
+    if(form) form.addEventListener("submit",handleCalculate);
+
+    var unlockBtn=$("unlockBtn");
+    if(unlockBtn) unlockBtn.addEventListener("click",handleUnlockClick,false);
+
+    var modalBackdrop=$("nlBackdropCF");
+    if(modalBackdrop) modalBackdrop.addEventListener("click",function(e){ if(e.target===modalBackdrop) closeGate(); });
+
+    var nlCloseCF=$("nlCloseCF");
+    if(nlCloseCF) nlCloseCF.addEventListener("click",closeGate);
+
+    var nlForm=$("nlFormCF");
+    if(nlForm){
+      nlForm.addEventListener("submit",function(){
+        unlock();
+        setTimeout(function(){
+          closeGate();
+          if(!lastInputs){ lastInputs=readInputs(); lastCalc=computeCoast(lastInputs); }
+          renderFullResults(lastInputs,lastCalc);
+          show($("unlockBlock"),false);
+        },150);
+      });
+    }
+
+    var nlSkip=$("nlSkipCF");
+    if(nlSkip){
+      nlSkip.addEventListener("click",function(){
+        unlock(); closeGate();
+        if(!lastInputs){ lastInputs=readInputs(); lastCalc=computeCoast(lastInputs); }
+        renderFullResults(lastInputs,lastCalc);
+        show($("unlockBlock"),false);
+      });
+    }
+
+    var nlAlready=$("nlAlreadyCF");
+    if(nlAlready) nlAlready.addEventListener("change",function(){ if(nlAlready.checked) unlock(); });
+
+    show($("fullResults"),false);
+  });
+})();
+</script>
