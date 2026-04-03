@@ -5,11 +5,10 @@ description: Find the best split between Traditional 401k, Roth 401k, and Broker
 permalink: /calculators/contribution-optimizer/
 ---
 
-
 <section class="container" style="max-width:980px;margin:2rem auto;padding:0 1rem;">
   <h1>FI Contribution Optimization Calculator</h1>
   <p style="margin-bottom:1rem;">
-    This calculator helps you allocate your annual savings across <strong>Traditional 401k</strong>, <strong>Roth 401k</strong>, and <strong>Brokerage</strong> to maximize estimated <em>after-tax</em> wealth at retirement. It models current-year tax savings from pre-tax 401k deferrals, employer match (approximate), long-term growth, and a simple dividend tax drag in taxable accounts. Assumptions are simplified and user-editable below; this is educational, not tax advice.
+    This calculator helps you allocate your annual savings across <strong>Traditional 401k</strong>, <strong>Roth 401k</strong>, and <strong>Brokerage</strong> to maximize estimated <em>after-tax</em> wealth at retirement. It models current-year tax savings from pre-tax 401k deferrals, employer match, long-term growth, and dividend tax drag in taxable accounts. Assumptions are simplified and user-editable; this is educational, not tax advice.
   </p>
 
   <div class="calc-card">
@@ -18,11 +17,11 @@ permalink: /calculators/contribution-optimizer/
     </p>
 
     <form id="calc-form" class="calc-grid">
-      <!-- add classes to inputs/selects/labels -->
       <div>
         <label class="calc-label" for="filingStatus">Filing Status <span aria-hidden="true" style="color:#c00">*</span></label>
         <select id="filingStatus" class="calc-select" required>
-          <option>Single</option><option>MFJ</option>
+          <option value="Single">Single</option>
+          <option value="MFJ">Married Filing Jointly</option>
         </select>
         <small class="calc-help">Used to look up brackets and the standard deduction.</small>
       </div>
@@ -30,7 +29,7 @@ permalink: /calculators/contribution-optimizer/
       <div>
         <label class="calc-label" for="age">Age</label>
         <input id="age" type="number" min="18" value="35" inputmode="numeric" class="calc-input">
-        <small class="calc-help">Optional. For context only (no age-based rules modeled yet).</small>
+        <small class="calc-help">Optional. For context only.</small>
       </div>
 
       <div>
@@ -60,33 +59,25 @@ permalink: /calculators/contribution-optimizer/
       <div style="grid-column:1/-1">
         <label class="calc-label" for="matchPolicy">Employer Match Policy</label>
         <input id="matchPolicy" type="text" value="100% up to 3%; 50% of next 2%" class="calc-input">
-        <small class="calc-help">Format like “100% up to 3%; 50% of next 2%”. We treat match dollars as pre-tax.</small>
+        <small class="calc-help">Format like "100% up to 3%; 50% of next 2%". Match dollars treated as pre-tax.</small>
       </div>
 
       <div>
         <label class="calc-label" for="savings">Annual Savings Budget ($) <span aria-hidden="true" style="color:#c00">*</span></label>
         <input id="savings" type="number" value="36000" inputmode="numeric" required class="calc-input">
-        <small class="calc-help">Total dollars you can save this year (across all accounts).</small>
-      </div>
-
-      <div>
-        <label class="calc-label" for="planTypes">401k Available</label>
-        <select id="planTypes" class="calc-select">
-          <option>Traditional & Roth</option>
-        </select>
-        <small class="calc-help">Informational—for future expansion (Roth-only/Trad-only scenarios).</small>
+        <small class="calc-help">Total dollars you can save this year across all accounts.</small>
       </div>
 
       <div>
         <label class="calc-label" for="rNom">Return (nominal) % <span aria-hidden="true" style="color:#c00">*</span></label>
         <input id="rNom" type="number" step="0.1" value="6.0" inputmode="decimal" required class="calc-input">
-        <small class="calc-help">Annualized long-run portfolio return assumption (before taxes).</small>
+        <small class="calc-help">Annualized long-run portfolio return assumption.</small>
       </div>
 
       <div>
         <label class="calc-label" for="divYield">Brokerage Dividend Yield %</label>
         <input id="divYield" type="number" step="0.1" value="1.8" inputmode="decimal" class="calc-input">
-        <small class="calc-help">Used to approximate yearly dividend tax drag in taxable (defaults to 1.8%).</small>
+        <small class="calc-help">Used to approximate yearly dividend tax drag in taxable account.</small>
       </div>
 
       <div>
@@ -104,12 +95,12 @@ permalink: /calculators/contribution-optimizer/
       <div>
         <label class="calc-label" for="retCGRate">Retirement LTCG Rate (Brokerage) % <span aria-hidden="true" style="color:#c00">*</span></label>
         <input id="retCGRate" type="number" step="0.1" value="15" inputmode="decimal" required class="calc-input">
-        <small class="calc-help">Estimated long-term capital gains/dividend rate in retirement.</small>
+        <small class="calc-help">Estimated long-term capital gains rate in retirement.</small>
       </div>
 
       <div style="grid-column:1/-1;margin-top:.25rem;">
         <button class="btn-primary" type="button" id="runBtn">Find Optimal Split</button>
-        <small class="calc-help">We’ll validate required fields, load tax data, and evaluate multiple allocation mixes.</small>
+        <small class="calc-help" style="margin-top:.5rem;display:block;">We'll evaluate multiple allocation mixes and show the one that maximizes after-tax wealth at retirement.</small>
       </div>
     </form>
   </div>
@@ -118,17 +109,368 @@ permalink: /calculators/contribution-optimizer/
 
   <div id="callouts" role="region" aria-live="polite"></div>
   <div id="kpis"></div>
-	<div class="calc-card" style="margin-top:1rem;">
-  <h3 style="margin:0 0 .75rem 0;">Breakdown of Projected After-Tax Value</h3>
-  <canvas id="donutBreakdown" aria-label="After-tax value breakdown" role="img" style="max-width:680px;"></canvas>
-  <p class="calc-help" style="margin-top:.5rem;">
-    Shows the estimated portion of your future after-tax value by account type.
-  </p>
-</div>
-  <canvas id="chartOut" style="margin:1.5rem 0;" aria-label="Top allocations chart" role="img"></canvas>
+
+  <div class="calc-card" id="donutCard" style="margin-top:1rem;display:none;">
+    <h3 style="margin:0 0 .75rem 0;">Breakdown of Projected After-Tax Value</h3>
+    <canvas id="donutBreakdown" aria-label="After-tax value breakdown" role="img" style="max-width:400px;margin:0 auto;display:block;"></canvas>
+    <p class="calc-help" style="margin-top:.5rem;">Shows the estimated portion of your future after-tax value by account type.</p>
+  </div>
+
+  <canvas id="chartOut" style="margin:1.5rem 0;display:none;" aria-label="Top allocations chart" role="img"></canvas>
   <div id="resultsTable" style="overflow:auto;margin-top:1rem;"></div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+  "use strict";
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
-<script type="module" src="/calculators/contribution-optimizer/app.js" defer></script>
+  // ── Inlined 2025 tax data ──────────────────────────────────────
+  var TAX_DATA = {
+    limits: { employee_deferral: 23500 },
+    stdDeduction: { Single: 15000, MFJ: 30000, HOH: 22500 },
+    brackets: {
+      Single: {
+        ordinary: [
+          {bottom:0,      top:11925,   rate:0.10},
+          {bottom:11925,  top:48475,   rate:0.12},
+          {bottom:48475,  top:103350,  rate:0.22},
+          {bottom:103350, top:197300,  rate:0.24},
+          {bottom:197300, top:250525,  rate:0.32},
+          {bottom:250525, top:626350,  rate:0.35},
+          {bottom:626350, top:Infinity,rate:0.37}
+        ],
+        capgains: { zero_top: 48350, fifteen_top: 533400 }
+      },
+      MFJ: {
+        ordinary: [
+          {bottom:0,      top:23850,   rate:0.10},
+          {bottom:23850,  top:96950,   rate:0.12},
+          {bottom:96950,  top:206700,  rate:0.22},
+          {bottom:206700, top:394600,  rate:0.24},
+          {bottom:394600, top:501050,  rate:0.32},
+          {bottom:501050, top:751600,  rate:0.35},
+          {bottom:751600, top:Infinity,rate:0.37}
+        ],
+        capgains: { zero_top: 96700, fifteen_top: 600050 }
+      }
+    }
+  };
+
+  // ── Utilities ──────────────────────────────────────────────────
+  function $q(sel){ return document.querySelector(sel); }
+  function $id(id){ return document.getElementById(id); }
+  function toNum(sel){
+    var el = $q(sel); if(!el) return 0;
+    var n = parseFloat(el.value);
+    return isFinite(n) ? n : 0;
+  }
+  function clamp(n,lo,hi){ return Math.min(Math.max(n,lo),hi); }
+  function fmtMoney(n){ return isFinite(n)?Math.round(n).toLocaleString():"—"; }
+
+  function showNotice(html, tone){
+    var el=$id("callouts")||document.body;
+    var border=tone==="error"?"#f99":tone==="warn"?"#fd7":"#eef2f7";
+    el.innerHTML='<div class="card" style="border:1px solid '+border+';padding:1rem;border-radius:.5rem;margin-bottom:1rem;">'+html+'</div>'+el.innerHTML;
+  }
+
+  // ── Validation ─────────────────────────────────────────────────
+  var REQUIRED = ["filingStatus","wages","savings","rNom","yearsToRet","retOrdRate","retCGRate"];
+  function validateRequired(){
+    var missing=[];
+    REQUIRED.forEach(function(id){
+      var el=$id(id); if(!el) return;
+      var ok=el.value!=="";
+      if(ok&&el.type==="number"){ ok=isFinite(parseFloat(el.value)); }
+      if(!ok) missing.push(id);
+      el.style.outline=ok?"":"2px solid #c00";
+    });
+    return missing;
+  }
+
+  // ── Read inputs ────────────────────────────────────────────────
+  function readInputs(){
+    var filing=($id("filingStatus")||{}).value||"Single";
+    // Normalise MFJ label
+    if(filing==="MFJ"||filing==="Married Filing Jointly") filing="MFJ";
+    var i={
+      filing:   filing,
+      age:      clamp(toNum("#age")||35, 18, 100),
+      wages:    Math.max(toNum("#wages"),0),
+      otherOrd: Math.max(toNum("#otherOrd"),0),
+      qdiv:     Math.max(toNum("#qdiv"),0),
+      ltcg:     Math.max(toNum("#ltcg"),0),
+      matchPolicy: ($id("matchPolicy")||{}).value||"",
+      savings:  Math.max(toNum("#savings"),0),
+      rNom:     clamp(toNum("#rNom")/100, -0.5, 1.0),
+      divYield: clamp(toNum("#divYield")/100, 0, 1.0),
+      yearsToRet: clamp(toNum("#yearsToRet")||25, 0, 70),
+      retOrdRate: clamp(toNum("#retOrdRate")/100, 0, 1.0),
+      retCGRate:  clamp(toNum("#retCGRate")/100, 0, 1.0),
+      kLimit:   TAX_DATA.limits.employee_deferral,
+      stdDeduction: TAX_DATA.stdDeduction,
+      brackets: TAX_DATA.brackets
+    };
+    return i;
+  }
+
+  // ── Employer match ─────────────────────────────────────────────
+  function calcMatch(salary, empCntrb, policyStr){
+    var nums=(String(policyStr).toLowerCase().match(/(\d+(\.\d+)?)/g)||[]).map(Number);
+    var t1rate=(nums[0]??100)/100, t1cap=(nums[1]??3)/100;
+    var t2rate=(nums[2]??50)/100,  t2cap=(nums[3]??2)/100;
+    var denom=Math.max(salary,1);
+    var cntrbPct=Math.min(empCntrb/denom,1);
+    var tier1=Math.min(cntrbPct,t1cap)*salary*t1rate;
+    var tier2=Math.max(Math.min(cntrbPct-t1cap,t2cap),0)*salary*t2rate;
+    return Math.min(tier1+tier2, salary*(t1cap+t2cap));
+  }
+
+  // ── Tax helpers ────────────────────────────────────────────────
+  function applyOrdTax(taxable, table){
+    if(!table||!Array.isArray(table.ordinary)) return 0;
+    var tax=0, remaining=taxable;
+    for(var j=0;j<table.ordinary.length;j++){
+      var b=table.ordinary[j];
+      var width=Math.max(Math.min(remaining, b.top-b.bottom),0);
+      if(width<=0) break;
+      tax+=width*b.rate; remaining-=width;
+    }
+    return tax;
+  }
+
+  function applyCapGainsTax(taxableOrd, qd_ltcg, table){
+    if(qd_ltcg<=0||!table||!table.capgains) return 0;
+    var cg=table.capgains, remaining=qd_ltcg, tax=0;
+    var room0=Math.max(cg.zero_top-taxableOrd,0);
+    var at0=Math.min(remaining,room0); remaining-=at0;
+    if(remaining<=0) return 0;
+    var room15=Math.max(cg.fifteen_top-(taxableOrd+at0),0);
+    var at15=Math.min(remaining,room15);
+    tax+=at15*0.15; remaining-=at15;
+    if(remaining>0) tax+=remaining*0.20;
+    return tax;
+  }
+
+  function currentYearTax(i, empPreTax){
+    var bracketTable=i.brackets[i.filing]||i.brackets["Single"];
+    var stdDed=i.stdDeduction[i.filing]||i.stdDeduction["Single"]||15000;
+    var agiOrd=Math.max(i.wages-empPreTax,0)+i.otherOrd;
+    var taxableOrd=Math.max(agiOrd-stdDed,0);
+    var ordTax=applyOrdTax(taxableOrd,bracketTable);
+    var ltcgTax=applyCapGainsTax(taxableOrd, i.qdiv+i.ltcg, bracketTable);
+    return{ordTax:ordTax,ltcgTax:ltcgTax,totalTax:ordTax+ltcgTax};
+  }
+
+  // ── Forward simulation ─────────────────────────────────────────
+  function growToRetirement(i, empTrad, rothCntrb, brokCntrb, match){
+    var tax=currentYearTax(i, empTrad);
+    var n=i.yearsToRet, r=i.rNom;
+    var taxDrag=i.divYield*0.15;
+    var brokEff=r-taxDrag;
+    var kTradNow=empTrad+match, kRothNow=rothCntrb, brokNow=brokCntrb;
+    var kTradFV=kTradNow*Math.pow(1+r,n);
+    var kTradAfterTax=kTradFV*(1-i.retOrdRate);
+    var kRothFV=kRothNow*Math.pow(1+r,n);
+    var brokFV=brokNow*Math.pow(1+brokEff,n);
+    var gains=Math.max(brokFV-brokNow,0);
+    var brokAfterTax=brokNow+gains*(1-i.retCGRate);
+    var total=kTradAfterTax+kRothFV+brokAfterTax;
+    return{tax:tax,totalAfterTaxFV:total,
+           components:{kTradAfterTaxFV:kTradAfterTax,kRothFV:kRothFV,brokAfterTaxFV:brokAfterTax}};
+  }
+
+  // ── Optimizer ──────────────────────────────────────────────────
+  function optimize(i){
+    var salary=Math.max(i.wages,0);
+    var maxEmployee=Math.min(i.kLimit,salary);
+    var budget=Math.max(i.savings,0);
+    var results=[];
+    var empMax=Math.min(budget,maxEmployee);
+    var empStep=Math.max(500,Math.round(budget*0.05));
+    var stepPct=5;
+
+    for(var emp=0;emp<=empMax;emp+=empStep){
+      var match=calcMatch(salary,emp,i.matchPolicy);
+      var remainder=Math.max(budget-emp,0);
+      for(var pRoth=0;pRoth<=100;pRoth+=stepPct){
+        for(var pBrok=0;pBrok<=100-pRoth;pBrok+=stepPct){
+          var pTrad=100-pRoth-pBrok;
+          var empTrad=emp*(pTrad/100);
+          var empRoth=emp*(pRoth/100);
+          var brok=remainder*(pBrok/100);
+          var sim=growToRetirement(i,empTrad,empRoth,brok,match);
+          results.push({empTotal:emp,empTrad:empTrad,empRoth:empRoth,brok:brok,match:match,
+                        afterTaxFV:sim.totalAfterTaxFV,taxNow:sim.tax.totalTax,
+                        components:sim.components});
+        }
+      }
+    }
+
+    if(!results.length){
+      var m=calcMatch(salary,0,i.matchPolicy);
+      var s=growToRetirement(i,0,0,budget,m);
+      results.push({empTotal:0,empTrad:0,empRoth:0,brok:budget,match:m,
+                    afterTaxFV:s.totalAfterTaxFV,taxNow:s.tax.totalTax,components:s.components});
+    }
+
+    results.sort(function(a,b){return b.afterTaxFV-a.afterTaxFV;});
+    var best=results[0];
+
+    var allBrokerage=growToRetirement(i,0,0,budget,0);
+    var empFull=Math.min(budget,maxEmployee);
+    var mFull=calcMatch(salary,empFull,i.matchPolicy);
+    var allTrad=growToRetirement(i,empFull,0,Math.max(budget-empFull,0),mFull);
+    var allRoth=growToRetirement(i,0,empFull,Math.max(budget-empFull,0),mFull);
+
+    return{best:best,allBrokerage:allBrokerage,allTrad:allTrad,allRoth:allRoth,results:results};
+  }
+
+  // ── Charts ─────────────────────────────────────────────────────
+  var _barChart=null, _donutChart=null;
+
+  function renderBarChart(results){
+    var canvas=$id("chartOut"); if(!canvas||!window.Chart) return;
+    canvas.style.display="block";
+    var top=results.slice(0,10);
+    var labels=top.map(function(_,i){return "#"+(i+1);});
+    var data=top.map(function(r){return r.afterTaxFV;});
+    var ctx=canvas.getContext("2d");
+    if(_barChart) _barChart.destroy();
+    var grad=ctx.createLinearGradient(0,0,0,canvas.height||200);
+    grad.addColorStop(0,"rgba(56,189,248,0.7)");
+    grad.addColorStop(1,"rgba(56,189,248,0.15)");
+    _barChart=new Chart(ctx,{
+      type:"bar",
+      data:{labels:labels,datasets:[{label:"After-tax FV",data:data,backgroundColor:grad,borderWidth:0}]},
+      options:{responsive:true,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(tt){return" $"+fmtMoney(tt.raw);}}}},
+        scales:{y:{ticks:{callback:function(v){return"$"+fmtMoney(v);}},grid:{color:"rgba(148,163,184,0.15)"}},x:{grid:{display:false}}}}
+    });
+  }
+
+  function renderDonutChart(components){
+    var card=$id("donutCard"); if(card) card.style.display="block";
+    var canvas=$id("donutBreakdown"); if(!canvas||!window.Chart) return;
+    var ctx=canvas.getContext("2d");
+    if(_donutChart) _donutChart.destroy();
+    _donutChart=new Chart(ctx,{
+      type:"doughnut",
+      data:{
+        labels:["Traditional 401k (after-tax)","Roth 401k","Brokerage (after-tax)"],
+        datasets:[{
+          data:[Math.round(components.kTradAfterTaxFV),Math.round(components.kRothFV),Math.round(components.brokAfterTaxFV)],
+          backgroundColor:["#2f481b","#FF6F61","#FFD166"],
+          borderWidth:2,borderColor:"#fff"
+        }]
+      },
+      options:{responsive:true,plugins:{legend:{position:"bottom"},
+        tooltip:{callbacks:{label:function(c){return" $"+fmtMoney(c.parsed);}}}}}
+    });
+  }
+
+  // ── Render ─────────────────────────────────────────────────────
+  function render(out){
+    var totalAlloc=out.best.empTotal+out.best.brok;
+    var pTrad=totalAlloc>0?Math.round((out.best.empTrad/totalAlloc)*100):0;
+    var pRoth=totalAlloc>0?Math.round((out.best.empRoth/totalAlloc)*100):0;
+    var pBrok=totalAlloc>0?Math.round((out.best.brok/totalAlloc)*100):0;
+
+    var callouts=$id("callouts");
+    if(callouts){
+      callouts.innerHTML='<div class="calc-card">'+
+        '<h3 style="margin:0 0 .5rem 0;">✅ Recommended Split</h3>'+
+        '<p style="margin:.25rem 0">'+
+          '<strong>Employee 401k:</strong> $'+fmtMoney(out.best.empTotal)+
+          ' → Trad $'+fmtMoney(out.best.empTrad)+' ('+pTrad+'%), '+
+          'Roth $'+fmtMoney(out.best.empRoth)+' ('+pRoth+'%)'+
+          ' &nbsp;|&nbsp; <strong>Brokerage:</strong> $'+fmtMoney(out.best.brok)+' ('+pBrok+'%)'+
+          ' &nbsp;|&nbsp; <strong>Employer Match (est):</strong> $'+fmtMoney(out.best.match)+
+        '</p>'+
+        '<p style="margin:.25rem 0"><strong>Projected after-tax value at retirement:</strong> $'+fmtMoney(out.best.afterTaxFV)+'</p>'+
+        '<p class="calc-help">Assumptions are simplified. Dividend drag modeled at 15% of yield. Retirement tax rates are user-provided estimates.</p>'+
+      '</div>';
+    }
+
+    var kpis=$id("kpis");
+    if(kpis){
+      var taxAllB=out.allBrokerage.tax?out.allBrokerage.tax.totalTax:0;
+      var taxNowBest=out.best.taxNow||0;
+      var taxSaved=Math.max(taxAllB-taxNowBest,0);
+      kpis.innerHTML='<div class="kpi-row">'+
+        '<div class="kpi"><div class="k">Best after-tax future value</div><div class="v">$'+fmtMoney(out.best.afterTaxFV)+'</div></div>'+
+        '<div class="kpi"><div class="k">Estimated employer match</div><div class="v">$'+fmtMoney(out.best.match)+'</div></div>'+
+        '<div class="kpi"><div class="k">Current-year tax saved vs all-brokerage</div><div class="v">$'+fmtMoney(taxSaved)+'</div></div>'+
+      '</div>';
+    }
+
+    renderDonutChart(out.best.components);
+    renderBarChart(out.results);
+
+    var tbl=$id("resultsTable");
+    if(tbl){
+      tbl.innerHTML='<table class="table">'+
+        '<thead><tr><th>Strategy</th><th style="text-align:right">After-tax FV</th></tr></thead>'+
+        '<tbody>'+
+          '<tr><td>All Brokerage</td><td style="text-align:right">$'+fmtMoney(out.allBrokerage.totalAfterTaxFV)+'</td></tr>'+
+          '<tr><td>All Traditional 401k to limit</td><td style="text-align:right">$'+fmtMoney(out.allTrad.totalAfterTaxFV)+'</td></tr>'+
+          '<tr><td>All Roth 401k to limit</td><td style="text-align:right">$'+fmtMoney(out.allRoth.totalAfterTaxFV)+'</td></tr>'+
+          '<tr><td><strong>Optimal</strong></td><td style="text-align:right"><strong>$'+fmtMoney(out.best.afterTaxFV)+'</strong></td></tr>'+
+        '</tbody></table>';
+
+      // CSV download
+      var existing=$id("csvBtn"); if(existing) existing.remove();
+      var csvBtn=document.createElement("button");
+      csvBtn.id="csvBtn"; csvBtn.textContent="Download CSV"; csvBtn.className="btn-secondary";
+      csvBtn.style.marginTop="1rem";
+      csvBtn.addEventListener("click",function(){
+        var header="Emp Total,Trad,Roth,Brokerage,Match,After-Tax FV,Tax Now\n";
+        var rows=out.results.map(function(r){
+          return[r.empTotal,r.empTrad,r.empRoth,r.brok,r.match,r.afterTaxFV,r.taxNow].join(",");
+        }).join("\n");
+        var blob=new Blob([header+rows],{type:"text/csv"});
+        var url=URL.createObjectURL(blob);
+        var a=document.createElement("a"); a.href=url; a.download="contribution-optimizer.csv";
+        document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      });
+      tbl.after(csvBtn);
+    }
+
+    // Scroll to results
+    callouts.scrollIntoView({behavior:"smooth",block:"nearest"});
+  }
+
+  // ── Run ────────────────────────────────────────────────────────
+  var _running=false;
+  function onRun(){
+    if(_running) return;
+    _running=true;
+    var btn=$id("runBtn");
+    var orig=btn?btn.textContent:"";
+    if(btn){btn.disabled=true;btn.textContent="Calculating…";}
+
+    // Clear previous results
+    var callouts=$id("callouts"); if(callouts) callouts.innerHTML="";
+    var kpis=$id("kpis"); if(kpis) kpis.innerHTML="";
+
+    var bad=validateRequired();
+    if(bad.length){
+      showNotice("Please complete required fields: "+bad.map(function(id){return"<code>"+id+"</code>";}).join(", ")+".","warn");
+      if(btn){btn.disabled=false;btn.textContent=orig;}
+      _running=false; return;
+    }
+
+    var i=readInputs();
+    var result=optimize(i);
+    render(result);
+
+    if(btn){btn.disabled=false;btn.textContent=orig;}
+    _running=false;
+  }
+
+  // ── Init ───────────────────────────────────────────────────────
+  var runBtn=$id("runBtn");
+  if(runBtn) runBtn.addEventListener("click",onRun);
+
+})();
+</script>
