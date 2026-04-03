@@ -7,47 +7,59 @@ permalink: /calculators/take-home-pay/
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Take-Home Pay Calculator • FIREandLife</title>
-  <meta name="description" content="Estimate household take-home pay with multiple income streams, pre-tax contributions (401k, HSA), FICA, state tax (flat, simplified), and health premiums."/>
-  <link rel="stylesheet" href="/styles.css?v=tax2"/>
-
-  <style>
-    .grid-2 { display:grid; gap:1rem; }
-    @media (min-width: 900px){ .grid-2 { grid-template-columns: 1fr 1fr; } }
-    .income-card { background:#fff;border:1px solid #eee;border-radius:8px;padding:1rem; }
-    .income-card h3 { margin:0 0 .5rem 0; }
-    .field { margin:.65rem 0; }
-    .help { font-size:.9rem; opacity:.75; }
-    #results .cards { display:grid; gap:1rem; }
-    @media (min-width:700px){ #results .cards { grid-template-columns: repeat(2, minmax(240px, 1fr)); } }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-    .table-wrap { overflow-x:auto; margin-top:1rem; }
-    .results-table { width:100%; border-collapse:collapse; background:#fff; border:1px solid #eee; border-radius:8px; overflow:hidden; }
-    .results-table th, .results-table td { padding:.75rem .9rem; text-align:right; border-bottom:1px solid #f2f2f2; white-space:nowrap; }
-    .results-table th:first-child, .results-table td:first-child { text-align:left; }
-    .results-table thead th { background:#fafafa; font-weight:600; }
-    #resultsChart { max-width:700px; height:260px; display:block; margin:1rem auto; }
-    .btn-link { background:none;border:0;color:#FF6F61;font-weight:700;cursor:pointer;padding:0; }
-    .container{max-width:1100px;margin:2rem auto;padding:0 1rem}
-  </style>
-
-  <!-- GA4 -->
+  <meta name="description" content="Estimate household take-home pay with multiple income streams, pre-tax contributions (401k, HSA), FICA, state tax, and health premiums."/>
+  <link rel="stylesheet" href="/assets/css/style.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date()); gtag('config', 'G-KHKJVXPJQM');
-  </script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-KHKJVXPJQM');</script>
+  <style>
+    .container{max-width:1100px;margin:2rem auto;padding:0 1rem}
+    .page-grid{display:grid;gap:1.5rem}
+    @media(min-width:900px){.page-grid{grid-template-columns:1fr 1fr;align-items:start}}
+    .income-card{background:#fff;border:1px solid #eee;border-radius:8px;padding:1rem;margin-bottom:1rem;position:relative}
+    .income-card h3{margin:0 0 .75rem;font-size:1rem;color:#333}
+    .remove-btn{position:absolute;top:.75rem;right:.75rem;background:none;border:none;font-size:1.1rem;color:#bbb;cursor:pointer;line-height:1;padding:0}
+    .remove-btn:hover{color:#FF6F61}
+    .field{margin:.7rem 0}
+    .field label{display:block;font-weight:600;margin-bottom:.3rem;font-size:.9rem;color:#444}
+    .field input,.field select{width:100%;padding:.6rem .75rem;border:1px solid #ddd;border-radius:6px;font-size:1rem;background:#fff;color:#333}
+    .field input:focus,.field select:focus{border-color:#FF6F61;outline:none}
+    .help{font-size:.82rem;color:#888;margin-top:.25rem}
+    .btn-row{display:flex;gap:.75rem;align-items:center;margin-top:1rem;flex-wrap:wrap}
+    .btn-link{background:none;border:none;color:#FF6F61;font-weight:700;cursor:pointer;padding:0;font-size:.95rem}
+    /* snapshot */
+    #quickCard{padding:1.25rem}
+    #snapshot{color:#555;line-height:1.8;font-size:.95rem}
+    /* results */
+    .results-section{margin-top:1.5rem}
+    .kpi-row{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:1rem}
+    .kpi{background:#fff;border:1px solid #eee;border-radius:8px;padding:1rem}
+    .kpi .k{font-size:.78rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+    .kpi .v{font-size:1.35rem;font-weight:700;color:#333;margin-top:.2rem}
+    .kpi .v.orange{color:#FF6F61}
+    .person-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-bottom:1rem}
+    .person-card{background:#f9f9f9;border:1px solid #eee;border-radius:8px;padding:.9rem}
+    .person-card h4{margin:0 0 .4rem;font-size:.88rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+    .person-card .big{font-size:1.2rem;font-weight:700;color:#333}
+    .person-card .detail{font-size:.82rem;color:#888;margin-top:.3rem;line-height:1.7}
+    canvas{max-width:560px;margin:1.25rem auto;display:block}
+    .table-wrap{overflow-x:auto;margin-top:1rem}
+    .results-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #eee;border-radius:8px;overflow:hidden;font-size:.9rem}
+    .results-table th,.results-table td{padding:.65rem .9rem;text-align:right;border-bottom:1px solid #f4f4f4;white-space:nowrap}
+    .results-table th:first-child,.results-table td:first-child{text-align:left}
+    .results-table thead th{background:#fafafa;font-weight:600;font-size:.8rem;color:#666;text-transform:uppercase;letter-spacing:.03em}
+    .results-table tr.total-row td{font-weight:700;background:#fff7f6;border-top:2px solid #eee}
+    .disclaimer{font-size:.8rem;color:#aaa;margin-top:.75rem}
+  </style>
 </head>
 <body>
 
-<!-- Responsive header (same pattern as other pages) -->
 <header class="site-header">
   <div class="nav">
     <a class="nav__brand" href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife"></a>
     <button id="navToggle" class="nav__toggle" aria-expanded="false" aria-label="Open menu">
       <span class="nav__bar"></span><span class="nav__bar"></span><span class="nav__bar"></span>
     </button>
-    <ul id="navMenu" class="nav__links" data-collapsed="true">
+    <ul id="navMenu" class="nav__links">
       <li><a href="/">Home</a></li>
       <li><a href="/calculators/" aria-current="page">Calculators</a></li>
       <li><a href="/blog/">Blog</a></li>
@@ -60,15 +72,16 @@ permalink: /calculators/take-home-pay/
 
 <main class="container">
   <h1>Take-Home Pay Calculator</h1>
-  <p>
-    Estimate household after-tax income with <strong>multiple income streams</strong>.
-    We apply federal tax (simplified), <strong>state income tax (flat, simplified)</strong>, FICA per person,
-    pre-tax contributions, and health premiums.
-  </p>
+  <p>Estimate household after-tax income with <strong>multiple income streams</strong>. Applies 2024 federal brackets, state income tax (simplified flat rate), FICA, pre-tax 401(k)/HSA contributions, and health premiums.</p>
 
-  <section class="grid-2" style="margin-top:1rem;">
-    <form id="thpForm">
+  <div class="page-grid" style="margin-top:1.5rem">
+
+    <!-- ── LEFT: Inputs ── -->
+    <div>
+      <!-- Household settings -->
       <div class="income-card">
+        <h3>Household Settings</h3>
+
         <div class="field">
           <label for="filing">Filing Status</label>
           <select id="filing">
@@ -79,7 +92,7 @@ permalink: /calculators/take-home-pay/
         </div>
 
         <div class="field">
-          <label for="state">State (simplified flat rate)</label>
+          <label for="state">State Income Tax</label>
           <select id="state">
             <option value="NONE:0">No state tax</option>
             <option value="AL:0.05">Alabama (~5%)</option>
@@ -116,99 +129,352 @@ permalink: /calculators/take-home-pay/
             <option value="WA:0">Washington (0%)</option>
             <option value="WI:0.05">Wisconsin (~5%)</option>
           </select>
-          <div class="help">This is a simplified flat/effective rate for planning, not a full table.</div>
+          <div class="help">Simplified flat/effective rate for planning purposes.</div>
         </div>
 
         <div class="field">
           <label for="health">Annual Health Premiums ($)</label>
-          <input id="health" type="number" min="0" step="50" value="7200"/>
-          <div class="help">Employer plan premiums you pay. Annual total.</div>
-        </div>
-
-        <div class="field">
-          <button type="button" id="addIncome" class="btn btn-secondary">+ Add Another Income</button>
-          <div class="help">If you choose “Married Filing Jointly”, we’ll auto-add a second income card.</div>
+          <input id="health" type="number" min="0" step="100" value="0" placeholder="0"/>
+          <div class="help">Total employee-paid premiums per year (pre-tax). Split across income streams automatically.</div>
         </div>
       </div>
 
-      <div id="streamsWrap" style="margin-top:1rem;"><!-- income cards injected here --></div>
+      <!-- Income streams injected here -->
+      <div id="streamsWrap"></div>
 
-      <div class="field" style="margin-top:1rem;">
-        <button type="submit" class="btn">Calculate</button>
+      <div class="btn-row">
+        <button type="button" id="addIncome" class="btn btn-secondary">+ Add Income Stream</button>
+        <button type="button" id="calcBtn" class="btn">Calculate</button>
         <button type="button" id="resetBtn" class="btn-link">Reset</button>
-      </div>
-    </form>
-
-    <section class="card" id="quickCard">
-      <h2>Household Snapshot</h2>
-      <div id="snapshot" class="mono" style="line-height:1.6;" aria-live="polite">Add incomes and click Calculate.</div>
-    </section>
-  </section>
-
-  <section id="results" class="results-section" style="margin-top:1.25rem; display:none;" aria-live="polite">
-    <div class="cards">
-      <div class="card">
-        <h3>Annual Summary</h3>
-        <div class="mono" id="sumLine" style="font-size:1.2rem;">—</div>
-        <small class="mono" id="sumSmall" style="display:block;margin-top:.25rem;">—</small>
-      </div>
-      <div class="card">
-        <h3>By Person</h3>
-        <div id="byPerson" class="mono" style="line-height:1.5;">—</div>
       </div>
     </div>
 
-    <canvas id="resultsChart"></canvas>
+    <!-- ── RIGHT: Snapshot ── -->
+    <div class="card" id="quickCard">
+      <h2 style="margin-top:0">Household Snapshot</h2>
+      <div id="snapshot">Add at least one income stream and click <strong>Calculate</strong>.</div>
+    </div>
+  </div>
 
+  <!-- Full results -->
+  <section id="results" class="results-section" style="display:none" aria-live="polite">
+    <div class="kpi-row" id="kpiRow"></div>
+    <div class="person-grid" id="personGrid"></div>
+    <canvas id="resultsChart" height="90"></canvas>
     <div class="table-wrap">
-      <table class="results-table" aria-describedby="sumLine">
+      <table class="results-table">
         <thead>
           <tr>
-            <th>Item</th>
-            <th>Annual</th>
-            <th>Monthly</th>
-            <th>Biweekly</th>
-            <th>Weekly</th>
+            <th>Item</th><th>Annual</th><th>Monthly</th><th>Biweekly</th><th>Weekly</th>
           </tr>
         </thead>
         <tbody id="tableBody"></tbody>
       </table>
     </div>
-
-    <p class="help" style="margin-top:.75rem">
-      Estimates only. Federal & state tax, FICA, and deductions are simplified and may not reflect your exact paycheck. Not financial, tax, or legal advice.
-    </p>
+    <p class="disclaimer">Estimates only. Federal &amp; state tax, FICA, and deductions are simplified and may not reflect your exact paycheck. Not financial, tax, or legal advice.</p>
   </section>
 </main>
 
 <footer>
   <p style="text-align:center;padding:1rem;">
-    &copy; <span id="year"></span> FIRE and Life · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a><br/>
-    <small>Educational use only.</small>
+    &copy; <span id="year"></span> FIRE and Life ·
+    <a href="/privacy/">Privacy Policy</a> ·
+    <a href="/terms/">Terms</a><br/>
+    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
   </p>
 </footer>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-<script src="./thp-multi.js?v=2" defer></script>
-
-<!-- Minimal hamburger toggle (page-local) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 (function(){
-  const toggle=document.getElementById('navToggle');
-  const menu=document.getElementById('navMenu');
-  if(!toggle||!menu) return;
-  function setOpen(open){
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    menu.dataset.collapsed=open?'false':'true';
-    menu.classList.toggle('is-open', open);
-    document.body.classList.toggle('nav-open', open);
+
+  // ── Helpers ────────────────────────────────────────────────────
+  const $  = id  => document.getElementById(id);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
+  const fmt = n  => '$' + Math.round(Number(n)||0).toLocaleString();
+  const pct = n  => (Number(n)*100).toFixed(1) + '%';
+
+  function perRow(label, annual, bold){
+    const f = n => fmt(n);
+    const b = bold ? ' class="total-row"' : '';
+    return `<tr${b}><td>${label}</td><td>${f(annual)}</td><td>${f(annual/12)}</td><td>${f(annual/26)}</td><td>${f(annual/52)}</td></tr>`;
   }
-  toggle.addEventListener('click', ()=> setOpen(toggle.getAttribute('aria-expanded')!=='true'));
-  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') setOpen(false); });
-  document.addEventListener('click',(e)=>{ if(toggle.getAttribute('aria-expanded')==='true' && !menu.contains(e.target) && !toggle.contains(e.target)) setOpen(false); });
-  document.getElementById('year').textContent=new Date().getFullYear();
+
+  // ── Tax constants (2024) ───────────────────────────────────────
+  const STD_DED = { single:14600, mfj:29200, hoh:21900 };
+
+  const BRACKETS = {
+    single: [[0,.10],[11600,.12],[47150,.22],[100525,.24],[191950,.32],[243725,.35],[609350,.37]],
+    mfj:    [[0,.10],[23200,.12],[94300,.22],[201050,.24],[383900,.32],[487450,.35],[731200,.37]],
+    hoh:    [[0,.10],[16550,.12],[63100,.22],[100500,.24],[191950,.32],[243700,.35],[609350,.37]]
+  };
+
+  const SS_CAP=168600, SS_RATE=0.062, MEDI_RATE=0.0145;
+
+  function federalTax(taxable, filing){
+    const b = BRACKETS[filing] || BRACKETS.single;
+    let tax=0;
+    for(let i=0;i<b.length;i++){
+      const [floor,rate]=b[i];
+      const ceil = i<b.length-1 ? b[i+1][0] : Infinity;
+      if(taxable>floor) tax += (Math.min(taxable,ceil)-floor)*rate;
+      else break;
+    }
+    return Math.max(0,tax);
+  }
+
+  function parseState(val){
+    if(!val||val==='NONE:0') return {rate:0,label:'No state tax'};
+    const [code,r]=val.split(':');
+    return {rate:parseFloat(r)||0, label:code};
+  }
+
+  // ── Income stream cards ────────────────────────────────────────
+  let streamCounter=0;
+
+  function makeCard(preset={}){
+    streamCounter++;
+    const id=streamCounter;
+    const el=document.createElement('div');
+    el.className='income-card';
+    el.dataset.sid=id;
+    el.innerHTML=`
+      <h3>Income Stream ${id}</h3>
+      ${id>1?`<button class="remove-btn" title="Remove stream">✕</button>`:''}
+      <div class="field">
+        <label>Gross Annual Income ($)</label>
+        <input type="number" class="s-gross" min="0" step="1000"
+               value="${preset.gross??''}" placeholder="e.g. 95000"/>
+      </div>
+      <div class="field">
+        <label>401(k) / 403(b) Contribution (%)</label>
+        <input type="number" class="s-k401" min="0" max="100" step="0.5"
+               value="${preset.k401??10}"/>
+        <div class="help">Traditional pre-tax percentage of this income. 2024 limit: $23,000.</div>
+      </div>
+      <div class="field">
+        <label>HSA Contribution ($/year)</label>
+        <input type="number" class="s-hsa" min="0" step="100"
+               value="${preset.hsa??0}"/>
+        <div class="help">Annual pre-tax amount. 2024 limits: $4,150 (self) / $8,300 (family).</div>
+      </div>
+    `;
+    // Remove button
+    const removeBtn = el.querySelector('.remove-btn');
+    if(removeBtn) removeBtn.addEventListener('click',()=>{ el.remove(); liveSnapshot(); });
+    // Live snapshot on input
+    el.addEventListener('input', liveSnapshot);
+    return el;
+  }
+
+  function readCard(card){
+    return {
+      gross: parseFloat(card.querySelector('.s-gross').value)||0,
+      k401:  parseFloat(card.querySelector('.s-k401').value)||0,
+      hsa:   parseFloat(card.querySelector('.s-hsa').value)||0
+    };
+  }
+
+  function addStream(preset={}){
+    $('streamsWrap').appendChild(makeCard(preset));
+    liveSnapshot();
+  }
+
+  // ── Compute ────────────────────────────────────────────────────
+  function compute(){
+    const filing    = $('filing').value||'single';
+    const health    = parseFloat($('health').value)||0;
+    const stateInfo = parseState($('state').value);
+    const stateRate = stateInfo.rate;
+    const cards     = $$('#streamsWrap .income-card');
+    const streams   = cards.map(readCard).filter(s=>s.gross>0);
+
+    if(!streams.length) return null;
+
+    const healthPer = streams.length ? health/streams.length : 0;
+
+    const persons = streams.map(s=>{
+      const k401     = Math.min(s.gross*(s.k401/100), 23000);
+      const hsa      = s.hsa;
+      const preTax   = k401+hsa;
+      const ficaW    = Math.max(0, s.gross-hsa);
+      const ssTax    = Math.min(ficaW,SS_CAP)*SS_RATE;
+      const mediTax  = ficaW*MEDI_RATE;
+      const fica     = ssTax+mediTax;
+      return {...s, k401, hsa, preTax, fica, healthShare:healthPer};
+    });
+
+    const grossHH  = persons.reduce((a,p)=>a+p.gross,  0);
+    const preTaxHH = persons.reduce((a,p)=>a+p.preTax, 0);
+    const ficaHH   = persons.reduce((a,p)=>a+p.fica,   0);
+    const std      = STD_DED[filing]||STD_DED.single;
+
+    // Federal — household level
+    const agiLike     = Math.max(0, grossHH-preTaxHH-health);
+    const fedTaxable  = Math.max(0, agiLike-std);
+    const fedTax      = federalTax(fedTaxable, filing);
+
+    // State — simplified flat on (gross-preTax-health)
+    const stateTax = Math.max(0, agiLike*stateRate);
+
+    const takeHome = Math.max(0, grossHH-preTaxHH-health-fedTax-stateTax-ficaHH);
+
+    return { persons, grossHH, preTaxHH, health, std,
+             fedTaxable, fedTax, stateTax, ficaHH,
+             takeHome, filing, stateInfo };
+  }
+
+  // ── Live snapshot (right panel, no chart) ─────────────────────
+  function liveSnapshot(){
+    const cards   = $$('#streamsWrap .income-card');
+    const grossHH = cards.reduce((a,c)=>a+(parseFloat(c.querySelector('.s-gross').value)||0),0);
+    if(!grossHH){
+      $('snapshot').innerHTML = 'Add at least one income stream and click <strong>Calculate</strong>.';
+      return;
+    }
+    $('snapshot').innerHTML = `
+      <div style="margin-bottom:.4rem"><strong style="font-size:1.05rem">Gross: ${fmt(grossHH)}/yr</strong></div>
+      <div style="font-size:.88rem;color:#aaa">Click <strong>Calculate</strong> to see take-home</div>`;
+  }
+
+  // ── Render full results ────────────────────────────────────────
+  let chartInst = null;
+
+  function renderResults(r){
+    // Snapshot
+    $('snapshot').innerHTML = `
+      <div style="margin-bottom:.5rem">
+        <strong style="font-size:1.25rem;color:#FF6F61">${fmt(r.takeHome)}</strong>
+        <div style="font-size:.82rem;color:#aaa">estimated annual take-home</div>
+      </div>
+      <div style="font-size:.9rem;line-height:2">
+        💰 Gross: <strong>${fmt(r.grossHH)}</strong><br>
+        📋 Federal tax: <strong>${fmt(r.fedTax)}</strong><br>
+        🏛️ State tax: <strong>${fmt(r.stateTax)}</strong><br>
+        🏥 FICA: <strong>${fmt(r.ficaHH)}</strong><br>
+        📦 Pre-tax deductions: <strong>${fmt(r.preTaxHH)}</strong><br>
+        📊 Effective rate: <strong>${pct((r.fedTax+r.stateTax+r.ficaHH)/r.grossHH)}</strong>
+      </div>`;
+
+    // KPIs
+    $('kpiRow').innerHTML = `
+      <div class="kpi"><div class="k">Annual Take-Home</div><div class="v orange">${fmt(r.takeHome)}</div></div>
+      <div class="kpi"><div class="k">Monthly Take-Home</div><div class="v">${fmt(r.takeHome/12)}</div></div>
+      <div class="kpi"><div class="k">Effective Tax Rate</div><div class="v">${pct((r.fedTax+r.stateTax+r.ficaHH)/r.grossHH)}</div></div>
+      <div class="kpi"><div class="k">Pre-Tax Savings</div><div class="v">${fmt(r.preTaxHH)}</div></div>`;
+
+    // Per-person (only if multiple)
+    const pg = $('personGrid');
+    if(r.persons.length>1){
+      const share = p => r.grossHH ? p.gross/r.grossHH : 0;
+      pg.innerHTML = r.persons.map((p,i)=>{
+        const fedShare   = r.fedTax   * share(p);
+        const stateShare = r.stateTax * share(p);
+        const net = p.gross - p.preTax - p.fica - fedShare - stateShare - p.healthShare;
+        return `<div class="person-card">
+          <h4>Person ${i+1}</h4>
+          <div class="big">${fmt(net)}/yr</div>
+          <div class="detail">
+            Gross: ${fmt(p.gross)}<br>
+            401(k): ${fmt(p.k401)} &nbsp;HSA: ${fmt(p.hsa)}<br>
+            FICA: ${fmt(p.fica)}<br>
+            Fed tax (share): ${fmt(fedShare)}<br>
+            State tax (share): ${fmt(stateShare)}
+          </div>
+        </div>`;
+      }).join('');
+    } else {
+      pg.innerHTML='';
+    }
+
+    // Table
+    $('tableBody').innerHTML =
+      perRow('Gross Household Income',       r.grossHH) +
+      perRow('– 401(k)/403(b) Contributions',r.preTaxHH>0 ? -r.preTaxHH : 0) +
+      perRow('– Health Premiums',            r.health>0   ? -r.health    : 0) +
+      perRow('Standard Deduction',           r.std) +
+      perRow('Federal Taxable Income',       r.fedTaxable) +
+      perRow('– Federal Income Tax',         -r.fedTax) +
+      `<tr><td>– State Income Tax (${r.stateInfo.label})</td><td>${fmt(-r.stateTax)}</td><td>${fmt(-r.stateTax/12)}</td><td>${fmt(-r.stateTax/26)}</td><td>${fmt(-r.stateTax/52)}</td></tr>` +
+      perRow('– FICA (SS + Medicare)',       -r.ficaHH) +
+      perRow('💵 Take-Home Pay',             r.takeHome, true);
+
+    // Chart
+    const ctx = $('resultsChart').getContext('2d');
+    if(chartInst) chartInst.destroy();
+    chartInst = new Chart(ctx,{
+      type:'doughnut',
+      data:{
+        labels:['Take-Home','Federal Tax','State Tax','FICA','Health Premiums','Pre-Tax Savings'],
+        datasets:[{
+          data:[r.takeHome, r.fedTax, r.stateTax, r.ficaHH, r.health, r.preTaxHH],
+          backgroundColor:['#FF6F61','#2f481b','#6aab5e','#FFD166','#aaccaa','#c8dfc8'],
+          borderWidth:2, borderColor:'#fff'
+        }]
+      },
+      options:{
+        responsive:true,
+        plugins:{
+          legend:{position:'bottom'},
+          tooltip:{callbacks:{label:c=>{
+            const v=c.parsed, t=c.dataset.data.reduce((a,b)=>a+b,0);
+            return ` ${fmt(v)} (${(v/t*100).toFixed(1)}%)`;
+          }}}
+        }
+      }
+    });
+
+    $('results').style.display='block';
+    $('results').scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  // ── Wire up buttons ────────────────────────────────────────────
+  $('addIncome').addEventListener('click',()=>addStream());
+
+  $('filing').addEventListener('change',function(){
+    if(this.value==='mfj' && $$('#streamsWrap .income-card').length<2)
+      addStream({gross:'',k401:10,hsa:0});
+    liveSnapshot();
+  });
+
+  $('health').addEventListener('input', liveSnapshot);
+  $('state').addEventListener('change', liveSnapshot);
+
+  $('calcBtn').addEventListener('click',function(){
+    const r=compute();
+    if(!r){ alert('Please enter at least one gross income.'); return; }
+    renderResults(r);
+  });
+
+  $('resetBtn').addEventListener('click',function(){
+    $('streamsWrap').innerHTML='';
+    streamCounter=0;
+    addStream({gross:'',k401:10,hsa:0});
+    $('filing').value='single';
+    $('state').value='NONE:0';
+    $('health').value=0;
+    $('results').style.display='none';
+    if(chartInst){chartInst.destroy();chartInst=null;}
+    liveSnapshot();
+  });
+
+  // ── Nav toggle ─────────────────────────────────────────────────
+  $('year').textContent=new Date().getFullYear();
+  const toggle=$('navToggle'), navMenu=$('navMenu');
+  function setOpen(o){
+    toggle.setAttribute('aria-expanded',String(o));
+    toggle.setAttribute('aria-label',o?'Close menu':'Open menu');
+    navMenu.classList.toggle('is-open',o);
+  }
+  toggle.addEventListener('click',()=>setOpen(toggle.getAttribute('aria-expanded')!=='true'));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')setOpen(false);});
+  document.addEventListener('click',e=>{
+    if(toggle.getAttribute('aria-expanded')==='true'&&!navMenu.contains(e.target)&&!toggle.contains(e.target))setOpen(false);
+  });
+
+  // ── Init ───────────────────────────────────────────────────────
+  addStream({gross:'',k401:10,hsa:0});
+
 })();
 </script>
 </body>
