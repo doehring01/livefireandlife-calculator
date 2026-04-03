@@ -10,7 +10,6 @@ permalink: /calculators/net-worth-tracker/
   <link rel="stylesheet" href="/styles.css?v=20250811c" />
   <link rel="icon" href="/assets/favicon.png">
 
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -20,80 +19,56 @@ permalink: /calculators/net-worth-tracker/
 
   <style>
     :root{ --bg:#ffffff; --soft:#f7fafc; --border:#e9edf2; --ink:#0f172a; --muted:#475569; }
-
     body{background:var(--bg); color:var(--ink);}
     .container{max-width:1100px;margin:2rem auto;padding:0 1rem;}
-
     .grid{display:grid;gap:1rem}
     .grid-12{grid-template-columns:repeat(12,1fr)}
     .span-12{grid-column:span 12}
     .span-6{grid-column:span 6}
     .span-3{grid-column:span 3}
-
     .card{background:#fff;border:1px solid var(--border);border-radius:.6rem;padding:1rem}
     .soft{background:var(--soft);border:1px solid var(--border);border-radius:.6rem;padding:1rem}
     .muted{color:var(--muted)}
-
     label{display:block;font-weight:600;margin-bottom:.25rem}
     input,select{width:100%;padding:.7rem .75rem;border:1px solid #cfd8e3;border-radius:.4rem;font-size:16px;background:#fff}
-
     table{width:100%;border-collapse:collapse}
     th,td{padding:.55rem;border-bottom:1px solid #eef2f7;vertical-align:middle}
     .table-wrap{overflow-x:auto}
     .table-min{min-width:540px}
-
-    /* Buttons */
     .btn{background:#FF6F61;color:#fff;padding:.6rem 1.1rem;border:none;border-radius:4px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-block;font-size:.95rem;transition:background .2s}
     .btn:hover{background:#E65A4F}
     .btn-secondary{background:#FFD166;color:#333;padding:.6rem 1.1rem;border:none;border-radius:4px;font-weight:600;font-size:.95rem;cursor:pointer;transition:background .2s}
     .btn-secondary:hover{background:#FFB347}
-
     .btn-tab{background:#fff;color:var(--ink);border:1px solid #cbd5e1;border-radius:999px;padding:.5rem 1rem;cursor:pointer;font-weight:600;font-size:.95rem}
     .btn-tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
-
-    /* Summary not sticky on mobile */
     .summary{background:var(--bg);padding:.5rem 0;margin:1rem 0}
-
     .accordion > summary{cursor:pointer;list-style:none;padding:.6rem .25rem;border-bottom:1px solid #eef2f7;font-weight:600}
     .accordion[open] > summary{border-bottom:none}
-
     .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:1rem;z-index:50}
     .modal{max-width:520px;width:100%;background:#fff;border:1px solid var(--border);border-radius:.7rem;padding:1rem}
-
     #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;padding:.6rem .9rem;border-radius:.5rem;opacity:0;pointer-events:none;transition:opacity .25s;z-index:60}
-
-    .quick{display:grid;grid-template-columns: 1fr 1fr 2fr 1fr 1fr auto; gap:.5rem; align-items:end}
+    .quick{display:grid;grid-template-columns:1fr 1fr 2fr 1fr 1fr auto;gap:.5rem;align-items:end}
     .quick .btn{height:42px}
-
-    /* Compact charts */
-    .chart-card{ padding:.75rem }
-    .chart-card canvas{ display:block; width:100% !important; height:200px !important; max-height:200px !important; }
-
-    /* Mobile */
-    @media (max-width: 899px){
+    .chart-card{padding:.75rem}
+    .chart-card canvas{display:block;width:100%!important;height:200px!important;max-height:200px!important;}
+    @media(max-width:899px){
       .grid-12{grid-template-columns:repeat(6,1fr)}
       .span-6,.span-3,.span-12{grid-column:1 / -1}
-
-      /* ensure no sticky/fixed on phones */
-      .summary, .results-panel, .sticky, .is-sticky { position:static !important; top:auto !important; max-height:none !important; overflow:visible !important; }
-
-      .quick{grid-template-columns: 1fr 1fr; }
+      .summary,.results-panel,.sticky,.is-sticky{position:static!important;top:auto!important;max-height:none!important;overflow:visible!important;}
+      .quick{grid-template-columns:1fr 1fr;}
       .quick .full{grid-column:1 / -1}
-      .chart-card canvas{ height:180px !important; max-height:180px !important; }
+      .chart-card canvas{height:180px!important;max-height:180px!important;}
     }
   </style>
 </head>
 <body>
 
-<!-- Responsive header -->
 <header class="site-header">
   <div class="nav">
     <a class="nav__brand" href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife"></a>
-
     <button id="navToggle" class="nav__toggle" aria-expanded="false" aria-label="Open menu">
       <span class="nav__bar"></span><span class="nav__bar"></span><span class="nav__bar"></span>
     </button>
-
     <ul id="navMenu" class="nav__links" data-collapsed="true">
       <li><a href="/">Home</a></li>
       <li><a href="/calculators/" aria-current="page">Calculators</a></li>
@@ -107,17 +82,16 @@ permalink: /calculators/net-worth-tracker/
 
 <main class="container">
   <h1>Net Worth Tracker</h1>
-  <p class="muted">Track your accounts privately in your browser. Mark which assets <strong>count toward FI</strong> (home equity/car usually don’t). Snapshot monthly to build your chart.</p>
+  <p class="muted">Track your accounts privately in your browser. Mark which assets <strong>count toward FI</strong> (home equity/car usually don't). Snapshot monthly to build your chart.</p>
 
-  <!-- Tabs -->
   <div class="tabs" style="margin-top:1rem;">
     <button class="btn-tab active" data-tab="items">Accounts</button>
     <button class="btn-tab" data-tab="history">History</button>
   </div>
 
-  <!-- Accounts -->
+  <!-- Accounts tab -->
   <section id="tab-items">
-    <div class="card">
+    <div class="card" style="margin-top:1rem;">
       <h3>Quick add</h3>
       <div class="quick">
         <div>
@@ -151,7 +125,7 @@ permalink: /calculators/net-worth-tracker/
       </div>
     </div>
 
-    <div class="grid grid-12">
+    <div class="grid grid-12" style="margin-top:1rem;">
       <div class="span-12 card">
         <details class="accordion" open>
           <summary>Assets</summary>
@@ -175,22 +149,20 @@ permalink: /calculators/net-worth-tracker/
     </div>
   </section>
 
-  <!-- History -->
+  <!-- History tab -->
   <section id="tab-history" hidden>
-    <div class="card chart-card">
+    <div class="card chart-card" style="margin-top:1rem;">
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:space-between;align-items:center">
         <div>
           <h3>Net Worth History</h3>
           <div class="muted">Snapshot monthly to build your trend.</div>
         </div>
-        <div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
           <button class="btn" id="snapshotBtn">Snapshot this month</button>
           <button class="btn-secondary" id="exportCsvBtn">Export CSV</button>
         </div>
       </div>
-      <div style="margin-top:1rem">
-        <canvas id="nwChart"></canvas>
-      </div>
+      <div style="margin-top:1rem"><canvas id="nwChart"></canvas></div>
       <div style="margin-top:1rem" class="table-wrap">
         <table class="table-min">
           <thead><tr><th>Date</th><th style="text-align:right">Net Worth</th></tr></thead>
@@ -200,9 +172,8 @@ permalink: /calculators/net-worth-tracker/
     </div>
   </section>
 
-  <!-- Results (at bottom for mobile friendliness) -->
+  <!-- Summary & charts -->
   <section id="resultsBlock" class="results-panel">
-    <!-- Summary -->
     <section class="summary grid grid-12">
       <div class="span-3 soft"><strong>Total Assets</strong><div id="totalAssets">$0</div></div>
       <div class="span-3 soft"><strong>Total Liabilities</strong><div id="totalLiabilities">$0</div></div>
@@ -210,11 +181,9 @@ permalink: /calculators/net-worth-tracker/
       <div class="span-3 soft">
         <strong>FI-Eligible Assets</strong>
         <div id="fiEligibleTotal">$0</div>
-        <small class="muted">Items marked “Counts toward FI.”</small>
+        <small class="muted">Items marked "Counts toward FI."</small>
       </div>
     </section>
-
-    <!-- Charts -->
     <section class="grid grid-12" style="margin-bottom:1rem">
       <div class="span-6 card chart-card">
         <h3>Asset Mix</h3>
@@ -225,21 +194,21 @@ permalink: /calculators/net-worth-tracker/
         <h3>What counts for FI?</h3>
         <ul class="muted" style="margin:.6rem 0 0 1rem;line-height:1.55">
           <li><strong>Usually counts:</strong> Brokerage, 401k/IRA, HSA, cash</li>
-          <li><strong>Usually doesn’t:</strong> Primary home equity, car</li>
-          <li>You can override per item with “Counts toward FI?”</li>
+          <li><strong>Usually doesn't:</strong> Primary home equity, car</li>
+          <li>You can override per item with "Counts toward FI?"</li>
         </ul>
       </div>
     </section>
   </section>
 </main>
 
-<!-- Modal: Edit item -->
+<!-- Edit modal -->
 <div class="backdrop" id="backdrop" aria-hidden="true">
   <div class="modal">
     <h3 id="modalTitle">Edit Item</h3>
-    <form id="itemForm" class="grid" style="grid-template-columns:repeat(2,1fr); gap:.75rem;">
+    <form id="itemForm" class="grid" style="grid-template-columns:repeat(2,1fr);gap:.75rem;">
       <input type="hidden" id="editId" value="">
-      <div class="span-12">
+      <div style="grid-column:span 2">
         <label for="itemType">Type</label>
         <select id="itemType"><option value="asset">Asset</option><option value="liability">Liability</option></select>
       </div>
@@ -255,15 +224,15 @@ permalink: /calculators/net-worth-tracker/
         <label for="itemCountsFi">Counts toward FI?</label>
         <select id="itemCountsFi"><option value="yes">Yes</option><option value="no">No</option></select>
       </div>
-      <div class="span-12">
+      <div style="grid-column:span 2">
         <label for="itemName">Name</label>
         <input id="itemName" type="text"/>
       </div>
-      <div class="span-12">
+      <div style="grid-column:span 2">
         <label for="itemAmount">Amount</label>
         <input id="itemAmount" type="number" step="0.01" min="0"/>
       </div>
-      <div class="span-12" style="display:flex;gap:.5rem;flex-wrap:wrap">
+      <div style="grid-column:span 2;display:flex;gap:.5rem;flex-wrap:wrap">
         <button class="btn" type="submit" id="saveBtn">Update item</button>
         <button class="btn-secondary" type="button" id="cancelBtn">Cancel</button>
       </div>
@@ -274,16 +243,16 @@ permalink: /calculators/net-worth-tracker/
 <!-- Newsletter soft-gate modal -->
 <div class="backdrop" id="nlBackdrop" style="display:none;">
   <div class="modal" style="max-width:460px;width:100%;">
-    <h3 id="nlTitle">Get the CSV download</h3>
-    <p class="muted">Pop in your email to receive FIREandLife updates. If you’re already subscribed, just check the box and continue.</p>
+    <h3>Get the CSV download</h3>
+    <p class="muted">Pop in your email to receive FIREandLife updates. If you're already subscribed, just check the box and continue.</p>
     <form id="nlForm" action="https://eepurl.com/jkcf3o" method="post" target="_blank" class="grid" style="gap:.75rem">
       <div>
         <label for="nlEmail">Email</label>
-        <input id="nlEmail" name="EMAIL" type="email" required placeholder="you@example.com" />
+        <input id="nlEmail" name="EMAIL" type="email" required placeholder="you@example.com"/>
       </div>
-      <label><input type="checkbox" id="nlAlready" /> I’m already subscribed</label>
+      <label><input type="checkbox" id="nlAlready"/> I'm already subscribed</label>
       <div style="display:flex;gap:.5rem;flex-wrap:wrap">
-        <button type="submit" class="btn">Continue & download</button>
+        <button type="submit" class="btn">Continue &amp; download</button>
         <button type="button" id="nlSkip" class="btn-secondary">Skip this time</button>
       </div>
     </form>
@@ -292,29 +261,361 @@ permalink: /calculators/net-worth-tracker/
 
 <div id="toast">Saved</div>
 
-<footer><p style="text-align:center;padding:1rem;">&copy; <span id="year"></span> FIRE and Life.</p></footer>
+<footer>
+  <p style="text-align:center;padding:1rem;">
+    &copy; <span id="year"></span> FIRE and Life ·
+    <a href="/privacy/">Privacy Policy</a> ·
+    <a href="/terms/">Terms</a><br/>
+    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
+  </p>
+</footer>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-<script src="/calculators/net-worth-tracker/net-worth-tracker.js?v=nw1" defer></script>
-
-<!-- Minimal hamburger toggle (page-local) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 (function(){
-  const toggle=document.getElementById('navToggle');
-  const menu=document.getElementById('navMenu');
-  if(!toggle||!menu) return;
-  function setOpen(open){
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    menu.dataset.collapsed=open?'false':'true';
-    menu.classList.toggle('is-open', open);
-    document.body.classList.toggle('nav-open', open);
+  "use strict";
+
+  // ── Utilities ──────────────────────────────────────────────────
+  function $(id){ return document.getElementById(id); }
+  function fmt(n){ return (n||0).toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0}); }
+  function uid(){ return Math.random().toString(36).slice(2,9); }
+  function showToast(msg){
+    var t=$('toast'); if(!t) return;
+    t.textContent=msg||'Saved'; t.style.opacity='1';
+    setTimeout(function(){ t.style.opacity='0'; },1400);
   }
-  toggle.addEventListener('click', ()=> setOpen(toggle.getAttribute('aria-expanded')!=='true'));
-  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') setOpen(false); });
-  document.addEventListener('click',(e)=>{ if(toggle.getAttribute('aria-expanded')==='true' && !menu.contains(e.target) && !toggle.contains(e.target)) setOpen(false); });
-  document.getElementById('year').textContent=new Date().getFullYear();
+  function escapeHtml(s){
+    return String(s||'').replace(/[&<>"']/g,function(m){
+      return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]);
+    });
+  }
+
+  // ── Year ───────────────────────────────────────────────────────
+  var yr=$('year'); if(yr) yr.textContent=new Date().getFullYear();
+
+  // ── Nav toggle ─────────────────────────────────────────────────
+  (function(){
+    var toggle=$('navToggle'), menu=$('navMenu');
+    if(!toggle||!menu) return;
+    function setOpen(open){
+      toggle.setAttribute('aria-expanded',String(open));
+      toggle.setAttribute('aria-label',open?'Close menu':'Open menu');
+      menu.dataset.collapsed=open?'false':'true';
+      menu.classList.toggle('is-open',open);
+      document.body.classList.toggle('nav-open',open);
+    }
+    toggle.addEventListener('click',function(){ setOpen(toggle.getAttribute('aria-expanded')!=='true'); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') setOpen(false); });
+    document.addEventListener('click',function(e){
+      if(toggle.getAttribute('aria-expanded')==='true'&&!menu.contains(e.target)&&!toggle.contains(e.target)) setOpen(false);
+    });
+  })();
+
+  // ── Storage ────────────────────────────────────────────────────
+  var STORAGE_ITEMS_V2='lf_nw_items_v2';
+  var STORAGE_ITEMS_V1='lf_nw_items_v1';
+  var STORAGE_HISTORY='lf_nw_history_v1';
+  var NEWS_KEY='lf_news_ok';
+
+  function migrateIfNeeded(){
+    var v2=localStorage.getItem(STORAGE_ITEMS_V2);
+    if(v2){ try{ return JSON.parse(v2)||[]; }catch(e){ return[]; } }
+    var v1=localStorage.getItem(STORAGE_ITEMS_V1);
+    if(!v1) return [];
+    var items=[]; try{ items=JSON.parse(v1)||[]; }catch(e){ items=[]; }
+    var upgraded=[];
+    for(var i=0;i<items.length;i++){
+      var it=items[i]||{};
+      upgraded.push({ id:it.id||uid(), type:it.type||'asset', name:it.name||'Item',
+                      amount:+it.amount||0, category:'Other', countsFi:true });
+    }
+    localStorage.setItem(STORAGE_ITEMS_V2,JSON.stringify(upgraded));
+    return upgraded;
+  }
+  function loadItems(){ return migrateIfNeeded(); }
+  function saveItems(items){ localStorage.setItem(STORAGE_ITEMS_V2,JSON.stringify(items)); }
+  function loadHistory(){ try{ return JSON.parse(localStorage.getItem(STORAGE_HISTORY))||[]; }catch(e){ return[]; } }
+  function saveHistory(h){ localStorage.setItem(STORAGE_HISTORY,JSON.stringify(h)); }
+
+  // ── State ──────────────────────────────────────────────────────
+  var items=loadItems();
+  var history=loadHistory();
+
+  // Normalize existing items
+  if(items.length){
+    var normalized=[];
+    for(var i=0;i<items.length;i++){
+      var it=items[i]||{};
+      normalized.push({
+        id:it.id||uid(), type:it.type||'asset', name:it.name||'Item',
+        amount:+it.amount||0, category:it.category||'Other',
+        countsFi:(it.category==='Home Equity'||it.category==='Car') ? false :
+                 (typeof it.countsFi==='boolean' ? it.countsFi : true)
+      });
+    }
+    items=normalized; saveItems(items);
+  }
+
+  // Seed demo data if empty
+  if(items.length===0){
+    items=[
+      {id:uid(),type:'asset',name:'Checking',category:'Checking',amount:3000,countsFi:true},
+      {id:uid(),type:'asset',name:'Brokerage',category:'Brokerage',amount:15000,countsFi:true},
+      {id:uid(),type:'asset',name:'Home Equity',category:'Home Equity',amount:80000,countsFi:false},
+      {id:uid(),type:'liability',name:'Credit Card',category:'Other',amount:500,countsFi:false}
+    ];
+    saveItems(items);
+  }
+
+  // ── DOM refs ───────────────────────────────────────────────────
+  var assetsBody=$('assetsBody'), liabilitiesBody=$('liabilitiesBody'), historyBody=$('historyBody');
+  var totalAssetsEl=$('totalAssets'), totalLiabilitiesEl=$('totalLiabilities');
+  var netWorthEl=$('netWorth'), fiEligibleTotalEl=$('fiEligibleTotal');
+  var qType=$('qType'), qCategory=$('qCategory'), qName=$('qName');
+  var qAmount=$('qAmount'), qFi=$('qFi'), qAdd=$('qAdd');
+  var backdrop=$('backdrop'), itemForm=$('itemForm');
+  var editId=$('editId'), itemType=$('itemType'), itemCategory=$('itemCategory');
+  var itemCountsFi=$('itemCountsFi'), itemName=$('itemName'), itemAmount=$('itemAmount');
+  var saveBtn=$('saveBtn'), cancelBtn=$('cancelBtn');
+
+  // ── Tabs ───────────────────────────────────────────────────────
+  (function(){
+    var tabBtns=document.querySelectorAll('.tabs button');
+    for(var i=0;i<tabBtns.length;i++){
+      tabBtns[i].addEventListener('click',function(){
+        for(var j=0;j<tabBtns.length;j++) tabBtns[j].classList.remove('active');
+        this.classList.add('active');
+        var tab=this.getAttribute('data-tab');
+        var it=$('tab-items'), hi=$('tab-history');
+        if(it) it.hidden=(tab!=='items');
+        if(hi) hi.hidden=(tab!=='history');
+      });
+    }
+  })();
+
+  // ── Charts ─────────────────────────────────────────────────────
+  var mixCanvas=$('mixChart'), ctxMix=mixCanvas?mixCanvas.getContext('2d'):null;
+  var nwCanvas=$('nwChart'),   ctxNW=nwCanvas?nwCanvas.getContext('2d'):null;
+  var chartMix=null, chartNW=null;
+
+  function computeTotals(){
+    var a=0,l=0,f=0;
+    for(var i=0;i<items.length;i++){
+      var it=items[i], amt=+it.amount||0;
+      if(it.type==='asset'){ a+=amt; if(it.countsFi) f+=amt; }
+      else l+=amt;
+    }
+    return{assets:a,liabs:l,net:a-l,fiElig:f};
+  }
+
+  function renderSummary(){
+    if(!totalAssetsEl) return;
+    var t=computeTotals();
+    totalAssetsEl.textContent=fmt(t.assets);
+    totalLiabilitiesEl.textContent=fmt(t.liabs);
+    netWorthEl.textContent=fmt(t.net);
+    fiEligibleTotalEl.textContent=fmt(t.fiElig);
+  }
+
+  function renderMixPie(){
+    if(!ctxMix) return;
+    var map={};
+    for(var i=0;i<items.length;i++){
+      var it=items[i]; if(it.type!=='asset') continue;
+      var key=(it.category||'Other')+'|'+(it.countsFi?'fi':'nfi');
+      map[key]=(map[key]||0)+(+it.amount||0);
+    }
+    var labels=[],data=[],bg=[];
+    for(var k in map){
+      if(!map.hasOwnProperty(k)) continue;
+      var parts=k.split('|');
+      labels.push(parts[0]+' '+(parts[1]==='fi'?'(FI)':'(non-FI)'));
+      data.push(map[k]);
+      bg.push(parts[1]==='fi'?'rgba(26,115,232,.35)':'rgba(203,213,225,.7)');
+    }
+    if(chartMix){ try{chartMix.destroy();}catch(e){} }
+    chartMix=new Chart(ctxMix,{
+      type:'pie',
+      data:{labels:labels,datasets:[{data:data,backgroundColor:bg}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}
+    });
+  }
+
+  function addRow(tbody,isAsset){
+    return function(it){
+      var tr=document.createElement('tr');
+      var fiCell=isAsset?'<td style="text-align:center">'+(it.countsFi?'✅':'—')+'</td>':'<td style="text-align:center">—</td>';
+      tr.innerHTML=
+        '<td>'+escapeHtml(it.name)+'</td>'+
+        '<td>'+escapeHtml(it.category||'Other')+'</td>'+
+        fiCell+
+        '<td style="text-align:right">'+fmt(+it.amount||0)+'</td>'+
+        '<td style="text-align:right">'+
+          '<button data-act="edit" data-id="'+it.id+'" style="margin-right:.4rem">Edit</button>'+
+          '<button data-act="del" data-id="'+it.id+'">Delete</button>'+
+        '</td>';
+      tbody.appendChild(tr);
+    };
+  }
+
+  function renderLists(){
+    if(!assetsBody||!liabilitiesBody) return;
+    assetsBody.innerHTML=''; liabilitiesBody.innerHTML='';
+    for(var i=0;i<items.length;i++){
+      var it=items[i];
+      if(it.type==='asset') addRow(assetsBody,true)(it);
+      else addRow(liabilitiesBody,false)(it);
+    }
+    renderSummary(); renderMixPie();
+  }
+
+  function renderHistory(){
+    if(!ctxNW||!historyBody) return;
+    historyBody.innerHTML='';
+    for(var i=0;i<history.length;i++){
+      var h=history[i];
+      var tr=document.createElement('tr');
+      var d=new Date(h.dateISO);
+      tr.innerHTML='<td>'+d.toLocaleDateString(undefined,{year:'numeric',month:'short'})+'</td><td style="text-align:right">'+fmt(h.netWorthNumber)+'</td>';
+      historyBody.appendChild(tr);
+    }
+    if(chartNW){ try{chartNW.destroy();}catch(e){} }
+    var labels=[],data=[];
+    for(var j=0;j<history.length;j++){
+      labels.push(new Date(history[j].dateISO).toLocaleDateString(undefined,{year:'2-digit',month:'short'}));
+      data.push(history[j].netWorthNumber);
+    }
+    chartNW=new Chart(ctxNW,{
+      type:'line',
+      data:{labels:labels,datasets:[{label:'Net worth',data:data,borderWidth:2,fill:false,tension:.15,pointRadius:2}]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false}},
+        scales:{y:{ticks:{callback:function(v){return fmt(v);}}}}}
+    });
+  }
+
+  // ── Quick add ──────────────────────────────────────────────────
+  function addQuick(){
+    if(!qType||!qCategory||!qName||!qAmount||!qFi) return;
+    var entry={
+      id:uid(), type:qType.value, category:qCategory.value||'Other',
+      name:(qName.value||'').trim()||(qType.value==='asset'?'Asset':'Liability'),
+      amount:parseFloat(qAmount.value||'0')||0,
+      countsFi:(qType.value==='asset')?(qFi.value==='yes'):false
+    };
+    items.push(entry); saveItems(items); renderLists(); showToast('Item added');
+    qName.value=''; qAmount.value='0';
+    try{qName.focus();}catch(e){}
+  }
+  if(qAdd) qAdd.addEventListener('click',function(){ addQuick(); });
+  if(qName) qName.addEventListener('keydown',function(e){ if(e.key==='Enter'){e.preventDefault();addQuick();} });
+  if(qAmount) qAmount.addEventListener('keydown',function(e){ if(e.key==='Enter'){e.preventDefault();addQuick();} });
+
+  // ── Modal edit ─────────────────────────────────────────────────
+  function openModal(editItem){
+    if(!backdrop||!editItem) return;
+    backdrop.style.display='flex'; backdrop.setAttribute('aria-hidden','false');
+    var title=$('modalTitle'); if(title) title.textContent='Edit Item';
+    if(editId) editId.value=editItem.id;
+    if(itemType) itemType.value=editItem.type;
+    if(itemCategory) itemCategory.value=editItem.category||'Other';
+    if(itemCountsFi) itemCountsFi.value=editItem.countsFi?'yes':'no';
+    if(itemName) itemName.value=editItem.name||'';
+    if(itemAmount) itemAmount.value=editItem.amount!=null?editItem.amount:0;
+    if(saveBtn) saveBtn.textContent='Update item';
+    setTimeout(function(){ try{itemName&&itemName.focus();}catch(e){} },50);
+  }
+  function closeModal(){ if(!backdrop) return; backdrop.style.display='none'; backdrop.setAttribute('aria-hidden','true'); }
+  if(cancelBtn) cancelBtn.addEventListener('click',closeModal);
+  if(backdrop) backdrop.addEventListener('click',function(e){ if(e.target===backdrop) closeModal(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
+
+  function onTableClick(e){
+    e=e||window.event;
+    var target=e.target||e.srcElement;
+    while(target&&target!==document&&!(target.tagName==='BUTTON'&&target.getAttribute('data-act'))){
+      target=target.parentNode;
+    }
+    if(!target||target===document) return;
+    var id=target.getAttribute('data-id'), act=target.getAttribute('data-act');
+    var it=null;
+    for(var i=0;i<items.length;i++){ if(items[i].id===id){it=items[i];break;} }
+    if(!it) return;
+    if(act==='edit'){ openModal(it); }
+    if(act==='del'){
+      var next=[]; for(var j=0;j<items.length;j++){ if(items[j].id!==id) next.push(items[j]); }
+      items=next; saveItems(items); renderLists(); showToast('Deleted');
+    }
+  }
+  if(assetsBody) assetsBody.addEventListener('click',onTableClick);
+  if(liabilitiesBody) liabilitiesBody.addEventListener('click',onTableClick);
+
+  if(itemForm) itemForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!editId) return;
+    var id=(editId.value||'').trim();
+    var entry={
+      id:id, type:itemType?itemType.value:'asset',
+      category:itemCategory?(itemCategory.value||'Other'):'Other',
+      name:(itemName&&itemName.value?itemName.value.trim():'')||((itemType&&itemType.value)==='asset'?'Asset':'Liability'),
+      amount:parseFloat(itemAmount&&itemAmount.value||'0')||0,
+      countsFi:(itemType&&itemType.value)==='asset'?((itemCountsFi&&itemCountsFi.value)==='yes'):false
+    };
+    var updated=[];
+    for(var i=0;i<items.length;i++){ updated.push(items[i].id===id?entry:items[i]); }
+    items=updated; saveItems(items); renderLists(); showToast('Updated'); closeModal();
+  });
+
+  // ── History & CSV ──────────────────────────────────────────────
+  var snapshotBtn=$('snapshotBtn'), exportCsvBtn=$('exportCsvBtn');
+
+  if(snapshotBtn) snapshotBtn.addEventListener('click',function(){
+    var t=computeTotals();
+    var now=new Date();
+    var monthKey=new Date(now.getFullYear(),now.getMonth(),1).toISOString();
+    var idx=-1;
+    for(var i=0;i<history.length;i++){ if(history[i].dateISO===monthKey){idx=i;break;} }
+    var entry={dateISO:monthKey,netWorthNumber:t.net};
+    if(idx>=0) history[idx]=entry; else history.push(entry);
+    history.sort(function(a,b){ return new Date(a.dateISO)-new Date(b.dateISO); });
+    saveHistory(history); renderHistory(); showToast('Snapshot saved');
+  });
+
+  function doExportCsv(){
+    var rows=[['Date','Net Worth']];
+    for(var i=0;i<history.length;i++){
+      rows.push([new Date(history[i].dateISO).toISOString().slice(0,10),history[i].netWorthNumber]);
+    }
+    var csv='';
+    for(var r=0;r<rows.length;r++){ csv+=rows[r].join(',')+(r<rows.length-1?'\n':''); }
+    var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a'); a.href=url; a.download='net-worth-history.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function openNl(){ var el=$('nlBackdrop'); if(el) el.style.display='flex'; }
+  function closeNl(){ var el=$('nlBackdrop'); if(el) el.style.display='none'; }
+
+  (function(){
+    var form=$('nlForm'), skip=$('nlSkip'), already=$('nlAlready');
+    if(form){ form.addEventListener('submit',function(){ try{localStorage.setItem(NEWS_KEY,'1');}catch(e){} setTimeout(function(){closeNl();doExportCsv();},150); }); }
+    if(skip){ skip.addEventListener('click',function(){closeNl();doExportCsv();}); }
+    if(already){ already.addEventListener('change',function(){ if(already.checked){ try{localStorage.setItem(NEWS_KEY,'1');}catch(e){} } }); }
+    var nlBackdrop=$('nlBackdrop');
+    if(nlBackdrop){ nlBackdrop.addEventListener('click',function(e){ if(e.target===nlBackdrop) closeNl(); }); }
+  })();
+
+  if(exportCsvBtn) exportCsvBtn.addEventListener('click',function(){
+    var ok=false; try{ok=localStorage.getItem(NEWS_KEY)==='1';}catch(e){}
+    if(ok) doExportCsv(); else openNl();
+  });
+
+  // ── Initial render ─────────────────────────────────────────────
+  renderLists();
+  renderHistory();
+
 })();
 </script>
 </body>
