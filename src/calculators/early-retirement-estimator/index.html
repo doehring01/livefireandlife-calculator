@@ -8,28 +8,17 @@ permalink: /calculators/early-retirement-estimator/
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Early Retirement Estimator • FIREandLife</title>
   <link rel="stylesheet" href="/styles.css?v=20250811c" />
-
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHKJVXPJQM"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config','G-KHKJVXPJQM');
-  </script>
-
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-KHKJVXPJQM');</script>
   <style>
-    :root{
-      --bg:#ffffff; --soft:#f7fafc; --border:#e9edf2; --ink:#0f172a; --muted:#475569;
-      --accent:#ff6b5d; --accent-ink:#fff;
-    }
-    body{background:var(--bg); color:var(--ink);}
+    :root{ --bg:#ffffff; --soft:#f7fafc; --border:#e9edf2; --ink:#0f172a; --muted:#475569; --accent:#ff6b5d; --accent-ink:#fff; }
+    body{background:var(--bg);color:var(--ink);}
     .container{max-width:1100px;margin:2rem auto;padding:0 1rem;}
     h1{margin-bottom:.75rem}
-    .lead{color:var(--muted); margin:.25rem 0 1rem}
-    .grid{display:grid; gap:1rem}
+    .lead{color:var(--muted);margin:.25rem 0 1rem}
+    .grid{display:grid;gap:1rem}
     .grid-12{grid-template-columns:repeat(12,1fr)}
-    .span-12{grid-column:span 12} .span-6{grid-column:span 6} .span-4{grid-column:span 4} .span-3{grid-column:span 3}
+    .span-12{grid-column:span 12}.span-6{grid-column:span 6}.span-4{grid-column:span 4}.span-3{grid-column:span 3}
     .card{background:#fff;border:1px solid var(--border);border-radius:.6rem;padding:1rem}
     .soft{background:var(--soft);border:1px solid var(--border);border-radius:.6rem;padding:1rem}
     label{display:block;font-weight:600;margin-bottom:.25rem}
@@ -44,29 +33,25 @@ permalink: /calculators/early-retirement-estimator/
     table{width:100%;border-collapse:collapse}
     th,td{padding:.6rem;border-bottom:1px solid #eef2f7}
     .muted{color:var(--muted)}
-    @media (max-width: 680px){
-      .grid-12{grid-template-columns:repeat(6,1fr)}
-      .span-3,.span-4,.span-6,.span-12{grid-column:1 / -1}
-      .row > *{flex:1 1 100%}
-      .btn, .badge{width:100%}
-    }
-    /* Soft-gate modal */
     .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:1rem;z-index:50}
     .modal{background:#fff;border-radius:.7rem;max-width:520px;width:100%;padding:1rem;border:1px solid var(--border)}
     .modal h3{margin:.25rem 0}
+    @media(max-width:680px){
+      .grid-12{grid-template-columns:repeat(6,1fr)}
+      .span-3,.span-4,.span-6,.span-12{grid-column:1 / -1}
+      .row>*{flex:1 1 100%}
+      .btn,.badge{width:100%}
+    }
   </style>
 </head>
 <body>
 
-<!-- Responsive header (hamburger) -->
 <header class="site-header">
   <div class="nav">
     <a class="nav__brand" href="/"><img src="/assets/logo-horizontal.png" alt="FIREandLife"></a>
-
     <button id="navToggle" class="nav__toggle" aria-expanded="false" aria-label="Open menu">
       <span class="nav__bar"></span><span class="nav__bar"></span><span class="nav__bar"></span>
     </button>
-
     <ul id="navMenu" class="nav__links" data-collapsed="true">
       <li><a href="/">Home</a></li>
       <li><a href="/calculators/" aria-current="page">Calculators</a></li>
@@ -80,88 +65,75 @@ permalink: /calculators/early-retirement-estimator/
 
 <main class="container">
   <h1>Early Retirement Estimator</h1>
-  <p class="lead">Estimate when you’ll reach <strong>FI</strong> (financial independence), see the <strong>FI number</strong>, and how faster contributions shift your timeline. Choose “Real” values to view results in today’s purchasing power.</p>
+  <p class="lead">Estimate when you'll reach <strong>FI</strong>, see the <strong>FI number</strong>, and how faster contributions shift your timeline. Choose "Real" values to view results in today's purchasing power.</p>
 
   <section id="ere">
-    <!-- INPUTS -->
     <form id="ere-form" class="grid grid-12" style="align-items:end">
       <div class="span-3">
         <label for="currentBalance">Current portfolio balance</label>
-        <input id="currentBalance" type="number" value="50000" min="0" step="100" inputmode="decimal" aria-describedby="hb1"/>
-        <small id="hb1" class="help">Total invested today across accounts.</small>
+        <input id="currentBalance" type="number" value="50000" min="0" step="100" inputmode="decimal"/>
+        <small class="help">Total invested today across accounts.</small>
       </div>
-
       <div class="span-3">
         <label for="contributionMonthly">Monthly contribution</label>
-        <input id="contributionMonthly" type="number" value="1000" min="0" step="50" inputmode="decimal" aria-describedby="hb2"/>
-        <small id="hb2" class="help">Average monthly deposits (401k, IRA, brokerage, etc.).</small>
+        <input id="contributionMonthly" type="number" value="1000" min="0" step="50" inputmode="decimal"/>
+        <small class="help">Average monthly deposits (401k, IRA, brokerage, etc.).</small>
       </div>
-
       <div class="span-3">
-        <label for="contributionBump">Add’l monthly contribution (optional)</label>
-        <input id="contributionBump" type="number" value="0" min="0" step="50" inputmode="decimal" aria-describedby="hb3"/>
-        <small id="hb3" class="help">Extra amount you’ll add later (e.g., after childcare/mortgage ends).</small>
+        <label for="contributionBump">Add'l monthly contribution (optional)</label>
+        <input id="contributionBump" type="number" value="0" min="0" step="50" inputmode="decimal"/>
+        <small class="help">Extra amount you'll add later (e.g., after childcare/mortgage ends).</small>
       </div>
-
       <div class="span-3">
         <label for="bumpYear">Bump starts after year</label>
-        <input id="bumpYear" type="number" value="5" min="0" step="1" aria-describedby="hb4"/>
-        <small id="hb4" class="help">When that extra contribution begins.</small>
+        <input id="bumpYear" type="number" value="5" min="0" step="1"/>
+        <small class="help">When that extra contribution begins.</small>
       </div>
-
       <div class="span-3">
         <label for="returnPct">Expected annual return (%)</label>
-        <input id="returnPct" type="number" value="6.0" step="0.1" aria-describedby="hb5"/>
-        <small id="hb5" class="help">Long-term average (before inflation) if viewing “Nominal.”</small>
+        <input id="returnPct" type="number" value="6.0" step="0.1"/>
+        <small class="help">Long-term average (before inflation) if viewing "Nominal."</small>
       </div>
-
       <div class="span-3">
         <label for="inflationPct">Inflation (%)</label>
-        <input id="inflationPct" type="number" value="2.0" step="0.1" aria-describedby="hb6"/>
-        <small id="hb6" class="help">Used to show “Real” results in today’s dollars.</small>
+        <input id="inflationPct" type="number" value="2.0" step="0.1"/>
+        <small class="help">Used to show "Real" results in today's dollars.</small>
       </div>
-
       <div class="span-3">
         <label for="useReal">Show values</label>
-        <select id="useReal" aria-describedby="hb7">
+        <select id="useReal">
           <option value="real" selected>Inflation-adjusted (real)</option>
           <option value="nominal">Nominal</option>
         </select>
-        <small id="hb7" class="help">Real = easier to compare over time; Nominal = raw dollars.</small>
+        <small class="help">Real = easier to compare over time; Nominal = raw dollars.</small>
       </div>
-
       <div class="span-3">
         <label for="annualSpend">Target annual spending (retirement)</label>
-        <input id="annualSpend" type="number" value="60000" min="0" step="100" inputmode="decimal" aria-describedby="hb8"/>
-        <small id="hb8" class="help">How much you plan to spend per year in retirement (today’s $ if Real).</small>
+        <input id="annualSpend" type="number" value="60000" min="0" step="100" inputmode="decimal"/>
+        <small class="help">How much you plan to spend per year in retirement (today's $ if Real).</small>
       </div>
-
       <div class="span-3">
         <label for="withdrawalRate">Withdrawal rate (%)</label>
-        <input id="withdrawalRate" type="number" value="4.0" step="0.1" aria-describedby="hb9"/>
-        <small id="hb9" class="help">Common choices: 4.0, 3.5, or 3.0 depending on risk tolerance.</small>
+        <input id="withdrawalRate" type="number" value="4.0" step="0.1"/>
+        <small class="help">Common choices: 4.0, 3.5, or 3.0 depending on risk tolerance.</small>
       </div>
-
       <div class="span-3">
         <label for="maxYears">Max years to simulate</label>
-        <input id="maxYears" type="number" value="50" min="1" max="70" step="1" aria-describedby="hb10"/>
-        <small id="hb10" class="help">We’ll stop early if you hit FI first.</small>
+        <input id="maxYears" type="number" value="50" min="1" max="70" step="1"/>
+        <small class="help">We'll stop early if you hit FI first.</small>
       </div>
-
       <div class="span-3">
         <label for="currentAge">Your current age (optional)</label>
-        <input id="currentAge" type="number" value="35" min="0" max="100" step="1" aria-describedby="hb11"/>
-        <small id="hb11" class="help">We’ll estimate your age at FI.</small>
+        <input id="currentAge" type="number" value="35" min="0" max="100" step="1"/>
+        <small class="help">We'll estimate your age at FI.</small>
       </div>
-
       <div class="span-12 row">
         <button type="button" id="runBtn" class="btn">Update results</button>
         <button type="button" id="downloadCsvBtn" class="btn secondary">Download CSV</button>
-        <label class="badge"><input id="compare200" type="checkbox" /> Compare “+ $200/mo”</label>
+        <label class="badge"><input id="compare200" type="checkbox"/> Compare "+ $200/mo"</label>
       </div>
     </form>
 
-    <!-- OUTPUTS -->
     <section aria-live="polite" class="grid grid-12" style="margin-top:1rem">
       <div class="span-4 soft">
         <h3 style="margin:.25rem 0">FI Number</h3>
@@ -180,7 +152,7 @@ permalink: /calculators/early-retirement-estimator/
       </div>
     </section>
 
-    <div class="card" id="insightBox" style="margin-top:1rem; display:none;">
+    <div class="card" id="insightBox" style="margin-top:1rem;display:none;">
       <strong>What speeds this up?</strong>
       <p id="insightText" class="muted" style="margin:.35rem 0 0 0;"></p>
     </div>
@@ -202,57 +174,211 @@ permalink: /calculators/early-retirement-estimator/
       <summary><strong>How to read the outputs</strong></summary>
       <ul style="margin:.75rem 0 0 1rem;line-height:1.55">
         <li><strong>FI Number</strong> is your target nest egg to fund spending at your chosen withdrawal rate.</li>
-        <li><strong>Real vs Nominal</strong>: Real shows everything in today’s dollars (removes inflation).</li>
+        <li><strong>Real vs Nominal</strong>: Real shows everything in today's dollars (removes inflation).</li>
         <li><strong>Half-FI</strong> ≈ halfway to the target; <strong>Coast-FI</strong> ≈ when compounding alone can carry you to FI.</li>
-        <li>Use <strong>“+ $200/mo”</strong> to see how small increases accelerate your FI date.</li>
+        <li>Use <strong>"+ $200/mo"</strong> to see how small increases accelerate your FI date.</li>
       </ul>
     </details>
   </section>
 </main>
 
-<footer><p style="text-align:center;padding:1rem;">&copy; <span id="year"></span> FIRE and Life.</p></footer>
-
-<!-- Chart.js + App JS -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-<script src="/calculators/early-retirement-estimator/early-retirement-estimator.js?v=ere1" defer></script>
-
-<!-- Hamburger toggle (local, in case this page isn't using the Jekyll layout JS) -->
-<script>
-(function(){
-  const toggle = document.getElementById('navToggle');
-  const menu   = document.getElementById('navMenu');
-  if(!toggle || !menu) return;
-  function setOpen(open){
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    menu.dataset.collapsed = open ? 'false' : 'true';
-    menu.classList.toggle('is-open', open);
-    document.body.classList.toggle('nav-open', open);
-  }
-  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setOpen(false); });
-  document.addEventListener('click', (e)=>{
-    if (toggle.getAttribute('aria-expanded')==='true' && !menu.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
-  });
-  document.getElementById('year').textContent = new Date().getFullYear();
-})();
-</script>
+<footer>
+  <p style="text-align:center;padding:1rem;">
+    &copy; <span id="year"></span> FIRE and Life ·
+    <a href="/privacy/">Privacy Policy</a> ·
+    <a href="/terms/">Terms</a><br/>
+    <small>For educational purposes only. Not financial, tax, or legal advice.</small>
+  </p>
+</footer>
 
 <!-- Newsletter soft-gate modal -->
 <div class="modal-backdrop" id="nlBackdrop" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nlTitle">
     <h3 id="nlTitle">Get the CSV + weekly FI tips</h3>
-    <p class="muted" style="margin:.25rem 0 1rem">Enter your email to receive the download and our best calculators & guides (1–2 emails/week). Unsubscribe anytime.</p>
-    <form id="nlForm" class="grid" style="grid-template-columns:1fr auto; gap:.5rem">
-      <input id="nlEmail" type="email" placeholder="you@example.com" required />
+    <p class="muted" style="margin:.25rem 0 1rem">Enter your email to receive the download and our best calculators &amp; guides (1–2 emails/week). Unsubscribe anytime.</p>
+    <form id="nlForm" class="grid" style="grid-template-columns:1fr auto;gap:.5rem">
+      <input id="nlEmail" type="email" placeholder="you@example.com" required/>
       <button class="btn" type="submit">Send the CSV</button>
-      <small class="muted span-12">We’ll store a cookie so you won’t be asked again on this device.</small>
+      <small class="muted span-12">We'll store a cookie so you won't be asked again on this device.</small>
     </form>
-    <div class="row" style="margin-top:.75rem;justify-content:space-between">
+    <div class="row" style="margin-top:.75rem">
       <button class="btn secondary" id="nlCloseBtn" type="button">Maybe later</button>
     </div>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(function(){
+  // ── Nav + year ─────────────────────────────────────────────────
+  document.getElementById('year').textContent = new Date().getFullYear();
+  (function(){
+    var toggle=document.getElementById('navToggle'), menu=document.getElementById('navMenu');
+    if(!toggle||!menu) return;
+    function setOpen(open){
+      toggle.setAttribute('aria-expanded',String(open));
+      toggle.setAttribute('aria-label',open?'Close menu':'Open menu');
+      menu.dataset.collapsed=open?'false':'true';
+      menu.classList.toggle('is-open',open);
+      document.body.classList.toggle('nav-open',open);
+    }
+    toggle.addEventListener('click',function(){ setOpen(toggle.getAttribute('aria-expanded')!=='true'); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') setOpen(false); });
+    document.addEventListener('click',function(e){
+      if(toggle.getAttribute('aria-expanded')==='true'&&!menu.contains(e.target)&&!toggle.contains(e.target)) setOpen(false);
+    });
+  })();
+
+  // ── Helpers ────────────────────────────────────────────────────
+  var $ = function(id){ return document.getElementById(id); };
+  var fmt = function(n){ return n.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0}); };
+  var mRate = function(a){ return Math.pow(1+(a/100),1/12)-1; };
+
+  // ── Simulation ─────────────────────────────────────────────────
+  function simulate(p){
+    var months=Math.max(12,Math.min(70*12,Math.floor(p.maxYears*12)));
+    var rNom=mRate(p.retPct), rInfl=mRate(p.inflPct);
+    var rReal=((1+rNom)/(1+rInfl))-1;
+    var r=(p.useReal==='real')?rReal:rNom;
+    var bal=new Array(months+1).fill(0);
+    var totalContrib=new Array(months+1).fill(0);
+    bal[0]=p.startBal;
+    var FI=p.spend/(p.wrPct/100);
+    var bumpMonth=Math.max(0,Math.floor(p.bumpYear*12));
+    for(var m=1;m<=months;m++){
+      var add=p.contribMonthly+(m>=bumpMonth?p.contribBump:0);
+      totalContrib[m]=totalContrib[m-1]+add;
+      bal[m]=bal[m-1]*(1+r)+add;
+    }
+    var cross=function(target){ for(var m=0;m<=months;m++){ if(bal[m]>=target) return m; } return null; };
+    var fiMonth=cross(FI), halfFiMonth=cross(FI/2);
+    var coastMonth=null;
+    for(var m=0;m<=months;m++){
+      var remain=months-m;
+      if(bal[m]*Math.pow(1+r,remain)>=FI){ coastMonth=m; break; }
+    }
+    return{bal:bal,totalContrib:totalContrib,months:months,FI:FI,fiMonth:fiMonth,halfFiMonth:halfFiMonth,coastMonth:coastMonth};
+  }
+
+  // ── Chart ──────────────────────────────────────────────────────
+  var chart=null;
+  function renderChart(labels,base,FI,comp){
+    var ctx=$('fiChart').getContext('2d');
+    var datasets=[
+      {label:'Portfolio balance',data:base,borderWidth:2,fill:false,tension:.15,pointRadius:0},
+      {label:'FI target',data:base.map(function(){return FI;}),borderWidth:1,borderDash:[6,6],fill:false,pointRadius:0}
+    ];
+    if(Array.isArray(comp)) datasets.push({label:'Balance (+$200/mo)',data:comp,borderWidth:2,fill:false,tension:.15,pointRadius:0});
+    if(chart) chart.destroy();
+    chart=new Chart(ctx,{
+      type:'line',data:{labels:labels,datasets:datasets},
+      options:{responsive:true,maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{legend:{display:true},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+fmt(c.raw);}}}},
+        scales:{x:{title:{display:true,text:'Year'}},y:{title:{display:true,text:'Balance'},ticks:{callback:function(v){return fmt(v);}}}}}
+    });
+  }
+
+  function ymdPlusMonths(d,m){ var dt=new Date(d.getTime()); dt.setMonth(dt.getMonth()+m); return dt; }
+
+  // ── Run ────────────────────────────────────────────────────────
+  function run(){
+    var now=new Date();
+    var p={
+      startBal:     +$('currentBalance').value||0,
+      contribMonthly:+$('contributionMonthly').value||0,
+      contribBump:  +$('contributionBump').value||0,
+      bumpYear:     +$('bumpYear').value||0,
+      retPct:       +$('returnPct').value||0,
+      inflPct:      +$('inflationPct').value||0,
+      useReal:       $('useReal').value,
+      spend:        +$('annualSpend').value||0,
+      wrPct:        +$('withdrawalRate').value||4.0,
+      maxYears:     +$('maxYears').value||50
+    };
+    var currentAge=+$('currentAge').value||null;
+    var base=simulate(p);
+    var doComp=$('compare200').checked;
+    var comp=doComp?simulate(Object.assign({},p,{contribMonthly:p.contribMonthly+200})):null;
+
+    // Outputs
+    $('fiNumber').textContent=fmt(base.FI);
+    var fiText='Not reached in horizon', fiYears='—', ageNote='';
+    if(base.fiMonth!==null){
+      var d=ymdPlusMonths(now,base.fiMonth);
+      fiText=d.toLocaleDateString(undefined,{year:'numeric',month:'short'});
+      fiYears=(base.fiMonth/12).toFixed(1);
+      if(currentAge) ageNote='Age at FI ≈ '+(currentAge+base.fiMonth/12).toFixed(1);
+    }
+    $('fiDate').textContent=fiText;
+    $('fiYears').textContent=fiYears;
+    $('fiAgeNote').textContent=ageNote;
+    var fmtMil=function(m){ return m===null?'—':ymdPlusMonths(now,m).toLocaleDateString(undefined,{year:'numeric',month:'short'}); };
+    $('halfFiDate').textContent=fmtMil(base.halfFiMonth);
+    $('coastFiDate').textContent=fmtMil(base.coastMonth);
+
+    // Table + chart data
+    var tableBody=document.querySelector('#fiTable tbody');
+    tableBody.innerHTML='';
+    var labels=[], yearEnd=[], yearEndComp=[];
+    for(var y=1;y<=Math.ceil(base.months/12);y++){
+      var idx=Math.min(y*12,base.months);
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td>'+(now.getFullYear()+y)+'</td><td style="text-align:right">'+fmt(base.bal[idx])+'</td><td style="text-align:right">'+fmt(base.totalContrib[idx])+'</td>';
+      tableBody.appendChild(tr);
+      labels.push(now.getFullYear()+y);
+      yearEnd.push(base.bal[idx]);
+      if(comp) yearEndComp.push(comp.bal[idx]);
+    }
+    renderChart(labels,yearEnd,base.FI,comp?yearEndComp:null);
+
+    // Insight
+    var insightBox=$('insightBox'), insightText=$('insightText');
+    if(comp&&base.fiMonth!==null&&comp.fiMonth!==null){
+      var delta=base.fiMonth-comp.fiMonth;
+      if(delta>0){
+        insightBox.style.display='block';
+        insightText.textContent='Adding $200/month could bring FI forward by about '+(delta/12).toFixed(1)+' years (from '+fiText+' to '+ymdPlusMonths(now,comp.fiMonth).toLocaleDateString(undefined,{year:'numeric',month:'short'})+').';
+      } else insightBox.style.display='none';
+    } else insightBox.style.display='none';
+  }
+
+  // ── Event listeners ────────────────────────────────────────────
+  document.querySelectorAll('#ere-form input, #ere-form select').forEach(function(el){
+    el.addEventListener('input',run); el.addEventListener('change',run);
+  });
+  $('runBtn').addEventListener('click',run);
+
+  // CSV soft-gate
+  var subscribed=function(){ return localStorage.getItem('lf_subscribed')==='true'; };
+  var openNL=function(){ var b=$('nlBackdrop'); b.style.display='flex'; b.setAttribute('aria-hidden','false'); };
+  var closeNL=function(){ var b=$('nlBackdrop'); b.style.display='none'; b.setAttribute('aria-hidden','true'); };
+
+  $('downloadCsvBtn').addEventListener('click',function(){ if(!subscribed()){ openNL(); return; } downloadCsv(); });
+  $('nlCloseBtn').addEventListener('click',closeNL);
+  $('nlForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    localStorage.setItem('lf_subscribed','true');
+    closeNL();
+    setTimeout(downloadCsv,250);
+  });
+
+  function downloadCsv(){
+    var rows=[['Year','End Balance','Total Contributions']];
+    document.querySelectorAll('#fiTable tbody tr').forEach(function(tr){
+      var tds=tr.querySelectorAll('td');
+      var clean=function(s){return s.replace(/[^0-9.\-]/g,'');};
+      rows.push([tds[0].textContent,clean(tds[1].textContent),clean(tds[2].textContent)]);
+    });
+    var csv=rows.map(function(r){return r.join(',');}).join('\n');
+    var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a'); a.href=url; a.download='early-retirement-estimator.csv'; a.click(); URL.revokeObjectURL(url);
+  }
+
+  // First render
+  run();
+})();
+</script>
 </body>
 </html>
