@@ -4,7 +4,6 @@ title: Our Financial Calculators | FIREandLife
 permalink: /calculators/
 description: Use our calculators to better understand your finances and plan for Financial Independence.
 ---
-
 <style>
   .calculator-grid {
     display: grid;
@@ -20,10 +19,35 @@ description: Use our calculators to better understand your finances and plan for
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border: 1px solid #eef2f7;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .calculator-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  }
+  .calculator-card .card-icon {
+    font-size: 1.75rem;
+    margin-bottom: .6rem;
+    display: block;
   }
   .calculator-card h3 {
     margin-bottom: 0.75rem;
-    color: #333333; /* Charcoal for titles */
+    color: #333333;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .badge-new {
+    font-size: .7rem;
+    font-weight: 700;
+    background: #FF6F61;
+    color: #fff;
+    padding: .15rem .5rem;
+    border-radius: 999px;
+    letter-spacing: .03em;
+    vertical-align: middle;
   }
   .calculator-card p {
     flex-grow: 1;
@@ -32,7 +56,7 @@ description: Use our calculators to better understand your finances and plan for
   }
   .calculator-card .btn {
     display: inline-block;
-    background: #FF6F61; /* Ember Orange */
+    background: #FF6F61;
     color: white;
     padding: 0.75rem 1rem;
     text-decoration: none;
@@ -48,31 +72,47 @@ description: Use our calculators to better understand your finances and plan for
 
 <main class="container">
   <h1 class="page-title">Our Financial Calculators</h1>
-  <p style="text-align:center; max-width:700px; margin:0 auto;">
+  <p style="text-align:center;max-width:700px;margin:0 auto;">
     Use our calculators to better understand your finances and plan for Financial Independence.
   </p>
 
   <div class="calculator-grid">
+
     <div class="calculator-card">
+      <span class="card-icon">💵</span>
       <h3>Take-Home Pay Calculator</h3>
-      <p>Estimate your after-tax income and see how contributions impact your paycheck.</p>
+      <p>Estimate your after-tax income with multiple income streams, pre-tax 401(k)/HSA contributions, and state tax.</p>
       <a href="/calculators/take-home-pay/" class="btn">Open Calculator</a>
     </div>
+
     <div class="calculator-card">
+      <span class="card-icon">📊</span>
       <h3>Net Worth Tracker</h3>
-      <p>Track your total and FI net worth and visualize progress over time.</p>
+      <p>Track your total and FI-eligible net worth, visualize progress over time, and snapshot monthly to build your trend.</p>
       <a href="/calculators/net-worth-tracker/" class="btn">Open Calculator</a>
     </div>
+
     <div class="calculator-card">
+      <span class="card-icon">🗓️</span>
       <h3>Early Retirement Estimator</h3>
-      <p>Estimate when you'll reach FI based on income, expenses, and savings growth.</p>
+      <p>Estimate when you'll reach FI based on your portfolio, contributions, return assumptions, and spending target.</p>
       <a href="/calculators/early-retirement-estimator/" class="btn">Open Calculator</a>
     </div>
+
     <div class="calculator-card">
+      <span class="card-icon">🏄</span>
       <h3>CoastFI Calculator</h3>
-      <p>See if you can stop contributing and still reach FI, factoring in passive income and real returns.</p>
+      <p>See if you can stop contributing and still reach FI by your target age, factoring in passive income and real returns.</p>
       <a href="/calculators/coast-fi/" class="btn">Open Calculator</a>
     </div>
+
+    <div class="calculator-card">
+      <span class="card-icon">⚙️</span>
+      <h3>Contribution Optimizer <span class="badge-new">New</span></h3>
+      <p>Find the best split between Traditional 401(k), Roth 401(k), and Brokerage to maximize your after-tax wealth at retirement.</p>
+      <a href="/calculators/contribution-optimizer/" class="btn">Open Calculator</a>
+    </div>
+
   </div>
 
   <section class="newsletter" style="margin-top:2rem;">
