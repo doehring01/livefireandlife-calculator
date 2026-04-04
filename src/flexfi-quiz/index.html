@@ -1,0 +1,848 @@
+-----
+
+## layout: default
+title: What’s Your FlexFI Path? | FIREandLife
+description: Take the 5-question FlexFI quiz to get your personalized path to Financial Independence — with the right tools, blogs, and steps for where you are right now.
+permalink: /flexfi-quiz/
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ── Reset & base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .quiz-shell {
+    font-family: 'DM Sans', sans-serif;
+    background: #faf8f5;
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .quiz-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ── */
+  .quiz-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .quiz-eyebrow {
+    display: inline-block;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #FF6F61;
+    margin-bottom: .75rem;
+  }
+  .quiz-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.15;
+    margin-bottom: .75rem;
+  }
+  .quiz-header p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ── Progress bar ── */
+  .progress-bar-wrap {
+    margin-bottom: 2rem;
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: .8rem;
+    color: #999;
+    margin-bottom: .4rem;
+  }
+  .progress-track {
+    height: 5px;
+    background: #e8e3dc;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FF6F61, #ff9a8b);
+    border-radius: 999px;
+    transition: width .4s ease;
+  }
+
+  /* ── Question card ── */
+  .question-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 2px 20px rgba(0,0,0,.06);
+    border: 1px solid #f0ebe3;
+    animation: slideUp .35s ease both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .question-number {
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #FF6F61;
+    margin-bottom: .6rem;
+  }
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.35;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── Answer options ── */
+  .options-grid {
+    display: grid;
+    gap: .65rem;
+  }
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    width: 100%;
+    padding: .9rem 1rem;
+    background: #faf8f5;
+    border: 2px solid #ece8e1;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    font-weight: 500;
+    color: #333;
+    text-align: left;
+    transition: all .18s ease;
+  }
+  .option-btn:hover {
+    border-color: #FF6F61;
+    background: #fff7f6;
+    transform: translateX(3px);
+  }
+  .option-btn.selected {
+    border-color: #FF6F61;
+    background: #fff2f0;
+    color: #c0392b;
+  }
+  .option-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+  }
+
+  /* ── Nav buttons ── */
+  .quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    gap: 1rem;
+  }
+  .btn-back {
+    background: none;
+    border: none;
+    color: #999;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: .5rem 0;
+    transition: color .15s;
+  }
+  .btn-back:hover { color: #555; }
+  .btn-next {
+    background: #FF6F61;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: .75rem 1.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .18s, transform .12s;
+    margin-left: auto;
+  }
+  .btn-next:hover { background: #e8533f; transform: translateY(-1px); }
+  .btn-next:disabled { background: #ddd; color: #aaa; cursor: not-allowed; transform: none; }
+
+  /* ── Email gate ── */
+  .gate-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 2px 20px rgba(0,0,0,.06);
+    border: 1px solid #f0ebe3;
+    text-align: center;
+    animation: slideUp .35s ease both;
+  }
+  .gate-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .gate-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: .5rem;
+  }
+  .gate-card p { color: #666; font-size: .95rem; line-height: 1.6; margin-bottom: 1.25rem; }
+  .gate-form { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; }
+  .gate-input {
+    flex: 1;
+    min-width: 220px;
+    padding: .75rem 1rem;
+    border: 2px solid #ece8e1;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    color: #333;
+    background: #faf8f5;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .gate-input:focus { border-color: #FF6F61; }
+  .btn-gate {
+    background: #FF6F61;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: .75rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s;
+  }
+  .btn-gate:hover { background: #e8533f; }
+  .gate-skip {
+    margin-top: .75rem;
+    font-size: .82rem;
+    color: #aaa;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: underline;
+  }
+  .gate-skip:hover { color: #777; }
+
+  /* ── Results ── */
+  .result-card {
+    animation: slideUp .4s ease both;
+  }
+
+  /* Identity badge */
+  .result-badge {
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .result-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: .08;
+    background-image: radial-gradient(circle at 20% 80%, currentColor 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, currentColor 0%, transparent 50%);
+  }
+  .badge-emoji { font-size: 3rem; display: block; margin-bottom: .5rem; }
+  .badge-label {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    opacity: .7;
+    margin-bottom: .3rem;
+  }
+  .badge-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: .6rem;
+  }
+  .badge-insight {
+    font-size: .9rem;
+    opacity: .8;
+    line-height: 1.5;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  /* Path 1 — Foundations */
+  .badge-foundations {
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    color: #2e7d32;
+  }
+  /* Path 2 — Momentum */
+  .badge-momentum {
+    background: linear-gradient(135deg, #fff8e1, #fff3e0);
+    color: #e65100;
+  }
+  /* Path 3 — Optimizer */
+  .badge-optimizer {
+    background: linear-gradient(135deg, #e3f2fd, #ede7f6);
+    color: #1565c0;
+  }
+
+  /* Share bar */
+  .share-bar {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #f0ebe3;
+  }
+  .share-label { font-size: .82rem; color: #999; font-weight: 500; }
+  .btn-share {
+    padding: .45rem .9rem;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity .15s;
+  }
+  .btn-share:hover { opacity: .85; }
+  .btn-share.copy  { background: #f0ebe3; color: #555; }
+  .btn-share.insta { background: linear-gradient(135deg, #f77737, #e1306c); color: #fff; }
+
+  /* Pathway */
+  .pathway-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.75rem;
+    border: 1px solid #f0ebe3;
+    box-shadow: 0 2px 16px rgba(0,0,0,.04);
+  }
+  .pathway-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 1.25rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid #f0ebe3;
+  }
+
+  .pathway-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: .85rem 0;
+    border-bottom: 1px solid #f5f2ee;
+    text-decoration: none;
+    color: inherit;
+    transition: background .15s;
+    border-radius: 8px;
+    padding: .75rem .75rem;
+    margin: 0 -.75rem;
+  }
+  .pathway-step:hover { background: #faf8f5; }
+  .pathway-step:last-child { border-bottom: none; }
+
+  .step-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #FF6F61;
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-content { flex: 1; }
+  .step-type {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #FF6F61;
+    margin-bottom: .2rem;
+  }
+  .step-title {
+    font-size: .95rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: .2rem;
+    line-height: 1.3;
+  }
+  .step-desc {
+    font-size: .82rem;
+    color: #888;
+    line-height: 1.4;
+  }
+  .step-arrow {
+    color: #ccc;
+    font-size: 1rem;
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  /* Restart */
+  .btn-restart {
+    width: 100%;
+    margin-top: 1.25rem;
+    padding: .7rem;
+    background: none;
+    border: 2px solid #ece8e1;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem;
+    color: #999;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .btn-restart:hover { border-color: #ccc; color: #555; }
+
+  /* Disclaimer */
+  .quiz-disclaimer {
+    margin-top: 2rem;
+    padding: .75rem 1rem;
+    background: #fffbf0;
+    border: 1px solid #ffe8a0;
+    border-left: 4px solid #f5b400;
+    border-radius: 0 8px 8px 0;
+    font-size: .78rem;
+    color: #6b5a00;
+    line-height: 1.5;
+  }
+</style>
+
+<div class="quiz-shell">
+  <div class="quiz-wrap">
+
+```
+<!-- Header -->
+<div class="quiz-header">
+  <span class="quiz-eyebrow">FlexFI Path Finder</span>
+  <h1>What's Your Path to<br>Financial Independence?</h1>
+  <p>5 questions. A personalized plan with the right blogs, calculators, and next steps for exactly where you are right now.</p>
+</div>
+
+<!-- Progress bar -->
+<div class="progress-bar-wrap" id="progressWrap">
+  <div class="progress-meta">
+    <span id="progressLabel">Question 1 of 5</span>
+    <span id="progressPct">20%</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill" style="width:20%"></div>
+  </div>
+</div>
+
+<!-- Quiz content -->
+<div id="quizContent"></div>
+```
+
+  </div>
+</div>
+
+<script>
+(function(){
+
+  // ── Questions ──────────────────────────────────────────────────
+  var QUESTIONS = [
+    {
+      text: "Where are you on your FI journey right now?",
+      options: [
+        { icon: "🌱", text: "Just starting — I'm still figuring out what FI even means for me",  value: "new" },
+        { icon: "⚙️", text: "Building — I'm saving but not sure I'm doing it in the right order", value: "building" },
+        { icon: "🏁", text: "Optimizing — I'm well on my way and want to fine-tune my plan",       value: "optimizing" },
+        { icon: "🤔", text: "Not sure — I know I should be doing something but don't know where to start", value: "new" }
+      ]
+    },
+    {
+      text: "What's your biggest money challenge right now?",
+      options: [
+        { icon: "🔍", text: "Understanding where my money actually goes each month",             value: "awareness" },
+        { icon: "💸", text: "Finding money to save when life is expensive",                      value: "saving" },
+        { icon: "🏦", text: "Making sure I'm saving in the right accounts (401k vs Roth vs taxable)", value: "accounts" },
+        { icon: "⏰", text: "Knowing when I can actually slow down or stop working",             value: "timeline" }
+      ]
+    },
+    {
+      text: "How stable is your income right now?",
+      options: [
+        { icon: "🏢", text: "Very stable — salaried job, reliable paycheck",                    value: "stable" },
+        { icon: "📈", text: "Mostly stable with some variability (bonus, commission, etc.)",     value: "mostly" },
+        { icon: "🔄", text: "Variable — freelance, contract, or I'm between roles",              value: "variable" },
+        { icon: "🚀", text: "Growing — I'm early career or recently increased my income significantly", value: "growing" }
+      ]
+    },
+    {
+      text: "What's your approximate savings rate right now?",
+      options: [
+        { icon: "🐣", text: "Less than 10% — I'm getting started",  value: "low" },
+        { icon: "📊", text: "10–20% — making progress",             value: "mid" },
+        { icon: "💪", text: "20–35% — seriously building",          value: "high" },
+        { icon: "🔥", text: "35%+ — fully committed to FI",         value: "fire" }
+      ]
+    },
+    {
+      text: "What does Financial Independence mean to you personally?",
+      options: [
+        { icon: "🏖️", text: "Full early retirement — I want to stop working as soon as possible", value: "retire" },
+        { icon: "🎯", text: "Career flexibility — I want to choose my work, not be trapped by it", value: "flexibility" },
+        { icon: "😌", text: "Less financial stress — I want a cushion and to stop worrying about money", value: "stress" },
+        { icon: "🌍", text: "Optionality — I'm not sure yet, I want to keep my options open",    value: "options" }
+      ]
+    }
+  ];
+
+  // ── Paths ──────────────────────────────────────────────────────
+  var PATHS = {
+    foundations: {
+      id: "foundations",
+      emoji: "🌱",
+      label: "Your FlexFI Type",
+      title: "The Foundations Builder",
+      insight: "You're in the best position possible — starting with intention. Most people stumble into FI planning too late or skip the fundamentals. You won't.",
+      badgeClass: "badge-foundations",
+      shareText: "I just took the FlexFI Quiz and I'm a 🌱 Foundations Builder! Find out your FI path at livefireandlife.com/flexfi-quiz",
+      steps: [
+        { type: "Blog", icon: "📖", title: "The FI Formula: Explained", desc: "Start here — understand what FI actually means and calculate your number.", url: "/blog/fi-formula-explained/" },
+        { type: "Blog", icon: "📖", title: "Introducing FlexFI", desc: "Why rigid FIRE plans fail and what a flexible approach looks like.", url: "/blog/introducing-flexfi/" },
+        { type: "Calculator", icon: "💵", title: "Take-Home Pay Calculator", desc: "Know exactly what you're working with after taxes and deductions.", url: "/calculators/take-home-pay/" },
+        { type: "Calculator", icon: "🗓️", title: "Early Retirement Estimator", desc: "Plug in your numbers and see your FI timeline for the first time.", url: "/calculators/early-retirement-estimator/" },
+        { type: "Guide", icon: "📋", title: "FI Order of Operations", desc: "Learn the right sequence for your dollars — this changes everything.", url: "/guides/investing-order-for-fi/" }
+      ]
+    },
+    momentum: {
+      id: "momentum",
+      emoji: "⚙️",
+      label: "Your FlexFI Type",
+      title: "The Momentum Builder",
+      insight: "You're saving and moving forward — but the gap between good and great is usually sequence, not effort. Let's make sure every dollar is doing the right job.",
+      badgeClass: "badge-momentum",
+      shareText: "I just took the FlexFI Quiz and I'm an ⚙️ Momentum Builder! Find out your FI path at livefireandlife.com/flexfi-quiz",
+      steps: [
+        { type: "Guide", icon: "📋", title: "FI Order of Operations", desc: "Confirm you're sequencing your savings correctly before optimizing.", url: "/guides/investing-order-for-fi/" },
+        { type: "Calculator", icon: "⚙️", title: "Contribution Optimizer", desc: "Find the best split between Traditional 401k, Roth, and Brokerage.", url: "/calculators/contribution-optimizer/" },
+        { type: "Calculator", icon: "📊", title: "Net Worth Tracker", desc: "Establish a clear baseline — you can't improve what you don't measure.", url: "/calculators/net-worth-tracker/" },
+        { type: "Calculator", icon: "🏄", title: "CoastFI Calculator", desc: "See how close you are to the point where compounding does the work.", url: "/calculators/coast-fi/" },
+        { type: "Blog", icon: "📖", title: "Balancing FI with Family Life", desc: "How to keep building when life demands more from your margin.", url: "/blog/balancing-fi-family/" }
+      ]
+    },
+    optimizer: {
+      id: "optimizer",
+      emoji: "🏁",
+      label: "Your FlexFI Type",
+      title: "The FlexFI Optimizer",
+      insight: "You've done the hard work. Now it's about precision — squeezing more from what you have, stress-testing your timeline, and knowing exactly when you have enough.",
+      badgeClass: "badge-optimizer",
+      shareText: "I just took the FlexFI Quiz and I'm a 🏁 FlexFI Optimizer! Find out your FI path at livefireandlife.com/flexfi-quiz",
+      steps: [
+        { type: "Calculator", icon: "🏄", title: "CoastFI Calculator", desc: "Find out if you can already stop contributing and let compounding finish the job.", url: "/calculators/coast-fi/" },
+        { type: "Calculator", icon: "🗓️", title: "Early Retirement Estimator", desc: "Stress-test your timeline with different return and spending scenarios.", url: "/calculators/early-retirement-estimator/" },
+        { type: "Calculator", icon: "⚙️", title: "Contribution Optimizer", desc: "Maximize after-tax wealth by fine-tuning your account allocation.", url: "/calculators/contribution-optimizer/" },
+        { type: "Calculator", icon: "📊", title: "Net Worth Tracker", desc: "Monthly snapshots to watch your FI number approach the finish line.", url: "/calculators/net-worth-tracker/" },
+        { type: "Blog", icon: "📖", title: "Balancing FI with Family Life", desc: "Managing the trade-offs as you approach the final stretch.", url: "/blog/balancing-fi-family/" }
+      ]
+    }
+  };
+
+  // ── Scoring ────────────────────────────────────────────────────
+  function scorePath(answers){
+    var score = { foundations: 0, momentum: 0, optimizer: 0 };
+
+    // Q1 — journey stage
+    var q1 = answers[0];
+    if(q1 === "new")        { score.foundations += 3; }
+    if(q1 === "building")   { score.momentum    += 3; }
+    if(q1 === "optimizing") { score.optimizer   += 3; }
+
+    // Q2 — challenge
+    var q2 = answers[1];
+    if(q2 === "awareness")  { score.foundations += 2; }
+    if(q2 === "saving")     { score.foundations += 1; score.momentum += 1; }
+    if(q2 === "accounts")   { score.momentum    += 2; }
+    if(q2 === "timeline")   { score.optimizer   += 2; }
+
+    // Q3 — income stability (modifier)
+    var q3 = answers[2];
+    if(q3 === "growing")    { score.foundations += 1; }
+    if(q3 === "stable")     { score.momentum    += 1; score.optimizer += 1; }
+
+    // Q4 — savings rate
+    var q4 = answers[3];
+    if(q4 === "low")        { score.foundations += 2; }
+    if(q4 === "mid")        { score.foundations += 1; score.momentum += 1; }
+    if(q4 === "high")       { score.momentum    += 2; }
+    if(q4 === "fire")       { score.optimizer   += 2; }
+
+    // Q5 — FI meaning (modifier)
+    var q5 = answers[4];
+    if(q5 === "stress" || q5 === "options") { score.foundations += 1; }
+    if(q5 === "flexibility")                { score.momentum    += 1; }
+    if(q5 === "retire")                     { score.optimizer   += 1; }
+
+    // Pick highest
+    var best = "foundations";
+    if(score.momentum  > score[best]) best = "momentum";
+    if(score.optimizer > score[best]) best = "optimizer";
+    return PATHS[best];
+  }
+
+  // ── State ──────────────────────────────────────────────────────
+  var state = {
+    step: 0,       // 0–4 = questions, 5 = gate, 6 = results
+    answers: [],
+    selectedIndex: null,
+    path: null
+  };
+
+  // ── Render helpers ─────────────────────────────────────────────
+  var content    = document.getElementById("quizContent");
+  var progWrap   = document.getElementById("progressWrap");
+  var progFill   = document.getElementById("progressFill");
+  var progLabel  = document.getElementById("progressLabel");
+  var progPct    = document.getElementById("progressPct");
+
+  function setProgress(q){
+    var pct = Math.round(((q+1)/5)*100);
+    progFill.style.width = pct + "%";
+    progLabel.textContent = "Question " + (q+1) + " of 5";
+    progPct.textContent   = pct + "%";
+    progWrap.style.display = "block";
+  }
+
+  function hideProgress(){
+    progWrap.style.display = "none";
+  }
+
+  function render(){
+    content.innerHTML = "";
+    if(state.step < 5)       renderQuestion(state.step);
+    else if(state.step === 5) renderGate();
+    else                      renderResult();
+  }
+
+  // ── Question ───────────────────────────────────────────────────
+  function renderQuestion(idx){
+    setProgress(idx);
+    var q = QUESTIONS[idx];
+    var selected = state.answers[idx] !== undefined ? state.answers[idx] : null;
+
+    var card = document.createElement("div");
+    card.className = "question-card";
+
+    var numEl = document.createElement("div");
+    numEl.className = "question-number";
+    numEl.textContent = "Question " + (idx+1);
+    card.appendChild(numEl);
+
+    var textEl = document.createElement("div");
+    textEl.className = "question-text";
+    textEl.textContent = q.text;
+    card.appendChild(textEl);
+
+    var grid = document.createElement("div");
+    grid.className = "options-grid";
+
+    q.options.forEach(function(opt, oi){
+      var btn = document.createElement("button");
+      btn.className = "option-btn" + (selected === oi ? " selected" : "");
+      btn.innerHTML = '<span class="option-icon">' + opt.icon + '</span>' + opt.text;
+      btn.addEventListener("click", function(){
+        state.answers[idx] = oi;
+        state.selectedIndex = oi;
+        // Store value for scoring
+        if(!state.answerValues) state.answerValues = [];
+        state.answerValues[idx] = opt.value;
+        // Update selection UI
+        grid.querySelectorAll(".option-btn").forEach(function(b,bi){
+          b.classList.toggle("selected", bi === oi);
+        });
+        nextBtn.disabled = false;
+      });
+      grid.appendChild(btn);
+    });
+    card.appendChild(grid);
+
+    // Nav
+    var nav = document.createElement("div");
+    nav.className = "quiz-nav";
+
+    if(idx > 0){
+      var backBtn = document.createElement("button");
+      backBtn.className = "btn-back";
+      backBtn.textContent = "← Back";
+      backBtn.addEventListener("click", function(){
+        state.step--;
+        render();
+      });
+      nav.appendChild(backBtn);
+    } else {
+      nav.appendChild(document.createElement("span"));
+    }
+
+    var nextBtn = document.createElement("button");
+    nextBtn.className = "btn-next";
+    nextBtn.textContent = idx < 4 ? "Next →" : "See My Path →";
+    nextBtn.disabled = (selected === null);
+    nextBtn.addEventListener("click", function(){
+      state.step++;
+      render();
+    });
+    nav.appendChild(nextBtn);
+    card.appendChild(nav);
+
+    content.appendChild(card);
+  }
+
+  // ── Email gate ─────────────────────────────────────────────────
+  function renderGate(){
+    hideProgress();
+    state.path = scorePath(state.answerValues || []);
+
+    var card = document.createElement("div");
+    card.className = "gate-card";
+    card.innerHTML =
+      '<div class="gate-icon">📬</div>' +
+      '<h2>Your FlexFI Path is Ready</h2>' +
+      '<p>Enter your email to get your personalized plan — plus one practical FI idea every week, written for busy people.</p>' +
+      '<form class="gate-form" id="gateForm" action="https://livefireandlife.us6.list-manage.com/subscribe/post?u=72d54d5d34e330e9be28f8b0b&id=aa67750f57&f_id=00a3c2e1f0" method="post" target="_blank">' +
+        '<input class="gate-input" type="email" name="EMAIL" placeholder="your@email.com" required/>' +
+        '<div aria-hidden="true" style="position:absolute;left:-5000px;"><input type="text" name="b_72d54d5d34e330e9be28f8b0b_aa67750f57" tabindex="-1" value=""/></div>' +
+        '<button class="btn-gate" type="submit">Get My Path →</button>' +
+      '</form>' +
+      '<button class="gate-skip" id="gateSkip">Skip — just show me my results</button>';
+
+    content.appendChild(card);
+
+    document.getElementById("gateForm").addEventListener("submit", function(){
+      setTimeout(function(){ state.step = 6; render(); }, 300);
+    });
+    document.getElementById("gateSkip").addEventListener("click", function(){
+      state.step = 6; render();
+    });
+  }
+
+  // ── Results ────────────────────────────────────────────────────
+  function renderResult(){
+    hideProgress();
+    var path = state.path;
+
+    var wrap = document.createElement("div");
+    wrap.className = "result-card";
+
+    // Badge
+    var badge = document.createElement("div");
+    badge.className = "result-badge " + path.badgeClass;
+    badge.innerHTML =
+      '<span class="badge-emoji">' + path.emoji + '</span>' +
+      '<div class="badge-label">' + path.label + '</div>' +
+      '<div class="badge-title">' + path.title + '</div>' +
+      '<div class="badge-insight">' + path.insight + '</div>';
+    wrap.appendChild(badge);
+
+    // Share bar
+    var shareBar = document.createElement("div");
+    shareBar.className = "share-bar";
+    shareBar.innerHTML =
+      '<span class="share-label">Share your result:</span>' +
+      '<button class="btn-share copy" id="copyBtn">📋 Copy link</button>' +
+      '<button class="btn-share insta" id="instaBtn">📸 Share to Instagram</button>';
+    wrap.appendChild(shareBar);
+
+    document.addEventListener("click", function(e){
+      if(e.target.id === "copyBtn"){
+        var text = path.shareText;
+        navigator.clipboard.writeText(text).then(function(){
+          e.target.textContent = "✅ Copied!";
+          setTimeout(function(){ e.target.textContent = "📋 Copy link"; }, 2000);
+        }).catch(function(){
+          e.target.textContent = "Copy: " + window.location.href;
+        });
+      }
+      if(e.target.id === "instaBtn"){
+        var text = path.shareText + "\n\n" + window.location.href;
+        navigator.clipboard.writeText(text).then(function(){
+          alert("Caption copied! Open Instagram and paste into your story or post.");
+        });
+      }
+    });
+
+    // Pathway
+    var pathway = document.createElement("div");
+    pathway.className = "pathway-section";
+    pathway.innerHTML = '<div class="pathway-header">🗺️ Your Personalized FlexFI Pathway</div>';
+
+    path.steps.forEach(function(step, i){
+      var a = document.createElement("a");
+      a.className = "pathway-step";
+      a.href = step.url;
+      a.innerHTML =
+        '<div class="step-number">' + (i+1) + '</div>' +
+        '<div class="step-content">' +
+          '<div class="step-type">' + step.icon + ' ' + step.type + '</div>' +
+          '<div class="step-title">' + step.title + '</div>' +
+          '<div class="step-desc">' + step.desc + '</div>' +
+        '</div>' +
+        '<div class="step-arrow">→</div>';
+      pathway.appendChild(a);
+    });
+
+    wrap.appendChild(pathway);
+
+    // Restart
+    var restartBtn = document.createElement("button");
+    restartBtn.className = "btn-restart";
+    restartBtn.textContent = "↺ Retake the quiz";
+    restartBtn.addEventListener("click", function(){
+      state.step = 0;
+      state.answers = [];
+      state.answerValues = [];
+      state.selectedIndex = null;
+      state.path = null;
+      render();
+    });
+    wrap.appendChild(restartBtn);
+
+    // Disclaimer
+    var disc = document.createElement("div");
+    disc.className = "quiz-disclaimer";
+    disc.innerHTML = "ℹ️ This quiz provides general educational guidance only and does not constitute financial, tax, or legal advice. Consult a qualified professional before making financial decisions.";
+    wrap.appendChild(disc);
+
+    content.appendChild(wrap);
+  }
+
+  // ── Init ───────────────────────────────────────────────────────
+  render();
+
+})();
+</script>
