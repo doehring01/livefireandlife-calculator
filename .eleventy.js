@@ -24,6 +24,9 @@ module.exports = function(eleventyConfig) {
   // Root stylesheet → /styles.css
   eleventyConfig.addPassthroughCopy({ "src/styles.css": "styles.css" });
 
+eleventyConfig.addPassthroughCopy("src/sitemap.xml");
+
+
   // Helpful during dev; harmless on Netlify
   eleventyConfig.addWatchTarget("src/assets");
   eleventyConfig.addWatchTarget("src/calculators/contribution-optimizer/app.js");
