@@ -21,6 +21,8 @@
 {%- endif -%}
 {%- if site.url and page.hero -%}
 <meta property="og:image" content="{{ site.url }}{{ page.hero }}">
+{%- elsif site.url -%}
+<meta property="og:image" content="{{ site.url }}/assets/logo-horizontal.png">
 {%- endif -%}
 
 <meta name="twitter:card" content="summary_large_image">
@@ -30,4 +32,6 @@
 {%- endif -%}
 {%- if site.url and page.hero -%}
 <meta name="twitter:image" content="{{ site.url }}{{ page.hero }}">
+{%- elsif site.url -%}
+<meta name="twitter:image" content="{{ site.url }}/assets/logo-horizontal.png">
 {%- endif -%}
