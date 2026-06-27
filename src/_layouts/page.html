@@ -7,8 +7,9 @@
     <main class="container">
       {{ content }}
 
-      {%- comment -%} Show support box on individual blog posts, not on blog index {%- endcomment -%}
+      {%- comment -%} Show newsletter + support box on individual blog posts, not on blog index {%- endcomment -%}
       {%- if page.url and page.url contains '/blog/' and page.url != '/blog/' and page.url != '/blog/index.html' -%}
+        {% include 'newsletter.html' %}
         {% include 'support.html' %}
       {%- endif -%}
     </main>
